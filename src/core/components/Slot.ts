@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import Reel from './Reel';
+
 export default class Slot{
     private app:PIXI.Application
     private slotLogo:PIXI.Sprite
@@ -33,13 +34,13 @@ export default class Slot{
     private createReels(){
         this.reelsValues.forEach((data,index)=>{
             this.reel = new Reel(this.app,data,this.textureArray,index)
+            
             this.reelsContainer.addChild(this.reel.reelContainer)
             this.slotContainer.addChild(this.reelsContainer)
         })
         this.reelsContainer.addChild(this.reel.reelContainer)
         this.slotContainer.addChild(this.reelsContainer)
         
-        this.reelsContainer.y = (this.slotBg.height - this.reelsContainer.height) + 60
         this.reelsContainer.x = -50
     }
     private createSlotFrame(){
