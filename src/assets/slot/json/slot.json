@@ -44,46 +44,46 @@
 			"frame": {
 				"x": 1,
 				"y": 217,
-				"w": 224,
-				"h": 219
+				"w": 266,
+				"h": 214
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 224,
-				"h": 219
+				"w": 266,
+				"h": 214
 			},
 			"sourceSize": {
-				"w": 224,
-				"h": 219
+				"w": 266,
+				"h": 214
 			}
 		},
-		"dynamite crate.png": {
+		"dynamite_crate.png": {
 			"frame": {
-				"x": 227,
+				"x": 269,
 				"y": 217,
-				"w": 272,
-				"h": 188
+				"w": 266,
+				"h": 214
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 272,
-				"h": 188
+				"w": 266,
+				"h": 214
 			},
 			"sourceSize": {
-				"w": 272,
-				"h": 188
+				"w": 266,
+				"h": 214
 			}
 		},
 		"gas_lamp.png": {
 			"frame": {
-				"x": 227,
-				"y": 407,
+				"x": 1,
+				"y": 433,
 				"w": 266,
 				"h": 214
 			},
@@ -101,6 +101,26 @@
 			}
 		},
 		"pile_of_gold.png": {
+			"frame": {
+				"x": 269,
+				"y": 433,
+				"w": 266,
+				"h": 214
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 266,
+				"h": 214
+			},
+			"sourceSize": {
+				"w": 266,
+				"h": 214
+			}
+		},
+		"snake.png": {
 			"frame": {
 				"x": 537,
 				"y": 1,
@@ -120,30 +140,10 @@
 				"h": 214
 			}
 		},
-		"snake.png": {
-			"frame": {
-				"x": 501,
-				"y": 217,
-				"w": 266,
-				"h": 214
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 266,
-				"h": 214
-			},
-			"sourceSize": {
-				"w": 266,
-				"h": 214
-			}
-		},
 		"trolley.png": {
 			"frame": {
-				"x": 495,
-				"y": 433,
+				"x": 537,
+				"y": 217,
 				"w": 266,
 				"h": 214
 			},
@@ -162,8 +162,8 @@
 		},
 		"wild.png": {
 			"frame": {
-				"x": 1,
-				"y": 649,
+				"x": 537,
+				"y": 433,
 				"w": 266,
 				"h": 214
 			},
@@ -184,11 +184,11 @@
 	"meta": {
 		"app": "http://www.codeandweb.com/texturepacker",
 		"version": "1.0",
-		"image": "spritesheet.png",
+		"image": "slot.png",
 		"format": "RGBA8888",
 		"size": {
 			"w": 804,
-			"h": 864
+			"h": 648
 		},
 		"scale": "1"
 	}
