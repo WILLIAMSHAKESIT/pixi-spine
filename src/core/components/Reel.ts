@@ -4,6 +4,7 @@ import Functions from '../settings/Functions'
 import Block from './Block';
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
+import json from '../settings/symbols.json'
 
 // register the plugin
 gsap.registerPlugin(PixiPlugin);
@@ -26,6 +27,7 @@ export default class Reel{
     private reelIndex:number
     private reelData:Array<number> = []
     private block:Block
+    public symbolSprite:PIXI.Sprite
     constructor(app:PIXI.Application,data:Array<number>,textureArray:any,index:number){
         this.app = app
         this.textureArray = textureArray
@@ -43,14 +45,19 @@ export default class Reel{
         this.createBlocks(true)
         this.createContainers()
     }
+
     public createBlocks(isInit:boolean){
         this.blocks.map((data,index)=>{
-            this.block = new Block(this.reelContainer,this.textureArray,data,index)
-            this.reelContainer.addChild(this.block.symbolSprite)
+            this.symbolSprite = PIXI.Sprite.from(this.textureArray.slot.textures[`${json.symbols[data].symbol}.png`])
+            this.symbolSprite.y = (this.symbolSprite.height * index)*1.3
+            this.reelContainer.addChild(this.symbolSprite)
         })
-
-        // while(this.reelContainer.children[0]) { this.reelContainer.removeChild(this.reelContainer.children[0]); }
     }
+
+    public updateBlocks(){
+        
+    }
+
     private createContainers(){
         //mask part
         const mask = PIXI.Sprite.from(this.textureArray.slot.textures[`mask.png`])

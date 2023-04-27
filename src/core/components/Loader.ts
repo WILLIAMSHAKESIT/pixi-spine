@@ -17,9 +17,10 @@ export default class Loader{
         PIXI.Assets.add('doggo', 'assets/doggo/doggo.json');
         PIXI.Assets.add('main', 'assets/main/json/main.json');
         PIXI.Assets.add('slot', 'assets/slot/json/slot.json');
+        PIXI.Assets.add('ui_menu', 'assets/menu-ui/json/controls.json');
 
         // Load the assets and get a resolved promise once both are loaded
-        const texturesPromise = PIXI.Assets.load(['corgi','doggo','main','slot']);
+        const texturesPromise = PIXI.Assets.load(['corgi','doggo','main','slot','ui_menu']);
 
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

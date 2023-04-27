@@ -17,7 +17,7 @@ export default class Slot{
     private baseWidth:number
     private baseHeight:number
     private reel:Reel
-    private slotContainer:PIXI.Container
+    public slotContainer:PIXI.Container
     private reelsContainer:PIXI.Container
     private masksContainer:PIXI.Container
     private reelsValues:Array<Array<number>> = [
@@ -39,6 +39,7 @@ export default class Slot{
         this.reelsContainer = new PIXI.Container
         this.masksContainer = new PIXI.Container
         this.init()
+        window.document.addEventListener('keypress', e => this.startSpin());
     }
     private init(){
         this.createSlotFrame()
@@ -46,24 +47,22 @@ export default class Slot{
     }
     private createReels(){
         this.reelsValues.forEach((data,index)=>{
-            this.reel = new Reel(this.app,data,this.textureArray,index)    
+            this.reel = new Reel(this.app,data,this.textureArray,index)  
             this.reelsContainer.addChild(this.reel.reelMaskContainer)
             this.masksContainer.addChild(this.reel.maskReelContainer)
-            this.slotContainer.addChild(this.reelsContainer,this.masksContainer)
+            this.slotContainer.addChild(this.reelsContainer,this.masksContainer) 
         })
-       
-        this.slotContainer.addChild(this.reelsContainer)
+
         this.reelsContainer.x = this.reelContainerX
         this.masksContainer.x = this.maskContainerX
-        window.document.addEventListener('keypress', e => this.startSpin());
     }
     public startSpin(){
         let dY = 7492.5
         this.reelsContainer.children.forEach((data,index)=>{
             let spin = gsap.to(data, {
                 delay:index*0.3,
-                duration: 1,
-                y: dY + 60,
+                duration: 3,
+                y: dY + 30,
                 onComplete:()=>{
                     spin.kill()
                     this.spinCount++
@@ -74,7 +73,8 @@ export default class Slot{
                         onComplete:()=>{
                             bounce.kill()
                             data.y = 0
-                            this.reel.createBlocks(false)
+                            // this.reel.createBlocks(false)
+                            this.reel.updateBlocks()
                         }
                     })
                 }
@@ -95,6 +95,6 @@ export default class Slot{
         this.slotLogo.x = 0
         this.slotLogo.y = -446
 
-        this.app.stage.addChild(this.slotContainer)
+        this.slotContainer.y = -40 
     }
 }
