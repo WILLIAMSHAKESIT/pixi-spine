@@ -74,7 +74,6 @@ export default class Slot{
                         onComplete:()=>{
                             bounce.kill()
                             data.y = 0
-                            this.reel.createBlocks(false)
                         }
                     })
                 }
