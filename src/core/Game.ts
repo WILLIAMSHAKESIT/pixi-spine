@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import Loader from "./components/Loader";
 import Slot from './components/Slot';
 import Controller from './components/Controller';
+import Functions from './settings/Functions';
 import {Spine} from 'pixi-spine';
 export default class Game{
     private app:PIXI.Application
@@ -11,8 +12,9 @@ export default class Game{
     private gameBackground:PIXI.Sprite
     private baseWidth:number;
     private baseHeight:number;
-    private slotGame:Slot
+    private slotGame:Slot;
     private controller:Controller
+
     constructor(){
         new Loader(this.init.bind(this))
     }
@@ -25,23 +27,21 @@ export default class Game{
         this.gameContainer = new PIXI.Container
         this.createGame()
         this.createController()
-    }
-
-    private createController(){
-        this.controller = new Controller(this.app,this.textureArray)
-        this.gameContainer.addChild(this.controller.container)
+        this.app.stage.addChild(this.gameContainer);
     }
 
     private createGame(){
-        this.gameBackground = PIXI.Sprite.from(this.textureArray.main.textures['bg.png']);
+        this.gameBackground = Functions.loadTexture(this.textureArray,'main','bg')
         this.gameBackground.width = this.baseWidth
         this.gameBackground.height = this.baseHeight
         this.gameContainer.addChild(this.gameBackground)
 
         // create slot
         this.slotGame = new Slot(this.app,this.textureArray)
-        this.gameContainer.addChild(this.slotGame.slotContainer)
-
-        this.app.stage.addChild(this.gameContainer);
+        this.gameContainer.addChild(this.slotGame.container)
+    }
+    private createController(){
+        this.controller = new Controller(this.app,this.textureArray)
+        this.gameContainer.addChild(this.controller.container)
     }
 }
