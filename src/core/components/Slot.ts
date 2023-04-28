@@ -67,7 +67,6 @@ export default class Slot{
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
         this.container = new PIXI.Container
-        // this.container.sortableChildren = true
         this.init()
     }
     private init(){
@@ -149,15 +148,12 @@ export default class Slot{
         this.reelContainer.forEach((data,indexUpper)=>{
             this.reelsSymbols[indexUpper].forEach((data:any,index:number)=>{
                 let reelValue = this.reelsValues[indexUpper]
-                let symbol = reelValue[Math.floor(Math.random() * reelValue.length)]
-                data.symbol = Functions.loadTexture(this.textureArray,'slot', `${this.symbolAssets[symbol-1].symbol}`)
-                data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${this.symbolAssets[symbol-1].symbol}`).texture
+                let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
+                data.type = this.symbolAssets[symbolIndex-1].type
+                data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${this.symbolAssets[symbolIndex-1].symbol}`).texture
             })
         })
-        // let visibleSymbols = this.reelsSymbols[0].filter((data:any,index:number) => index > 26)
-        // this.reelsSymbols[0].unshift({value:visibleSymbols[2].value,symbol:visibleSymbols[2].symbol}) 
-        // this.reelsSymbols[0].unshift({value:visibleSymbols[1].value,symbol:visibleSymbols[1].symbol}) 
-        // this.reelsSymbols[0].unshift({value:visibleSymbols[0].value,symbol:visibleSymbols[0].symbol}) 
+        console.log(this.reelsSymbols)
     }
 
     private createReel(index:number){
@@ -166,9 +162,10 @@ export default class Slot{
         for(let i = 0;i<reelValue.length;i++){
             const index = reelValue[Math.floor(Math.random() * reelValue.length)]
             const value = this.symbolAssets[index-1].symbol
+            const type = this.symbolAssets[index-1].type
             const symbol = Functions.loadTexture(this.textureArray,'slot', `${value}`)
             let data = {
-                value:value,
+                type:type,
                 symbol:symbol
             }
             arr.push(data)
