@@ -1,0 +1,55 @@
+
+corgi.png
+size: 568,352
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+body
+  rotate: true
+  xy: 2, 2
+  size: 348, 515
+  orig: 502, 517
+  offset: 85, 2
+  index: -1
+eyeball1
+  rotate: false
+  xy: 519, 262
+  size: 41, 38
+  orig: 43, 40
+  offset: 1, 1
+  index: -1
+eyeball2
+  rotate: false
+  xy: 519, 262
+  size: 41, 38
+  orig: 43, 40
+  offset: 1, 1
+  index: -1
+eyelid1
+  rotate: false
+  xy: 519, 302
+  size: 47, 48
+  orig: 47, 48
+  offset: 0, 0
+  index: -1
+eyelid2
+  rotate: false
+  xy: 519, 302
+  size: 47, 48
+  orig: 47, 48
+  offset: 0, 0
+  index: -1
+iris1
+  rotate: false
+  xy: 519, 234
+  size: 26, 26
+  orig: 28, 28
+  offset: 1, 1
+  index: -1
+iris2
+  rotate: false
+  xy: 519, 234
+  size: 26, 26
+  orig: 28, 28
+  offset: 1, 1
+  index: -1

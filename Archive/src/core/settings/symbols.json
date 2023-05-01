@@ -1,0 +1,40 @@
+{
+    "symbols":[
+        {
+            "symbol": "bag_of_gold",
+            "value":1
+        },
+        {
+            "symbol": "barrels",
+            "value":2
+        },
+        {
+            "symbol": "boots",
+            "value":3
+        },
+        {
+            "symbol": "dynamite_crate",
+            "value":4
+        },
+        {
+            "symbol": "gas_lamp",
+            "value":5
+        },
+        {
+            "symbol": "pile_of_gold",
+            "value":6
+        },
+        {
+            "symbol": "snake",
+            "value":7
+        },
+        {
+            "symbol": "trolley",
+            "value":8
+        },
+        {
+            "symbol": "wild",
+            "value":9
+        }
+    ]
+}

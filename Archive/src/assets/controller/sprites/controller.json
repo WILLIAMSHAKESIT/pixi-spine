@@ -1,0 +1,195 @@
+{
+	"frames": {
+		"autoplay_button.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 74,
+				"h": 73
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 74,
+				"h": 73
+			},
+			"sourceSize": {
+				"w": 74,
+				"h": 73
+			}
+		},
+		"bet_container.png": {
+			"frame": {
+				"x": 77,
+				"y": 1,
+				"w": 326,
+				"h": 73
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 326,
+				"h": 73
+			},
+			"sourceSize": {
+				"w": 326,
+				"h": 73
+			}
+		},
+		"controller_parent.png": {
+			"frame": {
+				"x": 1,
+				"y": 76,
+				"w": 1920,
+				"h": 176
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1920,
+				"h": 176
+			},
+			"sourceSize": {
+				"w": 1920,
+				"h": 176
+			}
+		},
+		"credits_container.png": {
+			"frame": {
+				"x": 405,
+				"y": 1,
+				"w": 359,
+				"h": 73
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 359,
+				"h": 73
+			},
+			"sourceSize": {
+				"w": 359,
+				"h": 73
+			}
+		},
+		"info_button.png": {
+			"frame": {
+				"x": 1,
+				"y": 254,
+				"w": 76,
+				"h": 75
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 76,
+				"h": 75
+			},
+			"sourceSize": {
+				"w": 76,
+				"h": 75
+			}
+		},
+		"sound_off_button.png": {
+			"frame": {
+				"x": 766,
+				"y": 1,
+				"w": 61,
+				"h": 61
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 61,
+				"h": 61
+			},
+			"sourceSize": {
+				"w": 61,
+				"h": 61
+			}
+		},
+		"spin_button.png": {
+			"frame": {
+				"x": 79,
+				"y": 254,
+				"w": 128,
+				"h": 129
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 128,
+				"h": 129
+			},
+			"sourceSize": {
+				"w": 128,
+				"h": 129
+			}
+		},
+		"spin_pause_button.png": {
+			"frame": {
+				"x": 209,
+				"y": 254,
+				"w": 128,
+				"h": 129
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 128,
+				"h": 129
+			},
+			"sourceSize": {
+				"w": 128,
+				"h": 129
+			}
+		},
+		"system_settings.png": {
+			"frame": {
+				"x": 829,
+				"y": 1,
+				"w": 122,
+				"h": 62
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 122,
+				"h": 62
+			},
+			"sourceSize": {
+				"w": 122,
+				"h": 62
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "controller.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1922,
+			"h": 384
+		},
+		"scale": "1"
+	}
+}

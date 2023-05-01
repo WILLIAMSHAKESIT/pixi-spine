@@ -1,0 +1,34 @@
+
+doggo.png
+size: 947,374
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 2
+  rotate: true
+  xy: 380, 24
+  size: 145, 422
+  orig: 145, 422
+  offset: 0, 0
+  index: -1
+Layer 3
+  rotate: true
+  xy: 2, 2
+  size: 370, 376
+  orig: 433, 505
+  offset: 5, 74
+  index: -1
+Layer 4
+  rotate: true
+  xy: 829, 103
+  size: 269, 116
+  orig: 269, 116
+  offset: 0, 0
+  index: -1
+Layer 5
+  rotate: false
+  xy: 380, 171
+  size: 447, 201
+  orig: 447, 201
+  offset: 0, 0
+  index: -1
