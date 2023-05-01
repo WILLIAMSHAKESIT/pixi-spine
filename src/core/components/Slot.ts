@@ -29,6 +29,18 @@ export default class Slot{
     private isSpinning:boolean = false
     private notLongPress:boolean = true
     private delta = 1500;
+    private reelsValues:Array<Array<number>> = [
+        [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        [2,8,3,3,6,7,3,8,9,1,4,2,3,4,4,7,5,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        [1,2,9,3,2,2,3,9,8,2,2,3,4,4,2,3,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        [2,5,9,2,4,6,5,4,2,9,8,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7]
+    ]
     private lastKeypressTime:any = 0;
     constructor(app:PIXI.Application,textureArray:any){
         this.app = app
@@ -102,7 +114,7 @@ export default class Slot{
     }
     private createReels(){
         let arr:Array<any> = []
-        for(let i=0;i<json.reelsValues.length;i++){
+        for(let i=0;i<this.reelsValues.length;i++){
             const container = new PIXI.Container
             container.zIndex = 10000
             arr = this.createReel(i)
@@ -215,57 +227,39 @@ export default class Slot{
         json.pattern.forEach((data,index)=>{
             //pattern 1
             if(index == 0){
-                data.forEach((data,index)=>{
-                    pattern1.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern1)
             }
             //pattern 2
             else if(index == 1){
-                data.forEach((data,index)=>{
-                    pattern2.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern2)
             }
             //pattern 3
             else if(index == 2){
-                data.forEach((data,index)=>{
-                    pattern3.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern3)
             }
             //pattern 4
             else if(index == 3){
-                data.forEach((data,index)=>{
-                    pattern4.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern4)
             }
             //pattern 5
             else if(index == 4){
-                data.forEach((data,index)=>{
-                    pattern5.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern5)
             }
             //pattern 6
             else if(index == 5){
-                data.forEach((data,index)=>{
-                    pattern6.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern6)
             }
             //pattern 7
             else if(index == 6){
-                data.forEach((data,index)=>{
-                    pattern7.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern7)
             }
             //pattern 8
             else if(index == 7){
-                data.forEach((data,index)=>{
-                    pattern8.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern8)
             }
             //pattern 9
             else if(index == 8){
-                data.forEach((data,index)=>{
-                    pattern9.push(this.reelsSymbols[index][data])
-                })
+                this.containPattern(data,pattern9)
             }
         })
 
@@ -279,61 +273,63 @@ export default class Slot{
         let isPattern7 = Functions.hasConsecutiveSameValues(pattern7)
         let isPattern8 = Functions.hasConsecutiveSameValues(pattern8)
         let isPattern9 = Functions.hasConsecutiveSameValues(pattern9)
+        
+        countsArray.push(isPattern1)
+        countsArray.push(isPattern2)
+        countsArray.push(isPattern3)
+        countsArray.push(isPattern4)
+        countsArray.push(isPattern5)
+        countsArray.push(isPattern6)
+        countsArray.push(isPattern7)
+        countsArray.push(isPattern8)
+        countsArray.push(isPattern9)
 
-        //animate pattern 1
-        if(isPattern1>2){   
-            for(let i=1;i<=isPattern1;i++){
-                console.log(pattern1[i-1].type)
+        countsArray.forEach((data,index)=>{
+            if(data>2){
+                if(index == 0){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern1[i].type,pattern1)
+                    }
+                }else if(index == 1){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern2[i].type,pattern2)
+                    }
+                }else if(index == 2){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern3[i].type,pattern3)
+                    }
+                }else if(index == 3){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern4[i].type,pattern4)
+                    }
+                }else if(index == 4){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern5[i].type,pattern5)
+                    }
+                }else if(index == 5){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern6[i].type,pattern6)
+                    }
+                }else if(index == 6){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern7[i].type,pattern7)
+                    }
+                }else if(index == 7){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern8[i].type,pattern8)
+                    }
+                }else if(index == 9){
+                    for(let i=0;i<data;i++){
+                        console.log(pattern9[i].type,pattern9)
+                    }
+                }
             }
-        }
-        //animate pattern 2
-        if(isPattern2>2){   
-            for(let i=1;i<=isPattern2;i++){
-                console.log(pattern1[i-1].type)
-            }
-        }
-        //animate pattern 3
-        if(isPattern3>2){   
-            for(let i=1;i<=isPattern3;i++){
-                console.log(pattern3[i-1].type)
-            }
-        }
-        //animate pattern 4
-        if(isPattern4>2){   
-            for(let i=1;i<=isPattern4;i++){
-                console.log(pattern4[i-1].type)
-            }
-        }
-        //animate pattern 5
-        if(isPattern5>2){   
-            for(let i=1;i<=isPattern5;i++){
-                console.log(pattern5[i-1].type)
-            }
-        }
-        //animate pattern 6
-        if(isPattern6>2){   
-            for(let i=1;i<=isPattern6;i++){
-                console.log(pattern6[i-1].type)
-            }
-        }
-        //animate pattern 7
-        if(isPattern7>2){   
-            for(let i=1;i<=isPattern7;i++){
-                console.log(pattern7[i-1].type)
-            }
-        }
-        //animate pattern 8
-        if(isPattern8>2){   
-            for(let i=1;i<=isPattern9;i++){
-                console.log(pattern8[i-1].type)
-            }
-        }
-        //animate pattern 9
-        if(isPattern9>2){   
-            for(let i=1;i<=isPattern9;i++){
-                console.log(pattern9[i-1].type)
-            }
-        }
+        })
+    }
+    private containPattern(data:Array<number>,arr:Array<any>){
+        data.forEach((data,index)=>{
+            arr.push(this.reelsSymbols[index][data])
+        })
     }
     private applyMotionBlur(index:number,onSpin:boolean){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
@@ -346,7 +342,7 @@ export default class Slot{
         this.reelContainer.forEach((data,indexUpper)=>{
             this.reelsSymbols[indexUpper].forEach((data:any,index:number)=>{
                 if(index < 27){
-                    let reelValue = json.reelsValues[indexUpper]
+                    let reelValue = this.reelsValues[indexUpper]
                     let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
                     data.type = json.symbolAssets[symbolIndex-1].type
                     data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${json.symbolAssets[symbolIndex-1].symbol}`).texture
@@ -374,7 +370,7 @@ export default class Slot{
     }
     private createReel(index:number){
         let arr:Array<any> = []
-        let reelValue = json.reelsValues[index]
+        let reelValue = this.reelsValues[index]
         for(let i = 0;i<reelValue.length;i++){
             const index = reelValue[Math.floor(Math.random() * reelValue.length)]
             const value = json.symbolAssets[index-1].symbol
