@@ -20,7 +20,7 @@
 				"h": 253
 			}
 		},
-		"barrels.png": {
+		"bag_of_gold_blur.png": {
 			"frame": {
 				"x": 301,
 				"y": 1,
@@ -40,9 +40,69 @@
 				"h": 253
 			}
 		},
-		"boots.png": {
+		"barrels.png": {
+			"frame": {
+				"x": 601,
+				"y": 1,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"barrels_blur.png": {
 			"frame": {
 				"x": 1,
+				"y": 256,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"boots.png": {
+			"frame": {
+				"x": 301,
+				"y": 256,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"boots_blur.png": {
+			"frame": {
+				"x": 601,
 				"y": 256,
 				"w": 298,
 				"h": 253
@@ -62,8 +122,28 @@
 		},
 		"dynamite_crate.png": {
 			"frame": {
+				"x": 1,
+				"y": 511,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"dynamite_crate_blur.png": {
+			"frame": {
 				"x": 301,
-				"y": 256,
+				"y": 511,
 				"w": 298,
 				"h": 253
 			},
@@ -82,8 +162,28 @@
 		},
 		"gas_lamp.png": {
 			"frame": {
-				"x": 1,
+				"x": 601,
 				"y": 511,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"gas_lamp_blur.png": {
+			"frame": {
+				"x": 1,
+				"y": 766,
 				"w": 298,
 				"h": 253
 			},
@@ -103,7 +203,27 @@
 		"pile_of_gold.png": {
 			"frame": {
 				"x": 301,
-				"y": 511,
+				"y": 766,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"pile_of_gold_blur.png": {
+			"frame": {
+				"x": 601,
+				"y": 766,
 				"w": 298,
 				"h": 253
 			},
@@ -122,8 +242,28 @@
 		},
 		"snake.png": {
 			"frame": {
-				"x": 601,
+				"x": 901,
 				"y": 1,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"snake_blur.png": {
+			"frame": {
+				"x": 901,
+				"y": 256,
 				"w": 298,
 				"h": 253
 			},
@@ -142,8 +282,28 @@
 		},
 		"trolley.png": {
 			"frame": {
-				"x": 601,
-				"y": 256,
+				"x": 901,
+				"y": 511,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"trolley_blur.png": {
+			"frame": {
+				"x": 901,
+				"y": 766,
 				"w": 298,
 				"h": 253
 			},
@@ -162,8 +322,28 @@
 		},
 		"wild.png": {
 			"frame": {
-				"x": 601,
-				"y": 511,
+				"x": 1,
+				"y": 1021,
+				"w": 298,
+				"h": 253
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 298,
+				"h": 253
+			},
+			"sourceSize": {
+				"w": 298,
+				"h": 253
+			}
+		},
+		"wild_blur.png": {
+			"frame": {
+				"x": 301,
+				"y": 1021,
 				"w": 298,
 				"h": 253
 			},
@@ -187,8 +367,8 @@
 		"image": "slot.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 900,
-			"h": 765
+			"w": 1200,
+			"h": 1275
 		},
 		"scale": "1"
 	}
