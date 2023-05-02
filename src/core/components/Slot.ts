@@ -1,9 +1,10 @@
+import 'pixi-spine' 
 import * as PIXI from 'pixi.js';
 import Functions from '../settings/Functions';
 import json from '../settings/settings.json'
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
-
+import {Spine} from 'pixi-spine';
 // register the plugin
 gsap.registerPlugin(PixiPlugin);
 
@@ -20,7 +21,7 @@ export default class Slot{
     //sprites
     private frameBg:PIXI.Sprite
     private frameBorder:PIXI.Sprite
-    private reelPosX:Array<number> = [230,529,827,1125,1423]
+    private reelPosX:Array<number> = [385.5,678.5,976.5,1271,1568.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
     private maskPosY:number = 130
     private reelContainer:Array<any> = []
@@ -129,7 +130,7 @@ export default class Slot{
 
         this.reelContainer.forEach((data,index)=>{
             data.x = this.reelPosX[index]
-            data.y = (this.frameBg.height + this.frameBg.y) - data.height
+            data.y = -6941.2
             this.container.addChild(data)
 
             const maskSprite = Functions.loadTexture(this.textureArray,'main','mask') 
@@ -142,7 +143,7 @@ export default class Slot{
     }
     public startSpin(spinType:string){
         let dY = this.frameBg.y
-        let bounceOffset = -7230
+        let bounceOffset = -7000
         let durationBounceUp:number;
         let duration:number;
         let delay:number;
@@ -337,12 +338,14 @@ export default class Slot{
     }
     private generateNewSymbols(){
         for(let i=0;i<5;i++){
+            this.reelContainer[i].removeChildren(0,27)
             this.reelsSymbols[i].forEach((data:any,index:number)=>{
                 if(index < 27){
                     let reelValue = this.reelsValues[i]
                     let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
                     data.type = json.symbolAssets[symbolIndex-1].type
                     data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${json.symbolAssets[symbolIndex-1].symbol}`).texture
+                    this.reelContainer[i].addChildAt(data.symbol,index)
                 }
             })
         }
@@ -372,7 +375,8 @@ export default class Slot{
             const index = reelValue[Math.floor(Math.random() * reelValue.length)]
             const value = json.symbolAssets[index-1].symbol
             const type = json.symbolAssets[index-1].type
-            const symbol = Functions.loadTexture(this.textureArray,'slot', `${value}`)
+            // const symbol = Functions.loadTexture(this.textureArray,'slot', `${value}`)
+            const symbol = new Spine(this.textureArray[`${value}`].spineData)
             let data = {
                 type:type,
                 symbol:symbol
