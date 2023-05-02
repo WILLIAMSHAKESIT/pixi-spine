@@ -16,12 +16,17 @@ export default class Loader{
         PIXI.Assets.add('main', 'assets/main/sprites/main.json');
         PIXI.Assets.add('controller', 'assets/controller/sprites/controller.json');
         PIXI.Assets.add('slot', 'assets/slot/sprites/slot.json');
-
+        PIXI.Assets.add('bag_of_gold', 'assets/slot/sprites/bag_of_gold.json');
+        PIXI.Assets.add('boots', 'assets/slot/sprites/boots.json');
         // Load the assets and get a resolved promise once both are loaded
-        const texturesPromise = PIXI.Assets.load(['main','slot','controller']);
+        const texturesPromise = PIXI.Assets.load(['main','slot','controller','bag_of_gold','boots']);
 
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)
+            // const animation = new Spine(resource.bag_of_gold.spineData);
+            // animation.x = 100
+            // animation.y = 100
+            // this.app.stage.addChild(animation)
         });
     }
 }

@@ -55,26 +55,26 @@ export default class Slot{
         this.createReels()
 
         // triggers space click
-        // window.document.addEventListener('keydown', (e)=> {
-        //     if(e.code === 'Space'  || e.key === 'Enter'){
-        //         if(!this.isSpinning){
-        //             if(this.notLongPress === true) {
-        //                 this.notLongPress = false;
-        //                 this.startSpin('normal')
-        //             }else{
-        //                 this.startSpin('turbo')
-        //             }
-        //         }
-        //     }
-        // });
+        window.document.addEventListener('keydown', (e)=> {
+            if(e.code === 'Space'  || e.key === 'Enter'){
+                if(!this.isSpinning){
+                    if(this.notLongPress === true) {
+                        this.notLongPress = false;
+                        this.startSpin('normal')
+                    }else{
+                        this.startSpin('turbo')
+                    }
+                }
+            }
+        });
         
         window.document.addEventListener('keyup', ()=> {
             this.notLongPress = true;
         });
 
-        window.document.addEventListener('keydown', (e)=> {
-            this.keyHandler(e)
-        })
+        // window.document.addEventListener('keydown', (e)=> {
+        //     this.keyHandler(e)
+        // })
     }
     private keyHandler(e:any){
         if(e.code === 'Space'  || e.key === 'Enter'){
@@ -155,7 +155,7 @@ export default class Slot{
             case 'quick':
                 durationBounceUp = 0.2
                 duration = 0.5
-                delay = 0
+                delay = 0.1
             break;
             case 'turbo':
                 durationBounceUp = 0.2
@@ -165,18 +165,16 @@ export default class Slot{
             default:
                 durationBounceUp = 0.4
                 duration = 1
-                delay = 0
+                delay = 0.1
             break
         }
 
         this.reelContainer.forEach((data,index)=>{
+            this.isSpinning = true
             let bounceStart = gsap.to(data, {
                 delay:index*delay,
                 duration:durationBounceUp,
                 y:bounceOffset,
-                onStart:()=>{
-                    this.isSpinning = true
-                },
                 onComplete:()=>{
                     bounceStart.kill()
                     let spin = gsap.to(data, {
@@ -184,7 +182,7 @@ export default class Slot{
                         y: dY+40,
                         ease: "bounce.in",
                         onStart:()=>{
-                            this.isSpinning = true
+                            // apply the blur effect on reel spin
                             this.applyMotionBlur(index,true)
                         },
                         onComplete:()=>{
@@ -199,10 +197,9 @@ export default class Slot{
                                     this.spinCount++
                                     data.y = (this.frameBg.height + this.frameBg.y) - data.height
                                     if(this.spinCount == 5){
-                                        this.spinCount = 0
-                                        this.generateNewSymbols()
-                                        this.isSpinning = false
                                         this.checkPattern()
+                                        this.spinCount = 0
+                                        this.isSpinning = false
                                     }
                                 }
                             })
@@ -224,45 +221,45 @@ export default class Slot{
         let pattern9:Array<any> = []
         let countsArray:Array<any> = []
 
-        json.pattern.forEach((data,index)=>{
+        json.pattern.forEach((blocks,index)=>{
             //pattern 1
             if(index == 0){
-                this.containPattern(data,pattern1)
+                this.containPattern(blocks,pattern1)
             }
             //pattern 2
             else if(index == 1){
-                this.containPattern(data,pattern2)
+                this.containPattern(blocks,pattern2)
             }
             //pattern 3
             else if(index == 2){
-                this.containPattern(data,pattern3)
+                this.containPattern(blocks,pattern3)
             }
             //pattern 4
             else if(index == 3){
-                this.containPattern(data,pattern4)
+                this.containPattern(blocks,pattern4)
             }
             //pattern 5
             else if(index == 4){
-                this.containPattern(data,pattern5)
+                this.containPattern(blocks,pattern5)
             }
             //pattern 6
             else if(index == 5){
-                this.containPattern(data,pattern6)
+                this.containPattern(blocks,pattern6)
             }
             //pattern 7
             else if(index == 6){
-                this.containPattern(data,pattern7)
+                this.containPattern(blocks,pattern7)
             }
             //pattern 8
             else if(index == 7){
-                this.containPattern(data,pattern8)
+                this.containPattern(blocks,pattern8)
             }
             //pattern 9
             else if(index == 8){
-                this.containPattern(data,pattern9)
+                this.containPattern(blocks,pattern9)
             }
         })
-
+        
         //pattern booleans
         let isPattern1 = Functions.hasConsecutiveSameValues(pattern1)
         let isPattern2 = Functions.hasConsecutiveSameValues(pattern2)
@@ -283,52 +280,52 @@ export default class Slot{
         countsArray.push(isPattern7)
         countsArray.push(isPattern8)
         countsArray.push(isPattern9)
-
+        
         countsArray.forEach((data,index)=>{
-            if(data>2){
-                if(index == 0){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern1[i].type,pattern1)
-                    }
-                }else if(index == 1){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern2[i].type,pattern2)
-                    }
-                }else if(index == 2){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern3[i].type,pattern3)
-                    }
-                }else if(index == 3){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern4[i].type,pattern4)
-                    }
-                }else if(index == 4){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern5[i].type,pattern5)
-                    }
-                }else if(index == 5){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern6[i].type,pattern6)
-                    }
-                }else if(index == 6){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern7[i].type,pattern7)
-                    }
-                }else if(index == 7){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern8[i].type,pattern8)
-                    }
-                }else if(index == 9){
-                    for(let i=0;i<data;i++){
-                        console.log(pattern9[i].type,pattern9)
-                    }
+            if(index == 0 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 1 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 2 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 3 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 4 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 5 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 6 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
+                }
+            }else if(index == 7 && data>2){
+                for(let i=0;i<data;i++){
+                }
+            }else if(index == 9 && data>2){
+                for(let i=0;i<data;i++){
+                    //add animation
                 }
             }
         })
+
+        // generate new symbols
+        this.generateNewSymbols()
     }
-    private containPattern(data:Array<number>,arr:Array<any>){
-        data.forEach((data,index)=>{
-            arr.push(this.reelsSymbols[index][data])
+    private containPattern(blocks:Array<number>,arr:Array<any>){
+        blocks.forEach((blockNo,index)=>{
+            arr.push(this.reelsSymbols[index][blockNo])
         })
     }
     private applyMotionBlur(index:number,onSpin:boolean){
@@ -339,16 +336,16 @@ export default class Slot{
         })
     }
     private generateNewSymbols(){
-        this.reelContainer.forEach((data,indexUpper)=>{
-            this.reelsSymbols[indexUpper].forEach((data:any,index:number)=>{
+        for(let i=0;i<5;i++){
+            this.reelsSymbols[i].forEach((data:any,index:number)=>{
                 if(index < 27){
-                    let reelValue = this.reelsValues[indexUpper]
+                    let reelValue = this.reelsValues[i]
                     let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
                     data.type = json.symbolAssets[symbolIndex-1].type
                     data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${json.symbolAssets[symbolIndex-1].symbol}`).texture
                 }
             })
-        })
+        }
     }
     private updateVisibleBlocks(index:number){
         this.applyMotionBlur(index,false)

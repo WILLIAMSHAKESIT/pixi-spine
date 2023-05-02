@@ -1,0 +1,13 @@
+
+snake.png
+size: 297,213
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: false
+  xy: 2, 2
+  size: 293, 209
+  orig: 296, 211
+  offset: 1, 1
+  index: -1
