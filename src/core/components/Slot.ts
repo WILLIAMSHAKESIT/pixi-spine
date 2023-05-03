@@ -43,6 +43,7 @@ export default class Slot{
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7]
     ]
     private lastKeypressTime:any = 0;
+    private reelY:number = -6941.2
     constructor(app:PIXI.Application,textureArray:any){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -127,10 +128,10 @@ export default class Slot{
             this.reelsSymbols.push(arr)
             this.reelContainer.push(container)
         }
-
+        
         this.reelContainer.forEach((data,index)=>{
             data.x = this.reelPosX[index]
-            data.y = -6941.2
+            data.y = this.reelY
             this.container.addChild(data)
 
             const maskSprite = Functions.loadTexture(this.textureArray,'main','mask') 
@@ -142,7 +143,7 @@ export default class Slot{
         })
     }
     public startSpin(spinType:string){
-        let dY = this.frameBg.y
+        let dY = 355.5
         let bounceOffset = -7000
         let durationBounceUp:number;
         let duration:number;
@@ -183,12 +184,13 @@ export default class Slot{
                         y: dY+40,
                         ease: "bounce.in",
                         onStart:()=>{
-                            // apply the blur effect on reel spin
-                            this.applyMotionBlur(index,true)
+                            // this.applyMotionBlur(index,true)
+                            // this.generateNewSymbols()
                         },
                         onComplete:()=>{
                             spin.kill()
-                            this.updateVisibleBlocks(index)
+                            this.generateNewSymbols(index)
+                            // this.updateVisibleBlocks(index)
                             let bounceStop = gsap.to(data,{
                                 y: dY,
                                 duration:0.3,
@@ -196,7 +198,7 @@ export default class Slot{
                                 onComplete:()=>{
                                     bounceStop.kill()
                                     this.spinCount++
-                                    data.y = (this.frameBg.height + this.frameBg.y) - data.height
+                                    data.y = this.reelY
                                     if(this.spinCount == 5){
                                         this.checkPattern()
                                         this.spinCount = 0
@@ -320,9 +322,6 @@ export default class Slot{
                 }
             }
         })
-
-        // generate new symbols
-        this.generateNewSymbols()
     }
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
@@ -336,35 +335,56 @@ export default class Slot{
             data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${blurSymbol}`).texture
         })
     }
-    private generateNewSymbols(){
-        for(let i=0;i<5;i++){
-            this.reelContainer[i].removeChildren(0,27)
-            this.reelsSymbols[i].forEach((data:any,index:number)=>{
-                if(index < 27){
-                    let reelValue = this.reelsValues[i]
-                    let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
-                    data.type = json.symbolAssets[symbolIndex-1].type
-                    data.symbol.texture = Functions.loadTexture(this.textureArray,'slot', `${json.symbolAssets[symbolIndex-1].symbol}`).texture
-                    this.reelContainer[i].addChildAt(data.symbol,index)
-                }
-            })
-        }
+    private generateNewSymbols(i:number){
+        this.reelContainer[i].removeChildren()
+        this.reelsSymbols[i].forEach((data:any,index:number)=>{
+
+            // if(index < 27){
+            //     let reelValue = this.reelsValues[i]
+            //     let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
+            //     data.type = json.symbolAssets[symbolIndex-1].type
+            //     const symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
+            //     symbol.y = index * 270
+            //     symbol.scale.set(0.9)
+            //     this.reelContainer[i].addChild(symbol)
+            // }
+            
+            let reelValue = this.reelsValues[i]
+            let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
+            data.type = json.symbolAssets[symbolIndex-1].type
+            let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
+            let test:any;
+            if(index == 0){
+                test = symbol
+            }
+            if(index == 27){
+                symbol = test
+            }
+            symbol.y = index * 270
+            symbol.scale.set(0.9)
+            this.reelContainer[i].addChild(symbol)
+        })
+        console.log(this.reelsSymbols[0])
     }
     private updateVisibleBlocks(index:number){
-        this.applyMotionBlur(index,false)
+        // this.applyMotionBlur(index,false)
         let topThree = this.reelsSymbols[index].filter((data:any,index:number)=> index < 3)
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
+            // const symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
+            // symbol.y = index * 270
+            // symbol.scale.set(0.9)
+            // this.reelContainer[i].addChild(symbol)
             if(index == 27){
-                data.type = topThree[0].type
-                data.symbol.texture = topThree[0].symbol.texture
+                data.type = topThree[0].spinType
+                // data.symbol.texture = topThree[0].symbol.texture
             }
             if(index == 28){
                 data.type = topThree[1].type
-                data.symbol.texture = topThree[1].symbol.texture
+                // data.symbol.texture = topThree[1].symbol.texture
             }
             if(index == 29){
                 data.type = topThree[2].type
-                data.symbol.texture = topThree[2].symbol.texture
+                // data.symbol.texture = topThree[2].symbol.texture
             }
         })
     }
