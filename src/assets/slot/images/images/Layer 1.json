@@ -1,0 +1,49 @@
+{ "skeleton": { "images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/images/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 1, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Layer 1", "bone": "root", "attachment": "Layer 1" },
+	{ "name": "barrels", "bone": "root", "attachment": "barrels" },
+	{ "name": "boots", "bone": "root", "attachment": "boots" },
+	{ "name": "dynamite_crate", "bone": "root", "attachment": "dynamite_crate" },
+	{ "name": "gas_lamp", "bone": "root", "attachment": "gas_lamp" },
+	{ "name": "pile_of_gold", "bone": "root", "attachment": "pile_of_gold" },
+	{ "name": "snake", "bone": "root", "attachment": "snake" },
+	{ "name": "trolley", "bone": "root", "attachment": "trolley" },
+	{ "name": "wild", "bone": "root", "attachment": "wild" }
+],
+"skins": {
+	"default": {
+		"Layer 1": {
+			"Layer 1": { "x": 140.5, "y": -127, "width": 263, "height": 250 }
+		},
+		"barrels": {
+			"barrels": { "x": 133, "y": -125.5, "width": 258, "height": 215 }
+		},
+		"boots": {
+			"boots": { "x": 141.5, "y": -130.5, "width": 225, "height": 219 }
+		},
+		"dynamite_crate": {
+			"dynamite_crate": { "x": 133.5, "y": -139, "width": 257, "height": 180 }
+		},
+		"gas_lamp": {
+			"gas_lamp": { "x": 135, "y": -131, "width": 242, "height": 218 }
+		},
+		"pile_of_gold": {
+			"pile_of_gold": { "x": 136, "y": -134.5, "width": 264, "height": 211 }
+		},
+		"snake": {
+			"snake": { "x": 130.5, "y": -134.5, "width": 261, "height": 187 }
+		},
+		"trolley": {
+			"trolley": { "x": 135.5, "y": -131, "width": 257, "height": 212 }
+		},
+		"wild": {
+			"wild": { "x": 128, "y": -126, "width": 236, "height": 220 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}

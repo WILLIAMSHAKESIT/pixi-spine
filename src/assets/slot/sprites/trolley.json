@@ -1,0 +1,41 @@
+{
+"skeleton": {
+	"hash": "/s3HSeskYsMQczUSP35L21WRv7Q",
+	"spine": "3.8.75",
+	"x": -147,
+	"y": -4,
+	"width": 291,
+	"height": 240,
+	"images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/trolly/",
+	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\slot_spine\\src\\assets\\slot\\images"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Layer 1", "bone": "root", "attachment": "Layer 1" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Layer 1": {
+				"Layer 1": { "x": -1.5, "y": 116, "width": 291, "height": 240 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"root": {
+				"scale": [
+					{},
+					{ "time": 0.3333, "x": 1.196, "y": 1.196 },
+					{ "time": 0.6667 }
+				]
+			}
+		}
+	}
+}
+}

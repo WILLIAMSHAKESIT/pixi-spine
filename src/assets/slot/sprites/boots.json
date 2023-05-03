@@ -1,0 +1,41 @@
+{
+"skeleton": {
+	"hash": "zlgA+vGpjPwvBb0Mgl5pqMJ2m6A",
+	"spine": "3.8.75",
+	"x": -133,
+	"y": -8,
+	"width": 254,
+	"height": 249,
+	"images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/boots/",
+	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\slot_spine\\src\\assets\\slot\\images"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Layer 1", "bone": "root", "attachment": "Layer 1" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"Layer 1": {
+				"Layer 1": { "x": -6, "y": 116.5, "width": 254, "height": 249 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"root": {
+				"scale": [
+					{ "x": 1.007, "y": 1.007 },
+					{ "time": 0.3333, "x": 1.105, "y": 1.105 },
+					{ "time": 0.6667, "x": 1.007, "y": 1.007 }
+				]
+			}
+		}
+	}
+}
+}

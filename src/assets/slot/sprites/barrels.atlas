@@ -1,0 +1,13 @@
+
+barrels.png
+size: 292,246
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 1
+  rotate: false
+  xy: 2, 2
+  size: 288, 242
+  orig: 292, 244
+  offset: 1, 1
+  index: -1

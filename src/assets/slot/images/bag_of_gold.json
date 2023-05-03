@@ -1,0 +1,17 @@
+{ "skeleton": { "images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/bagofgold/" },
+"PhotoshopToSpine": { "scale": 1, "padding": 1, "trim": true },
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Layer 1", "bone": "root", "attachment": "Layer 1" }
+],
+"skins": {
+	"default": {
+		"Layer 1": {
+			"Layer 1": { "x": -4.5, "y": 117, "width": 263, "height": 250 }
+		}
+	}
+},
+"animations": { "animation": {} }
+}
