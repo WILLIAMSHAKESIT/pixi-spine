@@ -29,6 +29,8 @@ export default class Slot{
     private isSpinning:boolean = false
     private notLongPress:boolean = true
     private delta = 1500;
+    private levelBarContainer:PIXI.Container
+    private levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
         [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,8,3,3,6,7,3,8,9,1,4,2,3,4,4,7,5,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -48,10 +50,12 @@ export default class Slot{
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
         this.container = new PIXI.Container
+        this.levelBarContainer = new PIXI.Container
         this.init()
     }
     private init(){
         this.createParent()
+        this.createLevelBar()
         this.createReels()
 
         // triggers space click
@@ -111,6 +115,47 @@ export default class Slot{
         this.frameBorder.x = this.frameBg.x - frameX
         this.frameBorder.y = this.frameBg.y - frameY
         this.container.addChild(this.frameBorder)
+    }
+    private createLevelBar(){
+        //create level bar background
+        const levelBarBg = Functions.loadTexture(this.textureArray,'main','bar_bg')
+        levelBarBg.x = (this.frameBorder.width - levelBarBg.width)+50
+        levelBarBg.y = this.frameBorder.y * 0.7
+        this.levelBarContainer.addChild(levelBarBg)
+        //create indicator
+        this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
+        // this.levelBarIndicator.width = 0
+        this.levelBarIndicator.x = levelBarBg.x + 5
+        this.levelBarIndicator.y = levelBarBg.y
+        this.levelBarContainer.addChild(this.levelBarIndicator)
+        //create mini item
+        const itemMini = Functions.loadTexture(this.textureArray,'main','mini')
+        itemMini.x = levelBarBg.x
+        itemMini.y = levelBarBg.y - 30
+        this.levelBarContainer.addChild(itemMini)
+        //create major item
+        const itemMajor = Functions.loadTexture(this.textureArray,'main','major')
+        itemMajor.x = itemMini.x + itemMini.width
+        itemMajor.y = itemMini.y - 13
+        this.levelBarContainer.addChild(itemMajor)
+        //create grand item
+        const itemGrand = Functions.loadTexture(this.textureArray,'main','grand')
+        itemGrand.x = itemMajor.x + itemMajor.width
+        itemGrand.y = 10
+        this.levelBarContainer.addChild(itemGrand)
+
+        // let width = 0
+        // let levelBarBgInterval = setInterval(()=>{
+        //     width = width+10
+        //     if(width < 742){
+        //         this.levelBarIndicator.width = width
+        //     }else{
+        //         width = 0 
+        //         this.levelBarIndicator.width = 0
+        //     }
+        // },1000) 
+
+        this.container.addChild(this.levelBarContainer)
     }
     private createReels(){
         let arr:Array<any> = []

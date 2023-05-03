@@ -26,8 +26,44 @@ export default class Game{
         this.textureArray = res
         this.gameContainer = new PIXI.Container
         this.createGame()
+        // this.testSpine()
         this.createController()
         this.app.stage.addChild(this.gameContainer);
+    }
+    private testSpine(){
+        let animation = new Spine(this.textureArray.bag_of_gold.spineData);
+        this.gameContainer.addChild(animation);
+        animation.x = 500
+        animation.y = 500
+        // add the animation to the scene and render...
+        this.app.stage.addChild(this.gameContainer);
+        
+        if (animation.state.hasAnimation('animation')) {
+            // run forever, little boy!
+            animation.state.setAnimation(0, 'animation', true);
+            // dont run too fast
+            animation.state.timeScale = .6;
+            // update yourself
+            animation.autoUpdate = true;
+        }
+        setTimeout(()=>{
+            // const animation2 = new Spine(this.textureArray.boots.spineData);
+            
+            // animation.hackTextureBySlotName('Layer 1',Functions.loadTexture(this.textureArray,'slot','boots').texture,Functions.loadTexture(this.textureArray,'slot','boots').texture.orig); 
+            animation = new Spine(this.textureArray.boots.spineData)
+            console.log(animation)
+            // animation.spineData = animation2.spineData
+            // console.log(animation2)
+            // animation.update(0)
+            // run forever, little boy!
+            animation.state.setAnimation(0, animation.spineData.animations[0].name, true);
+            console.log(animation.state.setAnimation(0, animation.spineData.animations[0].name, true))
+            // dont run too fast
+            animation.state.timeScale = .6;
+            // update yourself
+            // animation.autoUpdate = true;
+            animation.update(0)
+        },1000)
     }
 
     private createGame(){
