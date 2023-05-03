@@ -59,26 +59,26 @@ export default class Slot{
         this.createReels()
 
         // triggers space click
-        // window.document.addEventListener('keydown', (e)=> {
-        //     if(e.code === 'Space'  || e.key === 'Enter'){
-        //         if(!this.isSpinning){
-        //             if(this.notLongPress === true) {
-        //                 this.notLongPress = false;
-        //                 this.startSpin('normal')
-        //             }else{
-        //                 this.startSpin('turbo')
-        //             }
-        //         }
-        //     }
-        // });
+        window.document.addEventListener('keydown', (e)=> {
+            if(e.code === 'Space'  || e.key === 'Enter'){
+                if(!this.isSpinning){
+                    if(this.notLongPress === true) {
+                        this.notLongPress = false;
+                        this.startSpin('normal')
+                    }else{
+                        this.startSpin('turbo')
+                    }
+                }
+            }
+        });
         
         window.document.addEventListener('keyup', ()=> {
             this.notLongPress = true;
         });
 
-        window.document.addEventListener('keydown', (e)=> {
-            this.keyHandler(e)
-        })
+        // window.document.addEventListener('keydown', (e)=> {
+        //     this.keyHandler(e)
+        // })
     }
     private keyHandler(e:any){
         if(e.code === 'Space'  || e.key === 'Enter'){
@@ -143,6 +143,40 @@ export default class Slot{
         itemGrand.x = itemMajor.x + itemMajor.width
         itemGrand.y = 10
         this.levelBarContainer.addChild(itemGrand)
+
+
+        const style = new PIXI.TextStyle({
+            fontFamily: 'Arial',
+            fontSize: 36,
+            fontWeight: 'bold',
+            fill: ['#ffffff', '#ffffff'], // gradient
+            stroke: '#4a1850',
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 6,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+
+        //create mini text
+        const miniPrize = new PIXI.Text(`${json.jackpots.mini}`, style);
+        miniPrize.x = (itemMini.width - miniPrize.width)/2;
+        miniPrize.y = 40;
+        itemMini.addChild(miniPrize)
+        //create major text
+        const majorPrize = new PIXI.Text(`${json.jackpots.major}`, style);
+        majorPrize.x = (itemMajor.width - majorPrize.width)/2;
+        majorPrize.y = 53;
+        itemMajor.addChild(majorPrize)
+        //create grand text
+        const grandPrize = new PIXI.Text(`${json.jackpots.grand}`, style);
+        grandPrize.x = (itemGrand.width - grandPrize.width)/2;
+        grandPrize.y = 40;
+        itemGrand.addChild(grandPrize)
 
         // let width = 0
         // let levelBarBgInterval = setInterval(()=>{

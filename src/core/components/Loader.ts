@@ -25,18 +25,16 @@ export default class Loader{
         PIXI.Assets.add('snake', 'assets/slot/sprites/snake.json');
         PIXI.Assets.add('trolley', 'assets/slot/sprites/trolley.json');
         PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
+        PIXI.Assets.add('modal', 'assets/modal/sprites/modal.json');
         // Load the assets and get a resolved promise once both are loaded
         const texturesPromise = PIXI.Assets.load([
             'main','slot','controller','bag_of_gold',
-            'barrels','boots','dynamite_crate','gas_lamp','pile_of_gold','snake','trolley','wild'
+            'barrels','boots','dynamite_crate','gas_lamp',
+            'pile_of_gold','snake','trolley','wild','modal'
         ]);
 
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)
-            // const animation = new Spine(resource.bag_of_gold.spineData);
-            // animation.x = 100
-            // animation.y = 100
-            // this.app.stage.addChild(animation)
         });
     }
 }

@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import Loader from "./components/Loader";
 import Slot from './components/Slot';
 import Controller from './components/Controller';
+import Modal from './components/Modal';
 import Functions from './settings/Functions';
 import {Spine} from 'pixi-spine';
 export default class Game{
@@ -13,7 +14,7 @@ export default class Game{
     private baseWidth:number;
     private baseHeight:number;
     private slotGame:Slot;
-    private controller:Controller
+    private controller:Controller   
 
     constructor(){
         new Loader(this.init.bind(this))
@@ -29,6 +30,10 @@ export default class Game{
         // this.testSpine()
         this.createController()
         this.app.stage.addChild(this.gameContainer);
+        this.createModal()
+    }
+    private createModal(){
+        new Modal(this.app,this.textureArray)
     }
     private testSpine(){
         let animation = new Spine(this.textureArray.bag_of_gold.spineData);
@@ -44,25 +49,28 @@ export default class Game{
             // dont run too fast
             animation.state.timeScale = .6;
             // update yourself
-            animation.autoUpdate = true;
+            // animation.autoUpdate = true;
         }
         setTimeout(()=>{
-            // const animation2 = new Spine(this.textureArray.boots.spineData);
+            const animation2 = new Spine(this.textureArray.boots.spineData);
             
-            // animation.hackTextureBySlotName('Layer 1',Functions.loadTexture(this.textureArray,'slot','boots').texture,Functions.loadTexture(this.textureArray,'slot','boots').texture.orig); 
-            animation = new Spine(this.textureArray.boots.spineData)
+            animation.hackTextureBySlotName('Layer 1',Functions.loadTexture(this.textureArray,'slot','boots').texture,Functions.loadTexture(this.textureArray,'slot','boots').texture.orig); 
+            animation = animation2
             console.log(animation)
             // animation.spineData = animation2.spineData
             // console.log(animation2)
             // animation.update(0)
             // run forever, little boy!
-            animation.state.setAnimation(0, animation.spineData.animations[0].name, true);
-            console.log(animation.state.setAnimation(0, animation.spineData.animations[0].name, true))
-            // dont run too fast
-            animation.state.timeScale = .6;
-            // update yourself
-            // animation.autoUpdate = true;
-            animation.update(0)
+            setTimeout(()=>{
+                if (animation.state.hasAnimation('rotate')) {
+                    // run forever, little boy!
+                    animation.state.setAnimation(0, 'rotate', false);
+                    // dont run too fast
+                    animation.state.timeScale = .6;
+                    // update yourself
+                    // animation.autoUpdate = true;
+                }
+            },2000)
         },1000)
     }
 
