@@ -30,7 +30,7 @@ export default class Game{
         // this.testSpine()
         this.createController()
         this.app.stage.addChild(this.gameContainer);
-        this.createModal()
+        // this.createModal()
     }
     private createModal(){
         new Modal(this.app,this.textureArray)
