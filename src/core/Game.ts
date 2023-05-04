@@ -14,6 +14,15 @@ export default class Game{
     private baseHeight:number;
     private slotGame:Slot;
     private controller:Controller
+    private playcount: number = 0;
+    public autoplay: Boolean = false;
+
+    //textures
+    private singlePlayTexture:PIXI.Sprite;
+    private singlePauseTexture:PIXI.Sprite;
+    private soundOnTexture:PIXI.Sprite;
+    private soundOffTexture:PIXI.Sprite;
+    private bonusFill:PIXI.Sprite;
 
     constructor(){
         new Loader(this.init.bind(this))
@@ -41,7 +50,26 @@ export default class Game{
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
-        this.controller = new Controller(this.app,this.textureArray)
+        this.controller = new Controller(this.app,this.textureArray,this.setAutoPlay.bind(this))
         this.gameContainer.addChild(this.controller.container)
+
+        this.bonusFill =PIXI.Sprite.from(this.textureArray.bonusFill.textures['bonusFill.png']);
+        this.bonusFill.x = this.slotGame.container.width - 680
+        this.bonusFill.y = 0
+        this.gameContainer.addChild(this.bonusFill)
+
+    }
+
+
+    private setAutoPlay(number: number){
+        console.log("present")
+        this.autoplay = true;
+        if(this.controller.bet <= this.controller.balance){
+            //this.setButtonsBoolean(false);
+            this.autoplay = true;
+            // this.controller.playtext.style.fill = '#FF0000';
+            this.controller.spinBtnSprite.texture = this.singlePauseTexture.texture;
+            this.playcount = number;
+        }
     }
 }

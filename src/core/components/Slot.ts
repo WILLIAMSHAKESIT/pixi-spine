@@ -55,26 +55,26 @@ export default class Slot{
         this.createReels()
 
         // triggers space click
-        // window.document.addEventListener('keydown', (e)=> {
-        //     if(e.code === 'Space'  || e.key === 'Enter'){
-        //         if(!this.isSpinning){
-        //             if(this.notLongPress === true) {
-        //                 this.notLongPress = false;
-        //                 this.startSpin('normal')
-        //             }else{
-        //                 this.startSpin('turbo')
-        //             }
-        //         }
-        //     }
-        // });
+        window.document.addEventListener('keydown', (e)=> {
+            if(e.code === 'Space'  || e.key === 'Enter'){
+                if(!this.isSpinning){
+                    if(this.notLongPress === true) {
+                        this.notLongPress = false;
+                        this.startSpin('normal')
+                    }else{
+                        this.startSpin('turbo')
+                    }
+                }
+            }
+        });
         
         window.document.addEventListener('keyup', ()=> {
             this.notLongPress = true;
         });
 
-        window.document.addEventListener('keydown', (e)=> {
-            this.keyHandler(e)
-        })
+        // window.document.addEventListener('keydown', (e)=> {
+        //     this.keyHandler(e)
+        // })
     }
     private keyHandler(e:any){
         if(e.code === 'Space'  || e.key === 'Enter'){

@@ -1,0 +1,315 @@
+{
+	"frames": {
+		"bet_add.png": {
+			"frame": {
+				"x": 10,
+				"y": 10,
+				"w": 132,
+				"h": 66
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 132,
+				"h": 66
+			},
+			"sourceSize": {
+				"w": 132,
+				"h": 66
+			}
+		},
+		"bet_minus.png": {
+			"frame": {
+				"x": 162,
+				"y": 10,
+				"w": 133,
+				"h": 66
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 133,
+				"h": 66
+			},
+			"sourceSize": {
+				"w": 133,
+				"h": 66
+			}
+		},
+		"container_design.png": {
+			"frame": {
+				"x": 10,
+				"y": 96,
+				"w": 1309,
+				"h": 213
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1309,
+				"h": 213
+			},
+			"sourceSize": {
+				"w": 1309,
+				"h": 213
+			}
+		},
+		"left_arrow.png": {
+			"frame": {
+				"x": 315,
+				"y": 10,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
+		"lets_roll.png": {
+			"frame": {
+				"x": 385,
+				"y": 10,
+				"w": 275,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 275,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 275,
+				"h": 64
+			}
+		},
+		"lets_roll_clicked.png": {
+			"frame": {
+				"x": 680,
+				"y": 10,
+				"w": 275,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 275,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 275,
+				"h": 64
+			}
+		},
+		"modal_betbox.png": {
+			"frame": {
+				"x": 975,
+				"y": 10,
+				"w": 175,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 175,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 175,
+				"h": 64
+			}
+		},
+		"modal_betbox_clicked.png": {
+			"frame": {
+				"x": 10,
+				"y": 329,
+				"w": 175,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 175,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 175,
+				"h": 64
+			}
+		},
+		"modal_close.png": {
+			"frame": {
+				"x": 1170,
+				"y": 10,
+				"w": 43,
+				"h": 40
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 43,
+				"h": 40
+			},
+			"sourceSize": {
+				"w": 43,
+				"h": 40
+			}
+		},
+		"modal_container.png": {
+			"frame": {
+				"x": 10,
+				"y": 413,
+				"w": 1313,
+				"h": 740
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1313,
+				"h": 740
+			},
+			"sourceSize": {
+				"w": 1313,
+				"h": 740
+			}
+		},
+		"right_arrow.png": {
+			"frame": {
+				"x": 1233,
+				"y": 10,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
+		"straight_line.png": {
+			"frame": {
+				"x": 1339,
+				"y": 10,
+				"w": 6,
+				"h": 378
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 6,
+				"h": 378
+			},
+			"sourceSize": {
+				"w": 6,
+				"h": 378
+			}
+		},
+		"toggle_off.png": {
+			"frame": {
+				"x": 205,
+				"y": 329,
+				"w": 83,
+				"h": 41
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 83,
+				"h": 41
+			},
+			"sourceSize": {
+				"w": 83,
+				"h": 41
+			}
+		},
+		"toggle_on.png": {
+			"frame": {
+				"x": 308,
+				"y": 329,
+				"w": 83,
+				"h": 41
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 83,
+				"h": 41
+			},
+			"sourceSize": {
+				"w": 83,
+				"h": 41
+			}
+		},
+		"total_bet_container.png": {
+			"frame": {
+				"x": 10,
+				"y": 1173,
+				"w": 315,
+				"h": 107
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 315,
+				"h": 107
+			},
+			"sourceSize": {
+				"w": 315,
+				"h": 107
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "jungle_slot_containers.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1355,
+			"h": 1290
+		},
+		"scale": "1"
+	}
+}

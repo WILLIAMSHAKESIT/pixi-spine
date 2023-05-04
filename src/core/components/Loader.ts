@@ -15,6 +15,8 @@ export default class Loader{
         //added assets
         PIXI.Assets.add('main', 'assets/main/sprites/main.json');
         PIXI.Assets.add('controller', 'assets/controller/sprites/controller.json');
+        PIXI.Assets.add('jungle_slot_containers', 'assets/controller/sprites/jungle_slot_containers.json');
+        PIXI.Assets.add('bonusFill', 'assets/controller/sprites/bonusFill.json');
         PIXI.Assets.add('slot', 'assets/slot/sprites/slot.json');
         PIXI.Assets.add('bag_of_gold', 'assets/slot/sprites/bag_of_gold.json');
         PIXI.Assets.add('barrels', 'assets/slot/sprites/barrels.json');
@@ -27,7 +29,7 @@ export default class Loader{
         PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
         // Load the assets and get a resolved promise once both are loaded
         const texturesPromise = PIXI.Assets.load([
-            'main','slot','controller','bag_of_gold',
+            'main','slot','controller','jungle_slot_containers','bonusFill','bag_of_gold',
             'barrels','boots','dynamite_crate','gas_lamp','pile_of_gold','snake','trolley','wild'
         ]);
 
