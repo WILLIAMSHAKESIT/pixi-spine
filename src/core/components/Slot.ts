@@ -424,13 +424,16 @@ export default class Slot{
                 type:type,
                 symbol:symbol
             }
-            arr[index] = el
-        })
-        arr.forEach((data,index)=>{
+            data = el
             this.reelsSymbols[i][index].type = data.type
             this.reelsSymbols[i][index].symbol = data.symbol
             this.reelContainer[i].addChild(data.symbol)
         })
+        // arr.forEach((data,index)=>{
+        //     this.reelsSymbols[i][index].type = data.type
+        //     this.reelsSymbols[i][index].symbol = data.symbol
+        //     this.reelContainer[i].addChild(data.symbol)
+        // })
     }
     private updateVisibleBlocks(index:number){
         let topThree = this.reelsSymbols[index].filter((data:any,index:number)=> index < 3)
