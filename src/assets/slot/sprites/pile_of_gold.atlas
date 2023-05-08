@@ -1,13 +1,20 @@
 
 pile_of_gold.png
-size: 300,241
+size: 594,243
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Layer 1
   rotate: false
-  xy: 2, 2
+  xy: 2, 4
   size: 296, 237
   orig: 299, 239
   offset: 2, 1
+  index: -1
+blur
+  rotate: false
+  xy: 300, 2
+  size: 292, 239
+  orig: 299, 239
+  offset: 6, 0
   index: -1

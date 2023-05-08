@@ -1,13 +1,20 @@
 
 dynamite_crate.png
-size: 294,206
+size: 412,294
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Layer 1
-  rotate: false
-  xy: 2, 2
+  rotate: true
+  xy: 208, 2
   size: 290, 202
   orig: 292, 204
   offset: 1, 1
+  index: -1
+blur
+  rotate: true
+  xy: 2, 2
+  size: 290, 204
+  orig: 292, 204
+  offset: 0, 0
   index: -1

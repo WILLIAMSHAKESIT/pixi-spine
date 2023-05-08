@@ -1,14 +1,5 @@
 {
-"skeleton": {
-	"hash": "tk5GaRbBTaH+ZpP5ta5Xir5BNdI",
-	"spine": "3.8.75",
-	"x": -152,
-	"y": 13,
-	"width": 296,
-	"height": 211,
-	"images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/snake/",
-	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\slot_spine\\src\\assets\\slot\\images"
-},
+"skeleton": { "hash": "WmaLOMkHnsnAA7QwRuAZBttB+Oc", "spine": "3.8.75", "images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/snake/", "audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\slot_spine\\src\\assets\\slot\\images" },
 "bones": [
 	{ "name": "root" }
 ],
@@ -17,7 +8,15 @@
 ],
 "skins": [
 	{
-		"name": "default",
+		"name": "blur",
+		"attachments": {
+			"Layer 1": {
+				"Layer 1": { "name": "blur", "x": -4, "y": 118.5, "width": 296, "height": 211 }
+			}
+		}
+	},
+	{
+		"name": "no_blur",
 		"attachments": {
 			"Layer 1": {
 				"Layer 1": { "x": -4, "y": 118.5, "width": 296, "height": 211 }

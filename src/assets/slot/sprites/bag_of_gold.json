@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "kxj7aQPmd/ES6JJtCP40I5fuMfc",
+	"hash": "wmHgltpm5VAuQFPAb8VmBo/+47k",
 	"spine": "3.8.75",
 	"x": -136,
-	"y": -8,
-	"width": 249.68,
-	"height": 250,
+	"y": -7.99,
+	"width": 249.67,
+	"height": 249.99,
 	"images": "C:/Users/PC/Documents/88 Group Projects/build/slot_spine/src/assets/slot/images/bagofgold/",
 	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\slot_spine\\src\\assets\\slot\\images"
 },
@@ -27,7 +27,15 @@
 ],
 "skins": [
 	{
-		"name": "default",
+		"name": "blur",
+		"attachments": {
+			"Layer 1": {
+				"Layer 1": { "name": "bag_of_gold_blur", "type": "linkedmesh", "skin": "no_blur", "parent": "Layer 1", "width": 263, "height": 250 }
+			}
+		}
+	},
+	{
+		"name": "no_blur",
 		"attachments": {
 			"Layer 1": {
 				"Layer 1": {

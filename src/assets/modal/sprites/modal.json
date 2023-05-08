@@ -220,6 +220,26 @@
 				"h": 81
 			}
 		},
+		"separate.png": {
+			"frame": {
+				"x": 3781,
+				"y": 1,
+				"w": 6,
+				"h": 374
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 6,
+				"h": 374
+			},
+			"sourceSize": {
+				"w": 6,
+				"h": 374
+			}
+		},
 		"slot_pattern_title.png": {
 			"frame": {
 				"x": 948,
@@ -299,6 +319,26 @@
 				"w": 290,
 				"h": 27
 			}
+		},
+		"total_bet_container.png": {
+			"frame": {
+				"x": 1920,
+				"y": 1083,
+				"w": 314,
+				"h": 107
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 314,
+				"h": 107
+			},
+			"sourceSize": {
+				"w": 314,
+				"h": 107
+			}
 		}
 	},
 	"meta": {
@@ -307,8 +347,8 @@
 		"image": "modal.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 3780,
-			"h": 1165
+			"w": 3788,
+			"h": 1191
 		},
 		"scale": "1"
 	}

@@ -1,13 +1,20 @@
 
 wild.png
-size: 269,252
+size: 504,269
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Layer 1
-  rotate: false
-  xy: 2, 2
+  rotate: true
+  xy: 254, 2
   size: 265, 248
   orig: 267, 250
   offset: 1, 1
+  index: -1
+blur
+  rotate: true
+  xy: 2, 3
+  size: 264, 250
+  orig: 267, 250
+  offset: 2, 0
   index: -1

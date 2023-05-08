@@ -1,13 +1,20 @@
 
 barrels.png
-size: 292,246
+size: 492,292
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 Layer 1
-  rotate: false
-  xy: 2, 2
+  rotate: true
+  xy: 248, 2
   size: 288, 242
   orig: 292, 244
   offset: 1, 1
+  index: -1
+blur
+  rotate: true
+  xy: 2, 3
+  size: 287, 244
+  orig: 292, 244
+  offset: 1, 0
   index: -1

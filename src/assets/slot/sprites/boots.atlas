@@ -1,13 +1,20 @@
 
 boots.png
-size: 254,251
+size: 502,255
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Layer 1
+blur
   rotate: false
   xy: 2, 2
+  size: 249, 251
+  orig: 254, 251
+  offset: 2, 0
+  index: -1
+boots
+  rotate: true
+  xy: 253, 3
   size: 250, 247
-  orig: 254, 249
-  offset: 1, 1
+  orig: 254, 251
+  offset: 2, 2
   index: -1
