@@ -29,7 +29,7 @@ export default class Controller{
         this.textureArray = textureArray
         this.container = new PIXI.Container()
         this.textStyle = new PIXI.TextStyle({  
-            fontFamily: 'Arial',
+            fontFamily: 'Eras ITC',
             fontSize: 55,
             fontWeight: 'bolder',
             fill: ['#ffffff', '#ffffff'], // gradient
@@ -44,7 +44,7 @@ export default class Controller{
             lineJoin: 'round',
         });
         this.textStyle2 = new PIXI.TextStyle({  
-            fontFamily: 'Arial',
+            fontFamily: 'Eras ITC',
             fontSize: 20,
             fontWeight: 'normal',
             fill: '#a7a7a7', 
@@ -62,43 +62,51 @@ export default class Controller{
         this.container.addChild(this.parentSprite)
     }
     private createChildren(){
+        //sprites
+        let infoBtnSprite =  Functions.loadTexture(this.textureArray,'controller','info_button')
+        let sounBtnSprite =  Functions.loadTexture(this.textureArray,'controller','sound_off_button')
+        let spinBtnSprite =  Functions.loadTexture(this.textureArray,'controller','spin_button')
+        let autoPlaySprite =  Functions.loadTexture(this.textureArray,'controller','autoplay_button')
+        let settingsBtnSpite =  Functions.loadTexture(this.textureArray,'controller','system_settings')
+        let betContSpite =  Functions.loadTexture(this.textureArray,'controller','bet_container')
+        let creditContSprite =  Functions.loadTexture(this.textureArray,'controller','credits_container')
         //info btn
-        this.infoBtnSprite = Functions.loadTexture(this.textureArray,'controller','info_button')
+        this.infoBtnSprite = infoBtnSprite
         this.infoBtnSprite.y = this.parentSprite.y+10
         this.infoBtnSprite.x = this.infoBtnSprite.width*1.64
         this.infoBtnSprite.interactive = true
         this.infoBtnSprite.cursor = 'pointer'
         this.container.addChild(this.infoBtnSprite)
         //sound
-        this.soundBtnSprite = Functions.loadTexture(this.textureArray,'controller','sound_off_button')
+        this.soundBtnSprite = sounBtnSprite
         this.soundBtnSprite.y = ((this.parentSprite.y + this.parentSprite.height) - this.soundBtnSprite.height) - 25
         this.soundBtnSprite.x = this.soundBtnSprite.width*1.01 
         this.soundBtnSprite.interactive = true
         this.soundBtnSprite.cursor = 'pointer'
         this.container.addChild(this.soundBtnSprite)
         //spin
-        this.spinBtnSprite = Functions.loadTexture(this.textureArray,'controller','spin_button')
+        this.spinBtnSprite = spinBtnSprite
         this.spinBtnSprite.y = this.parentSprite.y + 15
         this.spinBtnSprite.x = (this.parentSprite.width - this.spinBtnSprite.width) - 147
         this.spinBtnSprite.interactive = true
         this.spinBtnSprite.cursor = 'pointer'
         this.container.addChild(this.spinBtnSprite)
         //autoplay
-        this.autoPlay = Functions.loadTexture(this.textureArray,'controller','autoplay_button')
+        this.autoPlay = autoPlaySprite
         this.autoPlay.y = (this.parentSprite.y + this.parentSprite.height) - this.autoPlay.height*1.2
         this.autoPlay.x = (this.parentSprite.width - this.autoPlay.width) - 45
         this.autoPlay.interactive = true
         this.autoPlay.cursor = 'pointer'
         this.container.addChild(this.autoPlay)
         //settings
-        this.settingBtnSpite = Functions.loadTexture(this.textureArray,'controller','system_settings')
+        this.settingBtnSpite = settingsBtnSpite
         this.settingBtnSpite.y = this.parentSprite.y+90
         this.settingBtnSpite.x = this.settingBtnSpite.width *1.5
         this.settingBtnSpite.interactive = true
         this.settingBtnSpite.cursor = 'pointer'
         this.container.addChild(this.settingBtnSpite)
         // bet container
-        this.betContainerSprite = Functions.loadTexture(this.textureArray,'controller','bet_container')
+        this.betContainerSprite = betContSpite
         this.betContainerSprite.y = this.parentSprite.y + 90
         this.betContainerSprite.x = this.betContainerSprite.width*0.95
         //bet text
@@ -106,7 +114,7 @@ export default class Controller{
         this.betContainerSprite.addChild(this.betText)
         this.container.addChild(this.betContainerSprite)
         // credit container
-        this.creditContainerSprite = Functions.loadTexture(this.textureArray,'controller','credits_container')
+        this.creditContainerSprite = creditContSprite
         this.creditContainerSprite.y = this.parentSprite.y + 90 
         this.creditContainerSprite.x = (this.parentSprite.width - this.creditContainerSprite.width)*0.82
         //credit text

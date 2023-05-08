@@ -36,7 +36,7 @@ module.exports = {
     new MiniCssExtractPlugin({
         filename:"bundle.css"}),
     new CopyPlugin({
-        patterns: [{ from: "src/assets", to: "assets" }]}),
+        patterns: [{ from: "src/assets", to: "assets" },{ from: "src/fonts", to: "fonts" },]}),
    ],
 
   devServer: {

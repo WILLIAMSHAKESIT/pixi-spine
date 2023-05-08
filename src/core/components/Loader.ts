@@ -1,6 +1,7 @@
 import 'pixi-spine' // Do this once at the very start of your code. This registers the loader!
 import * as PIXI from 'pixi.js';
 import {Spine} from 'pixi-spine';
+import WebFont from 'webfontloader';
 
 export default class Loader{
     private app:PIXI.Application
@@ -9,6 +10,11 @@ export default class Loader{
         (globalThis as any).__PIXI_APP__ = this.app;
         document.body.appendChild(this.app.view as any);
         this.init(loadedAssets)
+        WebFont.load({
+            custom: {
+              families: ['Eras ITC'],
+            },
+          });
     }
 
     private init(loadedAssets:(assets:any,app:PIXI.Application)=>void){
@@ -26,11 +32,13 @@ export default class Loader{
         PIXI.Assets.add('trolley', 'assets/slot/sprites/trolley.json');
         PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
         PIXI.Assets.add('modal', 'assets/modal/sprites/modal.json');
+        PIXI.Assets.add('bonus', 'assets/bonus/sprites/bonus.json');
         // Load the assets and get a resolved promise once both are loaded
         const texturesPromise = PIXI.Assets.load([
             'main','slot','controller','bag_of_gold',
             'barrels','boots','dynamite_crate','gas_lamp',
-            'pile_of_gold','snake','trolley','wild','modal'
+            'pile_of_gold','snake','trolley','wild','modal',
+            'bonus'
         ]);
 
         texturesPromise.then((resource) => {

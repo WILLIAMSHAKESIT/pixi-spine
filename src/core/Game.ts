@@ -18,16 +18,40 @@ export default class Game{
     private controller:Controller   
     private modal:Modal
     private spinType:string = 'normal'
+    //texttures
     private textureToggleOn:PIXI.Texture
     private textureToggleOff:PIXI.Texture
     private textureRollOn:PIXI.Texture
     private textureRollOff:PIXI.Texture
     private spinTextureOn:PIXI.Texture
     private spinTextureOff:PIXI.Texture
+    //sprites
+    private buyBonusBtn:PIXI.Sprite
     // values
     private betAmount:number = 1
     private betIndex:number = 0
+    private userCredit:number = 999999
+    private isAutoPlay:boolean = false
+    //text style 
+    private textStyle:PIXI.TextStyle
+    //text values
+    private buyBonusText:PIXI.Text
     constructor(){
+        this.textStyle = new PIXI.TextStyle({  
+            fontFamily: 'Eras ITC',
+            fontSize: 55,
+            fontWeight: 'bolder',
+            fill: ['#ffffff', '#ffffff'], // gradient
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 3,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
         new Loader(this.init.bind(this))
     }
     private init(res:any,app:PIXI.Application){
@@ -46,6 +70,7 @@ export default class Game{
         this.createGame()
         this.createSlot()
         this.createController()
+        this.createBuyBonus()
         this.createModal()
         this.events()
         this.updateTextValues()
@@ -72,38 +97,45 @@ export default class Game{
     private events(){
         //open system settings modal
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
-            this.modal.createSystemSettings()
+            this.modal.createSystemSettings(this.isAutoPlay)
             this.modal.betBtns.forEach((data,index)=>{
                 data.addEventListener('pointerdown',()=>{
                     if(index == 0){
                         this.betIndex--
-                        this.modal.betAmount = json.bet_amounts[this.betIndex]
-                        this.modal.betAmountText.text = this.betAmount
-                        this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
+                        this.betAmount = json.bet_amounts[this.betIndex]
                         if(this.betIndex == 0){
-                            this.modal.minusBtn.interactive = false
+                            this.modal.betBtns[0].interactive = false
                         }else{
-                            this.modal.minusBtn.interactive = true
-                            this.modal.plusBtn.interactive = true
+                            this.modal.betBtns[0].interactive = true
+                            this.modal.betBtns[1].interactive = true
                         }
                     }else{
                         this.betIndex++
                         this.betAmount = json.bet_amounts[this.betIndex]
-                        this.modal.betAmountText.text = this.betAmount
-                        this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
                         if(this.betIndex == 5){
-                            this.modal.plusBtn.interactive = false
+                            this.modal.betBtns[1].interactive = false
                         }else{
-                            this.modal.plusBtn.interactive = true
-                            this.modal.minusBtn.interactive = true
+                            this.modal.betBtns[0].interactive = true
+                            this.modal.betBtns[1].interactive = true
                         }
                     }
+                    this.modal.betAmountText.text = this.betAmount
+                    this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
                     this.betTextValue()
                 })
             })
+            if(this.betIndex == 0){
+                this.modal.betBtns[0].interactive = false
+            }
+            if(this.betIndex == 5){
+                this.modal.betBtns[1].interactive = false
+            }
+            this.modal.betAmountText.text = this.betAmount
+            this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
         })
         //open autoplay
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            this.isAutoPlay = false
             this.slotGame.autoPlayCount = 0
             this.modal.btnArray = []
             this.modal.createAutoPlaySettings()
@@ -125,6 +157,7 @@ export default class Game{
             this.modal.rollBtn.addEventListener('pointerdown',()=>{
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.controller.spinBtnSprite.interactive = false
+                this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
                 this.startSpin(this.modal.totalSpin)
             })
@@ -153,22 +186,37 @@ export default class Game{
        this.updateCreditValues()
     }
     private betTextValue(){
-        console.log('test')
         //bet value
         this.controller.betText.text = this.betAmount
         this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+        //bet value buy bonus
+        this.buyBonusText.text = this.betAmount
+        this.buyBonusText.x = (this.buyBonusBtn.width - this.buyBonusText.width)/2
+        this.buyBonusText.y = (this.buyBonusBtn.height - this.buyBonusText.height) - 20
     }
     private updateCreditValues(){
         //credit value
-        if(this.controller !== undefined){
-            this.controller.creditText.text = Functions.numberWithCommas(this.slotGame.credit) 
-            this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2     
-        }
+        this.controller.creditText.text = Functions.numberWithCommas(this.userCredit) 
+        this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
+        this.userCredit = this.userCredit-this.betAmount
+        this.updateCreditValues()
         if(this.slotGame.autoPlayCount <= 1){
+            this.isAutoPlay = false
             this.controller.spinBtnSprite.texture = this.spinTextureOn
             this.controller.spinBtnSprite.interactive = true
         }
+    }
+    private createBuyBonus(){
+        this.buyBonusBtn = Functions.loadTexture(this.textureArray,'bonus','buy_free_spin_btn')
+        this.buyBonusBtn.interactive = true
+        this.buyBonusBtn.cursor = 'pointer'
+        this.buyBonusBtn.y = (this.baseHeight - this.buyBonusBtn.height)/2
+        this.buyBonusText = new PIXI.Text(`${this.betAmount}`, this.textStyle)
+        this.buyBonusText.x = (this.buyBonusBtn.width - this.buyBonusText.width)/2
+        this.buyBonusText.y = (this.buyBonusBtn.height - this.buyBonusText.height) - 20
+        this.buyBonusBtn.addChild(this.buyBonusText)
+        this.gameContainer.addChild(this.buyBonusBtn)
     }
 }

@@ -56,9 +56,6 @@ export default class Slot{
     private reelY:number = -6941.2
     private timeScale:number = 0
     public autoPlayCount:number = 0
-    //values 
-    public credit:number = 999999
-    public betAmount:number = 1
     // methods 
     private updateCreditValues:()=>void
     private onSpinEnd:()=>void
@@ -292,8 +289,7 @@ export default class Slot{
                                             this.startSpin(spinType)
                                         }
                                         // set the credit base 
-                                        this.credit = this.credit - this.betAmount
-                                        this.updateCreditValues()
+                                        // this.credit = this.credit - this.betAmount
                                         this.onSpinEnd()
                                     }
                                 }

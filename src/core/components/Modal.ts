@@ -41,7 +41,7 @@ export default class Modal{
         this.spinBtnTextureOff =  Functions.loadTexture(this.textureArray,'modal','spin_amount_btn').texture
         this.container = new PIXI.Container()
         this.textStyle = new PIXI.TextStyle({  
-            fontFamily: 'Arial',
+            fontFamily: 'Eras ITC',
             fontSize: 36,
             fontWeight: 'bold',
             fill: ['#ffffff', '#ffffff'], // gradient
@@ -88,7 +88,8 @@ export default class Modal{
         this.modalFrame.addChild(this.closeModal)
     }
     
-    public createSystemSettings(){
+    public createSystemSettings(betDisable:boolean){
+        this.betBtns = []
         this.systemContainer = new PIXI.Container
         const leftContainer = new PIXI.Container
         const rightContainer = new PIXI.Container
@@ -122,7 +123,7 @@ export default class Modal{
         this.minusBtn = Functions.loadTexture(this.textureArray,'modal','minus_bet')
         this.minusBtn.x = this.betAmountSpite.x
         this.minusBtn.y= this.betAmountSpite.height + 20
-        this.minusBtn.interactive = true
+        this.minusBtn.interactive = betDisable?false:true
         this.minusBtn.cursor = 'pointer'
         this.betBtns.push(this.minusBtn)
         leftContainer.addChild(this.minusBtn)
@@ -130,7 +131,7 @@ export default class Modal{
         this.plusBtn = Functions.loadTexture(this.textureArray,'modal','add_bet')
         this.plusBtn.x = (this.betAmountSpite.x + this.betAmountSpite.width) - this.plusBtn.width
         this.plusBtn.y = this.minusBtn.y
-        this.plusBtn.interactive = true
+        this.plusBtn.interactive = betDisable?false:true
         this.plusBtn.cursor = 'pointer'
         this.betBtns.push(this.plusBtn)
         leftContainer.x = (separator.x - leftContainer.width) / 2 
