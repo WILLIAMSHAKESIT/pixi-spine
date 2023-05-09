@@ -408,8 +408,14 @@ export default class Game{
                 this.controller.spinBtnSprite.interactive = false
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
-                if(!this.slotGame.isSpinning)
-                    this.startSpin(this.modal.totalSpin)
+                if(!this.slotGame.isSpinning){
+                   // this.startSpin(this.modal.totalSpin)
+                   if(this.modal.totalSpin >= 1){
+                        this.startSpin(this.modal.totalSpin)
+                   }else{
+                    alert("Please choose a spin count!");
+                   }
+                }    
             })
             // set background on hover
             this.modal.rollBtn.addEventListener('mouseenter',()=>{

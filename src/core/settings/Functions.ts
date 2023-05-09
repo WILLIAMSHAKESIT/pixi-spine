@@ -24,7 +24,6 @@ const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
 }
 const hasConsecutiveSameValues=(arr:Array<any>)=> {
-    console.log(arr,"ARRRRRRRR")
     let count = 1; 
     let arrRes:Array<any> = []
     let arrType:number = 0 ;

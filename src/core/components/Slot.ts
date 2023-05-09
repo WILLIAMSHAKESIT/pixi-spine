@@ -374,7 +374,6 @@ export default class Slot{
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
-            console.log(data,"check data")
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
@@ -477,7 +476,7 @@ export default class Slot{
         //this.levelBarIndicator.width += 2 
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
-            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
+            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', false);
             // dont run too fast
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.timeScale = 1;
             // update yourself
