@@ -95,7 +95,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        this.matchingGame()
+        // this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
     }
     private createModal(){

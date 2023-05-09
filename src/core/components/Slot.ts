@@ -117,7 +117,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        // this.levelBarIndicator.width = 
+        this.levelBarIndicator.width = 0 
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -369,17 +369,21 @@ export default class Slot{
         countsArray.push(isPattern4)
         countsArray.push(isPattern5)
         countsArray.push(isPattern6)
-
         countsArray.push(isPattern7)
         countsArray.push(isPattern8)
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
+            console.log(data,"check data")
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
                     console.log(data.blocks[i],'pattern 1')
                     this.animatePatterns(i,data.blocks[i])
+                }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
                 }
             }else if(index == 1 && data.count>2){
                 for(let i=0;i<data.count;i++){
@@ -387,11 +391,19 @@ export default class Slot{
                     console.log(data.blocks[i],'pattern 2')
                     this.animatePatterns(i,data.blocks[i])
                 }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
+                }
             }else if(index == 2 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
                     console.log(data.blocks[i],'pattern 3')
                     this.animatePatterns(i,data.blocks[i])
+                }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
                 }
             }else if(index == 3 && data.count>2){
                 for(let i=0;i<data.count;i++){
@@ -399,11 +411,19 @@ export default class Slot{
                     console.log(data.blocks[i],'pattern 4')
                     this.animatePatterns(i,data.blocks[i])
                 }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
+                }
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
                     console.log(data.blocks[i],'pattern 5')
                     this.animatePatterns(i,data.blocks[i])
+                }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
                 }
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
@@ -411,11 +431,19 @@ export default class Slot{
                     console.log(data.blocks[i],'pattern 6')
                     this.animatePatterns(i,data.blocks[i])
                 }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
+                }
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
                     console.log(data.blocks[i],'pattern 7')
                     this.animatePatterns(i,data.blocks[i])
+                }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
                 }
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
@@ -423,11 +451,19 @@ export default class Slot{
                     console.log(data.blocks[i],'pattern 8')
                     this.animatePatterns(i,data.blocks[i])
                 }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
+                }
             }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
                     console.log(data.blocks[i],'pattern 9')
                     this.animatePatterns(i,data.blocks[i])
+                }
+                if(data.arrTypes == 9){
+                    console.log("WILDDDDDDDDDDDDDDDDDDD")
+                    this.levelBarIndicator.width += 20 
                 }
             }
         })
@@ -438,7 +474,7 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
-        this.levelBarIndicator.width++ 
+        //this.levelBarIndicator.width += 2 
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
@@ -450,7 +486,7 @@ export default class Slot{
     }
     private applyMotionBlur(index:number,onSpin:boolean){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
-            onSpin ? data.symbol.skeleton.setSkinByName('blur') : data.symbol.skeleton.setSkinByName('no_blur')
+            data.symbol.skeleton.setSkinByName(onSpin?'blur':'no_blur')
         })
     }
     private generateNewSymbols(i:number){
