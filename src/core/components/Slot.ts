@@ -295,6 +295,8 @@ export default class Slot{
                                                 this.startSpin(spinType) 
                                             }
                                         }
+                                        // set the credit base 
+                                        // this.credit = this.credit - this.betAmount
                                         this.onSpinEnd()
                                     }
                                 }
@@ -383,7 +385,7 @@ export default class Slot{
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -391,7 +393,7 @@ export default class Slot{
             }else if(index == 1 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -399,7 +401,7 @@ export default class Slot{
             }else if(index == 2 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -407,7 +409,7 @@ export default class Slot{
             }else if(index == 3 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -415,7 +417,7 @@ export default class Slot{
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -423,7 +425,7 @@ export default class Slot{
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -431,7 +433,7 @@ export default class Slot{
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -439,7 +441,7 @@ export default class Slot{
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -447,7 +449,7 @@ export default class Slot{
             }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -461,7 +463,14 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
-        //this.levelBarIndicator.width += 2 
+        // add total win
+        this.totalWin = this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
+        this.levelBarIndicator.width++ 
+        // reset level bar and start matching game
+        if(this.levelBarIndicator.width >= this.levelBarWidth){
+            this.matchingGame()
+            this.levelBarIndicator.width = 0
+        }
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', false);
