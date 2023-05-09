@@ -35,13 +35,15 @@ export default class Game{
     // values
     private betAmount:number = 1
     private betIndex:number = 0
-    private userCredit:number = 999999
+    private userCredit:number = 999
     private isAutoPlay:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
     //text values
     private buyBonusText:PIXI.Text
+    private paylineText:PIXI.Text
+    private paylineGreetings:string
     constructor(){
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
@@ -95,7 +97,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        this.matchingGame()
+        // this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
     }
     private createModal(){
@@ -109,11 +111,12 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
+        this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
     }
     private startSpin(spinCount:number){
@@ -139,13 +142,19 @@ export default class Game{
         this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
-        this.userCredit = this.userCredit-this.betAmount
+        this.paylineGreetings = 'SPIN TO WIN'
+        this.userCredit = (this.userCredit-this.betAmount)+this.slotGame.totalWin
         this.updateCreditValues()
         if(this.slotGame.autoPlayCount <= 1){
             this.isAutoPlay = false
             this.controller.spinBtnSprite.texture = this.spinTextureOn
             this.controller.spinBtnSprite.interactive = true
         }
+        this.updatePaylineAnimation(this.paylineGreetings)
+    }
+    private onSpin(){
+        this.paylineGreetings = 'GOOD LUCK'
+        this.updatePaylineAnimation(this.paylineGreetings)
     }
     private createBuyBonus(){
         this.buyBonusBtn = Functions.loadTexture(this.textureArray,'bonus','buy_free_spin_btn')
@@ -242,6 +251,11 @@ export default class Game{
         })
         this.slotGame.frameBg.texture = Functions.loadTexture(this.textureArray,'main','slot_frame_bg2').texture
         this.slotGame.levelBarContainer.x = -this.slotGame.levelBarContainer.width * 0.5
+        this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent2').texture
+        this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
+        this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
+        this.controller.spinBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','spin_button2').texture
+        this.controller.autoPlay.texture = Functions.loadTexture(this.textureArray,'controller','autoplay_button2').texture
         this.buyBonusBtn.visible = false
         this.gameBackground.texture = Functions.loadTexture(this.textureArray,'main','bg2').texture
         //create blocks
@@ -305,7 +319,18 @@ export default class Game{
             data.symbol.visible = true
         })
     }
+    private createPaylineAnimation(){
+        let greetY = 30
+        this.paylineText =  new PIXI.Text('SPIN TO WIN', this.textStyle)
+        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+        this.paylineText.y = greetY
+        this.controller.parentSprite.addChild(this.paylineText)
+    }
+    private updatePaylineAnimation(greetings:string){
+        this.paylineText.text = greetings
+    }
     private events(){
+
         //open system settings modal
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
             // call settings modal

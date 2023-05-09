@@ -8,7 +8,7 @@
 ],
 "skins": [
 	{
-		"name": "blur",
+		"name": "no_blur",
 		"attachments": {
 			"Layer 1": {
 				"Layer 1": { "x": -1.5, "y": 116, "width": 291, "height": 240 }
@@ -16,7 +16,7 @@
 		}
 	},
 	{
-		"name": "no_blur",
+		"name": "blur",
 		"attachments": {
 			"Layer 1": {
 				"Layer 1": { "name": "blur", "x": -1.5, "y": 116, "width": 291, "height": 240 }

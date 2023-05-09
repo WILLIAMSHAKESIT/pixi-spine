@@ -9,39 +9,48 @@
     "symbolAssets":[
         {
             "symbol": "bag_of_gold",
-            "type":1
+            "type":1,
+            "pay":0.2
         },
         {
             "symbol": "barrels",
-            "type":2
+            "type":2,
+            "pay":0.3
         },
         {
             "symbol": "boots",
-            "type":3
+            "type":3,
+            "pay":0.5
         },
         {
             "symbol": "dynamite_crate",
-            "type":4
+            "type":4,
+            "pay":0.6
         },
         {
             "symbol": "gas_lamp",
-            "type":5
+            "type":5,
+            "pay":0.7
         },
         {
             "symbol": "pile_of_gold",
-            "type":6
+            "type":6,
+            "pay":1
         },
         {
             "symbol": "snake",
-            "type":7
+            "type":7,
+            "pay":1.5
         },
         {
             "symbol": "trolley",
-            "type":8
+            "type":8,
+            "pay":2
         },
         {
             "symbol": "wild",
-            "type":9
+            "type":9,
+            "pay":3
         }
     ],
     "pattern":[

@@ -20,9 +20,29 @@
 				"h": 73
 			}
 		},
-		"bet_container.png": {
+		"autoplay_button2.png": {
 			"frame": {
 				"x": 77,
+				"y": 1,
+				"w": 74,
+				"h": 74
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 74,
+				"h": 74
+			},
+			"sourceSize": {
+				"w": 74,
+				"h": 74
+			}
+		},
+		"bet_container.png": {
+			"frame": {
+				"x": 153,
 				"y": 1,
 				"w": 326,
 				"h": 73
@@ -43,7 +63,27 @@
 		"controller_parent.png": {
 			"frame": {
 				"x": 1,
-				"y": 76,
+				"y": 77,
+				"w": 1920,
+				"h": 176
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1920,
+				"h": 176
+			},
+			"sourceSize": {
+				"w": 1920,
+				"h": 176
+			}
+		},
+		"controller_parent2.png": {
+			"frame": {
+				"x": 1,
+				"y": 255,
 				"w": 1920,
 				"h": 176
 			},
@@ -62,7 +102,7 @@
 		},
 		"credits_container.png": {
 			"frame": {
-				"x": 405,
+				"x": 481,
 				"y": 1,
 				"w": 359,
 				"h": 73
@@ -83,7 +123,7 @@
 		"info_button.png": {
 			"frame": {
 				"x": 1,
-				"y": 254,
+				"y": 433,
 				"w": 76,
 				"h": 75
 			},
@@ -100,9 +140,69 @@
 				"h": 75
 			}
 		},
+		"info_button2.png": {
+			"frame": {
+				"x": 79,
+				"y": 433,
+				"w": 76,
+				"h": 77
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 76,
+				"h": 77
+			},
+			"sourceSize": {
+				"w": 76,
+				"h": 77
+			}
+		},
+		"mask.png": {
+			"frame": {
+				"x": 1923,
+				"y": 1,
+				"w": 289,
+				"h": 758
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 289,
+				"h": 758
+			},
+			"sourceSize": {
+				"w": 289,
+				"h": 758
+			}
+		},
 		"sound_off_button.png": {
 			"frame": {
-				"x": 766,
+				"x": 842,
+				"y": 1,
+				"w": 61,
+				"h": 61
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 61,
+				"h": 61
+			},
+			"sourceSize": {
+				"w": 61,
+				"h": 61
+			}
+		},
+		"sound_on_button2.png": {
+			"frame": {
+				"x": 905,
 				"y": 1,
 				"w": 61,
 				"h": 61
@@ -122,8 +222,28 @@
 		},
 		"spin_button.png": {
 			"frame": {
-				"x": 79,
-				"y": 254,
+				"x": 1,
+				"y": 761,
+				"w": 128,
+				"h": 129
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 128,
+				"h": 129
+			},
+			"sourceSize": {
+				"w": 128,
+				"h": 129
+			}
+		},
+		"spin_button2.png": {
+			"frame": {
+				"x": 131,
+				"y": 761,
 				"w": 128,
 				"h": 129
 			},
@@ -142,8 +262,8 @@
 		},
 		"spin_pause_button.png": {
 			"frame": {
-				"x": 209,
-				"y": 254,
+				"x": 261,
+				"y": 761,
 				"w": 128,
 				"h": 129
 			},
@@ -162,7 +282,27 @@
 		},
 		"system_settings.png": {
 			"frame": {
-				"x": 829,
+				"x": 968,
+				"y": 1,
+				"w": 122,
+				"h": 62
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 122,
+				"h": 62
+			},
+			"sourceSize": {
+				"w": 122,
+				"h": 62
+			}
+		},
+		"system_settings2.png": {
+			"frame": {
+				"x": 1092,
 				"y": 1,
 				"w": 122,
 				"h": 62
@@ -187,8 +327,8 @@
 		"image": "controller.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 1922,
-			"h": 384
+			"w": 2213,
+			"h": 891
 		},
 		"scale": "1"
 	}

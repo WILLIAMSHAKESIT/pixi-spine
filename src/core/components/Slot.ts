@@ -42,24 +42,31 @@ export default class Slot{
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelY:number = -6941.2
     private timeScale:number = 0
     public autoPlayCount:number = 0
     // methods 
     private updateCreditValues:()=>void
+    private matchingGame:()=>void
+    private onSpin:()=>void
     private onSpinEnd:()=>void
-    constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void){
+    private levelBarWidth:number = 742
+    // payout
+    public totalWin:number = 0
+    // payline animation
+    public paylines:Array<any> = []
+    constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
@@ -68,7 +75,8 @@ export default class Slot{
         this.levelBarContainer = new PIXI.Container
         this.updateCreditValues = updateCreditValues
         this.onSpinEnd = onSpinEnd
-        // this.betAmount = parseFloat(betAmount)
+        this.matchingGame = matchingGame
+        this.onSpin = onSpin
         this.init()
     }
     private init(){
@@ -117,7 +125,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        // this.levelBarIndicator.width = 
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -136,7 +144,6 @@ export default class Slot{
         itemGrand.x = itemMajor.x + itemMajor.width
         itemGrand.y = 10
         this.levelBarContainer.addChild(itemGrand)
-
 
         const style = new PIXI.TextStyle({  
             fontFamily: 'Arial',
@@ -202,6 +209,7 @@ export default class Slot{
         })
     }
     public startSpin(spinType:string){
+        this.paylines = []
         let hiddenReelY = -5000
         let dY = 355.5
         let bounceOffset = -7000
@@ -258,6 +266,7 @@ export default class Slot{
                             this.applyMotionBlur(index,true)
                         },
                         onUpdate:()=>{
+                            this.onSpin()
                             if(data.y > hiddenReelY){
                                 this.reelContainer[index].children[27].y = 0
                                 this.reelContainer[index].children[28].y = 270
@@ -288,8 +297,6 @@ export default class Slot{
                                             this.autoPlayCount--
                                             this.startSpin(spinType)
                                         }
-                                        // set the credit base 
-                                        // this.credit = this.credit - this.betAmount
                                         this.onSpinEnd()
                                     }
                                 }
@@ -369,7 +376,6 @@ export default class Slot{
         countsArray.push(isPattern4)
         countsArray.push(isPattern5)
         countsArray.push(isPattern6)
-
         countsArray.push(isPattern7)
         countsArray.push(isPattern8)
         countsArray.push(isPattern9)
@@ -378,57 +384,59 @@ export default class Slot{
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 1')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
+                //populate paylines
+                // this.paylines.push({symbols:this.reelsSymbols[reelIndex][blockIndex],payline:payline})
             }else if(index == 1 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 2')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 2 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 3')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 3 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 4')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 5')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 6')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 7')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 8')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 9')
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
+                console.log(data)
             }
         })
     }
@@ -438,7 +446,14 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
+        // add total win
+        this.totalWin = this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
         this.levelBarIndicator.width++ 
+        // reset level bar and start matching game
+        if(this.levelBarIndicator.width >= this.levelBarWidth){
+            this.matchingGame()
+            this.levelBarIndicator.width = 0
+        }
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
@@ -504,11 +519,13 @@ export default class Slot{
             const index = reelValue[Math.floor(Math.random() * reelValue.length)]
             const value = json.symbolAssets[index-1].symbol
             const type = json.symbolAssets[index-1].type
+            const payout = json.symbolAssets[index-1].pay
             const symbol = new Spine(this.textureArray[`${value}`].spineData)
             symbol.skeleton.setSkinByName('no_blur')
             let data = {
                 type:type,
-                symbol:symbol
+                symbol:symbol,
+                payout:payout
             }
             arr.push(data)
         }
