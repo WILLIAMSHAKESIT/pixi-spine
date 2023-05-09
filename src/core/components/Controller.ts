@@ -9,7 +9,7 @@ export default class Controller{
     public container:PIXI.Container
     private textureArray:Array<any>
     //sprites
-    private parentSprite:PIXI.Sprite
+    public parentSprite:PIXI.Sprite
     public infoBtnSprite:PIXI.Sprite
     public soundBtnSprite:PIXI.Sprite
     public spinBtnSprite:PIXI.Sprite

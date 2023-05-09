@@ -28,17 +28,9 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
     let arrRes:Array<any> = []
     let arrType:number = 0 ;
     for (let i = 0; i < arr.length; i++) {
-        arrRes.push(arr[i].blockNo)
-        
+        arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout})
     }
-    // for (let i = 1; i < arr.length; i++) {
-    //     if ((arr[i].pattern.type === arr[i-1].pattern.type || arr[i].pattern.type && arr[i-1].pattern.type == 9 || arr[i-1].pattern.type && arr[i].pattern.type == 9)) {
-    //         count++;
-    //     } else {
-    //         break; 
-    //     }
-    // }
-     for (let i = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
         if ((arr[i].pattern.type === arr[i-1].pattern.type)) {
             count++;
             arrType = arr[i-1].pattern.type
@@ -51,7 +43,8 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
     return {count:count,blocks:arrRes, arrTypes:arrType};      
 }  
 const numberWithCommas =(x:number)=> {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    let num:any = Math.round(x * 100) / 100
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
   
 // const textt
