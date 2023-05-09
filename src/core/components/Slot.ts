@@ -438,7 +438,7 @@ export default class Slot{
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -446,7 +446,7 @@ export default class Slot{
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -454,7 +454,7 @@ export default class Slot{
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -462,7 +462,7 @@ export default class Slot{
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
@@ -470,7 +470,7 @@ export default class Slot{
             }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    this.animatePatterns(i,data.blocks[i])
+                    this.animatePatterns(i,data.blocks[i].block)
                 }
                 if(data.arrTypes == 9){
                     this.levelBarIndicator.width += 20 
