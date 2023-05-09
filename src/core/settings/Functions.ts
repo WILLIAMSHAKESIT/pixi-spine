@@ -23,20 +23,23 @@ const symbolRandomizer = (arr:Array<any>) =>{
 const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
 }
-const  hasConsecutiveSameValues=(arr:Array<any>)=> {
+const hasConsecutiveSameValues=(arr:Array<any>)=> {
     let count = 1; 
     let arrRes:Array<any> = []
+    let arrType:number = 0 ;
     for (let i = 0; i < arr.length; i++) {
         arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout})
     }
-    for (let i = 1; i < arr.length; i++) {
+     for (let i = 1; i < arr.length; i++) {
         if ((arr[i].pattern.type === arr[i-1].pattern.type)) {
             count++;
+            arrType = arr[i-1].pattern.type
         } else {
             break; 
         }
     }
-    return {count:count,blocks:arrRes};      
+    
+    return {count:count,blocks:arrRes, arrTypes:arrType};      
 }  
 const numberWithCommas =(x:number)=> {
     let num:any = Math.round(x * 100) / 100

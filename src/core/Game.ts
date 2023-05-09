@@ -99,6 +99,28 @@ export default class Game{
         this.updateTextValues()
         // this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
+
+
+
+        window.document.addEventListener('keydown', (e)=> {
+            if(e.code === 'Space'  || e.key === 'Enter'){
+                if(!this.slotGame.isSpinning){
+                    this.slotGame.timeScale = 0 
+                    if(this.slotGame.notLongPress === true) {
+                        this.slotGame.notLongPress = false;
+                        this.slotGame.startSpin(this.spinType)
+                    }else{
+                        this.slotGame.startSpin('turbo')  
+                    }
+                }else{ 
+                    this.slotGame.timeScale = 10
+                }
+            }
+        });
+        
+        window.document.addEventListener('keyup', ()=> {
+            this.slotGame.notLongPress = true;
+        });
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -122,6 +144,7 @@ export default class Game{
     private startSpin(spinCount:number){
         this.slotGame.autoPlayCount = spinCount
         this.slotGame.startSpin(this.spinType)
+        this.modal.totalSpin = 0 
     }
     private updateTextValues(){
        this.betTextValue()    
@@ -129,6 +152,7 @@ export default class Game{
     }
     private betTextValue(){
         //bet value
+
         this.controller.betText.text = this.betAmount
         this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
         //bet value buy bonus
@@ -433,8 +457,14 @@ export default class Game{
                 this.controller.spinBtnSprite.interactive = false
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
-                if(!this.slotGame.isSpinning)
-                    this.startSpin(this.modal.totalSpin)
+                if(!this.slotGame.isSpinning){
+                   // this.startSpin(this.modal.totalSpin)
+                   if(this.modal.totalSpin >= 1){
+                        this.startSpin(this.modal.totalSpin)
+                   }else{
+                    alert("Please choose a spin count!");
+                   }
+                }    
             })
             // set background on hover
             this.modal.rollBtn.addEventListener('mouseenter',()=>{
@@ -447,10 +477,12 @@ export default class Game{
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
             this.controller.spinBtnSprite.texture = this.spinTextureOff
-            this.controller.spinBtnSprite.interactive = false
-            this.spinType = 'normal'
-            if(!this.slotGame.isSpinning)
+            this.controller.spinBtnSprite.interactive = true
+            if(!this.slotGame.isSpinning){
                 this.startSpin(1)
+            }else{
+                this.slotGame.timeScale = 10
+            }
         })
         //buy bonus
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
