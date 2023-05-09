@@ -34,7 +34,7 @@
 	}
 ],
 "animations": {
-	"rotate": {
+	"animation": {
 		"bones": {
 			"root": {
 				"rotate": [

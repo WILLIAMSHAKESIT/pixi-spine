@@ -7,6 +7,10 @@ import Modal from './components/Modal';
 import Functions from './settings/Functions';
 import json from './settings/settings.json'
 import {Spine} from 'pixi-spine';
+import { gsap } from "gsap";
+import { PixiPlugin } from "gsap/PixiPlugin";
+// give the plugin a reference to the PIXI object
+PixiPlugin.registerPIXI(PIXI);
 export default class Game{
     private app:PIXI.Application
     private textureArray:any
@@ -27,6 +31,7 @@ export default class Game{
     private spinTextureOff:PIXI.Texture
     //sprites
     private buyBonusBtn:PIXI.Sprite
+    private buyBonusFrame:PIXI.Sprite
     // values
     private betAmount:number = 1
     private betIndex:number = 0
@@ -34,12 +39,28 @@ export default class Game{
     private isAutoPlay:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
+    private textStyle2:PIXI.TextStyle
     //text values
     private buyBonusText:PIXI.Text
     constructor(){
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 55,
+            fontWeight: 'bolder',
+            fill: ['#ffffff', '#ffffff'], // gradient
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 3,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+        this.textStyle2 = new PIXI.TextStyle({  
+            fontFamily: 'Eras ITC',
+            fontSize: 100,
             fontWeight: 'bolder',
             fill: ['#ffffff', '#ffffff'], // gradient
             strokeThickness: 5,
@@ -74,6 +95,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
+        this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
     }
     private createModal(){
@@ -93,89 +115,6 @@ export default class Game{
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
         this.gameContainer.addChild(this.controller.container)
-    }
-    private events(){
-        //open system settings modal
-        this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
-            this.modal.createSystemSettings(this.isAutoPlay)
-            this.modal.betBtns.forEach((data,index)=>{
-                data.addEventListener('pointerdown',()=>{
-                    if(index == 0){
-                        this.betIndex--
-                        this.betAmount = json.bet_amounts[this.betIndex]
-                        if(this.betIndex == 0){
-                            this.modal.betBtns[0].interactive = false
-                        }else{
-                            this.modal.betBtns[0].interactive = true
-                            this.modal.betBtns[1].interactive = true
-                        }
-                    }else{
-                        this.betIndex++
-                        this.betAmount = json.bet_amounts[this.betIndex]
-                        if(this.betIndex == 5){
-                            this.modal.betBtns[1].interactive = false
-                        }else{
-                            this.modal.betBtns[0].interactive = true
-                            this.modal.betBtns[1].interactive = true
-                        }
-                    }
-                    this.modal.betAmountText.text = this.betAmount
-                    this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
-                    this.betTextValue()
-                })
-            })
-            if(this.betIndex == 0){
-                this.modal.betBtns[0].interactive = false
-            }
-            if(this.betIndex == 5){
-                this.modal.betBtns[1].interactive = false
-            }
-            this.modal.betAmountText.text = this.betAmount
-            this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
-        })
-        //open autoplay
-        this.controller.autoPlay.addEventListener('pointerdown',()=>{
-            this.isAutoPlay = false
-            this.slotGame.autoPlayCount = 0
-            this.modal.btnArray = []
-            this.modal.createAutoPlaySettings()
-            //toggle spin type
-            this.modal.btnArray.forEach((data,index)=>{
-                data.addEventListener('pointerdown',()=>{
-                    if(index == 0){
-                        this.spinType = 'quick'
-                        this.modal.btnArray[0].texture = this.textureToggleOn
-                        this.modal.btnArray[1].texture = this.textureToggleOff
-                    }else{
-                        this.spinType = 'turbo'
-                        this.modal.btnArray[0].texture = this.textureToggleOff
-                        this.modal.btnArray[1].texture = this.textureToggleOn
-                    }
-                })
-            })
-            //start slot auto spin
-            this.modal.rollBtn.addEventListener('pointerdown',()=>{
-                this.controller.spinBtnSprite.texture = this.spinTextureOff
-                this.controller.spinBtnSprite.interactive = false
-                this.isAutoPlay = true
-                this.modal.rollBtn.texture = this.textureRollOn
-                this.startSpin(this.modal.totalSpin)
-            })
-            this.modal.rollBtn.addEventListener('mouseenter',()=>{
-                this.modal.rollBtn.texture = this.textureRollOn
-            })
-            this.modal.rollBtn.addEventListener('mouseleave',()=>{
-                this.modal.rollBtn.texture = this.textureRollOff
-            })
-        })
-        //single spin trigger
-        this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
-            this.controller.spinBtnSprite.texture = this.spinTextureOff
-            this.controller.spinBtnSprite.interactive = false
-            this.spinType = 'normal'
-            if(!this.slotGame.isSpinning)
-                this.startSpin(1)
-        })
     }
     private startSpin(spinCount:number){
         this.slotGame.autoPlayCount = spinCount
@@ -218,5 +157,279 @@ export default class Game{
         this.buyBonusText.y = (this.buyBonusBtn.height - this.buyBonusText.height) - 20
         this.buyBonusBtn.addChild(this.buyBonusText)
         this.gameContainer.addChild(this.buyBonusBtn)
+    }
+    private buyBonusPopUp(){
+        let dY = -80
+        // buy bonus modal 
+        this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        this.buyBonusFrame.x = (this.baseWidth - this.buyBonusFrame.width)/2
+        this.buyBonusFrame.y = dY
+        //amount
+        const amount = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
+        amount.x = (this.buyBonusFrame.width - amount.width)/2
+        amount.y = (this.buyBonusFrame.height - amount.height) * 0.85
+        this.buyBonusFrame.addChild(amount)
+        //close buy btn
+        const close = Functions.loadTexture(this.textureArray,'bonus','ex')
+        close.interactive = true
+        close.cursor = 'pointer'
+        close.x = (close.width)
+        close.y = (this.buyBonusFrame.height - close.height)*.94
+        this.buyBonusFrame.addChild(close)
+        //close buy btn
+        const check = Functions.loadTexture(this.textureArray,'bonus','check')
+        check.interactive = true
+        check.cursor = 'pointer'
+        check.x = (this.buyBonusFrame.width - check.width)*.85
+        check.y = (this.buyBonusFrame.height - check.height)*.94
+        this.buyBonusFrame.addChild(check)
+        let sY = -this.buyBonusFrame.height
+        close.addEventListener('pointerdown',()=>{
+            this.hideBonusPopUp(dY,sY)
+        })
+        check.addEventListener('pointerdown',()=>{
+            this.hideBonusPopUp(dY,sY)
+        })
+        let bonusFrameShow = gsap.from(this.buyBonusFrame, {
+            delay:.3,
+            y:sY,
+            onComplete:()=>{
+                bonusFrameShow.kill()
+                let bounceUp = gsap.to(this.buyBonusFrame,{
+                    y:dY-160,
+                    onComplete:()=>{
+                        bounceUp.kill()
+                    }
+                })
+            }
+        })
+
+        this.gameContainer.addChild(this.buyBonusFrame)
+    }
+    private hideBonusPopUp(dY:number,sY:number){
+        let bonusFrameHide = gsap.to(this.buyBonusFrame, {
+            delay:0,
+            duration:0.5,
+            y:dY*1.2,
+            onComplete:()=>{
+                bonusFrameHide.kill()
+                let bounceDown = gsap.to(this.buyBonusFrame,{
+                    delay:0,
+                    duration:0.5,
+                    y:sY,
+                    onComplete:()=>{
+                        bounceDown.kill()
+                        this.gameContainer.removeChild(this.buyBonusFrame)
+                    }
+                })
+            }
+        })
+    }
+    public matchingGame(){
+        const blocksContainer = new PIXI.Container()
+        let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
+        let arrayBlockValues:Array<any> = []
+        let blockSpacing = 1.2
+        let multiplier = 0
+        let multiplier2 = 0
+        let blockOffsetX = 25
+        let miniCount = 0
+        let majorCount = 0
+        let grandCount = 0
+        //change visibilities of normal game
+        this.slotGame.reelContainer.forEach(data=>{
+            data.visible = false
+        })
+        this.slotGame.frameBg.texture = Functions.loadTexture(this.textureArray,'main','slot_frame_bg2').texture
+        this.slotGame.levelBarContainer.x = -this.slotGame.levelBarContainer.width * 0.5
+        this.buyBonusBtn.visible = false
+        this.gameBackground.texture = Functions.loadTexture(this.textureArray,'main','bg2').texture
+        //create blocks
+        
+        randomizeArray.forEach((data:string,index:number)=>{
+            const symbol = Functions.loadTexture(this.textureArray,'bonus',`${data}`)
+            const rock = Functions.loadTexture(this.textureArray,'bonus',`rock_block`)
+            symbol.visible = false
+            rock.interactive = true
+            rock.cursor = 'pointer'
+            symbol.scale.set(0.9)
+            if(index > 3 && index < 8){
+                rock.y = rock.height*blockSpacing
+                rock.x = multiplier2*rock.width*blockSpacing
+                symbol.x = rock.x + blockOffsetX
+                symbol.y = rock.y
+                multiplier2++
+            }else if( index >= 8 && index <= 11){
+                rock.y = (rock.height*2)*blockSpacing
+                rock.x = multiplier*rock.width*blockSpacing
+                symbol.x = rock.x + blockOffsetX
+                symbol.y = rock.y
+                multiplier++
+            }else{
+                rock.x = index*rock.width*blockSpacing
+                symbol.x = rock.x + blockOffsetX
+            }
+            //click rock event
+            rock.addEventListener('pointerdown',()=>{
+                rock.interactive = false
+                rock.visible = false
+                symbol.visible = true
+                if(data == 'grand'){
+                    grandCount++
+                    if(grandCount == 3){
+                        this.matchinGameWinPop(arrayBlockValues)
+                    }
+                }else if(data == 'major'){
+                    majorCount++
+                    if(majorCount == 3){
+                        this.matchinGameWinPop(arrayBlockValues)
+                    }
+                }else{
+                    miniCount++
+                    if(miniCount == 3){
+                        this.matchinGameWinPop(arrayBlockValues)
+                    }
+                }
+            })
+            arrayBlockValues.push({rock:rock,symbol:symbol})
+            blocksContainer.addChild(symbol)
+            blocksContainer.addChild(rock)
+        })
+        blocksContainer.x = (this.slotGame.frameBg.width-blocksContainer.width)/2
+        blocksContainer.y = (this.slotGame.frameBg.height-blocksContainer.height)/2
+        this.slotGame.frameBg.addChild(blocksContainer)
+    }
+    private matchinGameWinPop(arrayBlockValues:Array<any>){
+        arrayBlockValues.forEach(data=>{
+            data.rock.visible = false
+            data.symbol.visible = true
+        })
+    }
+    private events(){
+        //open system settings modal
+        this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
+            // call settings modal
+            this.modal.createSystemSettings(this.isAutoPlay)
+            // spin type toggle
+            this.modal.betBtns.forEach((data,index)=>{
+                data.addEventListener('pointerdown',()=>{
+                    if(index == 0){
+                        this.betIndex--
+                        this.betAmount = json.bet_amounts[this.betIndex]
+                        if(this.betIndex == 0){
+                            this.modal.betBtns[0].interactive = false
+                        }else{
+                            this.modal.betBtns[0].interactive = true
+                            this.modal.betBtns[1].interactive = true
+                        }
+                    }else{
+                        this.betIndex++
+                        this.betAmount = json.bet_amounts[this.betIndex]
+                        if(this.betIndex == 5){
+                            this.modal.betBtns[1].interactive = false
+                        }else{
+                            this.modal.betBtns[0].interactive = true
+                            this.modal.betBtns[1].interactive = true
+                        }
+                    }
+                    this.modal.betAmountText.text = this.betAmount
+                    this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
+                    this.betTextValue()
+                })
+            })
+            // disable click for adjusting bet buttons
+            if(this.betIndex == 0){
+                this.modal.betBtns[0].interactive = false
+            }
+            if(this.betIndex == 5){
+                this.modal.betBtns[1].interactive = false
+            }
+            //sound events
+            this.modal.soundBtns.forEach((data,index)=>{
+                data.addEventListener('pointerdown',()=>{
+                    if(data.texture == this.textureToggleOff){
+                        data.texture = this.textureToggleOn
+                        if(index == 0){
+                            console.log('music')
+                        }else{
+                            console.log('sfx')
+                        }
+                    }else{
+                        data.texture = this.textureToggleOff
+                    }
+                })
+            })
+            // re position bet amount tex on click
+            this.modal.betAmountText.text = this.betAmount
+            this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
+        })
+        //open autoplay
+        this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            this.isAutoPlay = false
+            this.slotGame.autoPlayCount = 0
+            this.modal.btnArray = []
+            this.modal.createAutoPlaySettings()
+            // initialize active spintype button
+            if(this.spinType == 'quick'){
+                this.modal.btnArray[0].texture = this.textureToggleOn
+            }else if(this.spinType == 'turbo'){
+                this.modal.btnArray[1].texture = this.textureToggleOn
+            }else{
+                this.modal.btnArray[0].texture = this.textureToggleOff
+                this.modal.btnArray[1].texture = this.textureToggleOff
+            }
+            //toggle spin type
+            this.modal.btnArray.forEach((data,index)=>{
+                data.addEventListener('pointerdown',()=>{
+                    if(index == 0){
+                        this.modal.btnArray[1].texture = this.textureToggleOff
+                        if(data.texture == this.textureToggleOff){
+                            data.texture = this.textureToggleOn
+                            this.spinType = 'quick'
+                        }else{
+                            this.spinType = 'normal'
+                            data.texture = this.textureToggleOff
+                        }
+                    }else{
+                        this.modal.btnArray[0].texture = this.textureToggleOff
+                        if(data.texture == this.textureToggleOff){
+                            this.spinType = 'turbo'
+                            data.texture = this.textureToggleOn
+                        }else{
+                            this.spinType = 'normal'
+                            data.texture = this.textureToggleOff
+                        }
+                    }
+                })
+            })
+            //start slot auto spin
+            this.modal.rollBtn.addEventListener('pointerdown',()=>{
+                this.controller.spinBtnSprite.texture = this.spinTextureOff
+                this.controller.spinBtnSprite.interactive = false
+                this.isAutoPlay = true
+                this.modal.rollBtn.texture = this.textureRollOn
+                if(!this.slotGame.isSpinning)
+                    this.startSpin(this.modal.totalSpin)
+            })
+            // set background on hover
+            this.modal.rollBtn.addEventListener('mouseenter',()=>{
+                this.modal.rollBtn.texture = this.textureRollOn
+            })
+            this.modal.rollBtn.addEventListener('mouseleave',()=>{
+                this.modal.rollBtn.texture = this.textureRollOff
+            })
+        })
+        //single spin trigger
+        this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
+            this.controller.spinBtnSprite.texture = this.spinTextureOff
+            this.controller.spinBtnSprite.interactive = false
+            this.spinType = 'normal'
+            if(!this.slotGame.isSpinning)
+                this.startSpin(1)
+        })
+        //buy bonus
+        this.buyBonusBtn.addEventListener('pointerdown',()=>{
+            this.buyBonusPopUp()
+        })
     }
 }

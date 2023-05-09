@@ -19,6 +19,146 @@
 				"w": 205,
 				"h": 220
 			}
+		},
+		"check.png": {
+			"frame": {
+				"x": 208,
+				"y": 1,
+				"w": 83,
+				"h": 82
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 83,
+				"h": 82
+			},
+			"sourceSize": {
+				"w": 83,
+				"h": 82
+			}
+		},
+		"ex.png": {
+			"frame": {
+				"x": 293,
+				"y": 1,
+				"w": 84,
+				"h": 72
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 84,
+				"h": 72
+			},
+			"sourceSize": {
+				"w": 84,
+				"h": 72
+			}
+		},
+		"get_free_spin.png": {
+			"frame": {
+				"x": 379,
+				"y": 1,
+				"w": 647,
+				"h": 1018
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 647,
+				"h": 1018
+			},
+			"sourceSize": {
+				"w": 647,
+				"h": 1018
+			}
+		},
+		"grand.png": {
+			"frame": {
+				"x": 1028,
+				"y": 1,
+				"w": 221,
+				"h": 207
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 221,
+				"h": 207
+			},
+			"sourceSize": {
+				"w": 221,
+				"h": 207
+			}
+		},
+		"major.png": {
+			"frame": {
+				"x": 1251,
+				"y": 1,
+				"w": 221,
+				"h": 207
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 221,
+				"h": 207
+			},
+			"sourceSize": {
+				"w": 221,
+				"h": 207
+			}
+		},
+		"mini.png": {
+			"frame": {
+				"x": 1028,
+				"y": 210,
+				"w": 221,
+				"h": 207
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 221,
+				"h": 207
+			},
+			"sourceSize": {
+				"w": 221,
+				"h": 207
+			}
+		},
+		"rock_block.png": {
+			"frame": {
+				"x": 1251,
+				"y": 210,
+				"w": 243,
+				"h": 189
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 243,
+				"h": 189
+			},
+			"sourceSize": {
+				"w": 243,
+				"h": 189
+			}
 		}
 	},
 	"meta": {
@@ -27,8 +167,8 @@
 		"image": "bonus.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 207,
-			"h": 222
+			"w": 1495,
+			"h": 1020
 		},
 		"scale": "1"
 	}

@@ -21,6 +21,9 @@ export default class Modal{
     public minusBtn:PIXI.Sprite
     public plusBtn:PIXI.Sprite
     public betAmountSpite:PIXI.Sprite
+    public musicBtnSprite:PIXI.Sprite
+    public sfxBtnSprite:PIXI.Sprite
+    private modalTitle:PIXI.Sprite
     //text
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
@@ -32,6 +35,7 @@ export default class Modal{
     private spinBtnTextureOn:PIXI.Texture
     private spinBtnTextureOff:PIXI.Texture
     public betBtns:Array<any> = []
+    public soundBtns:Array<any> = []
     constructor(app:PIXI.Application,textureArray:Array<any>){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -82,6 +86,7 @@ export default class Modal{
         this.closeModal.y = 30 
         this.closeModal.addListener("pointerdown", () => {
             this.modalFrame.removeChild(this.systemContainer)
+            this.modalFrame.removeChild(this.modalTitle)
             this.modalFrame.removeChild(this.autoPlaySettingsCont)
             this.app.stage.removeChild(this.container)   
         })
@@ -90,14 +95,15 @@ export default class Modal{
     
     public createSystemSettings(betDisable:boolean){
         this.betBtns = []
+        this.soundBtns = []
         this.systemContainer = new PIXI.Container
         const leftContainer = new PIXI.Container
         const rightContainer = new PIXI.Container
         //title
-        const title = Functions.loadTexture(this.textureArray,'modal','system_settings_title')
-        title.x = (this.modalFrame.width - title.width)/2
-        title.y = this.titleY
-        this.modalFrame.addChild(title)
+        this.modalTitle = Functions.loadTexture(this.textureArray,'modal','system_settings_title')
+        this.modalTitle.x = (this.modalFrame.width - this.modalTitle.width)/2
+        this.modalTitle.y = this.titleY
+        this.modalFrame.addChild(this.modalTitle)
         // middle separator
         const separator = Functions.loadTexture(this.textureArray,'modal','separate')
         separator.x = (this.modalFrame.width - separator.width)/2
@@ -148,10 +154,13 @@ export default class Modal{
         ambientDesc.y = 45
         rightContainer.addChild(ambientTitle,ambientDesc)
         // ambient toggle
-        const offBtn = Functions.loadTexture(this.textureArray,'modal','off')
-        offBtn.x = ambientTitle.x * 1.5
-        offBtn.y = ambientTitle.y + 15
-        rightContainer.addChild(offBtn)
+        this.musicBtnSprite = Functions.loadTexture(this.textureArray,'modal','off')
+        this.musicBtnSprite.interactive = true
+        this.musicBtnSprite.cursor = 'pointer'
+        this.musicBtnSprite.x = ambientTitle.x * 1.5
+        this.musicBtnSprite.y = ambientTitle.y + 15
+        this.soundBtns.push(this.musicBtnSprite)
+        rightContainer.addChild(this.musicBtnSprite)
         // sfx 
         const sfxTitle = new PIXI.Text(`SOUND FX`, this.textStyle);
         sfxTitle.x = ambientTitle.x
@@ -162,10 +171,13 @@ export default class Modal{
         sfxDesc.y = sfxTitle.y + 45
         rightContainer.addChild(sfxTitle,sfxDesc)
         // ambient toggle
-        const offBtn2 = Functions.loadTexture(this.textureArray,'modal','off')
-        offBtn2.x = sfxTitle.x * 1.5
-        offBtn2.y = sfxTitle.y + 15
-        rightContainer.addChild(offBtn2)
+        this.sfxBtnSprite = Functions.loadTexture(this.textureArray,'modal','off')
+        this.sfxBtnSprite.interactive = true
+        this.sfxBtnSprite.cursor ='pointer'
+        this.sfxBtnSprite.x = sfxTitle.x * 1.5
+        this.sfxBtnSprite.y = sfxTitle.y + 15
+        this.soundBtns.push(this.sfxBtnSprite)
+        rightContainer.addChild(this.sfxBtnSprite)
         rightContainer.y = (this.systemContainer.height - rightContainer.height)/2
         this.systemContainer.addChild(rightContainer)
 

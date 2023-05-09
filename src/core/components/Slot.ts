@@ -19,17 +19,17 @@ export default class Slot{
     private baseHeight:number
     public container:PIXI.Container
     //sprites
-    private frameBg:PIXI.Sprite
+    public frameBg:PIXI.Sprite
     private frameBorder:PIXI.Sprite
     private reelPosX:Array<number> = [385.5,678.5,976.5,1271,1568.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
     private maskPosY:number = 130
-    private reelContainer:Array<any> = []
+    public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
     private spinCount:number= 0
     public isSpinning:boolean = false
     private notLongPress:boolean = true
-    private levelBarContainer:PIXI.Container
+    public levelBarContainer:PIXI.Container
     private levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
         // [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -42,16 +42,16 @@ export default class Slot{
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelY:number = -6941.2
     private timeScale:number = 0
@@ -75,7 +75,6 @@ export default class Slot{
         this.createParent()
         this.createLevelBar()
         this.createReels()
-
         // triggers space click
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
@@ -118,7 +117,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        // this.levelBarIndicator.width = 
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -233,6 +232,7 @@ export default class Slot{
                 delay = 0.5
             break
         }
+        
         this.reelContainer.forEach((data,index)=>{
             this.isSpinning = true
             let bounceStart = gsap.to(data, {
@@ -378,46 +378,55 @@ export default class Slot{
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 1')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 1 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 2')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 2 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 3')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 3 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 4')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 5')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 6')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 7')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 8')
                     this.animatePatterns(i,data.blocks[i])
                 }
-            }else if(index == 9 && data.count>2){
+            }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    console.log(data.blocks[i],'pattern 9')
                     this.animatePatterns(i,data.blocks[i])
                 }
             }
@@ -431,7 +440,7 @@ export default class Slot{
     private animatePatterns(reelIndex:number,blockIndex:number){
         this.levelBarIndicator.width++ 
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
-            // run forever, little boy!
+            // run block animation
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
             // dont run too fast
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.timeScale = 1;
@@ -488,7 +497,6 @@ export default class Slot{
             }
         })
     }
-
     private createReel(index:number){
         let arr:Array<any> = []
         let reelValue = this.reelsValues[index]

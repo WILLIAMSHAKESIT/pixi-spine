@@ -24,14 +24,13 @@ const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
 }
 const  hasConsecutiveSameValues=(arr:Array<any>)=> {
-    // return false;
     let count = 1; 
     let arrRes:Array<any> = []
     for (let i = 0; i < arr.length; i++) {
         arrRes.push(arr[i].blockNo)
     }
     for (let i = 1; i < arr.length; i++) {
-        if (arr[i].pattern.type === arr[i-1].pattern.type) {
+        if ((arr[i].pattern.type === arr[i-1].pattern.type || arr[i].pattern.type && arr[i-1].pattern.type == 9 || arr[i-1].pattern.type && arr[i].pattern.type == 9)) {
             count++;
         } else {
             break; 
