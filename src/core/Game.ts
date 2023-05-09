@@ -428,10 +428,13 @@ export default class Game{
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
             this.controller.spinBtnSprite.texture = this.spinTextureOff
-            this.controller.spinBtnSprite.interactive = false
+            this.controller.spinBtnSprite.interactive = true
             this.spinType = 'normal'
-            if(!this.slotGame.isSpinning)
+            if(!this.slotGame.isSpinning){
                 this.startSpin(1)
+            }else{
+                this.slotGame.timeScale = 10
+            }
         })
         //buy bonus
         this.buyBonusBtn.addEventListener('pointerdown',()=>{

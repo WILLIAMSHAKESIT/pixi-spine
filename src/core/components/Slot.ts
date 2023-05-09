@@ -54,11 +54,14 @@ export default class Slot{
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelY:number = -6941.2
-    private timeScale:number = 0
+    public timeScale:number = 0
     public autoPlayCount:number = 0
     // methods 
     private updateCreditValues:()=>void
     private onSpinEnd:()=>void
+
+    //checkIfanimationDone
+    private animateDone:boolean = true;
     constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -87,6 +90,7 @@ export default class Slot{
                         this.startSpin('turbo')  
                     }
                 }else{
+                    console.log("doyubles")
                     this.timeScale = 10
                 }
             }
@@ -246,6 +250,7 @@ export default class Slot{
                         bounceContainerArr[2].delay(0)
                         bounceContainerArr[3].delay(0)
                         bounceContainerArr[4].delay(0)
+                        
                     }
                 },
                 onComplete:()=>{
@@ -265,6 +270,7 @@ export default class Slot{
                             }
                             if(this.timeScale == 10 && spinType !== 'turbo'){
                                 spin.timeScale(this.timeScale)
+                                
                             }
                         },
                         onComplete:()=>{
@@ -286,7 +292,23 @@ export default class Slot{
                                         this.isSpinning = false
                                         if(this.autoPlayCount > 1){
                                             this.autoPlayCount--
-                                            this.startSpin(spinType)
+                                            let spinSpeed = 1000;
+                                            if(spinType == 'turbo'){
+                                                spinSpeed = 200
+                                                console.log("zxcxc???")
+                                            }else{
+                                                1000
+                                            }
+                                            if(!this.animateDone){
+                                                console.log("ey ")
+                                                let settime = setTimeout(() => {
+                                                    this.animateDone=true
+                                                    this.startSpin(spinType)   
+                                                    clearTimeout(settime);
+                                                }, spinSpeed);
+                                            }else{
+                                                this.startSpin(spinType) 
+                                            }
                                         }
                                         // set the credit base 
                                         // this.credit = this.credit - this.betAmount
@@ -299,6 +321,7 @@ export default class Slot{
                 }
             })
             bounceContainerArr.push(bounceStart)
+            this.timeScale = 0
         })
     }
     private checkPattern(){
@@ -377,31 +400,25 @@ export default class Slot{
             if(index == 0 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 1')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 1 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 2')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 2 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 3')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 3 && data.count>2){
@@ -411,57 +428,46 @@ export default class Slot{
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 4 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 5')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 5 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 6')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 6 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 7')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 7 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 8')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }else if(index == 8 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 9')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
-                    console.log("WILDDDDDDDDDDDDDDDDDDD")
                     this.levelBarIndicator.width += 20 
                 }
             }
@@ -473,6 +479,7 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
+    
         //this.levelBarIndicator.width += 2 
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
@@ -481,6 +488,9 @@ export default class Slot{
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.timeScale = 1;
             // update yourself
             this.reelsSymbols[reelIndex][blockIndex].symbol.autoUpdate = true;
+
+            this.animateDone = false
+            console.log(this.animateDone,"HEYZ")
         }
     }
     private applyMotionBlur(index:number,onSpin:boolean){
