@@ -104,7 +104,7 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
-                if(!this.slotGame.isSpinning){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay){
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
@@ -474,7 +474,7 @@ export default class Game{
                 this.modal.rollBtn.texture = this.textureRollOff
             })
         })
-        //single spin trigger
+        //single spin trigger              
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
             this.controller.spinBtnSprite.texture = this.spinTextureOff
             this.controller.spinBtnSprite.interactive = true
