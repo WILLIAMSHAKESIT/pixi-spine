@@ -30,7 +30,7 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
     for (let i = 0; i < arr.length; i++) {
         arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout})
     }
-    for (let i = 1; i < arr.length; i++) {
+     for (let i = 1; i < arr.length; i++) {
         if ((arr[i].pattern.type === arr[i-1].pattern.type)) {
             count++;
             arrType = arr[i-1].pattern.type

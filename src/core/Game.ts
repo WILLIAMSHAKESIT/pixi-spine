@@ -37,6 +37,7 @@ export default class Game{
     private betIndex:number = 0
     private userCredit:number = 999
     private isAutoPlay:boolean = false
+    private isMatchingGame:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
@@ -100,11 +101,9 @@ export default class Game{
         // this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
 
-
-
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
-                if(!this.slotGame.isSpinning){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame){
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
@@ -259,6 +258,7 @@ export default class Game{
         })
     }
     public matchingGame(){
+        this.isMatchingGame = true
         const blocksContainer = new PIXI.Container()
         let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
         let arrayBlockValues:Array<any> = []
