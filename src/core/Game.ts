@@ -110,8 +110,7 @@ export default class Game{
                     }else{
                         this.slotGame.startSpin('turbo')  
                     }
-                }else{
-                    console.log("doyubles")
+                }else{ 
                     this.slotGame.timeScale = 10
                 }
             }

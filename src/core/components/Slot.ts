@@ -90,7 +90,6 @@ export default class Slot{
         //                 this.startSpin('turbo')  
         //             }
         //         }else{
-        //             console.log("doyubles")
         //             this.timeScale = 10
         //         }
         //     }
@@ -295,12 +294,10 @@ export default class Slot{
                                             let spinSpeed = 1000;
                                             if(spinType == 'turbo'){
                                                 spinSpeed = 200
-                                                console.log("zxcxc???")
                                             }else{
                                                 1000
                                             }
                                             if(!this.animateDone){
-                                                console.log("ey ")
                                                 let settime = setTimeout(() => {
                                                     this.animateDone=true
                                                     this.startSpin(spinType)   
@@ -424,7 +421,6 @@ export default class Slot{
             }else if(index == 3 && data.count>2){
                 for(let i=0;i<data.count;i++){
                     //add animation
-                    console.log(data.blocks[i],'pattern 4')
                     this.animatePatterns(i,data.blocks[i])
                 }
                 if(data.arrTypes == 9){
@@ -490,7 +486,6 @@ export default class Slot{
             this.reelsSymbols[reelIndex][blockIndex].symbol.autoUpdate = true;
 
             this.animateDone = false
-            console.log(this.animateDone,"HEYZ")
         }
     }
     private applyMotionBlur(index:number,onSpin:boolean){
