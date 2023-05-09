@@ -28,7 +28,7 @@ export default class Slot{
     private reelsSymbols:Array<any> = []
     private spinCount:number= 0
     public isSpinning:boolean = false
-    private notLongPress:boolean = true
+    public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
     private levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
@@ -79,26 +79,26 @@ export default class Slot{
         this.createLevelBar()
         this.createReels()
         // triggers space click
-        window.document.addEventListener('keydown', (e)=> {
-            if(e.code === 'Space'  || e.key === 'Enter'){
-                if(!this.isSpinning){
-                    this.timeScale = 0 
-                    if(this.notLongPress === true) {
-                        this.notLongPress = false;
-                        this.startSpin('normal')
-                    }else{
-                        this.startSpin('turbo')  
-                    }
-                }else{
-                    console.log("doyubles")
-                    this.timeScale = 10
-                }
-            }
-        });
+        // window.document.addEventListener('keydown', (e)=> {
+        //     if(e.code === 'Space'  || e.key === 'Enter'){
+        //         if(!this.isSpinning){
+        //             this.timeScale = 0 
+        //             if(this.notLongPress === true) {
+        //                 this.notLongPress = false;
+        //                 this.startSpin('normal')
+        //             }else{
+        //                 this.startSpin('turbo')  
+        //             }
+        //         }else{
+        //             console.log("doyubles")
+        //             this.timeScale = 10
+        //         }
+        //     }
+        // });
         
-        window.document.addEventListener('keyup', ()=> {
-            this.notLongPress = true;
-        });
+        // window.document.addEventListener('keyup', ()=> {
+        //     this.notLongPress = true;
+        // });
     }
     private createParent(){
         const frameX = 95
