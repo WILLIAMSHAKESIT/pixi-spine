@@ -360,15 +360,15 @@ export default class Game{
     private updatePaylineAnimation(greetings:string){
         let paylineContent:any = this.slotGame.paylines
         this.paylineText.text = greetings
-        if(this.slotGame.paylines.length !== 0){
-            paylineContent.forEach((data:any,index:number)=>{
-                // console.log(data)
-                data.symbols.forEach((data:any,i:number)=>{
-                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
-                    this.controller.parentSprite.addChild(symbols)
-                })
-            })
-        }
+        // if(this.slotGame.paylines.length !== 0){
+        //     paylineContent.forEach((data:any,index:number)=>{
+        //         // console.log(data)
+        //         data.symbols.forEach((data:any,i:number)=>{
+        //             let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
+        //             this.controller.parentSprite.addChild(symbols)
+        //         })
+        //     })
+        // }
     }
     private events(){
         //open system settings modal
