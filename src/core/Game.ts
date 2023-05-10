@@ -393,50 +393,62 @@ export default class Game{
         let paylineContent:any = this.slotGame.paylines
         let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
+        let paylineTotal = 0
+        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
         if(this.slotGame.paylines.length !== 0){
             let symbolsContainer = new PIXI.Container
-            for(let i=1;i<=paylineContent.length;i++){
+            for(let i=0;i<paylineContent.length;i++){
                 const container = new PIXI.Container
                 const containerWithText = new PIXI.Container
-                const greetingText = new PIXI.Text(`line${paylineContent[i-1].payline} pays ${Functions.numberWithCommas(paylineContent[i-1].payout)}` , this.descText)
-                paylineContent[i-1].symbols.forEach((data:any,index:number)=>{
+                const greetingText = new PIXI.Text(`line ${paylineContent[i].payline} pays ${Functions.numberWithCommas(paylineContent[i].payout)}` , this.descText)
+                paylineContent[i].symbols.forEach((data:any,index:number)=>{
                     let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
                     symbols.x = index*65
                     symbols.scale.set(.2)
                     container.addChild(symbols)
+                    paylineTotal+=json.symbolAssets[data-1].pay
                 })
+                container.x = greetingText.width
                 containerWithText.addChild(container,greetingText)
-                greetingText.x = -greetingText.width
+                containerWithText.alpha = 0
                 greetingText.y = (containerWithText.height - greetingText.height)/2
                 symbolsContainer.addChild(containerWithText)
                 this.paylineContainersAnimation.push(containerWithText)
                 this.paylineContainers.push(symbolsContainer)
-                this.animateSymbols(containerWithText,i,parentContainer,paylineContent.length)
+                this.animatePaySymbols(containerWithText,i,symbolsContainer,paylineContent.length)
             }
             symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
             parentContainer.addChild(symbolsContainer)
+            this.paylineText.text = `WIN ${paylineTotal}`
         }
     }
-    private animateSymbols(containerWithText:any,i:number,parentContainer:any,totalLines:number){
-        containerWithText.x = (parentContainer.width - containerWithText.width)/7
+
+    private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any,totalLines:number){
+        let parentContainer = this.controller.parentSprite
         let fadeIn = gsap.to(containerWithText,{
-            delay:(i-1)*3,
-            duration:0.3,
+            delay:(i)*4,
+            duration:0.1,
             alpha:1,
+            onStart:()=>{
+                containerWithText.x = (symbolsContainer.width - containerWithText.width)/2
+                symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
+                symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
+            },
             onComplete:()=>{
                 fadeIn.kill()
                 let fadeOut = gsap.to(containerWithText,{
-                    delay:i*2,
-                    duration:0.3,
-                    alpha:0,
+                    delay:0,
+                    duration:3,
+                    alpha:1,
                     onComplete:()=>{
                         fadeOut.kill()
+                        containerWithText.alpha = 0
                         this.paylineAnimCount++
                         if(this.paylineAnimCount == (this.slotGame.paylines.length)){
                             this.paylineAnimCount = 0
                             this.paylineContainersAnimation.forEach((data,index)=>{
-                                this.animateSymbols(data,index+2,parentContainer,totalLines)
+                                this.animatePaySymbols(data,index,symbolsContainer,totalLines)
                             })
                         }
                     }
@@ -444,6 +456,7 @@ export default class Game{
             }
         })
     }
+
     private lightMode(bool:boolean){
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
         let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
@@ -453,9 +466,8 @@ export default class Game{
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
         let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
         //change visibilities of normal game
-        this.slotGame.reelContainer.forEach(data=>{
-            data.visible = bool
-        })
+        this.slotGame.reelContainer.forEach(data=>{data.visible = bool})
+        this.paylineContainers.forEach(data=>{data.visible = bool})
         this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
         this.controller.infoBtnSprite.texture = infoBtnTexture
@@ -606,54 +618,5 @@ export default class Game{
             this.buyBonusPopUp()
             this.buyBonusBtn.interactive = false
         })
-    }
-
-    private createGrass(){
-       // this.playSound(27)
-        while(this.grass.length < 300){
-            let bubble = {
-                x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
-                y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
-                size: Math.round(Functions.getRandomInt(50, 350))
-            }
-
-            let overlapping = false;
-            for(let j = 0; j < this.grass.length; j++){
-                let other = this.grass[j];
-                if (bubble.x < other.x + other.size &&
-                    bubble.x + bubble.size > other.x &&
-                    bubble.y < other.y + other.size &&
-                    bubble.size + bubble.y > other.y) {
-                    overlapping = true;
-                    break;
-                 }
-            }
-
-            if(!overlapping){
-                this.grass.push(bubble);
-            }
-
-            this.protection++;
-            if(this.protection > 10000){
-                break;
-            }
-        }
-    }
-
-    private animateGrass(){
-        let duration = 10;
-        this.grass.forEach((element, index) => {
-            let interval = duration * index;
-            let show = setTimeout(() => {
-                const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
-                sprite.width = element.size;
-                sprite.height = element.size;
-                sprite.x = element.x;
-                sprite.y = element.y;
-                this.grassSprites.push(sprite);
-                this.app.stage.addChild(sprite);
-                clearTimeout(show);
-            }, interval);
-        });
     }
 }

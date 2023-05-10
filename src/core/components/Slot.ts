@@ -114,7 +114,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 740
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -323,7 +323,7 @@ export default class Slot{
                     this.levelBarIndicator.width += 1  
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
-                    if(this.levelBarIndicator.width >= this.levelBarWidth){
+                    if(this.levelBarIndicator.width == this.levelBarWidth){
                         this.createGrass()
                         this.animateGrass()
 
@@ -343,7 +343,6 @@ export default class Slot{
                                         duration: .05,
                                         alpha: 0,
                                         onStart: () => {
-                                            this.matchingGame()
                                             if(index == 0){
                                                 let transition2 = gsap.to(this.container, {
                                                     alpha: 1,
@@ -366,8 +365,8 @@ export default class Slot{
                                         }
                                     });
                                 });
-                                //this.overallticker.destroy();
                                 transition.kill();
+                                this.matchingGame()
                             }
                         });
                     }
@@ -449,7 +448,6 @@ export default class Slot{
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
-            console.log(data,"datas")
            
             if(index == 0 && data.count>2){
                 let totalLinePay:number = 0
@@ -543,7 +541,6 @@ export default class Slot{
                 this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
             }
         })
-        console.log("end")
     }
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
