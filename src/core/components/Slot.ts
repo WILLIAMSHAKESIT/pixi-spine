@@ -20,7 +20,7 @@ export default class Slot{
     public container:PIXI.Container
     //sprites
     public frameBg:PIXI.Sprite
-    private frameBorder:PIXI.Sprite
+    public frameBorder:PIXI.Sprite
     private reelPosX:Array<number> = [385.5,678.5,976.5,1271,1568.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
     private maskPosY:number = 130
@@ -30,7 +30,7 @@ export default class Slot{
     public isSpinning:boolean = false
     public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
-    private levelBarIndicator:PIXI.Sprite
+    public levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
         // [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
         // [2,8,3,3,6,7,3,8,9,1,4,2,3,4,4,7,5,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -42,21 +42,16 @@ export default class Slot{
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
+        [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9]
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
         // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
     ]
     private reelY:number = -6941.2
     public timeScale:number = 0
@@ -119,7 +114,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
