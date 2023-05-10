@@ -273,6 +273,7 @@ export default class Slot{
                                     data.y = this.reelY
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
+                                    this.reelContainWild(index)
                                     if(this.spinCount == 5){
                                         this.checkPattern()
                                         this.spinCount = 0
@@ -296,7 +297,6 @@ export default class Slot{
                                             }
                                         }
                                         // set the credit base 
-                                        // this.credit = this.credit - this.betAmount
                                         this.onSpinEnd()
                                     }
                                 }
@@ -309,7 +309,23 @@ export default class Slot{
             this.timeScale = 0
         })
     }
+    private reelContainWild(index:number){
+        this.reelsSymbols[index].forEach((data:any,index:number)=>{
+            if(index > 26){
+                if(data.type == 9){
+                    this.levelBarIndicator.width += 1 
+                    this.levelBarIndicator.width++ 
+                    // reset level bar and start matching game
+                    if(this.levelBarIndicator.width >= this.levelBarWidth){
+                        this.matchingGame()
+                        this.levelBarIndicator.width = this.levelBarWidth
+                    }
+                }
+            }
+        })
+    }
     private checkPattern(){
+        this.paylines = []
         let pattern1:Array<any> = []
         let pattern2:Array<any> = []
         let pattern3:Array<any> = []
@@ -360,7 +376,7 @@ export default class Slot{
             }
         })
         
-        //pattern booleans
+        //pattern count consecutive
         let isPattern1 = Functions.hasConsecutiveSameValues(pattern1)
         let isPattern2 = Functions.hasConsecutiveSameValues(pattern2)
         let isPattern3 = Functions.hasConsecutiveSameValues(pattern3)
@@ -370,7 +386,7 @@ export default class Slot{
         let isPattern7 = Functions.hasConsecutiveSameValues(pattern7)
         let isPattern8 = Functions.hasConsecutiveSameValues(pattern8)
         let isPattern9 = Functions.hasConsecutiveSameValues(pattern9)
-        
+
         countsArray.push(isPattern1)
         countsArray.push(isPattern2)
         countsArray.push(isPattern3)
@@ -383,77 +399,95 @@ export default class Slot{
         
         countsArray.forEach((data,index)=>{
             if(index == 0 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:1,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 1 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:2,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 2 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:3,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 3 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:4,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 4 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:5,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 5 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:6,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 6 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:7,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 7 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:8,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 8 && data.count>2){
+                let totalLinePay:number = 0
+                let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
                     //add animation
+                    totalLinePay+=data.blocks[i].payout
+                    lineSymbols.push(data.blocks[i].type)
                     this.animatePatterns(i,data.blocks[i].block)
                 }
-                if(data.arrTypes == 9){
-                    this.levelBarIndicator.width += 20 
-                }
+                this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
             }
         })
     }
@@ -464,16 +498,10 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         // add total win
-        this.totalWin = this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
-        this.levelBarIndicator.width++ 
-        // reset level bar and start matching game
-        if(this.levelBarIndicator.width >= this.levelBarWidth){
-            this.matchingGame()
-            this.levelBarIndicator.width = 0
-        }
+        this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation
-            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', false);
+            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
             // dont run too fast
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.timeScale = 1;
             // update yourself
@@ -494,16 +522,19 @@ export default class Slot{
             let reelValue = this.reelsValues[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
             let type = json.symbolAssets[symbolIndex-1].type
+            let payout = json.symbolAssets[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * 270
             symbol.scale.set(0.9)
             let el ={
                 type:type,
-                symbol:symbol
+                symbol:symbol,
+                payout:payout
             }
             data = el
             this.reelsSymbols[i][index].type = data.type
             this.reelsSymbols[i][index].symbol = data.symbol
+            this.reelsSymbols[i][index].payout = data.payout
             this.reelsSymbols[i][index].symbol.skeleton.setSkinByName('no_blur')
             this.reelContainer[i].addChild(data.symbol)
         })
@@ -514,18 +545,21 @@ export default class Slot{
             if(i == 27){
                 data.type = topThree[0].type
                 data.symbol = topThree[0].symbol
+                data.payout = topThree[0].payout
                 this.reelContainer[index].children[27] = data.symbol
                 this.reelContainer[index].children[27].y = 7290
             }
             if(i == 28){
                 data.type = topThree[1].type
                 data.symbol = topThree[1].symbol
+                data.payout = topThree[1].payout
                 this.reelContainer[index].children[28] = data.symbol
                 this.reelContainer[index].children[28].y = 7560
             }
             if(i == 29){
                 data.type = topThree[2].type
                 data.symbol = topThree[2].symbol
+                data.payout = topThree[2].payout
                 this.reelContainer[index].children[29] = data.symbol
                 this.reelContainer[index].children[29].y = 7830
             }
