@@ -45,6 +45,13 @@ export default class Game{
     private buyBonusText:PIXI.Text
     private paylineText:PIXI.Text
     private paylineGreetings:string
+
+    //grass
+    private slideshowTicker: Boolean = true;
+    private play: Boolean = true;
+    private grass: Array<any> = [];
+    private grassSprites: Array<PIXI.Sprite> = [];
+    private protection: number = 0;
     constructor(){
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
@@ -120,6 +127,9 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+        // this.createGrass();
+        // this.animateGrass();
+
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -473,7 +483,7 @@ export default class Game{
                 this.controller.spinBtnSprite.interactive = false
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
-                if(!this.slotGame.isSpinning)
+                if(!this.slotGame.isSpinning )
                     this.startSpin(this.modal.totalSpin)
             })
             // set background on hover
@@ -499,5 +509,54 @@ export default class Game{
             this.buyBonusPopUp()
             this.buyBonusBtn.interactive = false
         })
+    }
+
+    private createGrass(){
+       // this.playSound(27)
+        while(this.grass.length < 300){
+            let bubble = {
+                x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
+                y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
+                size: Math.round(Functions.getRandomInt(50, 350))
+            }
+
+            let overlapping = false;
+            for(let j = 0; j < this.grass.length; j++){
+                let other = this.grass[j];
+                if (bubble.x < other.x + other.size &&
+                    bubble.x + bubble.size > other.x &&
+                    bubble.y < other.y + other.size &&
+                    bubble.size + bubble.y > other.y) {
+                    overlapping = true;
+                    break;
+                 }
+            }
+
+            if(!overlapping){
+                this.grass.push(bubble);
+            }
+
+            this.protection++;
+            if(this.protection > 10000){
+                break;
+            }
+        }
+    }
+
+    private animateGrass(){
+        let duration = 10;
+        this.grass.forEach((element, index) => {
+            let interval = duration * index;
+            let show = setTimeout(() => {
+                const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
+                sprite.width = element.size;
+                sprite.height = element.size;
+                sprite.x = element.x;
+                sprite.y = element.y;
+                this.grassSprites.push(sprite);
+                this.app.stage.addChild(sprite);
+                clearTimeout(show);
+            }, interval);
+        });
     }
 }

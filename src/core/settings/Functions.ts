@@ -43,6 +43,11 @@ const numberWithCommas =(x:number)=> {
     let num:any = Math.round(x * 100) / 100
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+//RANDMON INT
+const getRandomInt = (min: number, max: number) => {
+    return Math.random() * (max - min) + min;
+  }
   
 // const textt
 export default{
@@ -50,5 +55,6 @@ export default{
     symbolRandomizer,
     loadTexture,
     hasConsecutiveSameValues,
-    numberWithCommas
+    numberWithCommas,
+    getRandomInt
 }

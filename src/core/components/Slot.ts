@@ -68,6 +68,13 @@ export default class Slot{
     public paylines:Array<any> = []
     //checkIfanimationDone
     private animateDone:boolean = true;
+    
+    //grass
+    private slideshowTicker: Boolean = true;
+    private play: Boolean = true;
+    private grass: Array<any> = [];
+    private grassSprites: Array<PIXI.Sprite> = [];
+    private protection: number = 0;
     constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -313,12 +320,56 @@ export default class Slot{
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
                 if(data.type == 9){
-                    this.levelBarIndicator.width += 1 
+                    this.levelBarIndicator.width += 10 
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width >= this.levelBarWidth){
-                        this.matchingGame()
+                        this.createGrass()
+                        this.animateGrass()
+
+                        this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
+
+                        let transition = gsap.to(this.container, {
+                            alpha: 0,
+                            ease: "sine.in",
+                            duration: 1.3,
+                            onComplete: () => {
+                               // this.app.stage.removeChild(this.homeComponent.container);
+                                this.grassSprites.forEach((element, index) => {
+                                    let delay = .005 * index;
+                                    let gsapper = gsap.to(element, {
+                                        delay: delay,
+                                        duration: .05,
+                                        alpha: 0,
+                                        onStart: () => {
+                                            this.matchingGame()
+                                            if(index == 0){
+                                                let transition2 = gsap.to(this.container, {
+                                                    alpha: 1,
+                                                    ease: "sine.out",
+                                                    duration: 1.5,
+                                                    onComplete: () => {
+                                                        transition2.kill();
+
+                                                    }
+                                                });
+                                            }
+                                        },
+                                        onComplete: () =>{
+                                            this.app.stage.removeChild(element);
+                                            if(index == this.grassSprites.length - 1){
+                                                this.grass = [];
+                                                this.grassSprites = [];
+                                            }
+                                            gsapper.kill();
+                                        }
+                                    });
+                                });
+                                //this.overallticker.destroy();
+                                transition.kill();
+                            }
+                        });
                     }
                 }
             }
@@ -587,4 +638,55 @@ export default class Slot{
         }
         return arr
     }
+
+    private createGrass(){
+        // this.playSound(27)
+         while(this.grass.length < 300){
+             let bubble = {
+                 x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
+                 y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
+                 size: Math.round(Functions.getRandomInt(50, 350))
+             }
+ 
+             let overlapping = false;
+             for(let j = 0; j < this.grass.length; j++){
+                 let other = this.grass[j];
+                 if (bubble.x < other.x + other.size &&
+                     bubble.x + bubble.size > other.x &&
+                     bubble.y < other.y + other.size &&
+                     bubble.size + bubble.y > other.y) {
+                     overlapping = true;
+                     break;
+                  }
+             }
+ 
+             if(!overlapping){
+                 this.grass.push(bubble);
+             }
+ 
+             this.protection++;
+             if(this.protection > 10000){
+                 break;
+             }
+         }
+     }
+ 
+     private animateGrass(){
+         let duration = 10;
+         this.grass.forEach((element, index) => {
+             let interval = duration * index;
+             let show = setTimeout(() => {
+                 const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
+                 sprite.width = element.size;
+                 sprite.height = element.size;
+                 sprite.x = element.x;
+                 sprite.y = element.y;
+                 this.grassSprites.push(sprite);
+                 this.app.stage.addChild(sprite);
+                 clearTimeout(show);
+             }, interval);
+         });
+     }
+
+    
 }
