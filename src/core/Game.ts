@@ -235,7 +235,6 @@ export default class Game{
                 })
             }
         })
-
         this.gameContainer.addChild(this.buyBonusFrame)
     }
     private hideBonusPopUp(dY:number,sY:number){
@@ -257,7 +256,7 @@ export default class Game{
             }
         })
     }
-    public matchingGame(){
+    private matchingGame(){
         this.isMatchingGame = true
         const blocksContainer = new PIXI.Container()
         let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
@@ -351,10 +350,19 @@ export default class Game{
         this.controller.parentSprite.addChild(this.paylineText)
     }
     private updatePaylineAnimation(greetings:string){
+        let paylineContent:any = this.slotGame.paylines
         this.paylineText.text = greetings
+        if(this.slotGame.paylines.length !== 0){
+            paylineContent.forEach((data:any,index:number)=>{
+                // console.log(data)
+                data.symbols.forEach((data:any,i:number)=>{
+                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
+                    this.controller.parentSprite.addChild(symbols)
+                })
+            })
+        }
     }
     private events(){
-
         //open system settings modal
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
             // call settings modal
@@ -457,14 +465,8 @@ export default class Game{
                 this.controller.spinBtnSprite.interactive = false
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
-                if(!this.slotGame.isSpinning){
-                   // this.startSpin(this.modal.totalSpin)
-                   if(this.modal.totalSpin >= 1){
-                        this.startSpin(this.modal.totalSpin)
-                   }else{
-                    alert("Please choose a spin count!");
-                   }
-                }    
+                if(!this.slotGame.isSpinning)
+                    this.startSpin(this.modal.totalSpin)
             })
             // set background on hover
             this.modal.rollBtn.addEventListener('mouseenter',()=>{
