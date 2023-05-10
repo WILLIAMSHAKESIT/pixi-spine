@@ -16,6 +16,7 @@ export default class Game{
     private textureArray:any
     private gameContainer:PIXI.Container;
     private gameBackground:PIXI.Sprite
+    private matchingBlocksContainer:PIXI.Container
     private baseWidth:number;
     private baseHeight:number;
     private slotGame:Slot;
@@ -38,13 +39,18 @@ export default class Game{
     private userCredit:number = 999
     private isAutoPlay:boolean = false
     private isMatchingGame:boolean = false
+    private paylineAnimCount:number = 0
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
+    private descText:PIXI.TextStyle
     //text values
     private buyBonusText:PIXI.Text
     private paylineText:PIXI.Text
     private paylineGreetings:string
+    //arrays 
+    private paylineContainers:Array<any> = []
+    private paylineContainersAnimation:Array<any> = []
     constructor(){
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
@@ -65,6 +71,20 @@ export default class Game{
             fontFamily: 'Eras ITC',
             fontSize: 100,
             fontWeight: 'bolder',
+            fill: ['#ffffff', '#ffffff'], // gradient
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 3,
+            wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+        this.descText = new PIXI.TextStyle({  
+            fontFamily: 'Eras ITC',
+            fontSize: 30,
             fill: ['#ffffff', '#ffffff'], // gradient
             strokeThickness: 5,
             dropShadow: true,
@@ -98,7 +118,6 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        // this.matchingGame()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -165,18 +184,23 @@ export default class Game{
         this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
-        this.paylineGreetings = 'SPIN TO WIN'
-        this.userCredit = (this.userCredit-this.betAmount)+this.slotGame.totalWin
-        this.updateCreditValues()
-        if(this.slotGame.autoPlayCount <= 1){
-            this.isAutoPlay = false
-            this.controller.spinBtnSprite.texture = this.spinTextureOn
-            this.controller.spinBtnSprite.interactive = true
+        if(!this.isMatchingGame){
+            this.paylineGreetings = 'SPIN TO WIN'
+            this.userCredit = (this.userCredit-this.betAmount)+this.slotGame.totalWin
+            this.updateCreditValues()
+            if(this.slotGame.autoPlayCount <= 1){
+                this.isAutoPlay = false
+                this.controller.spinBtnSprite.texture = this.spinTextureOn
+                this.controller.spinBtnSprite.interactive = true
+            }
+            this.updatePaylineAnimation(this.paylineGreetings)
         }
-        this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
         this.paylineGreetings = 'GOOD LUCK'
+        this.paylineContainers.forEach(data=>{
+            this.controller.parentSprite.removeChild(data)
+        })
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private createBuyBonus(){
@@ -258,7 +282,7 @@ export default class Game{
     }
     private matchingGame(){
         this.isMatchingGame = true
-        const blocksContainer = new PIXI.Container()
+        this.matchingBlocksContainer = new PIXI.Container()
         let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
         let arrayBlockValues:Array<any> = []
         let blockSpacing = 1.2
@@ -268,21 +292,11 @@ export default class Game{
         let miniCount = 0
         let majorCount = 0
         let grandCount = 0
-        //change visibilities of normal game
-        this.slotGame.reelContainer.forEach(data=>{
-            data.visible = false
-        })
-        this.slotGame.frameBg.texture = Functions.loadTexture(this.textureArray,'main','slot_frame_bg2').texture
-        this.slotGame.levelBarContainer.x = -this.slotGame.levelBarContainer.width * 0.5
-        this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent2').texture
-        this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
-        this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
-        this.controller.spinBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','spin_button2').texture
-        this.controller.autoPlay.texture = Functions.loadTexture(this.textureArray,'controller','autoplay_button2').texture
-        this.buyBonusBtn.visible = false
-        this.gameBackground.texture = Functions.loadTexture(this.textureArray,'main','bg2').texture
+
+        this.enableButtons(false)
+        this.lightMode(false)
         //create blocks
-        
+
         randomizeArray.forEach((data:string,index:number)=>{
             const symbol = Functions.loadTexture(this.textureArray,'bonus',`${data}`)
             const rock = Functions.loadTexture(this.textureArray,'bonus',`rock_block`)
@@ -329,14 +343,19 @@ export default class Game{
                 }
             })
             arrayBlockValues.push({rock:rock,symbol:symbol})
-            blocksContainer.addChild(symbol)
-            blocksContainer.addChild(rock)
+            this.matchingBlocksContainer.addChild(symbol)
+            this.matchingBlocksContainer.addChild(rock)
         })
-        blocksContainer.x = (this.slotGame.frameBg.width-blocksContainer.width)/2
-        blocksContainer.y = (this.slotGame.frameBg.height-blocksContainer.height)/2
-        this.slotGame.frameBg.addChild(blocksContainer)
+        this.matchingBlocksContainer.x = (this.slotGame.frameBg.width-this.matchingBlocksContainer.width)/2
+        this.matchingBlocksContainer.y = (this.slotGame.frameBg.height-this.matchingBlocksContainer.height)/2
+        this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
     }
     private matchinGameWinPop(arrayBlockValues:Array<any>){
+        this.isMatchingGame = false
+        this.lightMode(true)
+        this.enableButtons(true)
+        this.slotGame.levelBarIndicator.width = 0
+        this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
         arrayBlockValues.forEach(data=>{
             data.rock.visible = false
             data.symbol.visible = true
@@ -350,17 +369,95 @@ export default class Game{
         this.controller.parentSprite.addChild(this.paylineText)
     }
     private updatePaylineAnimation(greetings:string){
+        this.paylineAnimCount = 0
+        this.paylineContainers = []
+        this.paylineContainersAnimation = []
         let paylineContent:any = this.slotGame.paylines
+        let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
         if(this.slotGame.paylines.length !== 0){
-            paylineContent.forEach((data:any,index:number)=>{
-                // console.log(data)
-                data.symbols.forEach((data:any,i:number)=>{
+            let symbolsContainer = new PIXI.Container
+            for(let i=1;i<=paylineContent.length;i++){
+                const container = new PIXI.Container
+                const containerWithText = new PIXI.Container
+                const greetingText = new PIXI.Text(`line${paylineContent[i-1].payline} pays ${Functions.numberWithCommas(paylineContent[i-1].payout)}` , this.descText)
+                paylineContent[i-1].symbols.forEach((data:any,index:number)=>{
                     let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
-                    this.controller.parentSprite.addChild(symbols)
+                    symbols.x = index*65
+                    symbols.scale.set(.2)
+                    container.addChild(symbols)
                 })
-            })
+                containerWithText.addChild(container,greetingText)
+                greetingText.x = -greetingText.width
+                greetingText.y = (containerWithText.height - greetingText.height)/2
+                symbolsContainer.addChild(containerWithText)
+                this.paylineContainersAnimation.push(containerWithText)
+                this.paylineContainers.push(symbolsContainer)
+                this.animateSymbols(containerWithText,i,parentContainer,paylineContent.length)
+            }
+            symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
+            symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
+            parentContainer.addChild(symbolsContainer)
         }
+    }
+    private animateSymbols(containerWithText:any,i:number,parentContainer:any,totalLines:number){
+        containerWithText.x = (parentContainer.width - containerWithText.width)/7
+        let fadeIn = gsap.to(containerWithText,{
+            delay:(i-1)*3,
+            duration:0.3,
+            alpha:1,
+            onComplete:()=>{
+                fadeIn.kill()
+                let fadeOut = gsap.to(containerWithText,{
+                    delay:i*2,
+                    duration:0.3,
+                    alpha:0,
+                    onComplete:()=>{
+                        fadeOut.kill()
+                        this.paylineAnimCount++
+                        if(this.paylineAnimCount == (this.slotGame.paylines.length)){
+                            this.paylineAnimCount = 0
+                            this.paylineContainersAnimation.forEach((data,index)=>{
+                                this.animateSymbols(data,index+2,parentContainer,totalLines)
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+    private lightMode(bool:boolean){
+        let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
+        let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
+        let infoBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'info_button':'info_button2').texture
+        let settingBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'system_settings':'system_settings2').texture
+        let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
+        let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
+        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
+        //change visibilities of normal game
+        this.slotGame.reelContainer.forEach(data=>{
+            data.visible = bool
+        })
+        this.slotGame.frameBg.texture = frameBgTexture
+        this.controller.parentSprite.texture = parentSpriteTexture
+        this.controller.infoBtnSprite.texture = infoBtnTexture
+        this.controller.settingBtnSpite.texture = settingBtnTexture
+        this.controller.spinBtnSprite.texture = spinBtnTexture
+        this.controller.autoPlay.texture = autoPlayTexture
+        this.gameBackground.texture = gameBackgroundTexture
+        this.buyBonusBtn.visible = bool
+        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+    }
+    private enableButtons(bool:boolean){
+        let cursor = bool?'pointer':''
+        this.controller.spinBtnSprite.interactive = bool
+        this.controller.spinBtnSprite.cursor = cursor
+        this.controller.autoPlay.interactive = bool
+        this.controller.autoPlay.cursor = cursor
+        this.controller.settingBtnSpite.interactive = bool
+        this.controller.settingBtnSpite.cursor = cursor
+        this.controller.infoBtnSprite.interactive = bool
+        this.controller.infoBtnSprite.cursor = cursor
     }
     private events(){
         //open system settings modal
