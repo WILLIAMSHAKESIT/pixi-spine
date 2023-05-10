@@ -17,6 +17,7 @@ export default class Game{
     private gameContainer:PIXI.Container;
     private gameBackground:PIXI.Sprite
     private matchingBlocksContainer:PIXI.Container
+    private createPaylineContainer:PIXI.Container
     private baseWidth:number;
     private baseHeight:number;
     private slotGame:Slot;
@@ -43,22 +44,21 @@ export default class Game{
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
+    private textStyle3:PIXI.TextStyle
     private descText:PIXI.TextStyle
     //text values
     private buyBonusText:PIXI.Text
     private paylineText:PIXI.Text
+    private paylineTextBottom:PIXI.Text
     private paylineGreetings:string
     //arrays 
     private paylineContainers:Array<any> = []
     private paylineContainersAnimation:Array<any> = []
-
-    //grass
-    private slideshowTicker: Boolean = true;
-    private play: Boolean = true;
-    private grass: Array<any> = [];
-    private grassSprites: Array<PIXI.Sprite> = [];
-    private protection: number = 0;
+    
     constructor(){
+        this.createPaylineContainer = new PIXI.Container
+        this.matchingBlocksContainer = new PIXI.Container
+        this.gameContainer = new PIXI.Container
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 55,
@@ -70,7 +70,7 @@ export default class Game{
             dropShadowBlur: 4,
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 3,
-            wordWrap: true,
+            wordWrap: false,
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
@@ -86,6 +86,21 @@ export default class Game{
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 3,
             wordWrap: true,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
+        this.textStyle3 = new PIXI.TextStyle({  
+            fontFamily: 'Eras ITC',
+            fontSize: 40,
+            fontWeight: 'bolder',
+            fill: ['#ffffff', '#ffffff'], // gradient
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 3,
+            wordWrap: false,
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
@@ -110,7 +125,6 @@ export default class Game{
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = res
-        this.gameContainer = new PIXI.Container
         this.textureToggleOn = Functions.loadTexture(this.textureArray,'modal','on').texture
         this.textureToggleOff = Functions.loadTexture(this.textureArray,'modal','off').texture
         this.textureRollOn = Functions.loadTexture(this.textureArray,'modal','roll_active').texture
@@ -146,9 +160,6 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
-        // this.createGrass();
-        // this.animateGrass();
-
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -180,7 +191,6 @@ export default class Game{
     }
     private betTextValue(){
         //bet value
-
         this.controller.betText.text = this.betAmount 
         this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
         //bet value buy bonus
@@ -300,7 +310,6 @@ export default class Game{
     }
     private matchingGame(){
         this.isMatchingGame = true
-        this.matchingBlocksContainer = new PIXI.Container()
         let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
         let arrayBlockValues:Array<any> = []
         let blockSpacing = 1.2
@@ -382,9 +391,12 @@ export default class Game{
     private createPaylineAnimation(){
         let greetY = 30
         this.paylineText =  new PIXI.Text('SPIN TO WIN', this.textStyle)
+        this.paylineTextBottom = new PIXI.Text('Tap space or enter to skip', this.textStyle3)
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
         this.paylineText.y = greetY
-        this.controller.parentSprite.addChild(this.paylineText)
+        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
+        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
+        this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
     }
     private updatePaylineAnimation(greetings:string){
         this.paylineAnimCount = 0
@@ -393,50 +405,68 @@ export default class Game{
         let paylineContent:any = this.slotGame.paylines
         let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
+        let paylineTotal = 0
+        this.paylineTextBottom.text = 'Tap space or enter to skip'
         if(this.slotGame.paylines.length !== 0){
             let symbolsContainer = new PIXI.Container
-            for(let i=1;i<=paylineContent.length;i++){
+            for(let i=0;i<paylineContent.length;i++){
+                this.paylineTextBottom.text = ''
+                let payline = paylineContent[i].payline
+                let payout = Functions.numberWithCommas(paylineContent[i].payout)
                 const container = new PIXI.Container
                 const containerWithText = new PIXI.Container
-                const greetingText = new PIXI.Text(`line${paylineContent[i-1].payline} pays ${Functions.numberWithCommas(paylineContent[i-1].payout)}` , this.descText)
-                paylineContent[i-1].symbols.forEach((data:any,index:number)=>{
+                const greetingText = new PIXI.Text(`line ${payline} pays ${payout}`, this.descText)
+                paylineContent[i].symbols.forEach((data:any,index:number)=>{
                     let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
                     symbols.x = index*65
                     symbols.scale.set(.2)
                     container.addChild(symbols)
+                    paylineTotal+=json.symbolAssets[data-1].pay
                 })
+                container.x = greetingText.width
                 containerWithText.addChild(container,greetingText)
-                greetingText.x = -greetingText.width
+                containerWithText.alpha = 0
                 greetingText.y = (containerWithText.height - greetingText.height)/2
                 symbolsContainer.addChild(containerWithText)
                 this.paylineContainersAnimation.push(containerWithText)
                 this.paylineContainers.push(symbolsContainer)
-                this.animateSymbols(containerWithText,i,parentContainer,paylineContent.length)
+                this.animatePaySymbols(containerWithText,i,symbolsContainer,paylineContent.length)
             }
             symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
             parentContainer.addChild(symbolsContainer)
+            this.paylineText.text = `WIN ${paylineTotal}`
         }
+        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
+        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
-    private animateSymbols(containerWithText:any,i:number,parentContainer:any,totalLines:number){
-        containerWithText.x = (parentContainer.width - containerWithText.width)/7
+
+    private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any,totalLines:number){
+        let parentContainer = this.controller.parentSprite
         let fadeIn = gsap.to(containerWithText,{
-            delay:(i-1)*3,
-            duration:0.3,
+            delay:i*4,
+            duration:0.1,
             alpha:1,
+            onStart:()=>{
+                containerWithText.x = (symbolsContainer.width - containerWithText.width)/2
+                symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
+                symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
+            },
             onComplete:()=>{
                 fadeIn.kill()
                 let fadeOut = gsap.to(containerWithText,{
-                    delay:i*2,
-                    duration:0.3,
-                    alpha:0,
+                    delay:0,
+                    duration:3,
+                    alpha:1,
                     onComplete:()=>{
                         fadeOut.kill()
+                        containerWithText.alpha = 0
                         this.paylineAnimCount++
                         if(this.paylineAnimCount == (this.slotGame.paylines.length)){
                             this.paylineAnimCount = 0
                             this.paylineContainersAnimation.forEach((data,index)=>{
-                                this.animateSymbols(data,index+2,parentContainer,totalLines)
+                                this.animatePaySymbols(data,index,symbolsContainer,totalLines)
                             })
                         }
                     }
@@ -444,6 +474,7 @@ export default class Game{
             }
         })
     }
+
     private lightMode(bool:boolean){
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
         let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
@@ -453,9 +484,8 @@ export default class Game{
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
         let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
         //change visibilities of normal game
-        this.slotGame.reelContainer.forEach(data=>{
-            data.visible = bool
-        })
+        this.slotGame.reelContainer.forEach(data=>{data.visible = bool})
+        this.paylineContainers.forEach(data=>{data.visible = bool})
         this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
         this.controller.infoBtnSprite.texture = infoBtnTexture
