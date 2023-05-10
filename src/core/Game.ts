@@ -162,7 +162,7 @@ export default class Game{
     private betTextValue(){
         //bet value
 
-        this.controller.betText.text = this.betAmount
+        this.controller.betText.text = this.betAmount 
         this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
         //bet value buy bonus
         this.buyBonusText.text = this.betAmount
