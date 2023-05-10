@@ -177,8 +177,8 @@ export default class Game{
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
-        this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
+        this.createPaylineAnimation()
     }
     private startSpin(spinCount:number){
         this.slotGame.autoPlayCount = spinCount
@@ -392,25 +392,35 @@ export default class Game{
         let greetY = 30
         this.paylineText =  new PIXI.Text('SPIN TO WIN', this.textStyle)
         this.paylineTextBottom = new PIXI.Text('Tap space or enter to skip', this.textStyle3)
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+       
         this.paylineText.y = greetY
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
+        this.createPaylineContainer.addChild(this.paylineText)
         this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
-        this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
+        this.createPaylineContainer.addChild(this.paylineTextBottom)
+        this.gameContainer.addChild(this.createPaylineContainer)
+        this.createPaylineContainer.y = this.controller.parentSprite.y
+        this.createPaylineContainer.x = (this.controller.parentSprite.width - this.createPaylineContainer.width)/2
+        this.paylineTextBottom.x = (this.createPaylineContainer.width - this.paylineTextBottom.width)/2
+        this.paylineText.x = (this.createPaylineContainer.width - this.paylineText.width)/2
     }
     private updatePaylineAnimation(greetings:string){
+        let paylineContent:any = this.slotGame.paylines
+        let controllerParent = this.controller.parentSprite
+        let parentContainer = this.createPaylineContainer
+        let paylineTotal = 0
+        let textBottom = this.paylineTextBottom
+
         this.paylineAnimCount = 0
         this.paylineContainers = []
         this.paylineContainersAnimation = []
-        let paylineContent:any = this.slotGame.paylines
-        let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
-        let paylineTotal = 0
-        this.paylineTextBottom.text = 'Tap space or enter to skip'
+
+        textBottom.text = 'Tap space or enter to skip'
+
         if(this.slotGame.paylines.length !== 0){
             let symbolsContainer = new PIXI.Container
             for(let i=0;i<paylineContent.length;i++){
-                this.paylineTextBottom.text = ''
+                textBottom.text = ''
                 let payline = paylineContent[i].payline
                 let payout = Functions.numberWithCommas(paylineContent[i].payout)
                 const container = new PIXI.Container
@@ -432,18 +442,20 @@ export default class Game{
                 this.paylineContainers.push(symbolsContainer)
                 this.animatePaySymbols(containerWithText,i,symbolsContainer,paylineContent.length)
             }
-            symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
+            symbolsContainer.x = (this.controller.parentSprite.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
-            parentContainer.addChild(symbolsContainer)
+            controllerParent.addChild(symbolsContainer)
             this.paylineText.text = `WIN ${paylineTotal}`
         }
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
+        textBottom.x = (parentContainer.width - textBottom.width)/2
+        this.createPaylineContainer.x = (this.controller.parentSprite.width - this.createPaylineContainer.width)/2
     }
 
     private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any,totalLines:number){
         let parentContainer = this.controller.parentSprite
+        symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
+        symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
         let fadeIn = gsap.to(containerWithText,{
             delay:i*4,
             duration:0.1,
