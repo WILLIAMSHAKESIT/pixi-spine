@@ -46,7 +46,7 @@ const numberWithCommas =(x:number)=> {
 //RANDMON INT
 const getRandomInt = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
-  }
+}
   
 // const textt
 export default{
