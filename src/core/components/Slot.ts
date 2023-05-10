@@ -398,6 +398,8 @@ export default class Slot{
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
+            console.log(data,"datas")
+           
             if(index == 0 && data.count>2){
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
@@ -490,6 +492,7 @@ export default class Slot{
                 this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
             }
         })
+        console.log("end")
     }
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
