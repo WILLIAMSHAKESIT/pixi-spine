@@ -218,9 +218,17 @@ export default class Game{
         let sY = -this.buyBonusFrame.height
         close.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
+            let setBooleanBoard = setTimeout(()=>{
+                this.buyBonusBtn.interactive = true
+                clearTimeout(setBooleanBoard);
+            },1000);
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
+            let setBooleanBoard = setTimeout(()=>{
+                this.buyBonusBtn.interactive = true
+                clearTimeout(setBooleanBoard);
+            },1000);
         })
         let bonusFrameShow = gsap.from(this.buyBonusFrame, {
             delay:.3,
@@ -489,6 +497,7 @@ export default class Game{
         //buy bonus
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
             this.buyBonusPopUp()
+            this.buyBonusBtn.interactive = false
         })
     }
 }
