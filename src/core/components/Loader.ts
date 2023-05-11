@@ -34,12 +34,13 @@ export default class Loader{
         PIXI.Assets.add('modal', 'assets/modal/sprites/modal.json');
         PIXI.Assets.add('bonus', 'assets/bonus/sprites/bonus.json');
         PIXI.Assets.add('grass', 'assets/main/sprites/grass.json');
+        PIXI.Assets.add('pop_glow', 'assets/bonus/sprites/pop_glow.json');
         // Load the assets and get a resolved promise once both are loaded
         const texturesPromise = PIXI.Assets.load([
             'main','slot','controller','bag_of_gold',
             'barrels','boots','dynamite_crate','gas_lamp',
             'pile_of_gold','snake','trolley','wild','modal',
-            'bonus','grass'
+            'bonus','grass','pop_glow'
         ]);
 
         texturesPromise.then((resource) => {

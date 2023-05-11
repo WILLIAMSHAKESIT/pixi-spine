@@ -54,6 +54,8 @@ export default class Game{
     //arrays 
     private paylineContainers:Array<any> = []
     private paylineContainersAnimation:Array<any> = []
+    //spines
+    private popGlow:Spine
     
     constructor(){
         this.createPaylineContainer = new PIXI.Container
@@ -239,6 +241,15 @@ export default class Game{
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         // buy bonus modal 
+        // glow animation
+        this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
+        this.popGlow.x = 956
+        this.popGlow.y = 1044
+        this.popGlow.alpha = 0
+        this.popGlow.scale.x = 1.1
+        this.popGlow.scale.y = 1.3
+        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
+        this.overlay.addChild(this.popGlow)
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         this.buyBonusFrame.x = (this.baseWidth - this.buyBonusFrame.width)/2
         this.buyBonusFrame.y = dY
@@ -277,6 +288,14 @@ export default class Game{
                     y:dY-160,
                     onComplete:()=>{
                         bounceUp.kill()
+                        let fadeInGlow = gsap.to(this.popGlow,{
+                            delay:0,
+                            duration:1,
+                            alpha:1,
+                            onComplete:()=>{
+                                fadeInGlow.kill()
+                            }
+                        }) 
                     }
                 })
             }
@@ -286,23 +305,28 @@ export default class Game{
     }
     private hideBonusPopUp(dY:number,sY:number){
         this.enableButtons(true)
-        let bonusFrameHide = gsap.to(this.buyBonusFrame, {
-            delay:0,
-            duration:0.5,
-            y:dY*1.2,
+        let fadeOutGlow = gsap.to(this.popGlow,{
+            duration:0.8,
+            alpha:0,
             onComplete:()=>{
-                bonusFrameHide.kill()
-                let bounceDown = gsap.to(this.buyBonusFrame,{
-                    delay:0,
-                    duration:0.5,
-                    y:sY,
+                fadeOutGlow.kill()
+                let bonusFrameHide = gsap.to(this.buyBonusFrame, {
+                    duration:0.2,
+                    y:dY*1.2,
                     onComplete:()=>{
-                        bounceDown.kill()
-                        this.gameContainer.removeChild(this.overlay)
+                        bonusFrameHide.kill()
+                        let bounceDown = gsap.to(this.buyBonusFrame,{
+                            duration:0.2,
+                            y:sY,
+                            onComplete:()=>{
+                                bounceDown.kill()
+                                this.gameContainer.removeChild(this.overlay)
+                            }
+                        })
                     }
                 })
             }
-        })
+        }) 
     }
     private matchingGame(){
         this.isMatchingGame = true

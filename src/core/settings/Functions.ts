@@ -1,4 +1,6 @@
+import 'pixi-spine' 
 import * as PIXI from 'pixi.js';
+import {Spine} from 'pixi-spine';
 
 const arrayRandomizer = (array:any)=> {
     let currentIndex = array.length,  randomIndex;
@@ -22,6 +24,19 @@ const symbolRandomizer = (arr:Array<any>) =>{
 }
 const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
+}
+const loadSpine = (textureArray:any,objKey:string)=>{
+   return new Spine(textureArray[`${objKey}`].spineData)
+}
+const loadSpineAnimation = (spine:any,animation:string,loop:boolean,animationSpeed:number)=>{
+    if (spine.state.hasAnimation(`${animation}`)) {
+        // run animation
+        spine.state.setAnimation(0, `${animation}`, loop);
+        // animation spee
+        spine.state.timeScale = animationSpeed;
+        // update yourself
+        spine.autoUpdate = loop;
+    }
 }
 const hasConsecutiveSameValues=(arr:Array<any>)=> {
     let count = 1; 
@@ -56,5 +71,7 @@ export default{
     loadTexture,
     hasConsecutiveSameValues,
     numberWithCommas,
-    getRandomInt
+    getRandomInt,
+    loadSpineAnimation,
+    loadSpine
 }
