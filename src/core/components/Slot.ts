@@ -114,7 +114,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -319,8 +319,7 @@ export default class Slot{
     private reelContainWild(index:number){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
-                if(data.type == 9){
-                    this.levelBarIndicator.width += 1  
+                if(data.type == 9){ 
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
