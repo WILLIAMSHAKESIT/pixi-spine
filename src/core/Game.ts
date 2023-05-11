@@ -54,6 +54,16 @@ export default class Game{
     //arrays 
     private paylineContainers:Array<any> = []
     private paylineContainersAnimation:Array<any> = []
+
+    //grass
+    private slideshowTicker: Boolean = true;
+    private play: Boolean = true;
+    private grass: Array<any> = [];
+    private grassSprites: Array<PIXI.Sprite> = [];
+    private protection: number = 0;
+
+    //free spin
+    private isFreeSpin:boolean = false;
     
     constructor(){
         this.createPaylineContainer = new PIXI.Container
@@ -143,7 +153,7 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
-                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin){
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
@@ -172,7 +182,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
@@ -215,6 +225,7 @@ export default class Game{
             }
             this.updatePaylineAnimation(this.paylineGreetings)
         }
+        //this.slotGame.isFreeSpin = false
     }
     private onSpin(){
         this.paylineGreetings = 'GOOD LUCK'
@@ -267,6 +278,55 @@ export default class Game{
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
+
+            let timeOut = setTimeout(()=>{
+                this.startSpin(1)
+                clearTimeout(timeOut)
+            },1000)
+            this.slotGame.isFreeSpin= true
+          
+            // this.createGrass()
+            // this.animateGrass()
+
+            // let transition = gsap.to(this.slotGame.container, {
+            //     alpha: 0,
+            //     ease: "sine.in",
+            //     duration: 1.3,
+            //     onComplete: () => {
+            //        // this.app.stage.removeChild(this.homeComponent.container);
+            //         this.grassSprites.forEach((element, index) => {
+            //             let delay = .005 * index;
+            //             let gsapper = gsap.to(element, {
+            //                 delay: delay,
+            //                 duration: .05,
+            //                 alpha: 0,
+            //                 onStart: () => {       
+            //                     if(index == 0){
+            //                         let transition2 = gsap.to(this.slotGame.container, {
+            //                             alpha: 1,
+            //                             ease: "sine.out",
+            //                             duration: 1.5,
+            //                             onComplete: () => {
+            //                                 transition2.kill();
+
+            //                             }
+            //                         });
+            //                     }
+            //                 },
+            //                 onComplete: () =>{
+            //                     this.app.stage.removeChild(element);
+            //                     if(index == this.grassSprites.length - 1){
+            //                         this.grass = [];
+            //                         this.grassSprites = [];
+            //                     }
+            //                     gsapper.kill();
+            //                 }
+            //             });
+            //         });
+            //         transition.kill();
+            //         this.freeSpinEvent()
+            //     }
+            // });
         })
         let bonusFrameShow = gsap.from(this.buyBonusFrame, {
             delay:.3,
@@ -485,6 +545,25 @@ export default class Game{
         this.buyBonusBtn.visible = bool
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
     }
+    private lightModeEvent(bool:boolean){
+        let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
+        let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
+        let infoBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'info_button':'info_button2').texture
+        let settingBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'system_settings':'system_settings2').texture
+        let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
+        let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
+        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
+        //change visibilities of normal game
+       // this.slotGame.frameBg.texture = frameBgTexture
+        this.controller.parentSprite.texture = parentSpriteTexture
+        this.controller.infoBtnSprite.texture = infoBtnTexture
+        this.controller.settingBtnSpite.texture = settingBtnTexture
+        this.controller.spinBtnSprite.texture = spinBtnTexture
+        this.controller.autoPlay.texture = autoPlayTexture
+        this.gameBackground.texture = gameBackgroundTexture
+        this.buyBonusBtn.visible = bool
+        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+    }
     private enableButtons(bool:boolean){
         let cursor = bool?'pointer':''
         this.controller.spinBtnSprite.interactive = bool
@@ -634,4 +713,71 @@ export default class Game{
             this.enableButtons(false)
         })
     }
+
+    private freeSpinEvent(){
+        this.enableButtons(false)
+        this.lightModeEvent(false)
+        this.slotGame.isFreeSpin = true
+        this.slotGame.isFreeSpinDone = false
+        let show = setTimeout(() => {
+            this.isFreeSpin = false
+            clearTimeout(show);
+        }, 1000);
+        
+    }
+
+
+    private createGrass(){
+        // this.playSound(27)
+         while(this.grass.length < 300){
+             let bubble = {
+                 x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
+                 y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
+                 size: Math.round(Functions.getRandomInt(50, 350))
+             }
+ 
+             let overlapping = false;
+             for(let j = 0; j < this.grass.length; j++){
+                 let other = this.grass[j];
+                 if (bubble.x < other.x + other.size &&
+                     bubble.x + bubble.size > other.x &&
+                     bubble.y < other.y + other.size &&
+                     bubble.size + bubble.y > other.y) {
+                     overlapping = true;
+                     break;
+                  }
+             }
+ 
+             if(!overlapping){
+                 this.grass.push(bubble);
+             }
+ 
+             this.protection++;
+             if(this.protection > 10000){
+                 break;
+             }
+         }
+     }
+ 
+     private animateGrass(){
+         let duration = 10;
+         this.grass.forEach((element, index) => {
+             let interval = duration * index;
+             let show = setTimeout(() => {
+                 const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
+                 sprite.width = element.size;
+                 sprite.height = element.size;
+                 sprite.x = element.x;
+                 sprite.y = element.y;
+                 this.grassSprites.push(sprite);
+                 this.app.stage.addChild(sprite);
+                 clearTimeout(show);
+             }, interval);
+         });
+     }
+
+     private checkIfFreeSpin(bool:boolean){
+        this.enableButtons(false)
+        this.isFreeSpin = true
+     }
 }

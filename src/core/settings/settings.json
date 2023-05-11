@@ -53,6 +53,53 @@
             "pay":3
         }
     ],
+    "symbolAssetsEvent":[
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "corgi",
+            "type":1,
+            "pay":0.2
+        }
+    ],
     "pattern":[
         [27,27,27,27,27],
         [28,28,28,28,28],

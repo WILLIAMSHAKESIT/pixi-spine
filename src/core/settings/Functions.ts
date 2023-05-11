@@ -26,17 +26,20 @@ const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
 const hasConsecutiveSameValues=(arr:Array<any>)=> {
     let count = 1; 
     let arrRes:Array<any> = []
+    let arrType:number = 0 ;
     for (let i = 0; i < arr.length; i++) {
         arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout,type:arr[i].pattern.type,symbol:arr[i].pattern.symbol})
     }
      for (let i = 1; i < arr.length; i++) {
         if (arr[i].pattern.type === arr[i-1].pattern.type || arr[i].pattern.type == 9 ) {
             count++;
+            arrType = arr[i-1].pattern.type
+
         } else {
             break; 
         }
     } 
-    return {count:count,blocks:arrRes};      
+    return {count:count,blocks:arrRes,arrTypes:arrType};      
 }  
 const numberWithCommas =(x:number)=> {
     let num:any = Math.round(x * 100) / 100
