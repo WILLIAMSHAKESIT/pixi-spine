@@ -151,7 +151,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        // this.createCongrats()
+        //this.createCongrats()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -177,6 +177,25 @@ export default class Game{
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray)
         this.gameContainer.addChild(this.congrats.container)
+        console.log("sda")
+        this.congrats.container.cursor = 'pointer'
+        this.congrats.container.interactive = true
+        this.congrats.container.addEventListener('pointerdown',()=>{
+            this.gameContainer.removeChild(this.congrats.container)
+            this.enableButtons(true)
+            this.lightModeEvent(true)
+            this.slotGame.isFreeSpin = true
+            this.slotGame.isFreeSpinDone = false
+            let show = setTimeout(() => {
+                this.isFreeSpin = false
+                clearTimeout(show);
+            }, 1000);
+                this.slotGame.reelContainer.forEach((data,index)=>{
+                        this.slotGame.generateNewSymbols(index)      
+                })  
+    
+        })
+
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -189,7 +208,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
@@ -710,7 +729,7 @@ export default class Game{
         wildSlot.y = -200
 
         //amount
-        const amount = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
+        const amount = new PIXI.Text(`6`, this.textStyle2)
         amount.x = (wildSlot.width - amount.width)/2
         amount.y = (wildSlot.height - amount.height) * 0.85
         wildSlot.addChild(amount)
@@ -723,16 +742,19 @@ export default class Game{
         moneySlot.y = -200
 
         //amount
-        const amount2 = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
+        const amount2 = new PIXI.Text(`12`, this.textStyle2)
         amount2.x = (moneySlot.width - amount2.width)/2
         amount2.y = (moneySlot.height - amount2.height) * 0.85
         moneySlot.addChild(amount2)
+        moneySlot.cursor = 'pointer'
+        moneySlot.interactive = true
         this.gameContainer.addChild(moneySlot)
 
 
 
 
         wildSlot.addEventListener('pointerdown', () =>{
+            this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
             this.createGrass()
@@ -774,14 +796,63 @@ export default class Game{
                         });
                     });
                     transition.kill();
-                    this.startfreeSpinEvent()
+                    this.startfreeSpinEvent(6)
+                }
+            });
+        })
+
+        
+        moneySlot.addEventListener('pointerdown', () =>{
+            this.slotGame.autoplayDoneEvent = false
+            this.gameContainer.removeChild(wildSlot)
+            this.gameContainer.removeChild(moneySlot)
+            this.createGrass()
+            this.animateGrass()
+    
+            let transition = gsap.to(this.slotGame.container, {
+                alpha: 0,
+                ease: "sine.in",
+                duration: 1.3,
+                onComplete: () => {
+                    //this.app.stage.removeChild(this.homeComponent.container);
+                    this.grassSprites.forEach((element, index) => {
+                        let delay = .005 * index;
+                        let gsapper = gsap.to(element, {
+                            delay: delay,
+                            duration: .05,
+                            alpha: 0,
+                            onStart: () => {       
+                                if(index == 0){
+                                    let transition2 = gsap.to(this.slotGame.container, {
+                                        alpha: 1,
+                                        ease: "sine.out",
+                                        duration: 1.5,
+                                        onComplete: () => {
+                                            transition2.kill();
+    
+                                        }
+                                    });
+                                }
+                            },
+                            onComplete: () =>{
+                                this.app.stage.removeChild(element);
+                                if(index == this.grassSprites.length - 1){
+                                    this.grass = [];
+                                    this.grassSprites = [];
+                                }
+                                gsapper.kill();
+                            }
+                        });
+                    });
+                    transition.kill();
+                    this.startfreeSpinEvent(12)
                 }
             });
         })
 
         
     }
-    private startfreeSpinEvent(){
+    private startfreeSpinEvent(count:number){
         this.enableButtons(false)
         this.lightModeEvent(false)
         this.slotGame.isFreeSpin = true
@@ -791,8 +862,13 @@ export default class Game{
             clearTimeout(show);
         }, 1000);
             this.slotGame.reelContainer.forEach((data,index)=>{
-                    this.slotGame.generateNewSymbolsMainEvent(index)
+                    this.slotGame.generateNewSymbolsMainEvent(index)      
             })  
+            let show2 = setTimeout(() => {
+                this.slotGame.autoPlayCount = count
+                this.startSpin(count)
+                clearTimeout(show2);
+            }, 1000);
 
 
     }

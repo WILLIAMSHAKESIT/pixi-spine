@@ -60,6 +60,7 @@ export default class Slot{
     private updateCreditValues:()=>void
     private matchingGame:()=>void
     private freeSpinEvent:()=>void
+    private createCongrats:()=>void
     private checkIfFreeSpin:(bool: boolean)=>void
     private onSpin:()=>void
     private onSpinEnd:()=>void
@@ -86,7 +87,8 @@ export default class Slot{
     public isFreeSpin:boolean = false
     public isFreeSpinDone:boolean = true
     public freeSpinStart:boolean = false
-    constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void){
+    public autoplayDoneEvent:boolean = true
+    constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
@@ -95,6 +97,7 @@ export default class Slot{
         this.levelBarContainer = new PIXI.Container
         this.updateCreditValues = updateCreditValues
         this.onSpinEnd = onSpinEnd
+        this.createCongrats = createCongrats
         this.matchingGame = matchingGame
         this.freeSpinEvent = freeSpinEvent
         this.checkIfFreeSpin = checkIfFreeSpin
@@ -332,6 +335,8 @@ export default class Slot{
                                             }else{
                                                 this.startSpin(spinType) 
                                             }
+                                        }else if(this.autoPlayCount <= 1 && !this.autoplayDoneEvent) {
+                                            this.createCongrats()
                                         }
                                         // set the credit base 
                                         this.onSpinEnd()
@@ -741,7 +746,7 @@ export default class Slot{
             data.symbol.skeleton.setSkinByName(onSpin?'blur':'no_blur')
         })
     }
-    private generateNewSymbols(i:number){
+    public generateNewSymbols(i:number){
         let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
         arr.forEach((data,index)=>{

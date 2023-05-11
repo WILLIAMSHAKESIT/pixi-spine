@@ -11,11 +11,11 @@ export default class Congrats{
     private baseWidth:number
     private baseHeight:number
     public container:PIXI.Container
-    private middleContainer:PIXI.Container
+    public middleContainer:PIXI.Container
     private coinsContainer:PIXI.Container
     private overlay:PIXI.Sprite
     private popGlow:Spine
-    private logo:Spine
+    public logo:Spine
     private leftCoinAnimation: any;
     private rightCoinAnimation: any;
     //text styles
@@ -125,9 +125,11 @@ export default class Congrats{
         this.logo = new Spine(this.textureArray.congrats.spineData)
         this.logo.x = (this.overlay.width)/2
         this.logo.y = (this.overlay.height)/1.2
+   
         // animate glow
         Functions.loadSpineAnimation(this.logo,'animation',true,0.2)
         this.middleContainer.addChild(this.logo)
+
 
         //create text
         this.descText = new PIXI.Text('YOU WON', this.textStyle)
@@ -154,6 +156,7 @@ export default class Congrats{
         clickAnyTxt.x = (this.overlay.width - clickAnyTxt.width)/2
         clickAnyTxt.y = (this.overlay.height - clickAnyTxt.height)/1.4
         this.middleContainer.addChild(clickAnyTxt)
+
     }
 
     private createCoin(){
