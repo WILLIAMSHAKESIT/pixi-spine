@@ -320,8 +320,7 @@ export default class Slot{
     private reelContainWild(index:number){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
-                if(data.type == 9){
-                    this.levelBarIndicator.width += 1  
+                if(data.type == 9){ 
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){

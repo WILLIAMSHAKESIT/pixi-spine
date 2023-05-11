@@ -34,13 +34,13 @@ export default class Game{
     //sprites
     private buyBonusBtn:PIXI.Sprite
     private buyBonusFrame:PIXI.Sprite
+    private overlay:PIXI.Sprite
     // values
     private betAmount:number = 1
     private betIndex:number = 0
     private userCredit:number = 999
     private isAutoPlay:boolean = false
     private isMatchingGame:boolean = false
-    private paylineAnimCount:number = 0
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
@@ -236,6 +236,8 @@ export default class Game{
     }
     private buyBonusPopUp(){
         let dY = -80
+        //overlay
+        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         // buy bonus modal 
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         this.buyBonusFrame.x = (this.baseWidth - this.buyBonusFrame.width)/2
@@ -261,18 +263,10 @@ export default class Game{
         this.buyBonusFrame.addChild(check)
         let sY = -this.buyBonusFrame.height
         close.addEventListener('pointerdown',()=>{
-            this.hideBonusPopUp(dY,sY)
-            let setBooleanBoard = setTimeout(()=>{
-                this.buyBonusBtn.interactive = true
-                clearTimeout(setBooleanBoard);
-            },1000);
+            this.hideBonusPopUp(dY,sY);
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
-            let setBooleanBoard = setTimeout(()=>{
-                this.buyBonusBtn.interactive = true
-                clearTimeout(setBooleanBoard);
-            },1000);
         })
         let bonusFrameShow = gsap.from(this.buyBonusFrame, {
             delay:.3,
@@ -287,9 +281,11 @@ export default class Game{
                 })
             }
         })
-        this.gameContainer.addChild(this.buyBonusFrame)
+        this.overlay.addChild(this.buyBonusFrame)
+        this.gameContainer.addChild(this.overlay)
     }
     private hideBonusPopUp(dY:number,sY:number){
+        this.enableButtons(true)
         let bonusFrameHide = gsap.to(this.buyBonusFrame, {
             delay:0,
             duration:0.5,
@@ -302,7 +298,7 @@ export default class Game{
                     y:sY,
                     onComplete:()=>{
                         bounceDown.kill()
-                        this.gameContainer.removeChild(this.buyBonusFrame)
+                        this.gameContainer.removeChild(this.overlay)
                     }
                 })
             }
@@ -399,7 +395,6 @@ export default class Game{
         this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
     }
     private updatePaylineAnimation(greetings:string){
-        this.paylineAnimCount = 0
         this.paylineContainers = []
         this.paylineContainersAnimation = []
         let paylineContent:any = this.slotGame.paylines
@@ -430,7 +425,7 @@ export default class Game{
                 symbolsContainer.addChild(containerWithText)
                 this.paylineContainersAnimation.push(containerWithText)
                 this.paylineContainers.push(symbolsContainer)
-                this.animatePaySymbols(containerWithText,i,symbolsContainer,paylineContent.length)
+                this.animatePaySymbols(containerWithText,i,symbolsContainer)
             }
             symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
@@ -442,11 +437,12 @@ export default class Game{
         this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
 
-    private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any,totalLines:number){
+    private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any){
+        let lastIndex = i+1
         let parentContainer = this.controller.parentSprite
         let fadeIn = gsap.to(containerWithText,{
             delay:i*4,
-            duration:0.1,
+            duration:3,
             alpha:1,
             onStart:()=>{
                 containerWithText.x = (symbolsContainer.width - containerWithText.width)/2
@@ -455,22 +451,15 @@ export default class Game{
             },
             onComplete:()=>{
                 fadeIn.kill()
-                let fadeOut = gsap.to(containerWithText,{
-                    delay:0,
-                    duration:3,
-                    alpha:1,
-                    onComplete:()=>{
-                        fadeOut.kill()
-                        containerWithText.alpha = 0
-                        this.paylineAnimCount++
-                        if(this.paylineAnimCount == (this.slotGame.paylines.length)){
-                            this.paylineAnimCount = 0
-                            this.paylineContainersAnimation.forEach((data,index)=>{
-                                this.animatePaySymbols(data,index,symbolsContainer,totalLines)
-                            })
-                        }
+                containerWithText.alpha = 0
+                let timeOut = setTimeout(()=>{
+                    if(lastIndex == this.slotGame.paylines.length){
+                        this.paylineContainersAnimation.forEach((data,index)=>{
+                            this.animatePaySymbols(data,index,symbolsContainer)
+                        })
                     }
-                })
+                    clearTimeout(timeOut)
+                },3000)
             }
         })
     }
@@ -506,6 +495,8 @@ export default class Game{
         this.controller.settingBtnSpite.cursor = cursor
         this.controller.infoBtnSprite.interactive = bool
         this.controller.infoBtnSprite.cursor = cursor
+        this.buyBonusBtn.interactive = bool
+        this.buyBonusBtn.cursor = cursor
     }
     private events(){
         //open system settings modal
@@ -640,7 +631,7 @@ export default class Game{
         //buy bonus
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
             this.buyBonusPopUp()
-            this.buyBonusBtn.interactive = false
+            this.enableButtons(false)
         })
     }
 }
