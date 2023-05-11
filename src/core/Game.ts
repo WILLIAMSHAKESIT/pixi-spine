@@ -2,6 +2,7 @@ import 'pixi-spine'
 import * as PIXI from 'pixi.js';
 import Loader from "./components/Loader";
 import Slot from './components/Slot';
+import Congrats from './components/Congrats';
 import Controller from './components/Controller';
 import Modal from './components/Modal';
 import Functions from './settings/Functions';
@@ -17,12 +18,12 @@ export default class Game{
     private gameContainer:PIXI.Container;
     private gameBackground:PIXI.Sprite
     private matchingBlocksContainer:PIXI.Container
-    private createPaylineContainer:PIXI.Container
     private baseWidth:number;
     private baseHeight:number;
     private slotGame:Slot;
     private controller:Controller   
     private modal:Modal
+    private congrats:Congrats
     private spinType:string = 'normal'
     //texttures
     private textureToggleOn:PIXI.Texture
@@ -68,7 +69,6 @@ export default class Game{
     private isFreeSpin:boolean = false;
     
     constructor(){
-        this.createPaylineContainer = new PIXI.Container
         this.matchingBlocksContainer = new PIXI.Container
         this.gameContainer = new PIXI.Container
         this.textStyle = new PIXI.TextStyle({  
@@ -151,6 +151,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
+        // this.createCongrats()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -172,6 +173,10 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+    }
+    private createCongrats(){
+        this.congrats = new Congrats(this.app,this.textureArray)
+        this.gameContainer.addChild(this.congrats.container)
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -248,14 +253,16 @@ export default class Game{
         this.gameContainer.addChild(this.buyBonusBtn)
     }
     private buyBonusPopUp(){
+        let glowX = 956
+        let glowY = 1044
         let dY = -80
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         // buy bonus modal 
         // glow animation
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
-        this.popGlow.x = 956
-        this.popGlow.y = 1044
+        this.popGlow.x = glowX
+        this.popGlow.y = glowY
         this.popGlow.alpha = 0
         this.popGlow.scale.x = 1.1
         this.popGlow.scale.y = 1.3
@@ -481,7 +488,6 @@ export default class Game{
         this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
         this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
-
     private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any){
         let lastIndex = i+1
         let parentContainer = this.controller.parentSprite
@@ -508,7 +514,6 @@ export default class Game{
             }
         })
     }
-
     private lightMode(bool:boolean){
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
         let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
