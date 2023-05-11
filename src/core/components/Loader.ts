@@ -37,6 +37,7 @@ export default class Loader{
         PIXI.Assets.add('pop_glow', 'assets/bonus/sprites/pop_glow.json');
         PIXI.Assets.add('coins', 'assets/pop_ups/sprites/coins.json');
         PIXI.Assets.add('congrats', 'assets/pop_ups/sprites/congrats.json');
+        PIXI.Assets.add('transition', 'assets/pop_ups/sprites/transition_leaf.json');
 
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
@@ -45,7 +46,8 @@ export default class Loader{
             'main','slot','controller','bag_of_gold',
             'barrels','boots','dynamite_crate','gas_lamp',
             'pile_of_gold','snake','trolley','wild','modal',
-            'bonus','grass','pop_glow','coins','congrats','corgi'
+            'bonus','grass','pop_glow','coins','congrats','corgi',
+            'transition'
         ]);
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

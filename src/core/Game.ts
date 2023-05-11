@@ -5,6 +5,7 @@ import Slot from './components/Slot';
 import Congrats from './components/Congrats';
 import Controller from './components/Controller';
 import Modal from './components/Modal';
+import Transition from './components/Transition';
 import Functions from './settings/Functions';
 import json from './settings/settings.json'
 import {Spine} from 'pixi-spine';
@@ -24,6 +25,7 @@ export default class Game{
     private controller:Controller   
     private modal:Modal
     private congrats:Congrats
+    private transition:Transition
     private spinType:string = 'normal'
     //texttures
     private textureToggleOn:PIXI.Texture
@@ -152,6 +154,7 @@ export default class Game{
         this.events()
         this.updateTextValues()
         // this.createCongrats()
+        this.createTransition()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -173,6 +176,10 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+    }
+    private createTransition(){
+        this.transition = new Transition(this.app,this.textureArray)
+        this.gameContainer.addChild(this.transition.container)
     }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray)
@@ -736,8 +743,6 @@ export default class Game{
         //     this.isFreeSpin = false
         //     clearTimeout(show);
         // }, 1000);
-
-
 
         wildSlot.addEventListener('pointerdown', () =>{
             this.gameContainer.removeChild(wildSlot)
