@@ -766,7 +766,7 @@ export default class Slot{
             this.reelContainer[i].addChild(data.symbol)
         })
     }
-    private generateNewSymbolsMainEvent(i:number){
+    public generateNewSymbolsMainEvent(i:number){
         let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
         arr.forEach((data,index)=>{

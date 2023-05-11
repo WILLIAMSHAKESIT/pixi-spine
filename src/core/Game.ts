@@ -728,14 +728,7 @@ export default class Game{
         amount2.y = (moneySlot.height - amount2.height) * 0.85
         moneySlot.addChild(amount2)
         this.gameContainer.addChild(moneySlot)
-        // this.enableButtons(false)
-        // this.lightModeEvent(false)
-        // this.slotGame.isFreeSpin = true
-        // this.slotGame.isFreeSpinDone = false
-        // let show = setTimeout(() => {
-        //     this.isFreeSpin = false
-        //     clearTimeout(show);
-        // }, 1000);
+
 
 
 
@@ -781,12 +774,27 @@ export default class Game{
                         });
                     });
                     transition.kill();
-                    
+                    this.startfreeSpinEvent()
                 }
             });
         })
 
         
+    }
+    private startfreeSpinEvent(){
+        this.enableButtons(false)
+        this.lightModeEvent(false)
+        this.slotGame.isFreeSpin = true
+        this.slotGame.isFreeSpinDone = false
+        let show = setTimeout(() => {
+            this.isFreeSpin = false
+            clearTimeout(show);
+        }, 1000);
+            this.slotGame.reelContainer.forEach((data,index)=>{
+                    this.slotGame.generateNewSymbolsMainEvent(index)
+            })  
+
+
     }
 
 
