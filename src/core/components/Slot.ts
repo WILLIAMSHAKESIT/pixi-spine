@@ -404,48 +404,49 @@ export default class Slot{
         })
     }
     private reelContainBonus(index:number){   
-        this.createGrass()
-        this.animateGrass()
+        // this.createGrass()
+        // this.animateGrass()
 
-        let transition = gsap.to(this.container, {
-            alpha: 0,
-            ease: "sine.in",
-            duration: 1.3,
-            onComplete: () => {
-                //this.app.stage.removeChild(this.homeComponent.container);
-                this.grassSprites.forEach((element, index) => {
-                    let delay = .005 * index;
-                    let gsapper = gsap.to(element, {
-                        delay: delay,
-                        duration: .05,
-                        alpha: 0,
-                        onStart: () => {       
-                            if(index == 0){
-                                let transition2 = gsap.to(this.container, {
-                                    alpha: 1,
-                                    ease: "sine.out",
-                                    duration: 1.5,
-                                    onComplete: () => {
-                                        transition2.kill();
+        // let transition = gsap.to(this.container, {
+        //     alpha: 0,
+        //     ease: "sine.in",
+        //     duration: 1.3,
+        //     onComplete: () => {
+        //         //this.app.stage.removeChild(this.homeComponent.container);
+        //         this.grassSprites.forEach((element, index) => {
+        //             let delay = .005 * index;
+        //             let gsapper = gsap.to(element, {
+        //                 delay: delay,
+        //                 duration: .05,
+        //                 alpha: 0,
+        //                 onStart: () => {       
+        //                     if(index == 0){
+        //                         let transition2 = gsap.to(this.container, {
+        //                             alpha: 1,
+        //                             ease: "sine.out",
+        //                             duration: 1.5,
+        //                             onComplete: () => {
+        //                                 transition2.kill();
 
-                                    }
-                                });
-                            }
-                        },
-                        onComplete: () =>{
-                            this.app.stage.removeChild(element);
-                            if(index == this.grassSprites.length - 1){
-                                this.grass = [];
-                                this.grassSprites = [];
-                            }
-                            gsapper.kill();
-                        }
-                    });
-                });
-                transition.kill();
-                this.freeSpinEvent()
-            }
-        });
+        //                             }
+        //                         });
+        //                     }
+        //                 },
+        //                 onComplete: () =>{
+        //                     this.app.stage.removeChild(element);
+        //                     if(index == this.grassSprites.length - 1){
+        //                         this.grass = [];
+        //                         this.grassSprites = [];
+        //                     }
+        //                     gsapper.kill();
+        //                 }
+        //             });
+        //         });
+        //         transition.kill();
+        //         this.freeSpinEvent()
+        //     }
+        // });
+        this.freeSpinEvent()
     }
     private checkPattern(){
         this.paylines = []
@@ -536,12 +537,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:1,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 1 && data.count>2){
@@ -557,12 +558,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:2,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 2 && data.count>2){
@@ -578,12 +579,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:3,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 3 && data.count>2){
@@ -599,12 +600,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:4,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 4 && data.count>2){
@@ -620,12 +621,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:5,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 5 && data.count>2){
@@ -641,12 +642,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:6,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 6 && data.count>2){
@@ -662,12 +663,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
 
                 }
                 this.paylines.push({payline:7,symbols:lineSymbols,payout:totalLinePay})
@@ -684,12 +685,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:8,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 8 && data.count>2){
@@ -705,12 +706,12 @@ export default class Slot{
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.reelContainBonus(index)
-                    let settime = setTimeout(() => {
-                        this.reelContainer.forEach((data,index)=>{
-                            this.generateNewSymbolsMainEvent(index)
-                        })  
-                        clearTimeout(settime);
-                    }, 1000);
+                    // let settime = setTimeout(() => {
+                    //     this.reelContainer.forEach((data,index)=>{
+                    //         this.generateNewSymbolsMainEvent(index)
+                    //     })  
+                    //     clearTimeout(settime);
+                    // }, 1000);
                 }
                 this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
             }

@@ -289,55 +289,16 @@ export default class Game{
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
-
+        check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpin(1)
                 clearTimeout(timeOut)
             },1000)
-            this.slotGame.isFreeSpin= true
-          
-            // this.createGrass()
-            // this.animateGrass()
-
-            // let transition = gsap.to(this.slotGame.container, {
-            //     alpha: 0,
-            //     ease: "sine.in",
-            //     duration: 1.3,
-            //     onComplete: () => {
-            //        // this.app.stage.removeChild(this.homeComponent.container);
-            //         this.grassSprites.forEach((element, index) => {
-            //             let delay = .005 * index;
-            //             let gsapper = gsap.to(element, {
-            //                 delay: delay,
-            //                 duration: .05,
-            //                 alpha: 0,
-            //                 onStart: () => {       
-            //                     if(index == 0){
-            //                         let transition2 = gsap.to(this.slotGame.container, {
-            //                             alpha: 1,
-            //                             ease: "sine.out",
-            //                             duration: 1.5,
-            //                             onComplete: () => {
-            //                                 transition2.kill();
-
-            //                             }
-            //                         });
-            //                     }
-            //                 },
-            //                 onComplete: () =>{
-            //                     this.app.stage.removeChild(element);
-            //                     if(index == this.grassSprites.length - 1){
-            //                         this.grass = [];
-            //                         this.grassSprites = [];
-            //                     }
-            //                     gsapper.kill();
-            //                 }
-            //             });
-            //         });
-            //         transition.kill();
-            //         this.freeSpinEvent()
-            //     }
-            // });
+            this.slotGame.isFreeSpin = true
+            let timeOut1 = setTimeout(()=>{
+                check.interactive = true
+                clearTimeout(timeOut1)
+            },5000)
         })
         let bonusFrameShow = gsap.from(this.buyBonusFrame, {
             delay:.3,
@@ -739,14 +700,87 @@ export default class Game{
     }
 
     private freeSpinEvent(){
-        this.enableButtons(false)
-        this.lightModeEvent(false)
-        this.slotGame.isFreeSpin = true
-        this.slotGame.isFreeSpinDone = false
-        let show = setTimeout(() => {
-            this.isFreeSpin = false
-            clearTimeout(show);
-        }, 1000);
+        const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
+        wildSlot.y = -200
+
+        //amount
+        const amount = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
+        amount.x = (wildSlot.width - amount.width)/2
+        amount.y = (wildSlot.height - amount.height) * 0.85
+        wildSlot.addChild(amount)
+        wildSlot.cursor = 'pointer'
+        wildSlot.interactive = true
+        this.gameContainer.addChild(wildSlot)
+
+        const moneySlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        moneySlot.x = (this.baseWidth - moneySlot.width)/2 + 400
+        moneySlot.y = -200
+
+        //amount
+        const amount2 = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
+        amount2.x = (moneySlot.width - amount2.width)/2
+        amount2.y = (moneySlot.height - amount2.height) * 0.85
+        moneySlot.addChild(amount2)
+        this.gameContainer.addChild(moneySlot)
+        // this.enableButtons(false)
+        // this.lightModeEvent(false)
+        // this.slotGame.isFreeSpin = true
+        // this.slotGame.isFreeSpinDone = false
+        // let show = setTimeout(() => {
+        //     this.isFreeSpin = false
+        //     clearTimeout(show);
+        // }, 1000);
+
+
+
+        wildSlot.addEventListener('pointerdown', () =>{
+            this.gameContainer.removeChild(wildSlot)
+            this.gameContainer.removeChild(moneySlot)
+            this.createGrass()
+            this.animateGrass()
+    
+            let transition = gsap.to(this.slotGame.container, {
+                alpha: 0,
+                ease: "sine.in",
+                duration: 1.3,
+                onComplete: () => {
+                    //this.app.stage.removeChild(this.homeComponent.container);
+                    this.grassSprites.forEach((element, index) => {
+                        let delay = .005 * index;
+                        let gsapper = gsap.to(element, {
+                            delay: delay,
+                            duration: .05,
+                            alpha: 0,
+                            onStart: () => {       
+                                if(index == 0){
+                                    let transition2 = gsap.to(this.slotGame.container, {
+                                        alpha: 1,
+                                        ease: "sine.out",
+                                        duration: 1.5,
+                                        onComplete: () => {
+                                            transition2.kill();
+    
+                                        }
+                                    });
+                                }
+                            },
+                            onComplete: () =>{
+                                this.app.stage.removeChild(element);
+                                if(index == this.grassSprites.length - 1){
+                                    this.grass = [];
+                                    this.grassSprites = [];
+                                }
+                                gsapper.kill();
+                            }
+                        });
+                    });
+                    transition.kill();
+                    
+                }
+            });
+        })
+
         
     }
 
