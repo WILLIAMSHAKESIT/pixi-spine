@@ -195,6 +195,7 @@ export default class Game{
                 })  
     
         })
+        this.slotGame.autoplayDoneEvent = true
 
     }
     private createModal(){
