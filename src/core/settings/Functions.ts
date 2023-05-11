@@ -25,6 +25,11 @@ const symbolRandomizer = (arr:Array<any>) =>{
 const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
 }
+//GET SPRITE
+const animatedSprite = (spritesheet:any,animationName:string) => {
+    const sprite = new PIXI.AnimatedSprite(spritesheet.animations[`${animationName}`]);
+    return sprite
+}
 const loadSpine = (textureArray:any,objKey:string)=>{
    return new Spine(textureArray[`${objKey}`].spineData)
 }
@@ -59,6 +64,7 @@ const numberWithCommas =(x:number)=> {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+
 //RANDMON INT
 const getRandomInt = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -73,5 +79,6 @@ export default{
     numberWithCommas,
     getRandomInt,
     loadSpineAnimation,
-    loadSpine
+    loadSpine,
+    animatedSprite
 }
