@@ -4,7 +4,7 @@ import {Spine} from 'pixi-spine';
 import Functions from '../settings/Functions';
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
-export default class Congrats{
+export default class PopUps{
     //app settings
     private app:PIXI.Application
     private textureArray:any
@@ -13,6 +13,7 @@ export default class Congrats{
     public container:PIXI.Container
     public middleContainer:PIXI.Container
     private coinsContainer:PIXI.Container
+    private gameContainer:PIXI.Container
     private overlay:PIXI.Sprite
     private popGlow:Spine
     public logo:Spine
@@ -30,13 +31,14 @@ export default class Congrats{
     //value 
     private amount:number = 20000
     private noOfSpin:number = 0
-    constructor(app:PIXI.Application,textureArray:any,amount:number, noOfSpin:number){
+    // animation skin
+    private animationSkin:string = 'excellent'
+    constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any){
         this.app = app
         this.container = new PIXI.Container
-        this.amount = amount
-        this.noOfSpin = noOfSpin
         this.middleContainer = new PIXI.Container
         this.coinsContainer = new PIXI.Container
+        this.gameContainer = gameContainer
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
@@ -87,7 +89,7 @@ export default class Congrats{
         });
         this.textStyleYellow = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
-            fontSize: 100,
+            fontSize: 80,
             fontWeight: 'bolder',
             fill: ['#ffeaa0', '#ffc260'], // gradient
             strokeThickness: 5,
@@ -106,8 +108,20 @@ export default class Congrats{
         this.createParent()
         this.createPopup()
         this.createMoney()
-        this.createSpins()
         this.createCoin()
+        this.container.interactive = true
+        this.container.cursor = 'pointer'
+        // close pop up
+        this.container.addEventListener('pointerdown',()=>{
+            let fadeOut = gsap.to(this.container,{
+                duration:2,
+                alpha:0,
+                onComplete:()=>{
+                    fadeOut.kill()
+                    this.gameContainer.removeChild(this.container)
+                }
+            })
+        })
     }
     private createParent(){
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
@@ -116,37 +130,27 @@ export default class Congrats{
         this.container.addChild(this.overlay)
     }
     private createPopup(){
-        // create glow back drop
-        this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
-        this.popGlow.position.x = (this.overlay.width)/2        
-        this.popGlow.position.y = (this.overlay.height)*1.15
-        this.popGlow.scale.x = 1.4
-        this.popGlow.scale.y = 1.7
-        // animate glow
-        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
-        this.middleContainer.addChild(this.popGlow)
-
+        const logoAnimationSpeed = 0.7
         //create pop logo
-        this.logo = new Spine(this.textureArray.congrats.spineData)
+        this.logo = new Spine(this.textureArray.pop_ups.spineData)
         this.logo.x = (this.overlay.width)/2
-        this.logo.y = (this.overlay.height)/1.2
-   
+        this.logo.y = (this.overlay.height)/2
+        
+        //set the skin
+        this.logo.skeleton.setSkinByName(this.animationSkin)
         // animate glow
-        Functions.loadSpineAnimation(this.logo,'animation',true,0.2)
+        Functions.loadSpineAnimation(this.logo,'animation',true,logoAnimationSpeed)
         this.middleContainer.addChild(this.logo)
-
-        //create text
-        this.descText = new PIXI.Text('YOU WON', this.textStyle)
-        this.descText.x = (this.overlay.width - this.descText.width)/2
-        this.descText.y = ((this.overlay.height - this.descText.height)/2)*0.74
-        this.middleContainer.addChild(this.descText)
         this.container.addChild(this.middleContainer)
     }
-
     private createMoney(){
+        let moneyPosY:any;
+        let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
-        this.money.x = (this.overlay.width - this.money.width)/2
-        this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
+        moneyPosX = (this.overlay.width - this.money.width)/2
+        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.099
+        this.money.x = moneyPosX
+        this.money.y= moneyPosY
         this.middleContainer.addChild(this.money)
 
         // Set up animation
@@ -170,26 +174,13 @@ export default class Congrats{
             onUpdate: () => {
                 this.money.text = Functions.numberWithCommas(parseInt(this.money.text)).toString();
                 this.money.x = (this.overlay.width - this.money.width)/2
-                this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
+                this.money.y = moneyPosY
             },
             onComplete:()=>{
                 textAnimation.kill()
             }
         });
     }
-
-    private createSpins(){
-        this.spins = new PIXI.Text(`IN ${this.noOfSpin} FREE SPINS`, this.textStyle2)
-        this.spins.x = (this.overlay.width - this.spins.width)/2
-        this.spins.y = (this.overlay.height - this.spins.height)/1.5
-        this.middleContainer.addChild(this.spins)
-
-        const clickAnyTxt = new PIXI.Text(`click anywhere to continue`, this.textStyle3)
-        clickAnyTxt.x = (this.overlay.width - clickAnyTxt.width)/2
-        clickAnyTxt.y = (this.overlay.height - clickAnyTxt.height)/1.4
-        this.middleContainer.addChild(clickAnyTxt)
-    }
-
     private createCoin(){
         // LEFTCOINS
         for(let count = 0; count < 10; count++){
@@ -283,12 +274,10 @@ export default class Congrats{
                 }
             })
         }
-
         this.container.addChild(this.coinsContainer);
     }
     private randMinMax(min:number, max:number){
         let random = Math.random() * (max - min) + min;
-    
         return random;
     }
 }   
