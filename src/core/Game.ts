@@ -5,6 +5,7 @@ import Slot from './components/Slot';
 import Congrats from './components/Congrats';
 import Controller from './components/Controller';
 import Modal from './components/Modal';
+import Transition from './components/Transition';
 import Functions from './settings/Functions';
 import json from './settings/settings.json'
 import {Spine} from 'pixi-spine';
@@ -24,6 +25,7 @@ export default class Game{
     private controller:Controller   
     private modal:Modal
     private congrats:Congrats
+    private transition:Transition
     private spinType:string = 'normal'
     //texttures
     private textureToggleOn:PIXI.Texture
@@ -173,6 +175,10 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+    }
+    private createTransition(){
+        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
+        this.gameContainer.addChild(this.transition.container)
     }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray)
@@ -752,8 +758,6 @@ export default class Game{
         this.gameContainer.addChild(moneySlot)
 
 
-
-
         wildSlot.addEventListener('pointerdown', () =>{
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
@@ -761,6 +765,7 @@ export default class Game{
             this.createGrass()
             this.animateGrass()
     
+            this.createTransition()
             let transition = gsap.to(this.slotGame.container, {
                 alpha: 0,
                 ease: "sine.in",
