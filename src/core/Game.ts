@@ -154,7 +154,6 @@ export default class Game{
         this.events()
         this.updateTextValues()
         // this.createCongrats()
-        this.createTransition()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -178,7 +177,7 @@ export default class Game{
         });
     }
     private createTransition(){
-        this.transition = new Transition(this.app,this.textureArray)
+        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.transition.container)
     }
     private createCongrats(){
@@ -750,48 +749,8 @@ export default class Game{
             this.createGrass()
             this.animateGrass()
     
-            let transition = gsap.to(this.slotGame.container, {
-                alpha: 0,
-                ease: "sine.in",
-                duration: 1.3,
-                onComplete: () => {
-                    //this.app.stage.removeChild(this.homeComponent.container);
-                    this.grassSprites.forEach((element, index) => {
-                        let delay = .005 * index;
-                        let gsapper = gsap.to(element, {
-                            delay: delay,
-                            duration: .05,
-                            alpha: 0,
-                            onStart: () => {       
-                                if(index == 0){
-                                    let transition2 = gsap.to(this.slotGame.container, {
-                                        alpha: 1,
-                                        ease: "sine.out",
-                                        duration: 1.5,
-                                        onComplete: () => {
-                                            transition2.kill();
-    
-                                        }
-                                    });
-                                }
-                            },
-                            onComplete: () =>{
-                                this.app.stage.removeChild(element);
-                                if(index == this.grassSprites.length - 1){
-                                    this.grass = [];
-                                    this.grassSprites = [];
-                                }
-                                gsapper.kill();
-                            }
-                        });
-                    });
-                    transition.kill();
-                    
-                }
-            });
+            this.createTransition()
         })
-
-        
     }
 
 

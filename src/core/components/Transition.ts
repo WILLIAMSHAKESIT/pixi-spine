@@ -13,9 +13,11 @@ export default class Transition{
     public container:PIXI.Container
     private overlay:PIXI.Sprite
     private leaves:Spine
-    constructor(app:PIXI.Application,textureArray:any){
+    private gameContainer:PIXI.Container
+    constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any){
         this.app = app
         this.container = new PIXI.Container
+        this.gameContainer = new PIXI.Container
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
@@ -25,14 +27,21 @@ export default class Transition{
         this.createParent()
     }
     private createParent(){
+        const posX = 935.5
+        const posY = 1025
         // create glow back drop
         this.leaves = new Spine(this.textureArray.transition.spineData)
-        this.leaves.x = 935.5
-        this.leaves.y = 1025
-        // this.leaves.scale.x = 1.4
-        // this.leaves.scale.y = 1.7
+        this.leaves.x = posX
+        this.leaves.y = posY
         // animate glow
-        Functions.loadSpineAnimation(this.leaves,'animation',true,0.3)
         this.container.addChild(this.leaves)
+        const spine = Functions.loadSpineAnimation(this.leaves,'animation',false,0.3)
+        spine.state.onComplete = () => {
+            let timeout = setTimeout(()=>{
+                this.container.removeChild(this.leaves)
+                this.gameContainer.removeChild(this.container)
+                clearTimeout(timeout)
+            },2000)
+        };
     }
 }   
