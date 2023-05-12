@@ -159,6 +159,11 @@ export default class Game{
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
+            console.log(this.slotGame.isSpinning , " is spinning")
+            console.log(this.isAutoPlay , " this.isAutoPlay")
+            console.log(this.isMatchingGame , " this.isMatchingGame")
+            console.log(this.isFreeSpin , " this.isFreeSpin")
+            console.log(this.isOpenModal , " this.isOpenModal")
             if(e.code === 'Space'  || e.key === 'Enter'){
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                     this.slotGame.timeScale = 0 
@@ -191,6 +196,7 @@ export default class Game{
                 this.lightModeEvent(true)
                 this.slotGame.isFreeSpin = true
                 this.slotGame.isFreeSpinDone = false
+                this.isOpenModal = false
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
                     clearTimeout(show);
@@ -201,6 +207,7 @@ export default class Game{
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
+       
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
@@ -318,9 +325,11 @@ export default class Game{
         let sY = -this.buyBonusFrame.height
         close.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY);
+            this.isOpenModal = false
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
+            //this.isOpenModal = false
         check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpin(1)
