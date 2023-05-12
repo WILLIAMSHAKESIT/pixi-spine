@@ -44,12 +44,14 @@ export default class Game{
     private betAmount:number = 1
     private betIndex:number = 0
     private userCredit:number = 999
+    private matchingGameWin:number = 0
     private isAutoPlay:boolean = false
     private isMatchingGame:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
     private textStyle3:PIXI.TextStyle
+    private whiteYellow:PIXI.TextStyle
     private descText:PIXI.TextStyle
     private textStyleSize:number = 55
     //text values
@@ -63,25 +65,31 @@ export default class Game{
     //spines
     private popGlow:Spine
     private popGlow2:Spine
-
-    //grass
-    private slideshowTicker: Boolean = true;
-    private play: Boolean = true;
-    private grass: Array<any> = [];
-    private grassSprites: Array<PIXI.Sprite> = [];
-    private protection: number = 0;
-
     //free spin
     private isFreeSpin:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
     private noOfSpin:number = 0
-    
-    
+     
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
         this.gameContainer = new PIXI.Container
+        this.whiteYellow = new PIXI.TextStyle({  
+            fontFamily: 'Eras ITC',
+            fontSize: 120,
+            fontWeight: 'bolder',
+            fill: ['#fffdfa', '#fec159'], // gradient
+            strokeThickness: 5,
+            dropShadow: true,
+            dropShadowColor: '#000000',
+            dropShadowBlur: 4,
+            dropShadowAngle: Math.PI / 6,
+            dropShadowDistance: 3,
+            wordWrap: false,
+            wordWrapWidth: 440,
+            lineJoin: 'round',
+        });
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: this.textStyleSize,
@@ -162,8 +170,6 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        // this.createCongrats()
-        this.createPopUps()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -435,8 +441,10 @@ export default class Game{
             let miniCount = 0
             let majorCount = 0
             let grandCount = 0
+            let result:any 
             let topText = 'MATCH 3 TO WIN'
             let bottomText = 'PICK ROCKS TO REVEAL JACKPOTS'
+            let popUpSkin = ''
             this.enableButtons(false)
             this.lightMode(false)
             //create blocks
@@ -472,19 +480,30 @@ export default class Game{
                     if(data == 'grand'){
                         grandCount++
                         if(grandCount == 3){
-                            this.matchinGameWinPop(arrayBlockValues)
+                            popUpSkin = 'excellent'
+                            this.matchingGameWin = 500
+                            result = symbol
+                            this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else if(data == 'major'){
                         majorCount++
                         if(majorCount == 3){
-                            this.matchinGameWinPop(arrayBlockValues)
+                            popUpSkin = 'impressive'
+                            this.matchingGameWin = 100
+                            result = symbol
+                            this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else{
                         miniCount++
                         if(miniCount == 3){
-                            this.matchinGameWinPop(arrayBlockValues)
+                            popUpSkin = 'nice'
+                            this.matchingGameWin = 25
+                            result = symbol
+                            this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }
+                    this.userCredit+=this.matchingGameWin
+                    this.updateCreditValues()
                 })
                 arrayBlockValues.push({rock:rock,symbol:symbol})
                 this.matchingBlocksContainer.addChild(symbol)
@@ -501,16 +520,73 @@ export default class Game{
             clearTimeout(timeOut)
         },this.transitionDelay)
     }
-    private matchinGameWinPop(arrayBlockValues:Array<any>){
-        this.isMatchingGame = false
-        this.lightMode(true)
-        this.enableButtons(true)
-        this.slotGame.levelBarIndicator.width = 0
-        this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
+    private matchinGameWinPop(arrayBlockValues:Array<any>,popUpSkin:string,result:any){
         arrayBlockValues.forEach(data=>{
             data.rock.visible = false
             data.symbol.visible = true
         })
+        let popDelay = setTimeout(()=>{
+            this.createPopUps(popUpSkin)
+            this.popUps.container.addEventListener('pointerdown',()=>{
+                this.matchGameResult(result)
+            })
+            clearTimeout(popDelay)
+        },1000)
+    }
+    private matchGameResult(result:any){
+        let frame = this.slotGame.frameBg
+        let frameBgTexture = Functions.loadTexture(this.textureArray,'bonus','matchin_game_win_board').texture
+        let win = new PIXI.Text(`${this.matchingGameWin}`, this.whiteYellow)
+        let clickContinueText = new PIXI.Text(`click here to continue`, this.textStyle3)
+        frame.texture = frameBgTexture
+        result.x = (frame.width - result.width)/2
+        result.y = (frame.height - result.height)*0.8
+        win.x = (frame.width - win.width)/2
+        win.y = ((frame.height - win.height)/2)*0.85
+        clickContinueText.x = (frame.width - clickContinueText.width)/2
+        clickContinueText.y = (frame.height - clickContinueText.height)*0.96
+        // let scaleText = gsap.to(clickContinueText,{
+        //     duration: 1,
+        //     scale: 1.2,
+        //     repeat: -1,
+        //     yoyo: true,
+        //     ease: "power1.inOut",
+        //     onUpdate:()=>{
+        //         clickContinueText.x = (frame.width - clickContinueText.width)/2
+        //         clickContinueText.y = (frame.height - clickContinueText.height)*0.96
+        //     }   
+        // })
+        this.popUps.closePopUp()
+        frame.addChild(result)
+        frame.addChild(win)
+        frame.addChild(clickContinueText)
+        frame.removeChild(this.matchingBlocksContainer)
+        clickContinueText.interactive= true
+        clickContinueText.cursor = 'pointer'
+        clickContinueText.addEventListener('pointerdown',()=>{
+            let timeOut = setTimeout(()=>{
+                frame.removeChild(result)
+                frame.removeChild(win)
+                frame.removeChild(clickContinueText)
+                clearTimeout(timeOut)
+            },this.transitionDelay)
+            this.endMatchingGame()
+        })
+    }
+    private endMatchingGame(){
+        this.createTransition()
+        let timeOut = setTimeout(()=>{
+            this.gameContainer.interactive= false
+            this.gameContainer.cursor = ''
+            this.isMatchingGame = false
+            this.lightMode(true)
+            this.enableButtons(true)
+            this.slotGame.levelBarIndicator.width = 0
+            this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
+            this.updatePaylineTopText('SPIN TO WIN')
+            this.updatePaylineBottomText('Tap space or enter to skip')
+            clearTimeout(timeOut)
+        },this.transitionDelay)
     }
     private createPaylineAnimation(){
         let greetY = 30
@@ -941,33 +1017,8 @@ export default class Game{
         this.enableButtons(false)
         this.isFreeSpin = true
     }
-    // private createCongrats(){
-    //     this.congrats = new Congrats(this.app,this.textureArray)
-    //     this.gameContainer.addChild(this.congrats.container)
-    //     this.congrats.container.cursor = 'pointer'
-    //     this.congrats.container.interactive = true
-    //     this.congrats.container.addEventListener('pointerdown',()=>{
-    //         this.createTransition()
-    //         let timeout = setTimeout(()=>{
-    //             this.gameContainer.removeChild(this.congrats.container)
-    //             this.enableButtons(true)
-    //             this.lightModeEvent(true)
-    //             this.slotGame.isFreeSpin = true
-    //             this.slotGame.isFreeSpinDone = false
-    //             let show = setTimeout(() => {
-    //                 this.isFreeSpin = false
-    //                 clearTimeout(show);
-    //             }, 1000);
-    //             this.slotGame.reelContainer.forEach((data,index)=>{
-    //                 this.slotGame.generateNewSymbols(index)      
-    //             })  
-    //             clearTimeout(timeout)
-    //         },this.transitionDelay)
-    //     })
-    //     this.slotGame.autoplayDoneEvent = true
-    // }
-    private createPopUps(){
-        this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray)
+    private createPopUps(skin:string){
+        this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray,skin,this.matchingGameWin)
         this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){

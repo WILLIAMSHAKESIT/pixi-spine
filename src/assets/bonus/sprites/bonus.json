@@ -120,10 +120,30 @@
 				"h": 207
 			}
 		},
+		"matchin_game_win_board.png": {
+			"frame": {
+				"x": 1474,
+				"y": 1,
+				"w": 1490,
+				"h": 770
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1490,
+				"h": 770
+			},
+			"sourceSize": {
+				"w": 1490,
+				"h": 770
+			}
+		},
 		"mini.png": {
 			"frame": {
-				"x": 1028,
-				"y": 210,
+				"x": 1,
+				"y": 773,
 				"w": 221,
 				"h": 207
 			},
@@ -142,8 +162,8 @@
 		},
 		"rock_block.png": {
 			"frame": {
-				"x": 1251,
-				"y": 210,
+				"x": 1028,
+				"y": 773,
 				"w": 243,
 				"h": 189
 			},
@@ -167,7 +187,7 @@
 		"image": "bonus.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 1495,
+			"w": 2965,
 			"h": 1020
 		},
 		"scale": "1"

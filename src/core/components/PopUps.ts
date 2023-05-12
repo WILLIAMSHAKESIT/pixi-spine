@@ -29,11 +29,11 @@ export default class PopUps{
     private money:PIXI.Text
     private spins:PIXI.Text
     //value 
-    private amount:number = 20000
     private noOfSpin:number = 0
+    private matchingGameWin:number = 0
     // animation skin
-    private animationSkin:string = 'excellent'
-    constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any){
+    private animationSkin:string = ''
+    constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any,skin:string,matchingGameWin:number){
         this.app = app
         this.container = new PIXI.Container
         this.middleContainer = new PIXI.Container
@@ -42,6 +42,8 @@ export default class PopUps{
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
+        this.animationSkin = skin
+        this.matchingGameWin = matchingGameWin
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 100,
@@ -113,14 +115,17 @@ export default class PopUps{
         this.container.cursor = 'pointer'
         // close pop up
         this.container.addEventListener('pointerdown',()=>{
-            let fadeOut = gsap.to(this.container,{
-                duration:2,
-                alpha:0,
-                onComplete:()=>{
-                    fadeOut.kill()
-                    this.gameContainer.removeChild(this.container)
-                }
-            })
+            this.closePopUp()
+        })
+    }
+    public closePopUp(){
+        let fadeOut = gsap.to(this.container,{
+            duration:2,
+            alpha:0,
+            onComplete:()=>{
+                fadeOut.kill()
+                this.gameContainer.removeChild(this.container)
+            }
         })
     }
     private createParent(){
@@ -128,6 +133,14 @@ export default class PopUps{
         this.overlay.width = this.baseWidth
         this.overlay.height = this.baseHeight
         this.container.addChild(this.overlay)
+        this.container.alpha = 0
+        let fadeIn = gsap.to(this.container,{
+            duration:1,
+            alpha:1,
+            onComplete:()=>{
+                fadeIn.kill()
+            }
+        })
     }
     private createPopup(){
         const logoAnimationSpeed = 0.7
@@ -148,15 +161,15 @@ export default class PopUps{
         let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
         moneyPosX = (this.overlay.width - this.money.width)/2
-        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.099
+        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.12
         this.money.x = moneyPosX
         this.money.y= moneyPosY
         this.middleContainer.addChild(this.money)
 
         // Set up animation
         const startValue = 0;
-        const endValue = this.amount;
-        const duration = 10;
+        const endValue = this.matchingGameWin;
+        const duration = 3;
         const delay = 0.4;
         const ease = "power1.out";
 
