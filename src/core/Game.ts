@@ -157,6 +157,8 @@ export default class Game{
         this.spinTextureOff = Functions.loadTexture(this.textureArray,'controller','spin_pause_button').texture
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
         this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
+        //overlay
+        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         this.createGame()
         this.createSlot()
         this.createController()
@@ -304,8 +306,7 @@ export default class Game{
         let glowX = 956
         let glowY = 1044
         let dY = -80
-        //overlay
-        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
+
         // buy bonus modal 
         // glow animation
         this.popGlow.x = glowX
@@ -315,6 +316,7 @@ export default class Game{
         this.popGlow.scale.y = 1.3
         Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
         this.overlay.addChild(this.popGlow)
+        
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         this.buyBonusFrame.x = (this.baseWidth - this.buyBonusFrame.width)/2
         this.buyBonusFrame.y = dY
@@ -819,7 +821,8 @@ export default class Game{
         this.popGlow2.scale.y = 1.3
         this.overlay.addChild(this.popGlow2)
         Functions.loadSpineAnimation(this.popGlow2,'glow',true,0.5)
-
+        this.overlay.addChild(this.popGlow)
+        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
         this.popGlow.x = glowX
         this.popGlow.y = glowY
         this.popGlow.alpha = 0
