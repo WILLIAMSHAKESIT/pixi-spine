@@ -159,11 +159,6 @@ export default class Game{
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
-            console.log(this.slotGame.isSpinning , " is spinning")
-            console.log(this.isAutoPlay , " this.isAutoPlay")
-            console.log(this.isMatchingGame , " this.isMatchingGame")
-            console.log(this.isFreeSpin , " this.isFreeSpin")
-            console.log(this.isOpenModal , " this.isOpenModal")
             if(e.code === 'Space'  || e.key === 'Enter'){
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                     this.slotGame.timeScale = 0 
