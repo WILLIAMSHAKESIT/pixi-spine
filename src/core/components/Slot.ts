@@ -325,9 +325,6 @@ export default class Slot{
                                         if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
                                             this.createCongrats()
                                         }
-                                        console.log(this.autoPlayCount
-                                            
-                                            )
                                     }
                                 }
                             })

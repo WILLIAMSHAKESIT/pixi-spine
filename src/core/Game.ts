@@ -60,6 +60,7 @@ export default class Game{
     private paylineContainersAnimation:Array<any> = []
     //spines
     private popGlow:Spine
+    private popGlow2:Spine
 
     //grass
     private slideshowTicker: Boolean = true;
@@ -264,10 +265,7 @@ export default class Game{
         }
         if(this.slotGame.startCountWinFreeSpin){
             this.winFreeSpin += this.slotGame.totalWin
-            console.log( this.winFreeSpin)
-        }
-       
-        
+        }   
         //this.slotGame.isFreeSpin = false
     }
     private onSpin(){
@@ -368,6 +366,32 @@ export default class Game{
         this.gameContainer.addChild(this.overlay)
     }
     private hideBonusPopUp(dY:number,sY:number){
+        this.enableButtons(true)
+        let fadeOutGlow = gsap.to(this.popGlow,{
+            duration:0.8,
+            alpha:0,
+            onComplete:()=>{
+                fadeOutGlow.kill()
+                let bonusFrameHide = gsap.to(this.buyBonusFrame, {
+                    delay:0.2,
+                    duration:0.2,
+                    y:dY*1.2,
+                    onComplete:()=>{
+                        bonusFrameHide.kill()
+                        let bounceDown = gsap.to(this.buyBonusFrame,{
+                            duration:0.2,
+                            y:sY,
+                            onComplete:()=>{
+                                bounceDown.kill()
+                                this.gameContainer.removeChild(this.overlay)
+                            }
+                        })
+                    }
+                })
+            }
+        }) 
+    }
+    private hideBonusChoicesPopUp(dY:number,sY:number){
         this.enableButtons(true)
         let fadeOutGlow = gsap.to(this.popGlow,{
             duration:0.8,
@@ -764,11 +788,28 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
-        let glowX = 956
+
+        let glowX = 570
+        let glowX2 = 1370
         let glowY = 1044
+        
         let dY = -80
-       
-  
+
+        // glow animation
+        this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
+        this.popGlow2.x = glowX2
+        this.popGlow2.y = glowY
+        this.popGlow2.alpha = 0
+        this.popGlow2.scale.x = 1.1
+        this.popGlow2.scale.y = 1.3
+        this.overlay.addChild(this.popGlow2)
+        Functions.loadSpineAnimation(this.popGlow2,'glow',true,0.5)
+        this.popGlow.x = glowX
+        this.popGlow.y = glowY
+        this.popGlow.alpha = 0
+        this.popGlow.scale.x = 1.1
+        this.popGlow.scale.y = 1.3
+        
         const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
         wildSlot.y = -200
@@ -794,6 +835,7 @@ export default class Game{
                 })
             }
         })
+        this.gameContainer.addChild(this.overlay)
 
         //amount
         const amount = new PIXI.Text(`6`, this.textStyle2)
@@ -816,7 +858,7 @@ export default class Game{
                     y:dY-160,
                     onComplete:()=>{
                         bounceUp.kill()
-                        let fadeInGlow = gsap.to(this.popGlow,{
+                        let fadeInGlow = gsap.to(this.popGlow2,{
                             delay:0,
                             duration:1,
                             alpha:1,
@@ -840,6 +882,8 @@ export default class Game{
 
 
         wildSlot.addEventListener('pointerdown', () =>{
+            this.overlay.removeChild(this.popGlow2)
+            this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=6
             this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
@@ -854,6 +898,8 @@ export default class Game{
 
         
         moneySlot.addEventListener('pointerdown', () =>{
+            this.overlay.removeChild(this.popGlow2)
+            this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=12
             this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
