@@ -176,10 +176,6 @@ export default class Game{
             this.slotGame.notLongPress = true;
         });
     }
-    private createTransition(){
-        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
-        this.gameContainer.addChild(this.transition.container)
-    }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray)
         this.gameContainer.addChild(this.congrats.container)
@@ -762,49 +758,7 @@ export default class Game{
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
-            this.createGrass()
-            this.animateGrass()
-    
             this.createTransition()
-            let transition = gsap.to(this.slotGame.container, {
-                alpha: 0,
-                ease: "sine.in",
-                duration: 1.3,
-                onComplete: () => {
-                    //this.app.stage.removeChild(this.homeComponent.container);
-                    this.grassSprites.forEach((element, index) => {
-                        let delay = .005 * index;
-                        let gsapper = gsap.to(element, {
-                            delay: delay,
-                            duration: .05,
-                            alpha: 0,
-                            onStart: () => {       
-                                if(index == 0){
-                                    let transition2 = gsap.to(this.slotGame.container, {
-                                        alpha: 1,
-                                        ease: "sine.out",
-                                        duration: 1.5,
-                                        onComplete: () => {
-                                            transition2.kill();
-    
-                                        }
-                                    });
-                                }
-                            },
-                            onComplete: () =>{
-                                this.app.stage.removeChild(element);
-                                if(index == this.grassSprites.length - 1){
-                                    this.grass = [];
-                                    this.grassSprites = [];
-                                }
-                                gsapper.kill();
-                            }
-                        });
-                    });
-                    transition.kill();
-                    this.startfreeSpinEvent(6)
-                }
-            });
         })
 
         
@@ -812,48 +766,7 @@ export default class Game{
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
-            this.createGrass()
-            this.animateGrass()
-    
-            let transition = gsap.to(this.slotGame.container, {
-                alpha: 0,
-                ease: "sine.in",
-                duration: 1.3,
-                onComplete: () => {
-                    //this.app.stage.removeChild(this.homeComponent.container);
-                    this.grassSprites.forEach((element, index) => {
-                        let delay = .005 * index;
-                        let gsapper = gsap.to(element, {
-                            delay: delay,
-                            duration: .05,
-                            alpha: 0,
-                            onStart: () => {       
-                                if(index == 0){
-                                    let transition2 = gsap.to(this.slotGame.container, {
-                                        alpha: 1,
-                                        ease: "sine.out",
-                                        duration: 1.5,
-                                        onComplete: () => {
-                                            transition2.kill();
-    
-                                        }
-                                    });
-                                }
-                            },
-                            onComplete: () =>{
-                                this.app.stage.removeChild(element);
-                                if(index == this.grassSprites.length - 1){
-                                    this.grass = [];
-                                    this.grassSprites = [];
-                                }
-                                gsapper.kill();
-                            }
-                        });
-                    });
-                    transition.kill();
-                    this.startfreeSpinEvent(12)
-                }
-            });
+            this.createTransition()
         })
 
         
@@ -867,70 +780,21 @@ export default class Game{
             this.isFreeSpin = false
             clearTimeout(show);
         }, 1000);
-            this.slotGame.reelContainer.forEach((data,index)=>{
-                    this.slotGame.generateNewSymbolsMainEvent(index)      
-            })  
-            let show2 = setTimeout(() => {
-                this.slotGame.autoPlayCount = count
-                this.startSpin(count)
-                clearTimeout(show2);
-            }, 1000);
-
-
+        this.slotGame.reelContainer.forEach((data,index)=>{
+            this.slotGame.generateNewSymbolsMainEvent(index)      
+        })  
+        let show2 = setTimeout(() => {
+            this.slotGame.autoPlayCount = count
+            this.startSpin(count)
+            clearTimeout(show2);
+        }, 1000);
     }
-
-
-    private createGrass(){
-        // this.playSound(27)
-         while(this.grass.length < 300){
-             let bubble = {
-                 x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
-                 y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
-                 size: Math.round(Functions.getRandomInt(50, 350))
-             }
- 
-             let overlapping = false;
-             for(let j = 0; j < this.grass.length; j++){
-                 let other = this.grass[j];
-                 if (bubble.x < other.x + other.size &&
-                     bubble.x + bubble.size > other.x &&
-                     bubble.y < other.y + other.size &&
-                     bubble.size + bubble.y > other.y) {
-                     overlapping = true;
-                     break;
-                  }
-             }
- 
-             if(!overlapping){
-                 this.grass.push(bubble);
-             }
- 
-             this.protection++;
-             if(this.protection > 10000){
-                 break;
-             }
-         }
-     }
- 
-     private animateGrass(){
-         let duration = 10;
-         this.grass.forEach((element, index) => {
-             let interval = duration * index;
-             let show = setTimeout(() => {
-                 const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
-                 sprite.width = element.size;
-                 sprite.height = element.size;
-                 sprite.x = element.x;
-                 sprite.y = element.y;
-                 this.grassSprites.push(sprite);
-                 this.app.stage.addChild(sprite);
-                 clearTimeout(show);
-             }, interval);
-         });
-     }
-
-     private checkIfFreeSpin(bool:boolean){
+    private checkIfFreeSpin(bool:boolean){
         this.enableButtons(false)
         this.isFreeSpin = true
-     }
+    }
+    private createTransition(){
+        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
+        this.gameContainer.addChild(this.transition.container)
+    }
 }

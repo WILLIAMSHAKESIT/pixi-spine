@@ -37,7 +37,7 @@ const loadSpineAnimation = (spine:any,animation:string,loop:boolean,animationSpe
     if (spine.state.hasAnimation(`${animation}`)) {
         // run animation
         spine.state.setAnimation(1, `${animation}`, loop);
-        // animation spee
+        // animation speed
         spine.state.timeScale = animationSpeed;
         // update yourself
         spine.autoUpdate = true;
