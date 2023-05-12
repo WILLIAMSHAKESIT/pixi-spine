@@ -941,31 +941,31 @@ export default class Game{
         this.enableButtons(false)
         this.isFreeSpin = true
     }
-    private createCongrats(){
-        this.congrats = new Congrats(this.app,this.textureArray)
-        this.gameContainer.addChild(this.congrats.container)
-        this.congrats.container.cursor = 'pointer'
-        this.congrats.container.interactive = true
-        this.congrats.container.addEventListener('pointerdown',()=>{
-            this.createTransition()
-            let timeout = setTimeout(()=>{
-                this.gameContainer.removeChild(this.congrats.container)
-                this.enableButtons(true)
-                this.lightModeEvent(true)
-                this.slotGame.isFreeSpin = true
-                this.slotGame.isFreeSpinDone = false
-                let show = setTimeout(() => {
-                    this.isFreeSpin = false
-                    clearTimeout(show);
-                }, 1000);
-                this.slotGame.reelContainer.forEach((data,index)=>{
-                    this.slotGame.generateNewSymbols(index)      
-                })  
-                clearTimeout(timeout)
-            },this.transitionDelay)
-        })
-        this.slotGame.autoplayDoneEvent = true
-    }
+    // private createCongrats(){
+    //     this.congrats = new Congrats(this.app,this.textureArray)
+    //     this.gameContainer.addChild(this.congrats.container)
+    //     this.congrats.container.cursor = 'pointer'
+    //     this.congrats.container.interactive = true
+    //     this.congrats.container.addEventListener('pointerdown',()=>{
+    //         this.createTransition()
+    //         let timeout = setTimeout(()=>{
+    //             this.gameContainer.removeChild(this.congrats.container)
+    //             this.enableButtons(true)
+    //             this.lightModeEvent(true)
+    //             this.slotGame.isFreeSpin = true
+    //             this.slotGame.isFreeSpinDone = false
+    //             let show = setTimeout(() => {
+    //                 this.isFreeSpin = false
+    //                 clearTimeout(show);
+    //             }, 1000);
+    //             this.slotGame.reelContainer.forEach((data,index)=>{
+    //                 this.slotGame.generateNewSymbols(index)      
+    //             })  
+    //             clearTimeout(timeout)
+    //         },this.transitionDelay)
+    //     })
+    //     this.slotGame.autoplayDoneEvent = true
+    // }
     private createPopUps(){
         this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.popUps.container)
