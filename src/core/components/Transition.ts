@@ -14,6 +14,7 @@ export default class Transition{
     private overlay:PIXI.Sprite
     private leaves:Spine
     private gameContainer:PIXI.Container
+    public spine:any
     constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any){
         this.app = app
         this.container = new PIXI.Container
@@ -35,8 +36,8 @@ export default class Transition{
         this.leaves.y = posY
         // animate glow
         this.container.addChild(this.leaves)
-        const spine = Functions.loadSpineAnimation(this.leaves,'animation',false,0.3)
-        spine.state.onComplete = () => {
+        this.spine = Functions.loadSpineAnimation(this.leaves,'animation',false,0.3)
+        this.spine.state.onComplete = () => {
             let timeout = setTimeout(()=>{
                 this.container.removeChild(this.leaves)
                 this.gameContainer.removeChild(this.container)

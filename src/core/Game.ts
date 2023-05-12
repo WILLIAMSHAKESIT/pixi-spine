@@ -69,6 +69,7 @@ export default class Game{
 
     //free spin
     private isFreeSpin:boolean = false;
+    private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     
     constructor(){
@@ -177,33 +178,30 @@ export default class Game{
             this.slotGame.notLongPress = true;
         });
     }
-    private createTransition(){
-        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
-        this.gameContainer.addChild(this.transition.container)
-    }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray)
         this.gameContainer.addChild(this.congrats.container)
-        console.log("sda")
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
-            this.gameContainer.removeChild(this.congrats.container)
-            this.enableButtons(true)
-            this.lightModeEvent(true)
-            this.slotGame.isFreeSpin = true
-            this.slotGame.isFreeSpinDone = false
-            let show = setTimeout(() => {
-                this.isFreeSpin = false
-                clearTimeout(show);
-            }, 1000);
+            this.createTransition()
+            let timeout = setTimeout(()=>{
+                this.gameContainer.removeChild(this.congrats.container)
+                this.enableButtons(true)
+                this.lightModeEvent(true)
+                this.slotGame.isFreeSpin = true
+                this.slotGame.isFreeSpinDone = false
+                let show = setTimeout(() => {
+                    this.isFreeSpin = false
+                    clearTimeout(show);
+                }, 1000);
                 this.slotGame.reelContainer.forEach((data,index)=>{
-                        this.slotGame.generateNewSymbols(index)      
+                    this.slotGame.generateNewSymbols(index)      
                 })  
-    
+                clearTimeout(timeout)
+            },this.transitionDelay)
         })
         this.slotGame.autoplayDoneEvent = true
-
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -366,6 +364,7 @@ export default class Game{
             onComplete:()=>{
                 fadeOutGlow.kill()
                 let bonusFrameHide = gsap.to(this.buyBonusFrame, {
+                    delay:0.2,
                     duration:0.2,
                     y:dY*1.2,
                     onComplete:()=>{
@@ -384,73 +383,79 @@ export default class Game{
         }) 
     }
     private matchingGame(){
+        this.createTransition()
         this.isMatchingGame = true
-        let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
-        let arrayBlockValues:Array<any> = []
-        let blockSpacing = 1.2
-        let multiplier = 0
-        let multiplier2 = 0
-        let blockOffsetX = 25
-        let miniCount = 0
-        let majorCount = 0
-        let grandCount = 0
+        let timeOut = setTimeout(()=>{
+            let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
+            let arrayBlockValues:Array<any> = []
+            let blockSpacing = 1.2
+            let multiplier = 0
+            let multiplier2 = 0
+            let blockOffsetX = 25
+            let miniCount = 0
+            let majorCount = 0
+            let grandCount = 0
+            let bottomText = 'PICK ROCKS TO REVEAL JACKPOTS'
+            this.enableButtons(false)
+            this.lightMode(false)
+            //create blocks
 
-        this.enableButtons(false)
-        this.lightMode(false)
-        //create blocks
-
-        randomizeArray.forEach((data:string,index:number)=>{
-            const symbol = Functions.loadTexture(this.textureArray,'bonus',`${data}`)
-            const rock = Functions.loadTexture(this.textureArray,'bonus',`rock_block`)
-            symbol.visible = false
-            rock.interactive = true
-            rock.cursor = 'pointer'
-            symbol.scale.set(0.9)
-            if(index > 3 && index < 8){
-                rock.y = rock.height*blockSpacing
-                rock.x = multiplier2*rock.width*blockSpacing
-                symbol.x = rock.x + blockOffsetX
-                symbol.y = rock.y
-                multiplier2++
-            }else if( index >= 8 && index <= 11){
-                rock.y = (rock.height*2)*blockSpacing
-                rock.x = multiplier*rock.width*blockSpacing
-                symbol.x = rock.x + blockOffsetX
-                symbol.y = rock.y
-                multiplier++
-            }else{
-                rock.x = index*rock.width*blockSpacing
-                symbol.x = rock.x + blockOffsetX
-            }
-            //click rock event
-            rock.addEventListener('pointerdown',()=>{
-                rock.interactive = false
-                rock.visible = false
-                symbol.visible = true
-                if(data == 'grand'){
-                    grandCount++
-                    if(grandCount == 3){
-                        this.matchinGameWinPop(arrayBlockValues)
-                    }
-                }else if(data == 'major'){
-                    majorCount++
-                    if(majorCount == 3){
-                        this.matchinGameWinPop(arrayBlockValues)
-                    }
+            randomizeArray.forEach((data:string,index:number)=>{
+                const symbol = Functions.loadTexture(this.textureArray,'bonus',`${data}`)
+                const rock = Functions.loadTexture(this.textureArray,'bonus',`rock_block`)
+                symbol.visible = false
+                rock.interactive = true
+                rock.cursor = 'pointer'
+                symbol.scale.set(0.9)
+                if(index > 3 && index < 8){
+                    rock.y = rock.height*blockSpacing
+                    rock.x = multiplier2*rock.width*blockSpacing
+                    symbol.x = rock.x + blockOffsetX
+                    symbol.y = rock.y
+                    multiplier2++
+                }else if( index >= 8 && index <= 11){
+                    rock.y = (rock.height*2)*blockSpacing
+                    rock.x = multiplier*rock.width*blockSpacing
+                    symbol.x = rock.x + blockOffsetX
+                    symbol.y = rock.y
+                    multiplier++
                 }else{
-                    miniCount++
-                    if(miniCount == 3){
-                        this.matchinGameWinPop(arrayBlockValues)
-                    }
+                    rock.x = index*rock.width*blockSpacing
+                    symbol.x = rock.x + blockOffsetX
                 }
+                //click rock event
+                rock.addEventListener('pointerdown',()=>{
+                    rock.interactive = false
+                    rock.visible = false
+                    symbol.visible = true
+                    if(data == 'grand'){
+                        grandCount++
+                        if(grandCount == 3){
+                            this.matchinGameWinPop(arrayBlockValues)
+                        }
+                    }else if(data == 'major'){
+                        majorCount++
+                        if(majorCount == 3){
+                            this.matchinGameWinPop(arrayBlockValues)
+                        }
+                    }else{
+                        miniCount++
+                        if(miniCount == 3){
+                            this.matchinGameWinPop(arrayBlockValues)
+                        }
+                    }
+                })
+                arrayBlockValues.push({rock:rock,symbol:symbol})
+                this.matchingBlocksContainer.addChild(symbol)
+                this.matchingBlocksContainer.addChild(rock)
             })
-            arrayBlockValues.push({rock:rock,symbol:symbol})
-            this.matchingBlocksContainer.addChild(symbol)
-            this.matchingBlocksContainer.addChild(rock)
-        })
-        this.matchingBlocksContainer.x = (this.slotGame.frameBg.width-this.matchingBlocksContainer.width)/2
-        this.matchingBlocksContainer.y = (this.slotGame.frameBg.height-this.matchingBlocksContainer.height)/2
-        this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
+            this.matchingBlocksContainer.x = (this.slotGame.frameBg.width-this.matchingBlocksContainer.width)/2
+            this.matchingBlocksContainer.y = (this.slotGame.frameBg.height-this.matchingBlocksContainer.height)/2
+            this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
+            this.textStyle3.fontSize = 30
+            this.updatePaylineBottomText(bottomText)
+            clearTimeout(timeOut)
+        },this.transitionDelay)
     }
     private matchinGameWinPop(arrayBlockValues:Array<any>){
         this.isMatchingGame = false
@@ -480,11 +485,13 @@ export default class Game{
         let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
         let paylineTotal = 0
-        this.paylineTextBottom.text = 'Tap space or enter to skip'
+        let bottomText = 'Tap space or enter to skip'
+        this.updatePaylineBottomText(bottomText)       
         if(this.slotGame.paylines.length !== 0){
             let symbolsContainer = new PIXI.Container
             for(let i=0;i<paylineContent.length;i++){
-                this.paylineTextBottom.text = ''
+                bottomText = ''
+                this.updatePaylineBottomText(bottomText)
                 let payline = paylineContent[i].payline
                 let payout = Functions.numberWithCommas(paylineContent[i].payout)
                 const container = new PIXI.Container
@@ -509,9 +516,13 @@ export default class Game{
             symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
             parentContainer.addChild(symbolsContainer)
-            this.paylineText.text = `WIN ${paylineTotal}`
+            this.paylineText.text = `WIN ${Functions.numberWithCommas(paylineTotal)}`
         }
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+        this.updatePaylineBottomText(bottomText)
+    }
+    private updatePaylineBottomText(text:string){
+        this.paylineTextBottom.text = text
         this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
         this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
@@ -731,7 +742,6 @@ export default class Game{
             this.isOpenModal = true
         })
     }
-
     private freeSpinEvent(){
         const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
@@ -764,49 +774,11 @@ export default class Game{
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
-            this.createGrass()
-            this.animateGrass()
-    
             this.createTransition()
-            let transition = gsap.to(this.slotGame.container, {
-                alpha: 0,
-                ease: "sine.in",
-                duration: 1.3,
-                onComplete: () => {
-                    //this.app.stage.removeChild(this.homeComponent.container);
-                    this.grassSprites.forEach((element, index) => {
-                        let delay = .005 * index;
-                        let gsapper = gsap.to(element, {
-                            delay: delay,
-                            duration: .05,
-                            alpha: 0,
-                            onStart: () => {       
-                                if(index == 0){
-                                    let transition2 = gsap.to(this.slotGame.container, {
-                                        alpha: 1,
-                                        ease: "sine.out",
-                                        duration: 1.5,
-                                        onComplete: () => {
-                                            transition2.kill();
-    
-                                        }
-                                    });
-                                }
-                            },
-                            onComplete: () =>{
-                                this.app.stage.removeChild(element);
-                                if(index == this.grassSprites.length - 1){
-                                    this.grass = [];
-                                    this.grassSprites = [];
-                                }
-                                gsapper.kill();
-                            }
-                        });
-                    });
-                    transition.kill();
-                    this.startfreeSpinEvent(6)
-                }
-            });
+            let timeout = setTimeout(()=>{
+                this.startfreeSpinEvent(6)
+                clearTimeout(timeout)
+            },this.transitionDelay)
         })
 
         
@@ -814,48 +786,11 @@ export default class Game{
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
-            this.createGrass()
-            this.animateGrass()
-    
-            let transition = gsap.to(this.slotGame.container, {
-                alpha: 0,
-                ease: "sine.in",
-                duration: 1.3,
-                onComplete: () => {
-                    //this.app.stage.removeChild(this.homeComponent.container);
-                    this.grassSprites.forEach((element, index) => {
-                        let delay = .005 * index;
-                        let gsapper = gsap.to(element, {
-                            delay: delay,
-                            duration: .05,
-                            alpha: 0,
-                            onStart: () => {       
-                                if(index == 0){
-                                    let transition2 = gsap.to(this.slotGame.container, {
-                                        alpha: 1,
-                                        ease: "sine.out",
-                                        duration: 1.5,
-                                        onComplete: () => {
-                                            transition2.kill();
-    
-                                        }
-                                    });
-                                }
-                            },
-                            onComplete: () =>{
-                                this.app.stage.removeChild(element);
-                                if(index == this.grassSprites.length - 1){
-                                    this.grass = [];
-                                    this.grassSprites = [];
-                                }
-                                gsapper.kill();
-                            }
-                        });
-                    });
-                    transition.kill();
-                    this.startfreeSpinEvent(12)
-                }
-            });
+            this.createTransition()
+            let timeout = setTimeout(()=>{
+                this.startfreeSpinEvent(6)
+                clearTimeout(timeout)
+            },this.transitionDelay)
         })
 
         
@@ -868,71 +803,22 @@ export default class Game{
         let show = setTimeout(() => {
             this.isFreeSpin = false
             clearTimeout(show);
+        }, 100);
+        this.slotGame.reelContainer.forEach((data,index)=>{
+            this.slotGame.generateNewSymbolsMainEvent(index)      
+        })  
+        let show2 = setTimeout(() => {
+            this.slotGame.autoPlayCount = count
+            this.startSpin(count)
+            clearTimeout(show2);
         }, 1000);
-            this.slotGame.reelContainer.forEach((data,index)=>{
-                    this.slotGame.generateNewSymbolsMainEvent(index)      
-            })  
-            let show2 = setTimeout(() => {
-                this.slotGame.autoPlayCount = count
-                this.startSpin(count)
-                clearTimeout(show2);
-            }, 1000);
-
-
     }
-
-
-    private createGrass(){
-        // this.playSound(27)
-         while(this.grass.length < 300){
-             let bubble = {
-                 x: Math.round(Functions.getRandomInt(-100, this.app.screen.width)),
-                 y: Math.round(Functions.getRandomInt(-100, this.app.screen.height)),
-                 size: Math.round(Functions.getRandomInt(50, 350))
-             }
- 
-             let overlapping = false;
-             for(let j = 0; j < this.grass.length; j++){
-                 let other = this.grass[j];
-                 if (bubble.x < other.x + other.size &&
-                     bubble.x + bubble.size > other.x &&
-                     bubble.y < other.y + other.size &&
-                     bubble.size + bubble.y > other.y) {
-                     overlapping = true;
-                     break;
-                  }
-             }
- 
-             if(!overlapping){
-                 this.grass.push(bubble);
-             }
- 
-             this.protection++;
-             if(this.protection > 10000){
-                 break;
-             }
-         }
-     }
- 
-     private animateGrass(){
-         let duration = 10;
-         this.grass.forEach((element, index) => {
-             let interval = duration * index;
-             let show = setTimeout(() => {
-                 const sprite = PIXI.Sprite.from(this.textureArray.grass.textures['grass_1.png']);
-                 sprite.width = element.size;
-                 sprite.height = element.size;
-                 sprite.x = element.x;
-                 sprite.y = element.y;
-                 this.grassSprites.push(sprite);
-                 this.app.stage.addChild(sprite);
-                 clearTimeout(show);
-             }, interval);
-         });
-     }
-
-     private checkIfFreeSpin(bool:boolean){
+    private checkIfFreeSpin(bool:boolean){
         this.enableButtons(false)
         this.isFreeSpin = true
-     }
+    }
+    private createTransition(){
+        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
+        this.gameContainer.addChild(this.transition.container)
+    }
 }
