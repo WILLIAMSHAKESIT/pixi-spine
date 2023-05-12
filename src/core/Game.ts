@@ -189,6 +189,7 @@ export default class Game{
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.slotGame.isFreeSpinDone = true
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
@@ -196,7 +197,6 @@ export default class Game{
                 this.enableButtons(true)
                 this.lightModeEvent(true)
                 this.slotGame.isFreeSpin = true
-                this.slotGame.isFreeSpinDone = false
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
                     clearTimeout(show);
@@ -329,13 +329,15 @@ export default class Game{
             this.hideBonusPopUp(dY,sY);
         })
         check.addEventListener('pointerdown',()=>{
+            this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
         check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpin(1)
                 clearTimeout(timeOut)
             },1000)
-            this.slotGame.isFreeSpin = true
+
+         
             let timeOut1 = setTimeout(()=>{
                 check.interactive = true
                 clearTimeout(timeOut1)
