@@ -163,7 +163,7 @@ export default class Game{
         this.events()
         this.updateTextValues()
         // this.createCongrats()
-        this.createPopUps()
+        //this.createPopUps()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
