@@ -49,6 +49,7 @@ export default class Game{
     private textStyle2:PIXI.TextStyle
     private textStyle3:PIXI.TextStyle
     private descText:PIXI.TextStyle
+    private textStyleSize:number = 55
     //text values
     private buyBonusText:PIXI.Text
     private paylineText:PIXI.Text
@@ -77,13 +78,13 @@ export default class Game{
         this.gameContainer = new PIXI.Container
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
-            fontSize: 55,
+            fontSize: this.textStyleSize,
             fontWeight: 'bolder',
-            fill: ['#ffffff', '#ffffff'], // gradient
+            fill: ['#ffeaa0', '#ffc260'], // gradient
             strokeThickness: 5,
             dropShadow: true,
-            dropShadowColor: '#000000',
-            dropShadowBlur: 4,
+            dropShadowColor: '#aa521d',
+            dropShadowBlur: 0,
             dropShadowAngle: Math.PI / 6,
             dropShadowDistance: 3,
             wordWrap: false,
@@ -399,6 +400,7 @@ export default class Game{
             let miniCount = 0
             let majorCount = 0
             let grandCount = 0
+            let topText = 'MATCH 3 TO WIN'
             let bottomText = 'PICK ROCKS TO REVEAL JACKPOTS'
             this.enableButtons(false)
             this.lightMode(false)
@@ -456,7 +458,10 @@ export default class Game{
             this.matchingBlocksContainer.x = (this.slotGame.frameBg.width-this.matchingBlocksContainer.width)/2
             this.matchingBlocksContainer.y = (this.slotGame.frameBg.height-this.matchingBlocksContainer.height)/2
             this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
+            // update text 
+            this.textStyle.fontSize = 46
             this.textStyle3.fontSize = 30
+            this.updatePaylineTopText(topText)
             this.updatePaylineBottomText(bottomText)
             clearTimeout(timeOut)
         },this.transitionDelay)
@@ -520,10 +525,16 @@ export default class Game{
             symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
             symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
             parentContainer.addChild(symbolsContainer)
-            this.paylineText.text = `WIN ${Functions.numberWithCommas(paylineTotal)}`
+            this.updatePaylineTopText(`WIN ${Functions.numberWithCommas(paylineTotal)}`)
         }
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
         this.updatePaylineBottomText(bottomText)
+    }
+    private updatePaylineTopText(text:string){
+        let greetY = 30
+        this.paylineText.text = text
+        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+        this.paylineText.y = greetY
     }
     private updatePaylineBottomText(text:string){
         this.paylineTextBottom.text = text
