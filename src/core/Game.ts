@@ -456,7 +456,7 @@ export default class Game{
             let grandCount = 0
             let result:any 
             let topText = 'MATCH 3 TO WIN'
-            let bottomText = 'PICK ROCKS TO REVEAL JACKPOTS'
+            let bottomText = 'PICK STONE TO REVEAL JACKPOTS'
             let popUpSkin = ''
             this.enableButtons(false)
             this.lightMode(false)
@@ -556,19 +556,22 @@ export default class Game{
         result.y = (frame.height - result.height)*0.8
         win.x = (frame.width - win.width)/2
         win.y = ((frame.height - win.height)/2)*0.85
+
+        const textScaleAnim = gsap.timeline({ 
+            repeat: -1,
+            onUpdate:()=>{
+                clickContinueText.x = (frame.width - clickContinueText.width)/2
+                clickContinueText.y = (frame.height - clickContinueText.height)*0.96
+            }
+        });
+
+        textScaleAnim.to(clickContinueText.scale, { duration: 0.5, x: 1.2, y: 1.2 })
+        .to(clickContinueText.scale, { duration: 0.5, x: 1, y: 1 });
+        // Start the animation
+        textScaleAnim.play();
+
         clickContinueText.x = (frame.width - clickContinueText.width)/2
         clickContinueText.y = (frame.height - clickContinueText.height)*0.96
-        // let scaleText = gsap.to(clickContinueText,{
-        //     duration: 1,
-        //     scale: 1.2,
-        //     repeat: -1,
-        //     yoyo: true,
-        //     ease: "power1.inOut",
-        //     onUpdate:()=>{
-        //         clickContinueText.x = (frame.width - clickContinueText.width)/2
-        //         clickContinueText.y = (frame.height - clickContinueText.height)*0.96
-        //     }   
-        // })
         this.popUps.closePopUp()
         frame.addChild(result)
         frame.addChild(win)
@@ -577,6 +580,9 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
+            clickContinueText.interactive = false
+            clickContinueText.interactive = false
+            textScaleAnim.kill()
             let timeOut = setTimeout(()=>{
                 frame.removeChild(result)
                 frame.removeChild(win)
