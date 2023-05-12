@@ -3,6 +3,7 @@ import * as PIXI from 'pixi.js';
 import Loader from "./components/Loader";
 import Slot from './components/Slot';
 import Congrats from './components/Congrats';
+import PopUps from './components/PopUps';
 import Controller from './components/Controller';
 import Modal from './components/Modal';
 import Transition from './components/Transition';
@@ -25,6 +26,7 @@ export default class Game{
     private controller:Controller   
     private modal:Modal
     private congrats:Congrats
+    private popUps:PopUps
     private transition:Transition
     private spinType:string = 'normal'
     //texttures
@@ -60,14 +62,6 @@ export default class Game{
     private paylineContainersAnimation:Array<any> = []
     //spines
     private popGlow:Spine
-
-    //grass
-    private slideshowTicker: Boolean = true;
-    private play: Boolean = true;
-    private grass: Array<any> = [];
-    private grassSprites: Array<PIXI.Sprite> = [];
-    private protection: number = 0;
-
     //free spin
     private isFreeSpin:boolean = false;
     private transitionDelay:number = 2000
@@ -156,7 +150,8 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        this.createCongrats()
+        // this.createCongrats()
+        this.createPopUps()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -178,31 +173,6 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
-    }
-    private createCongrats(){
-        this.congrats = new Congrats(this.app,this.textureArray)
-        this.gameContainer.addChild(this.congrats.container)
-        this.congrats.container.cursor = 'pointer'
-        this.congrats.container.interactive = true
-        this.congrats.container.addEventListener('pointerdown',()=>{
-            this.createTransition()
-            let timeout = setTimeout(()=>{
-                this.gameContainer.removeChild(this.congrats.container)
-                this.enableButtons(true)
-                this.lightModeEvent(true)
-                this.slotGame.isFreeSpin = true
-                this.slotGame.isFreeSpinDone = false
-                let show = setTimeout(() => {
-                    this.isFreeSpin = false
-                    clearTimeout(show);
-                }, 1000);
-                this.slotGame.reelContainer.forEach((data,index)=>{
-                    this.slotGame.generateNewSymbols(index)      
-                })  
-                clearTimeout(timeout)
-            },this.transitionDelay)
-        })
-        this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
@@ -827,6 +797,35 @@ export default class Game{
     private checkIfFreeSpin(bool:boolean){
         this.enableButtons(false)
         this.isFreeSpin = true
+    }
+    private createCongrats(){
+        this.congrats = new Congrats(this.app,this.textureArray)
+        this.gameContainer.addChild(this.congrats.container)
+        this.congrats.container.cursor = 'pointer'
+        this.congrats.container.interactive = true
+        this.congrats.container.addEventListener('pointerdown',()=>{
+            this.createTransition()
+            let timeout = setTimeout(()=>{
+                this.gameContainer.removeChild(this.congrats.container)
+                this.enableButtons(true)
+                this.lightModeEvent(true)
+                this.slotGame.isFreeSpin = true
+                this.slotGame.isFreeSpinDone = false
+                let show = setTimeout(() => {
+                    this.isFreeSpin = false
+                    clearTimeout(show);
+                }, 1000);
+                this.slotGame.reelContainer.forEach((data,index)=>{
+                    this.slotGame.generateNewSymbols(index)      
+                })  
+                clearTimeout(timeout)
+            },this.transitionDelay)
+        })
+        this.slotGame.autoplayDoneEvent = true
+    }
+    private createPopUps(){
+        this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray)
+        this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
