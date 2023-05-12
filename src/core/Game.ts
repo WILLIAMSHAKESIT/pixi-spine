@@ -203,6 +203,7 @@ export default class Game{
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.congrats.container.interactive = false
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
@@ -272,7 +273,7 @@ export default class Game{
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit = (this.userCredit-this.betAmount)+this.slotGame.totalWin
             this.updateCreditValues()
-            if(this.slotGame.autoPlayCount <= 1){
+            if(this.slotGame.autoPlayCount == 0){
                 this.isAutoPlay = false
                 this.controller.spinBtnSprite.texture = this.spinTextureOn
                 this.controller.spinBtnSprite.interactive = true
@@ -805,6 +806,7 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
+        this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
 
         let glowX = 570
