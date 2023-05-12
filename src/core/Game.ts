@@ -747,6 +747,28 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
+
+        // let bonusFrameShow = gsap.from(this.buyBonusFrame, {
+        //     delay:.3,
+        //     y:sY,
+        //     onComplete:()=>{
+        //         bonusFrameShow.kill()
+        //         let bounceUp = gsap.to(this.buyBonusFrame,{
+        //             y:dY-160,
+        //             onComplete:()=>{
+        //                 bounceUp.kill()
+        //                 let fadeInGlow = gsap.to(this.popGlow,{
+        //                     delay:0,
+        //                     duration:1,
+        //                     alpha:1,
+        //                     onComplete:()=>{
+        //                         fadeInGlow.kill()
+        //                     }
+        //                 }) 
+        //             }
+        //         })
+        //     }
+        // })
         const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
         wildSlot.y = -200
