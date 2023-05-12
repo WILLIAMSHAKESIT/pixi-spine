@@ -758,31 +758,36 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
-
-        // let bonusFrameShow = gsap.from(this.buyBonusFrame, {
-        //     delay:.3,
-        //     y:sY,
-        //     onComplete:()=>{
-        //         bonusFrameShow.kill()
-        //         let bounceUp = gsap.to(this.buyBonusFrame,{
-        //             y:dY-160,
-        //             onComplete:()=>{
-        //                 bounceUp.kill()
-        //                 let fadeInGlow = gsap.to(this.popGlow,{
-        //                     delay:0,
-        //                     duration:1,
-        //                     alpha:1,
-        //                     onComplete:()=>{
-        //                         fadeInGlow.kill()
-        //                     }
-        //                 }) 
-        //             }
-        //         })
-        //     }
-        // })
+        let glowX = 956
+        let glowY = 1044
+        let dY = -80
+       
+  
         const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
         wildSlot.y = -200
+        let sY = -wildSlot.height
+        let wildSlotFrameShow = gsap.from(wildSlot, {
+            delay:.3,
+            y:sY,
+            onComplete:()=>{
+                wildSlotFrameShow.kill()
+                let bounceUp = gsap.to(wildSlot,{
+                    y:dY-160,
+                    onComplete:()=>{
+                        bounceUp.kill()
+                        let fadeInGlow = gsap.to(this.popGlow,{
+                            delay:0,
+                            duration:1,
+                            alpha:1,
+                            onComplete:()=>{
+                                fadeInGlow.kill()
+                            }
+                        }) 
+                    }
+                })
+            }
+        })
 
         //amount
         const amount = new PIXI.Text(`6`, this.textStyle2)
@@ -796,6 +801,27 @@ export default class Game{
         const moneySlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         moneySlot.x = (this.baseWidth - moneySlot.width)/2 + 400
         moneySlot.y = -200
+        let moneySlotFrameShow = gsap.from(moneySlot, {
+            delay:.3,
+            y:sY,
+            onComplete:()=>{
+                moneySlotFrameShow.kill()
+                let bounceUp = gsap.to(moneySlot,{
+                    y:dY-160,
+                    onComplete:()=>{
+                        bounceUp.kill()
+                        let fadeInGlow = gsap.to(this.popGlow,{
+                            delay:0,
+                            duration:1,
+                            alpha:1,
+                            onComplete:()=>{
+                                fadeInGlow.kill()
+                            }
+                        }) 
+                    }
+                })
+            }
+        })
 
         //amount
         const amount2 = new PIXI.Text(`12`, this.textStyle2)
