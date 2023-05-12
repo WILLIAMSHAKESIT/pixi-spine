@@ -193,6 +193,7 @@ export default class Game{
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
             this.slotGame.isFreeSpinDone = true
+            this.slotGame.freeSpinStart = false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
@@ -793,6 +794,7 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
+        console.log("check")
 
         let glowX = 570
         let glowX2 = 1370

@@ -281,12 +281,8 @@ export default class Slot{
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
-                                console.log("heyzzzzzz")
-                                console.log(this.isFreeSpinDone,"check")
                             }else if(this.isFreeSpin && !this.isFreeSpinDone){
                                 this.generateNewSymbolsMainEvent(index)
-                                console.log("hey")
-                                console.log(this.isFreeSpinDone,"check2")
                             }else{
                                 this.generateNewSymbols(index)
                             }
