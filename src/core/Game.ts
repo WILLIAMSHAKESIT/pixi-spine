@@ -107,7 +107,7 @@ export default class Game{
         });
         this.textStyle2 = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
-            fontSize: 100,
+            fontSize: 120,
             fontWeight: 'bolder',
             fill: ['#ffffff', '#ffffff'], // gradient
             strokeThickness: 5,
@@ -282,7 +282,7 @@ export default class Game{
             if(this.slotGame.autoPlayCount == 0){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
-                // this.controller.spinBtnSprite.interactive = true
+                 this.controller.spinBtnSprite.interactive = true
             }
             this.updatePaylineAnimation(this.paylineGreetings)
         }
