@@ -77,11 +77,11 @@
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
-	"version": "1.1",
+	"version": "1.0",
 	"image": "coins.png",
 	"format": "RGBA8888",
 	"size": {"w":987,"h":1640},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:1f6bdce9baac6db42f839a9cbe38ad54:4384d7b28aa39030dc2986ca9fc4eaf0:7cb72418430a29c0cfc86e097f7c7202$"
+	"smartupdate": "$TexturePacker:SmartUpdate:5b814414a0acdc347728f9574424beb4:4384d7b28aa39030dc2986ca9fc4eaf0:51f960d29b2cb2ae0010061540f14fb7$"
 }
 }

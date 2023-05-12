@@ -156,7 +156,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        //this.createCongrats()
+        this.createCongrats()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -192,7 +192,6 @@ export default class Game{
                 this.lightModeEvent(true)
                 this.slotGame.isFreeSpin = true
                 this.slotGame.isFreeSpinDone = false
-                this.isOpenModal = false
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
                     clearTimeout(show);
@@ -203,7 +202,6 @@ export default class Game{
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
-       
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
@@ -217,7 +215,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.updateCreditValues.bind(this),this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
@@ -321,11 +319,9 @@ export default class Game{
         let sY = -this.buyBonusFrame.height
         close.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY);
-            this.isOpenModal = false
         })
         check.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY)
-            //this.isOpenModal = false
         check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpin(1)
@@ -460,7 +456,7 @@ export default class Game{
             this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
             // update text 
             this.textStyle.fontSize = 46
-            this.textStyle3.fontSize = 30
+            this.textStyle3.fontSize = 30 
             this.updatePaylineTopText(topText)
             this.updatePaylineBottomText(bottomText)
             clearTimeout(timeOut)
