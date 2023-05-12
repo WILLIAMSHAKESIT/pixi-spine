@@ -168,7 +168,13 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
+                console.log(this.slotGame.isSpinning , "this.slotGame.isSpinning")
+                console.log(this.isAutoPlay , "this.isAutoPlay")
+                console.log(this.isMatchingGame , "this.isMatchingGame")
+                console.log(this.isFreeSpin , "this.isFreeSpin")
+                console.log(this.isOpenModal , "this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
+                  
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
@@ -189,18 +195,20 @@ export default class Game{
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
+        
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
+            this.slotGame.isFreeSpin = false
+            this.isOpenModal= false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
-                this.slotGame.isFreeSpin = true
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
                     clearTimeout(show);
@@ -794,7 +802,7 @@ export default class Game{
         })
     }
     private freeSpinEvent(){
-        console.log("check")
+        this.isOpenModal= true
 
         let glowX = 570
         let glowX2 = 1370
