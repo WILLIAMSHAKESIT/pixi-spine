@@ -69,6 +69,7 @@ export default class Game{
 
     //free spin
     private isFreeSpin:boolean = false;
+    private isOpenModal:boolean = false;
     
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -158,7 +159,7 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
-                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
@@ -715,9 +716,9 @@ export default class Game{
         })
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
-            this.controller.spinBtnSprite.texture = this.spinTextureOff
             this.controller.spinBtnSprite.interactive = true
-            if(!this.slotGame.isSpinning){
+            if(!this.slotGame.isSpinning && !this.isFreeSpin){
+                this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.startSpin(1)
             }else{
                 this.slotGame.timeScale = 10
@@ -727,6 +728,7 @@ export default class Game{
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
             this.buyBonusPopUp()
             this.enableButtons(false)
+            this.isOpenModal = true
         })
     }
 
