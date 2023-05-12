@@ -72,6 +72,9 @@ export default class Game{
     private isFreeSpin:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
+    private winFreeSpin:number = 0
+    private noOfSpin:number = 0
+    
     
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -156,7 +159,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
-        this.createCongrats()
+        //this.createCongrats()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -180,12 +183,13 @@ export default class Game{
         });
     }
     private createCongrats(){
-        this.congrats = new Congrats(this.app,this.textureArray)
+        this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
             this.createTransition()
+            this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
@@ -258,6 +262,12 @@ export default class Game{
             }
             this.updatePaylineAnimation(this.paylineGreetings)
         }
+        if(this.slotGame.startCountWinFreeSpin){
+            this.winFreeSpin += this.slotGame.totalWin
+            console.log( this.winFreeSpin)
+        }
+       
+        
         //this.slotGame.isFreeSpin = false
     }
     private onSpin(){
@@ -830,24 +840,28 @@ export default class Game{
 
 
         wildSlot.addEventListener('pointerdown', () =>{
+            this.noOfSpin=6
+            this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
             this.createTransition()
             let timeout = setTimeout(()=>{
-                this.startfreeSpinEvent(6)
+                this.startfreeSpinEvent(this.noOfSpin)
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
 
         
         moneySlot.addEventListener('pointerdown', () =>{
+            this.noOfSpin=12
+            this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
             this.gameContainer.removeChild(wildSlot)
             this.gameContainer.removeChild(moneySlot)
             this.createTransition()
             let timeout = setTimeout(()=>{
-                this.startfreeSpinEvent(6)
+                this.startfreeSpinEvent(this.noOfSpin)
                 clearTimeout(timeout)
             },this.transitionDelay)
         })

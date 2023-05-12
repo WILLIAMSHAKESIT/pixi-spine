@@ -74,10 +74,12 @@ export default class Slot{
     private symbolCount = 0
     private symbolCount2 = 0
     private symbolCount3= 0
+    public winFreeSpin = 0
     public isFreeSpin:boolean = false
     public isFreeSpinDone:boolean = true
     public freeSpinStart:boolean = false
     public autoplayDoneEvent:boolean = true
+    public startCountWinFreeSpin:boolean = false
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -119,7 +121,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 730
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -301,7 +303,6 @@ export default class Slot{
                                         this.spinCount = 0
                                         this.isSpinning = false
                                         if(this.autoPlayCount > 1){
-                                            this.autoPlayCount--
                                             let spinSpeed = 1000;
                                             if(spinType == 'turbo'){
                                                 spinSpeed = 200
@@ -317,11 +318,16 @@ export default class Slot{
                                             }else{
                                                 this.startSpin(spinType) 
                                             }
-                                        }else if(this.autoPlayCount <= 1 && !this.autoplayDoneEvent) {
-                                            this.createCongrats()
                                         }
+                                        this.autoPlayCount--
                                         // set the credit base 
                                         this.onSpinEnd()
+                                        if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
+                                            this.createCongrats()
+                                        }
+                                        console.log(this.autoPlayCount
+                                            
+                                            )
                                     }
                                 }
                             })
@@ -569,6 +575,10 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         // add total win
+        if(this.isFreeSpin){
+            this.winFreeSpin += this.reelsSymbols[reelIndex][blockIndex].payout
+           
+        }
         this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
             // run block animation

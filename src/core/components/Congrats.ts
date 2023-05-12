@@ -30,9 +30,11 @@ export default class Congrats{
     //value 
     private amount:number = 20000
     private noOfSpin:number = 0
-    constructor(app:PIXI.Application,textureArray:any){
+    constructor(app:PIXI.Application,textureArray:any,amount:number, noOfSpin:number){
         this.app = app
         this.container = new PIXI.Container
+        this.amount = amount
+        this.noOfSpin = noOfSpin
         this.middleContainer = new PIXI.Container
         this.coinsContainer = new PIXI.Container
         this.baseWidth = this.app.screen.width
