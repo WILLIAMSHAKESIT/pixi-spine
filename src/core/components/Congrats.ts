@@ -283,7 +283,6 @@ export default class Congrats{
                 }
             })
         }
-
         this.container.addChild(this.coinsContainer);
     }
     private randMinMax(min:number, max:number){

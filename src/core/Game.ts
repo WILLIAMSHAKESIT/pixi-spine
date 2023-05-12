@@ -275,7 +275,7 @@ export default class Game{
             this.updateCreditValues()
             if(this.slotGame.autoPlayCount == 0){
                 this.isAutoPlay = false
-                // this.controller.spinBtnSprite.texture = this.spinTextureOn
+                 this.controller.spinBtnSprite.texture = this.spinTextureOn
                 // this.controller.spinBtnSprite.interactive = true
             }
             this.updatePaylineAnimation(this.paylineGreetings)
