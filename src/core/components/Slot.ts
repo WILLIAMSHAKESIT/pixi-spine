@@ -57,7 +57,6 @@ export default class Slot{
     public timeScale:number = 0
     public autoPlayCount:number = 0
     // methods 
-    private updateCreditValues:()=>void
     private matchingGame:()=>void
     private freeSpinEvent:()=>void
     private createCongrats:()=>void
@@ -71,31 +70,21 @@ export default class Slot{
     public paylines:Array<any> = []
     //checkIfanimationDone
     private animateDone:boolean = true;
-    
-    //grass
-    private slideshowTicker: Boolean = true;
-    private play: Boolean = true;
-    private grass: Array<any> = [];
-    private grassSprites: Array<PIXI.Sprite> = [];
-    private protection: number = 0;
-
     //freespin
     private symbolCount = 0
     private symbolCount2 = 0
     private symbolCount3= 0
-    private bonusCount= 0
     public isFreeSpin:boolean = false
     public isFreeSpinDone:boolean = true
     public freeSpinStart:boolean = false
     public autoplayDoneEvent:boolean = true
-    constructor(app:PIXI.Application,textureArray:any,updateCreditValues:()=>void,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void){
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
         this.container = new PIXI.Container
         this.levelBarContainer = new PIXI.Container
-        this.updateCreditValues = updateCreditValues
         this.onSpinEnd = onSpinEnd
         this.createCongrats = createCongrats
         this.matchingGame = matchingGame
@@ -130,7 +119,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 730
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -351,10 +340,8 @@ export default class Slot{
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
-
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
-
                         this.matchingGame()
                     }
                 }

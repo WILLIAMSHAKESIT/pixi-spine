@@ -27,6 +27,9 @@ export default class Congrats{
     private descText:PIXI.Text
     private money:PIXI.Text
     private spins:PIXI.Text
+    //value 
+    private amount:number = 20000
+    private noOfSpin:number = 0
     constructor(app:PIXI.Application,textureArray:any){
         this.app = app
         this.container = new PIXI.Container
@@ -130,7 +133,6 @@ export default class Congrats{
         Functions.loadSpineAnimation(this.logo,'animation',true,0.2)
         this.middleContainer.addChild(this.logo)
 
-
         //create text
         this.descText = new PIXI.Text('YOU WON', this.textStyle)
         this.descText.x = (this.overlay.width - this.descText.width)/2
@@ -140,14 +142,42 @@ export default class Congrats{
     }
 
     private createMoney(){
-        this.money = new PIXI.Text('1,000', this.textStyleYellow)
+        this.money = new PIXI.Text('0', this.textStyleYellow)
         this.money.x = (this.overlay.width - this.money.width)/2
         this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
         this.middleContainer.addChild(this.money)
+
+        // Set up animation
+        const startValue = 0;
+        const endValue = this.amount;
+        const duration = 10;
+        const delay = 0.4;
+        const ease = "power1.out";
+
+        // Animate text value
+        let textAnimation = gsap.to(this.money, {
+            pixi: {
+                text: endValue,
+            },
+            duration: duration,
+            delay: delay,
+            ease: ease,
+            onStart: () => {
+                this.money.text = startValue.toString();
+            },
+            onUpdate: () => {
+                this.money.text = Functions.numberWithCommas(parseInt(this.money.text)).toString();
+                this.money.x = (this.overlay.width - this.money.width)/2
+                this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
+            },
+            onComplete:()=>{
+                textAnimation.kill()
+            }
+        });
     }
 
     private createSpins(){
-        this.spins = new PIXI.Text(`IN ${8} FREE SPINS`, this.textStyle2)
+        this.spins = new PIXI.Text(`IN ${this.noOfSpin} FREE SPINS`, this.textStyle2)
         this.spins.x = (this.overlay.width - this.spins.width)/2
         this.spins.y = (this.overlay.height - this.spins.height)/1.5
         this.middleContainer.addChild(this.spins)
