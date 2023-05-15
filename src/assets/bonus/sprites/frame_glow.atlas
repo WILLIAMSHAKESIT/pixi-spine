@@ -1,0 +1,90 @@
+
+frame_glow.png
+size: 3837,450
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow
+  rotate: false
+  xy: 2, 232
+  size: 1665, 216
+  orig: 1728, 229
+  offset: 28, 1
+  index: -1
+ray1
+  rotate: false
+  xy: 2773, 2
+  size: 425, 222
+  orig: 425, 222
+  offset: 0, 0
+  index: -1
+ray10
+  rotate: false
+  xy: 3200, 2
+  size: 424, 222
+  orig: 424, 222
+  offset: 0, 0
+  index: -1
+ray11
+  rotate: false
+  xy: 2, 5
+  size: 1483, 225
+  orig: 1483, 225
+  offset: 0, 0
+  index: -1
+ray2
+  rotate: false
+  xy: 2105, 226
+  size: 433, 222
+  orig: 433, 222
+  offset: 0, 0
+  index: -1
+ray3
+  rotate: false
+  xy: 1917, 2
+  size: 426, 222
+  orig: 426, 222
+  offset: 0, 0
+  index: -1
+ray4
+  rotate: false
+  xy: 2540, 226
+  size: 431, 222
+  orig: 431, 222
+  offset: 0, 0
+  index: -1
+ray5
+  rotate: false
+  xy: 3406, 226
+  size: 429, 222
+  orig: 429, 222
+  offset: 0, 0
+  index: -1
+ray6
+  rotate: false
+  xy: 1487, 2
+  size: 428, 222
+  orig: 428, 222
+  offset: 0, 0
+  index: -1
+ray7
+  rotate: false
+  xy: 2973, 226
+  size: 431, 222
+  orig: 431, 222
+  offset: 0, 0
+  index: -1
+ray8
+  rotate: false
+  xy: 2345, 2
+  size: 426, 222
+  orig: 426, 222
+  offset: 0, 0
+  index: -1
+ray9
+  rotate: false
+  xy: 1669, 226
+  size: 434, 222
+  orig: 434, 222
+  offset: 0, 0
+  index: -1

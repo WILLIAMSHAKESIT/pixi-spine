@@ -71,6 +71,8 @@ export default class Game{
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
     private noOfSpin:number = 0
+    //frame glow 
+    private frameGlow:Spine
 
     //sound
     private sounBtnSpriteOn:PIXI.Texture
@@ -175,6 +177,7 @@ export default class Game{
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         this.createGame()
         this.createSlot()
+        this.createFrameGlow()
         this.createController()
         this.createBuyBonus()
         this.createModal()
@@ -252,6 +255,14 @@ export default class Game{
         // create slot
         this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
+    }
+    private createFrameGlow(){
+        this.frameGlow = new Spine(this.textureArray.frame_glow.spineData)
+        this.frameGlow.width = this.baseWidth
+        this.frameGlow.x = ((this.slotGame.frameBorder.x + this.slotGame.frameBorder.width)/2)+40
+        this.frameGlow.y = (this.slotGame.frameBorder.y + this.slotGame.frameBorder.height) - 20 
+        this.frameGlow.visible = false
+        this.gameContainer.addChild(this.frameGlow)
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
@@ -737,6 +748,11 @@ export default class Game{
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        //frame glow add
+        this.frameGlow.visible = bool?false:true
+        if(!bool){
+            Functions.loadSpineAnimation(this.frameGlow,'animation',true,0.15)
+        }
     }
     private lightModeEvent(bool:boolean){
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
