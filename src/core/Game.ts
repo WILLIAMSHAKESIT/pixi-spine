@@ -304,6 +304,7 @@ export default class Game{
             if(this.slotGame.autoPlayCount == 0){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
+                 this.buyBonusBtn.interactive = true
             }
             this.updatePaylineAnimation(this.paylineGreetings)
         }
@@ -772,6 +773,11 @@ export default class Game{
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        //frame glow add
+        this.frameGlow.visible = bool?false:true
+        if(!bool){
+            Functions.loadSpineAnimation(this.frameGlow,'animation',true,0.15)
+        }
     }
     private enableButtons(bool:boolean){
         let cursor = bool?'pointer':''
@@ -847,15 +853,14 @@ export default class Game{
         })
         //open autoplay
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
-
-            if(this.isAutoPlay) {
+            if(this.isAutoPlay){
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
-            }
-            if(this.isAutoPlay){
                 this.isAutoPlay = false
                 this.controller.spinBtnSprite.texture = this.spinTextureOn 
                 this.slotGame.autoPlayCount = 0
+                this.buyBonusBtn.interactive = true
+                
             }else{
                 this.controller.autoPlay.interactive = false
                 this.modal.btnArray = []
@@ -897,6 +902,7 @@ export default class Game{
                 })
                 //start slot auto spin
                 this.modal.rollBtn.addEventListener('pointerdown',()=>{
+                    this.buyBonusBtn.interactive = false
                     this.controller.autoPlay.interactive = true
                     this.controller.spinBtnSprite.texture = this.spinTextureOff
                    // this.controller.spinBtnSprite.interactive = false
