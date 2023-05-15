@@ -492,7 +492,6 @@ export default class Game{
             let blockSpacing = 1.2
             let multiplier = 0
             let multiplier2 = 0
-            let blockOffsetX = 25
             let miniCount = 0
             let majorCount = 0
             let grandCount = 0
@@ -503,35 +502,29 @@ export default class Game{
             this.enableButtons(false)
             this.lightMode(false)
             //create blocks
-
             randomizeArray.forEach((data:string,index:number)=>{
-                const symbol = Functions.loadTexture(this.textureArray,'bonus',`${data}`)
-                const rock = Functions.loadTexture(this.textureArray,'bonus',`rock_block`)
-                symbol.visible = false
-                rock.interactive = true
-                rock.cursor = 'pointer'
-                symbol.scale.set(0.9)
+                const symbol = new Spine(this.textureArray.rock_block.spineData)
+                symbol.interactive = true
+                symbol.cursor = 'pointer'
+                let status = 'close'
                 if(index > 3 && index < 8){
-                    rock.y = rock.height*blockSpacing
-                    rock.x = multiplier2*rock.width*blockSpacing
-                    symbol.x = rock.x + blockOffsetX
-                    symbol.y = rock.y
+                    symbol.y = symbol.height*blockSpacing
+                    symbol.x = multiplier2*symbol.width*blockSpacing
                     multiplier2++
                 }else if( index >= 8 && index <= 11){
-                    rock.y = (rock.height*2)*blockSpacing
-                    rock.x = multiplier*rock.width*blockSpacing
-                    symbol.x = rock.x + blockOffsetX
-                    symbol.y = rock.y
+                    symbol.y = (symbol.height*2)*blockSpacing
+                    symbol.x = multiplier*symbol.width*blockSpacing
                     multiplier++
                 }else{
-                    rock.x = index*rock.width*blockSpacing
-                    symbol.x = rock.x + blockOffsetX
+                    symbol.x = index*symbol.width*blockSpacing
                 }
-                //click rock event
-                rock.addEventListener('pointerdown',()=>{
-                    rock.interactive = false
-                    rock.visible = false
-                    symbol.visible = true
+                Functions.loadSpineAnimation(symbol,'close',true,0.7)
+                symbol.skeleton.setSkinByName(data)
+                symbol.addEventListener('pointerdown',()=>{
+                    symbol.interactive = false
+                    status = 'open'
+                    arrayBlockValues[index].status = 'open'
+                    Functions.loadSpineAnimation(symbol,'reveal',false,0.7)
                     if(data == 'grand'){
                         grandCount++
                         if(grandCount == 3){
@@ -560,12 +553,11 @@ export default class Game{
                     this.userCredit+=this.matchingGameWin
                     this.updateCreditValues()
                 })
-                arrayBlockValues.push({rock:rock,symbol:symbol})
+                arrayBlockValues.push({symbol:symbol,status:status})
                 this.matchingBlocksContainer.addChild(symbol)
-                this.matchingBlocksContainer.addChild(rock)
             })
-            this.matchingBlocksContainer.x = (this.slotGame.frameBg.width-this.matchingBlocksContainer.width)/2
-            this.matchingBlocksContainer.y = (this.slotGame.frameBg.height-this.matchingBlocksContainer.height)/2
+            this.matchingBlocksContainer.x = (this.slotGame.frameBg.width - this.matchingBlocksContainer.width)
+            this.matchingBlocksContainer.y = (this.slotGame.frameBg.height - this.matchingBlocksContainer.height)*1.7
             this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
             // update text 
             this.textStyle.fontSize = 46
@@ -576,9 +568,10 @@ export default class Game{
         },this.transitionDelay)
     }
     private matchinGameWinPop(arrayBlockValues:Array<any>,popUpSkin:string,result:any){
+        let timeOut = 2500
         arrayBlockValues.forEach(data=>{
-            data.rock.visible = false
-            data.symbol.visible = true
+            if(data.status == 'close')
+                Functions.loadSpineAnimation(data.symbol,'reveal',false,0.7)
         })
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
@@ -587,7 +580,7 @@ export default class Game{
                 this.matchGameResult(result)
             })
             clearTimeout(popDelay)
-        },1000)
+        },timeOut)
     }
     private matchGameResult(result:any){
         let frame = this.slotGame.frameBg
@@ -595,8 +588,8 @@ export default class Game{
         let win = new PIXI.Text(`${this.matchingGameWin}`, this.whiteYellow)
         let clickContinueText = new PIXI.Text(`click here to continue`, this.textStyle3)
         frame.texture = frameBgTexture
-        result.x = (frame.width - result.width)/2
-        result.y = (frame.height - result.height)*0.8
+        result.x = (frame.width)/2
+        result.y = frame.height - 200
         win.x = (frame.width - win.width)/2
         win.y = ((frame.height - win.height)/2)*0.85
 
