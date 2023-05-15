@@ -60,8 +60,8 @@ export default class Game{
     private paylineTextBottom:PIXI.Text
     private paylineGreetings:string
     //arrays 
-    private paylineContainers:Array<any> = []
     private paylineContainersAnimation:Array<any> = []
+    private paylineAnimations:Array<any> = []
     //spines
     private popGlow:Spine
     private popGlow2:Spine
@@ -293,7 +293,7 @@ export default class Game{
     }
     private onSpin(){
         this.paylineGreetings = 'GOOD LUCK'
-        this.paylineContainers.forEach(data=>{
+        this.paylineContainersAnimation.forEach(data=>{
             this.controller.parentSprite.removeChild(data)
         })
         this.updatePaylineAnimation(this.paylineGreetings)
@@ -618,16 +618,15 @@ export default class Game{
         this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
     }
     private updatePaylineAnimation(greetings:string){
-        this.paylineContainers = []
         this.paylineContainersAnimation = []
+        this.paylineAnimations.forEach(data=>{data.kill()})
         let paylineContent:any = this.slotGame.paylines
         let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
         let paylineTotal = 0
-        let bottomText = 'Tap space or enter to skip'
+        let bottomText = this.isAutoPlay?`Free spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
         this.updatePaylineBottomText(bottomText)       
         if(this.slotGame.paylines.length !== 0){
-            let symbolsContainer = new PIXI.Container
             for(let i=0;i<paylineContent.length;i++){
                 bottomText = ''
                 this.updatePaylineBottomText(bottomText)
@@ -647,14 +646,10 @@ export default class Game{
                 containerWithText.addChild(container,greetingText)
                 containerWithText.alpha = 0
                 greetingText.y = (containerWithText.height - greetingText.height)/2
-                symbolsContainer.addChild(containerWithText)
                 this.paylineContainersAnimation.push(containerWithText)
-                this.paylineContainers.push(symbolsContainer)
-                this.animatePaySymbols(containerWithText,i,symbolsContainer)
+                this.animatePaySymbols(containerWithText,i)
+                parentContainer.addChild(containerWithText)
             }
-            symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
-            symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
-            parentContainer.addChild(symbolsContainer)
             this.updatePaylineTopText(`WIN ${Functions.numberWithCommas(paylineTotal)}`)
         }
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
@@ -671,31 +666,31 @@ export default class Game{
         this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
         this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
-    private animatePaySymbols(containerWithText:any,i:number,symbolsContainer:any){
+    private animatePaySymbols(containerWithText:any,i:number){
         let lastIndex = i+1
         let parentContainer = this.controller.parentSprite
         let fadeIn = gsap.to(containerWithText,{
-            delay:i*4,
-            duration:3,
+            delay:i*2,
+            duration:1,
             alpha:1,
             onStart:()=>{
-                containerWithText.x = (symbolsContainer.width - containerWithText.width)/2
-                symbolsContainer.x = (parentContainer.width - symbolsContainer.width)/2
-                symbolsContainer.y = (parentContainer.height - symbolsContainer.height) - 10
+                containerWithText.x = (parentContainer.width - containerWithText.width)/2
+                containerWithText.y = (parentContainer.height - containerWithText.height)-10
             },
             onComplete:()=>{
-                fadeIn.kill()
                 containerWithText.alpha = 0
+                fadeIn.kill()
                 let timeOut = setTimeout(()=>{
                     if(lastIndex == this.slotGame.paylines.length){
                         this.paylineContainersAnimation.forEach((data,index)=>{
-                            this.animatePaySymbols(data,index,symbolsContainer)
+                            this.animatePaySymbols(data,index)
                         })
                     }
                     clearTimeout(timeOut)
                 },3000)
             }
         })
+        this.paylineAnimations.push(fadeIn)
     }
     private lightMode(bool:boolean){
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
@@ -707,7 +702,7 @@ export default class Game{
         let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
         //change visibilities of normal game
         this.slotGame.reelContainer.forEach(data=>{data.visible = bool})
-        this.paylineContainers.forEach(data=>{data.visible = bool})
+        this.paylineContainersAnimation.forEach(data=>{data.visible = bool})
         this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
         this.controller.infoBtnSprite.texture = infoBtnTexture
