@@ -2,11 +2,22 @@ import 'pixi-spine' // Do this once at the very start of your code. This registe
 import * as PIXI from 'pixi.js';
 import {Spine} from 'pixi-spine';
 import WebFont from 'webfontloader';
+import {Howl} from 'howler';
 
 export default class Loader{
     private app:PIXI.Application
-    constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void){
+    //sounds
+    private soundsPath: string = 'assets/sounds/';
+    private sounds:(soundInit:Boolean,bgm: Array<any>) => void;
+    private playSound:(index:number) => void;
+    private soundsGlobal: Array<any> = [];
+    public isMute: Boolean;
+    
+
+
+    constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
         this.app = new PIXI.Application({ width: 1920, height: 1080, antialias: false});
+        this.sounds = sounds;
         (globalThis as any).__PIXI_APP__ = this.app;
         document.body.appendChild(this.app.view as any);
         this.init(loadedAssets)
@@ -42,6 +53,12 @@ export default class Loader{
         PIXI.Assets.add('frame_glow', 'assets/bonus/sprites/frame_glow.json');
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
+
+        //sounds
+        this.soundSetup(`${this.soundsPath}music/new_main_musicbg.mp3`,true); //0 
+
+        this.soundPrompt();
+
         // Load the assets and get a resolved promise once both are loaded
         const texturesPromise = PIXI.Assets.load([
             'main','slot','controller','bag_of_gold',
@@ -53,5 +70,18 @@ export default class Loader{
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)
         });
+    }
+
+    private soundPrompt(){
+        console.log("hey");
+        this.sounds(true,this.soundsGlobal)
+    }
+
+    private soundSetup(src:string,loop:boolean){
+        const audio = new Howl({
+            src: src,
+            loop:loop
+        })
+        this.soundsGlobal.push(audio)
     }
 }

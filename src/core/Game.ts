@@ -12,6 +12,7 @@ import json from './settings/settings.json'
 import {Spine} from 'pixi-spine';
 import { gsap } from "gsap";
 import { PixiPlugin } from "gsap/PixiPlugin";
+import {Howler} from 'howler';
 // give the plugin a reference to the PIXI object
 PixiPlugin.registerPIXI(PIXI);
 export default class Game{
@@ -77,6 +78,13 @@ export default class Game{
     //sound
     private sounBtnSpriteOn:PIXI.Texture
     private sounBtnSpriteOff:PIXI.Texture
+    //sound 
+    private sound:Array<any>;
+    private globalSound:Boolean = false;
+    private ambientCheck:Boolean
+    private sfxCheck:Boolean;
+    public load:Loader;
+    
      
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -155,7 +163,7 @@ export default class Game{
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
-        new Loader(this.init.bind(this))
+        new Loader(this.init.bind(this),this.sounds.bind(this))
     }
     private init(res:any,app:PIXI.Application){
         this.app = app
@@ -184,6 +192,7 @@ export default class Game{
         this.events()
         this.updateTextValues()
         this.app.stage.addChild(this.gameContainer);
+        this.playSound(0)
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
@@ -1106,4 +1115,27 @@ export default class Game{
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.transition.container)
     }
+
+    // sounds methods
+    private sounds(soundInit:Boolean,soundArray:Array<any>){
+        console.log("Ey")
+        this.sound = soundArray;
+        this.globalSound = soundInit;
+
+        // prevent background music from stacking when click multiple times
+        // if(!this.sound[1].playing() || !this.sound[21].playing(21)){
+        //     //this.playSound(1);
+        // }
+        //console.log(this.sound, " test")
+    }
+
+    private playSound(index:number){
+        this.sound[index].play();
+        //this.soundVolume(index)
+    }
+
+    private soundStop(index:number){
+        this.sound[index].stop()
+    }
+    
 }
