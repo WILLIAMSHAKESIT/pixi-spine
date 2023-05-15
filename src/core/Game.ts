@@ -213,6 +213,7 @@ export default class Game{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
+            this.congrats.durationCount = 0.1
             this.isOpenModal= false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
@@ -914,7 +915,7 @@ export default class Game{
         this.popGlow.scale.x = 1.1
         this.popGlow.scale.y = 1.3
         
-        const wildSlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        const wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
         wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
         wildSlot.y = -200
         let sY = -wildSlot.height
@@ -950,7 +951,7 @@ export default class Game{
         wildSlot.interactive = true
         this.gameContainer.addChild(wildSlot)
 
-        const moneySlot = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        const moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
         moneySlot.x = (this.baseWidth - moneySlot.width)/2 + 400
         moneySlot.y = -200
         let moneySlotFrameShow = gsap.from(moneySlot, {

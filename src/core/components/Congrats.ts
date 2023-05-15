@@ -30,6 +30,8 @@ export default class Congrats{
     //value 
     private amount:number = 20000
     private noOfSpin:number = 0
+    //duration of count
+    public durationCount:number = 0.1
     constructor(app:PIXI.Application,textureArray:any,amount:number, noOfSpin:number){
         this.app = app
         this.container = new PIXI.Container
@@ -152,7 +154,7 @@ export default class Congrats{
         // Set up animation
         const startValue = 0;
         const endValue = this.amount;
-        const duration = 10;
+        this.durationCount = 10;
         const delay = 0.4;
         const ease = "power1.out";
 
@@ -161,7 +163,7 @@ export default class Congrats{
             pixi: {
                 text: endValue,
             },
-            duration: duration,
+            duration: this.durationCount,
             delay: delay,
             ease: ease,
             onStart: () => {
