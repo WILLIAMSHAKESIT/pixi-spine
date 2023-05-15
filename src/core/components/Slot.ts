@@ -61,8 +61,9 @@ export default class Slot{
     private freeSpinEvent:()=>void
     private createCongrats:()=>void
     private checkIfFreeSpin:(bool: boolean)=>void
-    private onSpin:()=>void
+    private onSpinning:()=>void
     private onSpinEnd:()=>void
+    private onSpin:()=>void
     private levelBarWidth:number = 742
     // payout
     public totalWin:number = 0
@@ -80,7 +81,7 @@ export default class Slot{
     public freeSpinStart:boolean = false
     public autoplayDoneEvent:boolean = true
     public startCountWinFreeSpin:boolean = false
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpin:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void){
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
@@ -92,6 +93,7 @@ export default class Slot{
         this.matchingGame = matchingGame
         this.freeSpinEvent = freeSpinEvent
         this.checkIfFreeSpin = checkIfFreeSpin
+        this.onSpinning = onSpinning
         this.onSpin = onSpin
         this.init()
     }
@@ -121,8 +123,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        // this.levelBarIndicator.width = 740
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -206,7 +207,6 @@ export default class Slot{
         })
     }
     public startSpin(spinType:string){
-        console.log()
         this.symbolCount = 0
         this.symbolCount2 = 0
         this.symbolCount3 = 0
@@ -218,7 +218,7 @@ export default class Slot{
         let duration:number;
         let delay:number;
         let bounceContainerArr:Array<any> = []
-
+        this.onSpin()
         switch(spinType){
             case 'normal':
                 durationBounceUp = 0.4
@@ -268,7 +268,7 @@ export default class Slot{
                             this.applyMotionBlur(index,true)
                         },
                         onUpdate:()=>{
-                            this.onSpin()
+                            this.onSpinning()
                             if(data.y > hiddenReelY){
                                 this.reelContainer[index].children[27].y = 0
                                 this.reelContainer[index].children[28].y = 270
