@@ -815,69 +815,76 @@ export default class Game{
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
             }
-            this.isAutoPlay = false
-          
-            this.controller.spinBtnSprite.texture = this.spinTextureOn 
-            this.slotGame.autoPlayCount = 0
-            this.modal.btnArray = []
-            this.modal.createAutoPlaySettings()
-            this.controller.spinBtnSprite.texture = this.spinTextureOn
-            this.controller.spinBtnSprite.interactive = true
-            // initialize active spintype button
-            if(this.spinType == 'quick'){
-                this.modal.btnArray[0].texture = this.textureToggleOn
-            }else if(this.spinType == 'turbo'){
-                this.modal.btnArray[1].texture = this.textureToggleOn
+            if(this.isAutoPlay){
+                this.isAutoPlay = false
+                this.controller.spinBtnSprite.texture = this.spinTextureOn 
+                this.slotGame.autoPlayCount = 0
             }else{
-                this.modal.btnArray[0].texture = this.textureToggleOff
-                this.modal.btnArray[1].texture = this.textureToggleOff
-            }
-            //toggle spin type
-            this.modal.btnArray.forEach((data,index)=>{
-                data.addEventListener('pointerdown',()=>{
-                    if(index == 0){
-                        this.modal.btnArray[1].texture = this.textureToggleOff
-                        if(data.texture == this.textureToggleOff){
-                            data.texture = this.textureToggleOn
-                            this.spinType = 'quick'
+                this.modal.btnArray = []
+                this.modal.createAutoPlaySettings()
+                this.controller.spinBtnSprite.texture = this.spinTextureOn
+                this.controller.spinBtnSprite.interactive = true
+                // initialize active spintype button
+                if(this.spinType == 'quick'){
+                    this.modal.btnArray[0].texture = this.textureToggleOn
+                }else if(this.spinType == 'turbo'){
+                    this.modal.btnArray[1].texture = this.textureToggleOn
+                }else{
+                    this.modal.btnArray[0].texture = this.textureToggleOff
+                    this.modal.btnArray[1].texture = this.textureToggleOff
+                }
+                //toggle spin type
+                this.modal.btnArray.forEach((data,index)=>{
+                    data.addEventListener('pointerdown',()=>{
+                        if(index == 0){
+                            this.modal.btnArray[1].texture = this.textureToggleOff
+                            if(data.texture == this.textureToggleOff){
+                                data.texture = this.textureToggleOn
+                                this.spinType = 'quick'
+                            }else{
+                                this.spinType = 'normal'
+                                data.texture = this.textureToggleOff
+                            }
                         }else{
-                            this.spinType = 'normal'
-                            data.texture = this.textureToggleOff
+                            this.modal.btnArray[0].texture = this.textureToggleOff
+                            if(data.texture == this.textureToggleOff){
+                                this.spinType = 'turbo'
+                                data.texture = this.textureToggleOn
+                            }else{
+                                this.spinType = 'normal'
+                                data.texture = this.textureToggleOff
+                            }
                         }
-                    }else{
-                        this.modal.btnArray[0].texture = this.textureToggleOff
-                        if(data.texture == this.textureToggleOff){
-                            this.spinType = 'turbo'
-                            data.texture = this.textureToggleOn
-                        }else{
-                            this.spinType = 'normal'
-                            data.texture = this.textureToggleOff
-                        }
-                    }
+                    })
                 })
-            })
-            //start slot auto spin
-            this.modal.rollBtn.addEventListener('pointerdown',()=>{
-                this.controller.spinBtnSprite.texture = this.spinTextureOff
-               // this.controller.spinBtnSprite.interactive = false
-                this.isAutoPlay = true
-                this.modal.rollBtn.texture = this.textureRollOn
-                if(!this.slotGame.isSpinning){
-                    // this.startSpinAutoPlay(this.modal.totalSpin)
-                    if(this.modal.totalSpin >= 1){
-                         this.startSpinAutoPlay(this.modal.totalSpin)
-                    }else{
-                     alert("Please choose a spin count!");
-                    }
-                 }  
-            })
-            // set background on hover
-            this.modal.rollBtn.addEventListener('mouseenter',()=>{
-                this.modal.rollBtn.texture = this.textureRollOn
-            })
-            this.modal.rollBtn.addEventListener('mouseleave',()=>{
-                this.modal.rollBtn.texture = this.textureRollOff
-            })
+                //start slot auto spin
+                this.modal.rollBtn.addEventListener('pointerdown',()=>{
+                    this.controller.spinBtnSprite.texture = this.spinTextureOff
+                   // this.controller.spinBtnSprite.interactive = false
+                    this.isAutoPlay = true
+                    this.modal.rollBtn.texture = this.textureRollOn
+                    if(!this.slotGame.isSpinning){
+                        // this.startSpinAutoPlay(this.modal.totalSpin)
+                        if(this.modal.totalSpin >= 1){
+                             this.startSpinAutoPlay(this.modal.totalSpin)
+                        }else{
+                         alert("Please choose a spin count!");
+                        }
+                     }  
+                })
+                // set background on hover
+                this.modal.rollBtn.addEventListener('mouseenter',()=>{
+                    this.modal.rollBtn.texture = this.textureRollOn
+                })
+                this.modal.rollBtn.addEventListener('mouseleave',()=>{
+                    this.modal.rollBtn.texture = this.textureRollOff
+                })
+            }
+
+
+          
+            
+           
         })
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
