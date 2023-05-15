@@ -178,26 +178,22 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
-                // console.log(this.slotGame.isSpinning , "this.slotGame.isSpinning")
-                // console.log(this.isAutoPlay , "this.isAutoPlay")
-                // console.log(this.isMatchingGame , "this.isMatchingGame")
-                // console.log(this.isFreeSpin , "this.isFreeSpin")
-                // console.log(this.isOpenModal , "this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
                         this.slotGame.notLongPress = false;
-                        this.slotGame.startSpin(this.spinType)
+                        this.spinType = 'normal'
+                        this.startSpin(this.spinType)
                     }else{
-                        this.slotGame.startSpin('turbo')  
+                        this.spinType = 'turbo'
+                        this.startSpin(this.spinType)
                     }
                 }else{ 
                     this.slotGame.timeScale = 10
                 }
             }
         });
-        
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
@@ -244,18 +240,13 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpin.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
-    }
-    private startSpin(spinCount:number){
-        this.slotGame.autoPlayCount = spinCount
-        this.slotGame.startSpin(this.spinType)
-        this.modal.totalSpin = 0 
     }
     private updateTextValues(){
        this.betTextValue()    
@@ -278,26 +269,35 @@ export default class Game{
     private onSpinEnd(){
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
-            this.userCredit = (this.userCredit-this.betAmount)+this.slotGame.totalWin
+            this.userCredit += this.slotGame.totalWin 
             this.updateCreditValues()
             if(this.slotGame.autoPlayCount == 0){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
-                 this.controller.spinBtnSprite.interactive = true
             }
             this.updatePaylineAnimation(this.paylineGreetings)
         }
         if(this.slotGame.startCountWinFreeSpin){
             this.winFreeSpin += this.slotGame.totalWin
         }   
-        //this.slotGame.isFreeSpin = false
     }
-    private onSpin(){
+    private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
         this.paylineContainersAnimation.forEach(data=>{
             this.controller.parentSprite.removeChild(data)
         })
         this.updatePaylineAnimation(this.paylineGreetings)
+    }
+    private startSpin(spinType:string){
+        this.slotGame.totalWin = 0
+        this.userCredit-=this.betAmount
+        this.updateCreditValues()
+        this.slotGame.startSpin(spinType)
+    }
+    private startSpinAutoPlay(spinCount:number){
+        this.slotGame.autoPlayCount = spinCount
+        this.startSpin(this.spinType)
+        this.modal.totalSpin = 0 
     }
     private createBuyBonus(){
         this.buyBonusBtn = Functions.loadTexture(this.textureArray,'bonus','buy_free_spin_btn')
@@ -357,11 +357,9 @@ export default class Game{
             this.hideBonusPopUp(dY,sY)
         check.interactive = false
             let timeOut = setTimeout(()=>{
-                this.startSpin(1)
+                this.startSpinAutoPlay(1)
                 clearTimeout(timeOut)
             },1000)
-
-         
             let timeOut1 = setTimeout(()=>{
                 check.interactive = true
                 clearTimeout(timeOut1)
@@ -817,6 +815,8 @@ export default class Game{
             this.slotGame.autoPlayCount = 0
             this.modal.btnArray = []
             this.modal.createAutoPlaySettings()
+            this.controller.spinBtnSprite.texture = this.spinTextureOn
+            this.controller.spinBtnSprite.interactive = true
             // initialize active spintype button
             if(this.spinType == 'quick'){
                 this.modal.btnArray[0].texture = this.textureToggleOn
@@ -857,9 +857,9 @@ export default class Game{
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
                 if(!this.slotGame.isSpinning){
-                    // this.startSpin(this.modal.totalSpin)
+                    // this.startSpinAutoPlay(this.modal.totalSpin)
                     if(this.modal.totalSpin >= 1){
-                         this.startSpin(this.modal.totalSpin)
+                         this.startSpinAutoPlay(this.modal.totalSpin)
                     }else{
                      alert("Please choose a spin count!");
                     }
@@ -878,7 +878,7 @@ export default class Game{
             this.controller.spinBtnSprite.interactive = true
             if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
-                this.startSpin(1)
+                this.startSpinAutoPlay(1)
             }else{
                 this.slotGame.timeScale = 10
             }
@@ -1034,7 +1034,7 @@ export default class Game{
         })  
         let show2 = setTimeout(() => {
             this.slotGame.autoPlayCount = count
-            this.startSpin(count)
+            this.startSpinAutoPlay(count)
             clearTimeout(show2);
         }, 1000);
     }
