@@ -240,7 +240,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createController(){
@@ -288,10 +288,12 @@ export default class Game{
         })
         this.updatePaylineAnimation(this.paylineGreetings)
     }
-    private startSpin(spinType:string){
+    private onSpin(){
         this.slotGame.totalWin = 0
         this.userCredit-=this.betAmount
         this.updateCreditValues()
+    }
+    private startSpin(spinType:string){
         this.slotGame.startSpin(spinType)
     }
     private startSpinAutoPlay(spinCount:number){
@@ -541,6 +543,7 @@ export default class Game{
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
             this.popUps.container.addEventListener('pointerdown',()=>{
+                this.popUps.container.interactive = false
                 this.matchGameResult(result)
             })
             clearTimeout(popDelay)
@@ -565,7 +568,9 @@ export default class Game{
             }
         });
 
-        textScaleAnim.to(clickContinueText.scale, { duration: 0.5, x: 1.2, y: 1.2 })
+        textScaleAnim.to(clickContinueText.scale, 
+            { duration: 0.5,x: 1.2, y: 1.2 }
+        )
         .to(clickContinueText.scale, { duration: 0.5, x: 1, y: 1 });
         // Start the animation
         textScaleAnim.play();
@@ -580,16 +585,17 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
-            clickContinueText.interactive = false
-            clickContinueText.interactive = false
+            console.log('test')
             textScaleAnim.kill()
+            this.endMatchingGame()
+            clickContinueText.interactive = false
+            clickContinueText.interactive = false
             let timeOut = setTimeout(()=>{
                 frame.removeChild(result)
                 frame.removeChild(win)
                 frame.removeChild(clickContinueText)
                 clearTimeout(timeOut)
             },this.transitionDelay)
-            this.endMatchingGame()
         })
     }
     private endMatchingGame(){
