@@ -231,6 +231,10 @@ export default class Game{
     }
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
+        this.modal.closeModal.addEventListener('pointerdown',() =>{
+            this.controller.settingBtnSpite.interactive = true
+            this.controller.autoPlay.interactive = true
+        })
     }
     private createGame(){
         this.gameBackground = Functions.loadTexture(this.textureArray,'main','bg')
@@ -754,6 +758,7 @@ export default class Game{
     private events(){
         //open system settings modal
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
+            this.controller.settingBtnSpite.interactive = false
             // call settings modal
             this.modal.createSystemSettings(this.isAutoPlay)
             // spin type toggle
@@ -811,6 +816,7 @@ export default class Game{
         })
         //open autoplay
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+
             if(this.isAutoPlay) {
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
@@ -820,6 +826,7 @@ export default class Game{
                 this.controller.spinBtnSprite.texture = this.spinTextureOn 
                 this.slotGame.autoPlayCount = 0
             }else{
+                this.controller.autoPlay.interactive = false
                 this.modal.btnArray = []
                 this.modal.createAutoPlaySettings()
                 this.controller.spinBtnSprite.texture = this.spinTextureOn
@@ -859,6 +866,7 @@ export default class Game{
                 })
                 //start slot auto spin
                 this.modal.rollBtn.addEventListener('pointerdown',()=>{
+                    this.controller.autoPlay.interactive = true
                     this.controller.spinBtnSprite.texture = this.spinTextureOff
                    // this.controller.spinBtnSprite.interactive = false
                     this.isAutoPlay = true

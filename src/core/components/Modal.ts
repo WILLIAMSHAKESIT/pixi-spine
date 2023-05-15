@@ -16,7 +16,7 @@ export default class Modal{
     private overlay:PIXI.Sprite
     private modalFrame:PIXI.Sprite
     private titleY:number = 50
-    private closeModal:PIXI.Sprite
+    public closeModal:PIXI.Sprite
     public rollBtn:PIXI.Sprite
     public minusBtn:PIXI.Sprite
     public plusBtn:PIXI.Sprite
@@ -88,7 +88,7 @@ export default class Modal{
             this.modalFrame.removeChild(this.systemContainer)
             this.modalFrame.removeChild(this.modalTitle)
             this.modalFrame.removeChild(this.autoPlaySettingsCont)
-            this.app.stage.removeChild(this.container)   
+            this.app.stage.removeChild(this.container)
         })
         this.modalFrame.addChild(this.closeModal)
     }
