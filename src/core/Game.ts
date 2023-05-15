@@ -350,6 +350,7 @@ export default class Game{
         let sY = -this.buyBonusFrame.height
         close.addEventListener('pointerdown',()=>{
             this.hideBonusPopUp(dY,sY);
+            this.isOpenModal = false
         })
         check.addEventListener('pointerdown',()=>{
             this.slotGame.isFreeSpin = true
