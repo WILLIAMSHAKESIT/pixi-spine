@@ -297,9 +297,10 @@ export default class Slot{
                                     data.y = this.reelY
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
-                                    this.reelContainWild(index)
+                                  
                                     if(this.spinCount == 5){
                                         this.checkPattern()
+                                        this.reelContainWild(index)
                                         this.spinCount = 0
                                         this.isSpinning = false
                                         if(this.autoPlayCount > 1){
@@ -339,7 +340,7 @@ export default class Slot{
     private reelContainWild(index:number){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
-                if(data.type == 9){ 
+                if(data.type == 9 && !this.freeSpinStart){ 
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){

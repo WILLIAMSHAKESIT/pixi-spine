@@ -924,12 +924,7 @@ export default class Game{
                 this.modal.rollBtn.addEventListener('mouseleave',()=>{
                     this.modal.rollBtn.texture = this.textureRollOff
                 })
-            }
-
-
-          
-            
-           
+            }       
         })
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
@@ -955,7 +950,6 @@ export default class Game{
         let glowX = 570
         let glowX2 = 1370
         let glowY = 1044
-        
         let dY = -80
 
         // glow animation
