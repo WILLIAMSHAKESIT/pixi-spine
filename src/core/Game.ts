@@ -934,7 +934,7 @@ export default class Game{
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
             this.controller.spinBtnSprite.interactive = true
-            if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay ){
+            if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay && !this.isMatchingGame ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.startSpinAutoPlay(1)
             }else{
