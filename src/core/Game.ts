@@ -616,7 +616,6 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
-            console.log('test')
             textScaleAnim.kill()
             this.endMatchingGame()
             clickContinueText.interactive = false

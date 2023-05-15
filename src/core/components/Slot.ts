@@ -343,7 +343,6 @@ export default class Slot{
             if(index > 26){
                 if(data.type == 9){ 
                     this.levelBarIndicator.width++ 
-                    console.log("ey")
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
                         this.autoPlayCount = 0
@@ -662,8 +661,8 @@ export default class Slot{
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
             
             let newSymbol1 = [0,0,4,2,3]
-            let newSymbol2 = [1,0,6,1,8]
-            let newSymbol3 = [4,3,0,2,8]
+            let newSymbol2 = [1,0,6,1,4]
+            let newSymbol3 = [4,3,0,2,2]
             let type:any;
             let payout:any;
             let symbol:any;
