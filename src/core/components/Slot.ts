@@ -81,6 +81,7 @@ export default class Slot{
     public freeSpinStart:boolean = false
     public autoplayDoneEvent:boolean = true
     public startCountWinFreeSpin:boolean = false
+    public isMatchingGame:boolean = false
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -297,10 +298,10 @@ export default class Slot{
                                     data.y = this.reelY
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
-                                  
+                                    this.reelContainWild(index)
                                     if(this.spinCount == 5){
                                         this.checkPattern()
-                                        this.reelContainWild(index)
+                                        
                                         this.spinCount = 0
                                         this.isSpinning = false
                                         if(this.autoPlayCount > 1){
@@ -340,12 +341,14 @@ export default class Slot{
     private reelContainWild(index:number){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
-                if(data.type == 9 && !this.freeSpinStart){ 
+                if(data.type == 9){ 
                     this.levelBarIndicator.width++ 
+                    console.log("ey")
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
+                        this.isMatchingGame = true
                         this.matchingGame()
                     }
                 }
@@ -440,7 +443,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:1,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 1 && data.count>2){
@@ -455,7 +458,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:2,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 2 && data.count>2){
@@ -470,7 +473,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:3,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 3 && data.count>2){
@@ -485,7 +488,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:4,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 4 && data.count>2){
@@ -500,7 +503,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:5,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 5 && data.count>2){
@@ -515,7 +518,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:6,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 6 && data.count>2){
@@ -530,7 +533,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:7,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 7 && data.count>2){
@@ -545,7 +548,7 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:8,symbols:lineSymbols,payout:totalLinePay})
             }else if(index == 8 && data.count>2){
@@ -560,12 +563,19 @@ export default class Slot{
                 if(data.arrTypes == 1 && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.freeSpinEvent()
+                    this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
             }
         })
     }
+
+    private checkIfMatchingGameDone(){
+        if(!this.isMatchingGame){
+            this.freeSpinEvent()
+        }
+    }
+
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
             arr.push({pattern:this.reelsSymbols[index][blockNo],blockNo:blockNo})

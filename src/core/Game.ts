@@ -641,8 +641,12 @@ export default class Game{
             this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
             this.updatePaylineTopText('SPIN TO WIN')
             this.updatePaylineBottomText('Tap space or enter to skip')
+            if(this.slotGame.freeSpinStart){
+                this.freeSpinEvent()
+            }
             clearTimeout(timeOut)
         },this.transitionDelay)
+
     }
     private createPaylineAnimation(){
         let greetY = 30
