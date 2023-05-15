@@ -645,6 +645,7 @@ export default class Game{
             }
             clearTimeout(timeOut)
         },this.transitionDelay)
+        this.slotGame.isMatchingGame = false
 
     }
     private createPaylineAnimation(){
