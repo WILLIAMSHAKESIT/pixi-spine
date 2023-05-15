@@ -123,7 +123,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 740
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -255,7 +255,6 @@ export default class Slot{
                         bounceContainerArr[2].delay(0)
                         bounceContainerArr[3].delay(0)
                         bounceContainerArr[4].delay(0)
-                        
                     }
                 },
                 onComplete:()=>{
@@ -276,7 +275,6 @@ export default class Slot{
                             }
                             if(this.timeScale == 10 && spinType !== 'turbo'){
                                 spin.timeScale(this.timeScale)
-                                
                             }
                         },
                         onComplete:()=>{
