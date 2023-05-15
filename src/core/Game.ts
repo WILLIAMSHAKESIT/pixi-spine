@@ -209,7 +209,7 @@ export default class Game{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
-            this.congrats.durationCount = 0.1
+            this.congrats.textAnimation.duration(0.1)
             this.isOpenModal= false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false

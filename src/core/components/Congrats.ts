@@ -32,6 +32,7 @@ export default class Congrats{
     private noOfSpin:number = 0
     //duration of count
     public durationCount:number = 0.1
+    public textAnimation: GSAPAnimation;
     constructor(app:PIXI.Application,textureArray:any,amount:number, noOfSpin:number){
         this.app = app
         this.container = new PIXI.Container
@@ -159,7 +160,7 @@ export default class Congrats{
         const ease = "power1.out";
 
         // Animate text value
-        let textAnimation = gsap.to(this.money, {
+        this.textAnimation = gsap.to(this.money, {
             pixi: {
                 text: endValue,
             },
@@ -175,7 +176,7 @@ export default class Congrats{
                 this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
             },
             onComplete:()=>{
-                textAnimation.kill()
+                this.textAnimation.kill()
             }
         });
     }
