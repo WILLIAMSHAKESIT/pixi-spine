@@ -71,6 +71,10 @@ export default class Game{
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
     private noOfSpin:number = 0
+
+    //sound
+    private sounBtnSpriteOn:PIXI.Texture
+    private sounBtnSpriteOff:PIXI.Texture
      
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -163,6 +167,8 @@ export default class Game{
         this.textureRollOff = Functions.loadTexture(this.textureArray,'modal','roll').texture
         this.spinTextureOn = Functions.loadTexture(this.textureArray,'controller','spin_button').texture
         this.spinTextureOff = Functions.loadTexture(this.textureArray,'controller','spin_pause_button').texture
+        this.sounBtnSpriteOff =  Functions.loadTexture(this.textureArray,'controller','sound_off_button').texture
+        this.sounBtnSpriteOn =  Functions.loadTexture(this.textureArray,'controller','sound_on_button').texture
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
         this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
         //overlay
@@ -209,7 +215,7 @@ export default class Game{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
-            this.congrats.textAnimation.duration(0.1)
+            this.congrats.textAnimation.duration(0.3)
             this.isOpenModal= false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
@@ -251,6 +257,15 @@ export default class Game{
         this.controller = new Controller(this.app,this.textureArray)
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
+
+        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
+        this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
+            if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
+                this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
+            }else{
+                this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
+            }
+        })
     }
     private updateTextValues(){
        this.betTextValue()    
