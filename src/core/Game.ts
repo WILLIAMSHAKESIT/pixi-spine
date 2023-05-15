@@ -805,7 +805,13 @@ export default class Game{
         })
         //open autoplay
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            if(this.isAutoPlay) {
+                this.controller.spinBtnSprite.interactive = true 
+                this.controller.spinBtnSprite.cursor = 'pointer' 
+            }
             this.isAutoPlay = false
+          
+            this.controller.spinBtnSprite.texture = this.spinTextureOn 
             this.slotGame.autoPlayCount = 0
             this.modal.btnArray = []
             this.modal.createAutoPlaySettings()
@@ -845,7 +851,7 @@ export default class Game{
             //start slot auto spin
             this.modal.rollBtn.addEventListener('pointerdown',()=>{
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
-                this.controller.spinBtnSprite.interactive = false
+               // this.controller.spinBtnSprite.interactive = false
                 this.isAutoPlay = true
                 this.modal.rollBtn.texture = this.textureRollOn
                 if(!this.slotGame.isSpinning){
@@ -868,7 +874,7 @@ export default class Game{
         //single spin trigger
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
             this.controller.spinBtnSprite.interactive = true
-            if(!this.slotGame.isSpinning && !this.isFreeSpin){
+            if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.startSpin(1)
             }else{
