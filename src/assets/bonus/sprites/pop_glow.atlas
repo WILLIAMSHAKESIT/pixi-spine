@@ -13,10 +13,10 @@ glow
   index: -1
 particles
   rotate: true
-  xy: 883, 68
-  size: 768, 599
+  xy: 883, 63
+  size: 773, 601
   orig: 773, 601
-  offset: 2, 1
+  offset: 0, 0
   index: -1
 ray1
   rotate: false

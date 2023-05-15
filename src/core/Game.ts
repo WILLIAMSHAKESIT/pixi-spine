@@ -324,7 +324,7 @@ export default class Game{
         this.popGlow.alpha = 0
         this.popGlow.scale.x = 1.1
         this.popGlow.scale.y = 1.3
-        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
+        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.1)
         this.overlay.addChild(this.popGlow)
         
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
@@ -913,9 +913,9 @@ export default class Game{
         this.popGlow2.scale.x = 1.1
         this.popGlow2.scale.y = 1.3
         this.overlay.addChild(this.popGlow2)
-        Functions.loadSpineAnimation(this.popGlow2,'glow',true,0.5)
+        Functions.loadSpineAnimation(this.popGlow2,'glow',true,0.1)
         this.overlay.addChild(this.popGlow)
-        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
+        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.1)
         this.popGlow.x = glowX
         this.popGlow.y = glowY
         this.popGlow.alpha = 0
