@@ -1116,7 +1116,6 @@ export default class Game{
 
     // sounds methods
     private sounds(soundInit:Boolean,soundArray:Array<any>){
-        console.log("Ey")
         this.sound = soundArray;
         this.globalSound = soundInit;
 
