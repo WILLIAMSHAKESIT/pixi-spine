@@ -193,7 +193,12 @@ export default class Game{
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
-            if(e.code === 'Space'  || e.key === 'Enter'){
+            if(e.code === 'Space'  || e.key === 'Enter'){               
+                // console.log(this.slotGame.isSpinning, 'this.slotGame.isSpinning')
+                // console.log(this.isAutoPlay, 'this.isAutoPlay')
+                // console.log(this.isMatchingGame, 'this.isMatchingGame')
+                // console.log(this.isFreeSpin, 'this.isFreeSpin')
+                // console.log(this.isOpenModal, 'this.isOpenModal')
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
@@ -221,6 +226,7 @@ export default class Game{
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.isAutoPlay = false
             this.congrats.container.interactive = false
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
@@ -308,7 +314,7 @@ export default class Game{
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
             this.updateCreditValues()
-            if(this.slotGame.autoPlayCount == 0){
+            if(this.slotGame.autoPlayCount == 0 && !this.slotGame.isFreeSpin){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
                  this.buyBonusBtn.interactive = true
