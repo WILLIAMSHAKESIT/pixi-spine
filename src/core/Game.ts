@@ -219,7 +219,7 @@ export default class Game{
             this.slotGame.notLongPress = true;
         });
 
-        this.playSound(0)
+       // this.playSound(0)
         Howler.mute(false)
     }
     private createCongrats(){
