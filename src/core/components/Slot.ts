@@ -124,7 +124,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -298,10 +298,11 @@ export default class Slot{
                                     data.y = this.reelY
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
-                                    this.reelContainWild(index)
+                                    if(!this.isFreeSpin){
+                                        this.reelContainWild(index)
+                                    }
                                     if(this.spinCount == 5){
-                                        this.checkPattern()
-                                        
+                                        this.checkPattern()            
                                         this.spinCount = 0
                                         this.isSpinning = false
                                         if(this.autoPlayCount > 1){
