@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "VginsegyNjCtsRAfHLFemSrfaKM",
+	"hash": "8BgUFL6ZkfOaDFiMLXK4Aa6G/6o",
 	"spine": "3.8.75",
 	"x": -197.5,
-	"y": -399,
+	"y": -397.07,
 	"width": 396.41,
-	"height": 789.07,
+	"height": 787.13,
 	"images": "",
 	"audio": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/reel"
 },
@@ -23,8 +23,8 @@
 	{ "name": "particle_bottom", "parent": "bone", "length": 54.96, "rotation": 90.67, "x": 2.29, "y": -367.74 }
 ],
 "slots": [
-	{ "name": "glow_bottom2", "bone": "glow_bottom2", "attachment": "glow_bottom2" },
-	{ "name": "glow_bottom1", "bone": "glow_bottom1", "attachment": "glow_bottom1" },
+	{ "name": "glow_bottom2", "bone": "glow_bottom2" },
+	{ "name": "glow_bottom1", "bone": "glow_bottom1" },
 	{ "name": "line_bg", "bone": "root", "attachment": "line_bg" },
 	{ "name": "glow_center", "bone": "glow_center", "attachment": "glow_center" },
 	{ "name": "glow_center2", "bone": "glow_center2", "attachment": "glow_center" },
@@ -119,30 +119,6 @@
 			},
 			"line_bg": {
 				"line_bg": { "x": -145.5, "y": -7.5, "width": 9, "height": 775 }
-			},
-			"glow_bottom1": {
-				"glow_bottom1": {
-					"type": "mesh",
-					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
-					"triangles": [ 1, 2, 3, 1, 3, 0 ],
-					"vertices": [ 1, 8, -8.03, -148.68, 1, 1, 8, -8.03, 145.32, 1, 1, 8, 160.97, 145.32, 1, 1, 8, 160.97, -148.68, 1 ],
-					"hull": 4,
-					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
-					"width": 294,
-					"height": 169
-				}
-			},
-			"glow_bottom2": {
-				"glow_bottom2": {
-					"type": "mesh",
-					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
-					"triangles": [ 1, 2, 3, 1, 3, 0 ],
-					"vertices": [ 1, 9, -4.74, -143.15, 1, 1, 9, 1.1, 151.79, 1, 1, 9, 329.04, 145.3, 1, 1, 9, 323.2, -149.65, 1 ],
-					"hull": 4,
-					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
-					"width": 295,
-					"height": 328
-				}
 			}
 		}
 	}
