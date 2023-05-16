@@ -56,7 +56,7 @@ export default class Loader{
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
 
         //sounds
-        this.soundSetup(`${this.soundsPath}music/new_main_musicbg.mp3`,true); //0 
+        this.soundSetup(`${this.soundsPath}music/main_music.mp3`,true); //0 
 
         this.soundPrompt();
 

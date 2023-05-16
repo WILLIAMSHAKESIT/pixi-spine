@@ -218,6 +218,9 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+
+        this.playSound(0)
+        Howler.mute(false)
     }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
