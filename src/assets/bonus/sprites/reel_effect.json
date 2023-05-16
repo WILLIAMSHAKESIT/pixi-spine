@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "8BgUFL6ZkfOaDFiMLXK4Aa6G/6o",
+	"hash": "I7XqOzfsDwvkLt2l7RY7NtgmMq0",
 	"spine": "3.8.75",
-	"x": -197.5,
-	"y": -397.07,
-	"width": 396.41,
-	"height": 787.13,
+	"x": -413.53,
+	"y": -432.14,
+	"width": 612.44,
+	"height": 852.43,
 	"images": "",
 	"audio": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/reel"
 },
@@ -20,15 +20,21 @@
 	{ "name": "particle_side_12", "parent": "bone", "length": 60.06, "rotation": 92, "x": 146.55, "y": -33.17 },
 	{ "name": "glow_bottom1", "parent": "bone", "length": 35.07, "rotation": 90, "x": -2.41, "y": -420.37 },
 	{ "name": "glow_bottom2", "parent": "bone", "length": 50.71, "rotation": 91.13, "x": 4.05, "y": -422.5 },
-	{ "name": "particle_bottom", "parent": "bone", "length": 54.96, "rotation": 90.67, "x": 2.29, "y": -367.74 }
+	{ "name": "particle_bottom", "parent": "bone", "length": 54.96, "rotation": 90.67, "x": 2.29, "y": -367.74 },
+	{ "name": "glow_center3", "parent": "bone", "length": 88.73, "rotation": 180, "x": -112.58, "y": -417.19 },
+	{ "name": "glow_center4", "parent": "bone", "length": 88.73, "rotation": 180, "x": -112.58, "y": 346.24 }
 ],
 "slots": [
 	{ "name": "glow_bottom2", "bone": "glow_bottom2" },
 	{ "name": "glow_bottom1", "bone": "glow_bottom1" },
 	{ "name": "line_bg", "bone": "root", "attachment": "line_bg" },
+	{ "name": "line_bg3", "bone": "root", "attachment": "line_bg" },
+	{ "name": "line_bg4", "bone": "root", "attachment": "line_bg" },
 	{ "name": "glow_center", "bone": "glow_center", "attachment": "glow_center" },
 	{ "name": "glow_center2", "bone": "glow_center2", "attachment": "glow_center" },
-	{ "name": "particle_side_1", "bone": "particle_side_1", "attachment": "particle_side_1" },
+	{ "name": "glow_center3", "bone": "glow_center3", "attachment": "glow_center" },
+	{ "name": "glow_center4", "bone": "glow_center4", "attachment": "glow_center" },
+	{ "name": "particle_side_1", "bone": "particle_side_1" },
 	{ "name": "particle_side_3", "bone": "particle_side_2", "attachment": "particle_side_1" },
 	{ "name": "particle_side_11", "bone": "particle_side_11", "attachment": "particle_side_11" },
 	{ "name": "particle_side_12", "bone": "particle_side_12", "attachment": "particle_side_11" },
@@ -45,6 +51,12 @@
 			"line_bg2": {
 				"line_bg2": { "x": 145.5, "y": -7.5, "width": 9, "height": 775 }
 			},
+			"line_bg3": {
+				"line_bg": { "x": 0.76, "y": 375.77, "scaleY": 0.3865, "rotation": 90, "width": 9, "height": 775 }
+			},
+			"line_bg4": {
+				"line_bg": { "x": -0.84, "y": -390.15, "scaleY": 0.3865, "rotation": 90, "width": 9, "height": 775 }
+			},
 			"glow_center": {
 				"glow_center": {
 					"type": "mesh",
@@ -58,6 +70,30 @@
 				}
 			},
 			"glow_center2": {
+				"glow_center": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ -297.32, -44.65, -297.32, 44.35, 300.68, 44.35, 300.68, -44.65 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 89,
+					"height": 598
+				}
+			},
+			"glow_center3": {
+				"glow_center": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ -297.32, -44.65, -297.32, 44.35, 300.68, 44.35, 300.68, -44.65 ],
+					"hull": 4,
+					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
+					"width": 89,
+					"height": 598
+				}
+			},
+			"glow_center4": {
 				"glow_center": {
 					"type": "mesh",
 					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
@@ -87,18 +123,6 @@
 					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
 					"triangles": [ 1, 2, 3, 1, 3, 0 ],
 					"vertices": [ 1, 7, -394.62, -33.16, 1, 1, 7, -391.37, 60.28, 1, 1, 7, 395.16, 32.85, 1, 1, 7, 391.9, -60.59, 1 ],
-					"hull": 4,
-					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
-					"width": 104,
-					"height": 787
-				}
-			},
-			"particle_side_1": {
-				"particle_side_1": {
-					"type": "mesh",
-					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
-					"triangles": [ 1, 2, 3, 1, 3, 0 ],
-					"vertices": [ 1, 3, 353.17, 46.81, 1, 1, 3, 351.79, -57.18, 1, 1, 3, -435.14, -46.69, 1, 1, 3, -433.76, 57.3, 1 ],
 					"hull": 4,
 					"edges": [ 0, 2, 2, 4, 4, 6, 0, 6 ],
 					"width": 104,
@@ -148,6 +172,13 @@
 					{ "time": 0.6667, "color": "ffffff00" }
 				]
 			},
+			"glow_center4": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
 			"particle_side_1": {
 				"color": [
 					{ "color": "ffffff00" },
@@ -167,6 +198,13 @@
 					{ "color": "ffffff00", "curve": "stepped" },
 					{ "time": 0.2333, "color": "ffffff00" },
 					{ "time": 0.4333, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
+			"glow_center3": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" },
 					{ "time": 0.6667, "color": "ffffff00" }
 				]
 			}
@@ -204,13 +242,13 @@
 					{ "time": 0.1333, "y": -398.77 },
 					{ "time": 0.3333, "y": -218.77 },
 					{ "time": 0.5, "y": 31.23 },
-					{ "time": 0.7667, "y": 310 }
+					{ "time": 0.6667, "y": 310 }
 				],
 				"scale": [
 					{ "x": 0.01 },
 					{ "time": 0.1333, "x": 0.23 },
 					{ "time": 0.5, "x": 0.913 },
-					{ "time": 0.7667, "x": 0.01 }
+					{ "time": 0.6667, "x": 0.01 }
 				]
 			},
 			"particle_side_2": {
@@ -236,18 +274,34 @@
 					{ "y": -20 },
 					{ "time": 0.6667, "y": -10 }
 				]
+			},
+			"glow_center3": {
+				"translate": [
+					{ "x": -25.34 },
+					{ "time": 0.3333, "x": 112.3 },
+					{ "time": 0.6667, "x": 231.21 }
+				],
+				"scale": [
+					{ "x": 0.119 },
+					{ "time": 0.3333, "x": 0.519 },
+					{ "time": 0.6667, "x": 0.119 }
+				]
+			},
+			"glow_center4": {
+				"translate": [
+					{ "x": 231.21 },
+					{ "time": 0.3333, "x": 112.3 },
+					{ "time": 0.6667, "x": -25.34 }
+				],
+				"scale": [
+					{ "x": 0.119 },
+					{ "time": 0.3333, "x": 0.519 },
+					{ "time": 0.6667, "x": 0.119 }
+				]
 			}
 		},
 		"deform": {
 			"default": {
-				"particle_side_1": {
-					"particle_side_1": [
-						{
-							"time": 0.6667,
-							"vertices": [ -0.14534, -9.95094, 0.14245, 9.76251, 0.14531, 9.95085, -0.14252, -9.76256 ]
-						}
-					]
-				},
 				"particle_side_3": {
 					"particle_side_1": [
 						{

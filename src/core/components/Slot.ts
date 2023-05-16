@@ -213,7 +213,7 @@ export default class Slot{
         const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
         reelEffect.x = this.reelEffectPosX[0]
         reelEffect.y = 501.5
-        Functions.loadSpineAnimation(reelEffect,'animation',true,1.4)
+        Functions.loadSpineAnimation(reelEffect,'animation',true,1.1)
         // this.container.addChild(reelEffect)
     }
     public startSpin(spinType:string){
