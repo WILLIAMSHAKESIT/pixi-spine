@@ -126,7 +126,7 @@ export default class Congrats{
         this.popGlow.scale.x = 1.4
         this.popGlow.scale.y = 1.7
         // animate glow
-        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.5)
+        Functions.loadSpineAnimation(this.popGlow,'glow',true,0.1)
         this.middleContainer.addChild(this.popGlow)
 
         //create pop logo
@@ -155,7 +155,7 @@ export default class Congrats{
         // Set up animation
         const startValue = 0;
         const endValue = this.amount;
-        this.durationCount = 10;
+        this.durationCount = 4;
         const delay = 0.4;
         const ease = "power1.out";
 

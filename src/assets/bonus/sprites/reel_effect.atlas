@@ -1,0 +1,41 @@
+
+reel_effect.png
+size: 791,314
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow_center
+  rotate: true
+  xy: 2, 2
+  size: 89, 598
+  orig: 89, 598
+  offset: 0, 0
+  index: -1
+line_bg
+  rotate: true
+  xy: 2, 93
+  size: 7, 772
+  orig: 9, 775
+  offset: 1, 1
+  index: -1
+line_bg2
+  rotate: true
+  xy: 2, 93
+  size: 7, 772
+  orig: 9, 775
+  offset: 1, 1
+  index: -1
+particle_side_1
+  rotate: true
+  xy: 2, 208
+  size: 104, 787
+  orig: 104, 787
+  offset: 0, 0
+  index: -1
+particle_side_11
+  rotate: true
+  xy: 2, 102
+  size: 104, 787
+  orig: 104, 787
+  offset: 0, 0
+  index: -1

@@ -52,6 +52,7 @@ export default class Loader{
         PIXI.Assets.add('pop_ups', 'assets/pop_ups/sprites/pop-ups.json');
         PIXI.Assets.add('frame_glow', 'assets/bonus/sprites/frame_glow.json');
         PIXI.Assets.add('rock_block', 'assets/bonus/sprites/rock_block.json');
+        PIXI.Assets.add('reel_effect', 'assets/bonus/sprites/reel_effect.json');
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
 
@@ -72,7 +73,7 @@ export default class Loader{
             'barrels','boots','dynamite_crate','gas_lamp',
             'pile_of_gold','snake','trolley','wild','modal',
             'bonus','grass','pop_glow','coins','congrats','corgi',
-            'transition','pop_ups','frame_glow','rock_block'
+            'transition','pop_ups','frame_glow','rock_block','reel_effect'
         ]);
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

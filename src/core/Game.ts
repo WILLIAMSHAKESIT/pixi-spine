@@ -193,12 +193,7 @@ export default class Game{
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
-            if(e.code === 'Space'  || e.key === 'Enter'){               
-                // console.log(this.slotGame.isSpinning, 'this.slotGame.isSpinning')
-                // console.log(this.isAutoPlay, 'this.isAutoPlay')
-                // console.log(this.isMatchingGame, 'this.isMatchingGame')
-                // console.log(this.isFreeSpin, 'this.isFreeSpin')
-                // console.log(this.isOpenModal, 'this.isOpenModal')
+            if(e.code === 'Space'  || e.key === 'Enter'){         
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
@@ -684,10 +679,10 @@ export default class Game{
     }
     private endMatchingGame(){
         this.createTransition()
+        this.isMatchingGame = false
         let timeOut = setTimeout(()=>{
             this.gameContainer.interactive= false
             this.gameContainer.cursor = ''
-            this.isMatchingGame = false
             this.lightMode(true)
             this.enableButtons(true)
             this.slotGame.levelBarIndicator.width = 0
