@@ -221,7 +221,7 @@ export default class Slot{
         const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
         reelEffect.x = this.reelEffectPosX[0]
         reelEffect.y = 501.5
-        Functions.loadSpineAnimation(reelEffect,'animation',true,1.1)
+        Functions.loadSpineAnimation(reelEffect,'animation',true,1)
         // this.container.addChild(reelEffect)
     }
     public startSpin(spinType:string){
@@ -304,6 +304,7 @@ export default class Slot{
                         },
                         onComplete:()=>{
                             this.playSound(4);
+                            this.checkIfBonus(index)
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -363,6 +364,13 @@ export default class Slot{
             })
             bounceContainerArr.push(bounceStart)
             this.timeScale = 0
+        })
+    }
+    private checkIfBonus(i:number){
+        this.reelsSymbols[i].forEach((data:any,index:number)=>{
+            if(index > 26 && i == 0){
+                console.log(data.type)
+            }
         })
     }
     private reelContainWild(index:number){
@@ -459,7 +467,6 @@ export default class Slot{
         countsArray.forEach((data,index)=>{
            
             if(index == 0 && data.count>2){
-                
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){

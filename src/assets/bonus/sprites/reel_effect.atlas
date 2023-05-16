@@ -1,9 +1,16 @@
 
 reel_effect.png
-size: 791,314
+size: 962,314
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+glow_bottom1
+  rotate: true
+  xy: 791, 18
+  size: 294, 169
+  orig: 294, 169
+  offset: 0, 0
+  index: -1
 glow_center
   rotate: true
   xy: 2, 2
