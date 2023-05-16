@@ -192,7 +192,7 @@ export default class Game{
         this.events()
         this.updateTextValues()
         this.app.stage.addChild(this.gameContainer);
-        this.playSound(0)
+        //this.playSound(0)
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){

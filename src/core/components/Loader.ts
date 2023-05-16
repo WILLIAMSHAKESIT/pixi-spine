@@ -74,7 +74,6 @@ export default class Loader{
     }
 
     private soundPrompt(){
-        console.log("hey");
         this.sounds(true,this.soundsGlobal)
     }
 
