@@ -301,10 +301,21 @@ export default class Game{
             if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
                 Howler.mute(true)
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
+                this.ambientCheck = false
+                this.sfxCheck = false
+                this.modal.soundBtns.forEach((data,index)=>{
+                    data.texture = this.textureToggleOff
+                })
             }else{
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
                 Howler.mute(false)
+                this.ambientCheck = true
+                this.sfxCheck = true
+                this.modal.soundBtns.forEach((data,index)=>{
+                    data.texture = this.textureToggleOn
+                })
             }
+       
         })
     }
     private updateTextValues(){
@@ -889,6 +900,18 @@ export default class Game{
                 this.modal.betBtns[1].interactive = false
             }
             //sound events
+            if(this.ambientCheck){
+                this.modal.soundBtns[0].texture = this.textureToggleOn
+            }else{
+                this.modal.soundBtns[0].texture = this.textureToggleOff
+            }
+            if(this.sfxCheck){
+                this.modal.soundBtns[1].texture = this.textureToggleOn
+            }else{
+                this.modal.soundBtns[1].texture = this.textureToggleOff
+            }
+            
+            console.log(this.modal.soundBtns[1])
             this.modal.soundBtns.forEach((data,index)=>{
                 data.addListener('mouseover',() =>{
                     this.playSound(2)
@@ -896,6 +919,8 @@ export default class Game{
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
                     if(data.texture == this.textureToggleOff){
+                        Howler.mute(false)
+                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
                         data.texture = this.textureToggleOn
                         if(index == 0){
                            this.ambientCheck = true
@@ -904,6 +929,7 @@ export default class Game{
                         }
                     }else{
                         data.texture = this.textureToggleOff
+                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
                         if(index == 0){
                             this.ambientCheck = false 
                         }else{
