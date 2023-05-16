@@ -1,6 +1,6 @@
 
 rock_block.png
-size: 1822,195
+size: 1824,195
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -18,51 +18,44 @@ glow_1
   orig: 30, 86
   offset: 2, 2
   index: -1
-glow_2
-  rotate: true
-  xy: 1783, 36
-  size: 19, 24
-  orig: 23, 27
-  offset: 2, 1
-  index: -1
 glow_3
-  rotate: false
-  xy: 1783, 57
+  rotate: true
+  xy: 1751, 113
   size: 26, 24
   orig: 32, 30
   offset: 3, 4
   index: -1
 glow_4
   rotate: false
-  xy: 1783, 83
+  xy: 1722, 112
   size: 27, 27
   orig: 33, 33
   offset: 3, 3
   index: -1
 glow_5
   rotate: false
-  xy: 1722, 108
+  xy: 1783, 79
   size: 39, 34
   orig: 46, 43
   offset: 4, 4
   index: -1
 glow_6
-  rotate: true
-  xy: 1783, 153
+  rotate: false
+  xy: 1777, 115
   size: 40, 37
   orig: 50, 42
   offset: 4, 3
   index: -1
 glow_7
   rotate: false
-  xy: 1776, 112
+  xy: 1773, 154
   size: 39, 39
   orig: 47, 48
   offset: 5, 4
   index: -1
 glow_8
-  rotate: true
-  xy: 1722, 144
+  rotate: false
+  xy: 1722, 141
   size: 49, 52
   orig: 59, 60
   offset: 6, 4

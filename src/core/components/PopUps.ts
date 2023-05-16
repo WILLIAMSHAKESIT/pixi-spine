@@ -169,7 +169,7 @@ export default class PopUps{
         // Set up animation
         const startValue = 0;
         const endValue = this.matchingGameWin;
-        const duration = 3;
+        const duration = 2;
         const delay = 0.4;
         const ease = "power1.out";
 
