@@ -161,8 +161,8 @@ export default class PopUps{
         let moneyPosY:any;
         let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
-        moneyPosX = (this.overlay.width - this.money.width)/2
-        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.12
+        moneyPosX = ((this.overlay.width - this.money.width)/2)*1.3
+        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.15
         this.money.x = moneyPosX
         this.money.y= moneyPosY
         this.middleContainer.addChild(this.money)
@@ -187,7 +187,7 @@ export default class PopUps{
             },
             onUpdate: () => {
                 this.money.text = Functions.numberWithCommas(parseInt(this.money.text)).toString();
-                this.money.x = (this.overlay.width - this.money.width)/2
+                this.money.x = ((this.overlay.width - this.money.width)/2)*1.03
                 this.money.y = moneyPosY
             },
             onComplete:()=>{
