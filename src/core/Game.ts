@@ -84,7 +84,6 @@ export default class Game{
     private ambientCheck:Boolean
     private sfxCheck:Boolean;
     public load:Loader;
-    
      
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -192,7 +191,6 @@ export default class Game{
         this.events()
         this.updateTextValues()
         this.app.stage.addChild(this.gameContainer);
-        //this.playSound(0)
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){
@@ -518,7 +516,7 @@ export default class Game{
                 }else{
                     symbol.x = index*symbol.width*blockSpacing
                 }
-                Functions.loadSpineAnimation(symbol,'close',true,0.7)
+                Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
                 symbol.addEventListener('pointerdown',()=>{
                     symbol.interactive = false
@@ -570,6 +568,7 @@ export default class Game{
     private matchinGameWinPop(arrayBlockValues:Array<any>,popUpSkin:string,result:any){
         let timeOut = 2500
         arrayBlockValues.forEach(data=>{
+            data.symbol.interactive = false
             if(data.status == 'close')
                 Functions.loadSpineAnimation(data.symbol,'reveal',false,0.7)
         })
