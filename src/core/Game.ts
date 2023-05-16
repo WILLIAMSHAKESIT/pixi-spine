@@ -315,6 +315,7 @@ export default class Game{
                     data.texture = this.textureToggleOn
                 })
             }
+            this.checkSoundToggle()
        
         })
     }
