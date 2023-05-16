@@ -146,6 +146,7 @@ export default class PopUps{
         const logoAnimationSpeed = 0.7
         //create pop logo
         this.logo = new Spine(this.textureArray.pop_ups.spineData)
+        this.logo.scale.set(1.3)
         this.logo.x = (this.overlay.width)/2
         this.logo.y = (this.overlay.height)/2
         

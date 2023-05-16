@@ -56,6 +56,7 @@ export default class Slot{
     private reelY:number = -6941.2
     public timeScale:number = 0
     public autoPlayCount:number = 0
+    private spinType:string = ''
     // methods 
     private matchingGame:()=>void
     private freeSpinEvent:()=>void
@@ -124,7 +125,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 740
+        this.levelBarIndicator.width = 700
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -208,6 +209,7 @@ export default class Slot{
         })
     }
     public startSpin(spinType:string){
+        this.spinType = spinType
         this.symbolCount = 0
         this.symbolCount2 = 0
         this.symbolCount3 = 0
@@ -343,6 +345,8 @@ export default class Slot{
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
                 if(data.type == 9){ 
+                    const globalPos = data.symbol.getGlobalPosition()
+                    this.createWildCoin(globalPos.x,globalPos.y,index)
                     this.levelBarIndicator.width++ 
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
@@ -758,5 +762,39 @@ export default class Slot{
             arr.push(data)
         }
         return arr
+    }
+    private createWildCoin(coinX:number,coinY:number,index:number){
+        let barPosX = this.levelBarIndicator.x + this.levelBarIndicator.width
+        let barPosY = this.levelBarIndicator.y
+        let duration = 1
+        for(let i = 0;i<=3;i++){
+            const coin = Functions.animatedSprite(this.textureArray['coins'],'new_coin_spinning')
+            coin.x = (coinX)
+            coin.y = (coinY * 0.75)
+            coin.alpha = 0.4
+            coin.scale.set(0.15)
+            coin.animationSpeed = 0.5
+            coin.play();
+            let coinAnimation = gsap.to(coin,{
+                y:barPosY,
+                x:barPosX - (coin.width/2),
+                alpha:1,
+                delay:i*0.1,
+                duration:duration,
+                onComplete:()=>{
+                    coinAnimation.kill()
+                    let coinFade = gsap.to(coin,{
+                        delay:0.5,
+                        duration:0.3,
+                        alpha:0,
+                        onComplete:()=>{
+                            coinFade.kill()
+                            this.container.removeChild(coin)
+                        }
+                    })
+                }
+            })
+            this.container.addChild(coin)
+        }
     }
 }
