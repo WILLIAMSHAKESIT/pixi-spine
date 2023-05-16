@@ -81,8 +81,8 @@ export default class Game{
     //sound 
     private sound:Array<any>;
     private globalSound:Boolean = false;
-    private ambientCheck:Boolean
-    private sfxCheck:Boolean;
+    private ambientCheck:Boolean = false;
+    private sfxCheck:Boolean = false;
     public load:Loader;
      
     constructor(){
@@ -220,7 +220,7 @@ export default class Game{
         });
 
         this.playSound(0)
-        Howler.mute(false)
+         Howler.mute(true)
     }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
@@ -291,7 +291,7 @@ export default class Game{
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
 
-        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
+        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
         this.controller.soundBtnSprite.addListener('mouseover',() =>{
             this.playSound(2)
         })
@@ -895,17 +895,22 @@ export default class Game{
                 })
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
-                    
                     if(data.texture == this.textureToggleOff){
                         data.texture = this.textureToggleOn
                         if(index == 0){
-                            console.log('music')
+                           this.ambientCheck = true
                         }else{
-                            console.log('sfx')
+                           this.sfxCheck = true
                         }
                     }else{
                         data.texture = this.textureToggleOff
+                        if(index == 0){
+                            this.ambientCheck = false 
+                        }else{
+                            this.sfxCheck = false
+                        }  
                     }
+                    this.checkSoundToggle()
                 })
             })
             // re position bet amount tex on click
@@ -1216,6 +1221,28 @@ export default class Game{
 
     private soundStop(index:number){
         this.sound[index].stop()
+    }
+
+    private checkSoundToggle(){
+        if(this.ambientCheck){
+            this.sound[0].mute(false)
+        }
+        else{
+            this.sound[0].mute(true)
+        }
+        if(this.sfxCheck){
+            this.sound[1].mute(false)
+            this.sound[2].mute(false)
+            this.sound[3].mute(false)
+            this.sound[4].mute(false)
+            this.sound[5].mute(false)
+        }else{
+            this.sound[1].mute(true)
+            this.sound[2].mute(true)
+            this.sound[3].mute(true)
+            this.sound[4].mute(true)
+            this.sound[5].mute(true)
+        }
     }
     
 }

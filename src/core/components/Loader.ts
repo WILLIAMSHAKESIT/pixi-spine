@@ -61,6 +61,7 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/ui/hover.mp3`,false); //2
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_spin.mp3`,false); //3
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_stop.mp3`,false); //4
+        this.soundSetup(`${this.soundsPath}sfx/reel/common_effect.mp3`,false); //5
         
 
         this.soundPrompt();

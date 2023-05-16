@@ -217,6 +217,7 @@ export default class Slot{
         })
     }
     public startSpin(spinType:string){
+        this.soundStop(5)
         this.spinType = spinType
         this.symbolCount = 0
         this.symbolCount2 = 0
@@ -601,6 +602,7 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
+        
         // add total win
         if(this.isFreeSpin){
             this.winFreeSpin += this.reelsSymbols[reelIndex][blockIndex].payout
@@ -608,8 +610,9 @@ export default class Slot{
         }
         this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
         if (this.reelsSymbols[reelIndex][blockIndex].symbol.state.hasAnimation('animation')) {
+            this.playSound(5);
             // run block animation
-            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', true);
+            this.reelsSymbols[reelIndex][blockIndex].symbol.state.setAnimation(0, 'animation', false);
             // dont run too fast
             this.reelsSymbols[reelIndex][blockIndex].symbol.state.timeScale = 1;
             // update yourself
