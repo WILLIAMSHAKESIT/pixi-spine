@@ -83,7 +83,13 @@ export default class Slot{
     public autoplayDoneEvent:boolean = true
     public startCountWinFreeSpin:boolean = false
     public isMatchingGame:boolean = false
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void){
+
+    //sound
+    private playSound: (index: number) => void;
+    private soundStop: (index: number) => void; 
+
+
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
@@ -97,6 +103,8 @@ export default class Slot{
         this.checkIfFreeSpin = checkIfFreeSpin
         this.onSpinning = onSpinning
         this.onSpin = onSpin
+        this.playSound = playSound;
+        this.soundStop = soundStop;
         this.init()
     }
     private init(){
@@ -246,12 +254,14 @@ export default class Slot{
         }
         
         this.reelContainer.forEach((data,index)=>{
+       
             this.isSpinning = true
             let bounceStart = gsap.to(data, {
                 delay:index*delay,
                 duration:durationBounceUp,
                 y:bounceOffset,
                 onStart:()=>{
+                  
                     if(this.timeScale == 10 && spinType !== 'turbo'){
                         bounceContainerArr[0].delay(0)
                         bounceContainerArr[1].delay(0)
@@ -261,6 +271,7 @@ export default class Slot{
                     }
                 },
                 onComplete:()=>{
+                    this.playSound(3)
                     bounceStart.kill()
                     let spin = gsap.to(data, {
                         duration: duration,
@@ -268,9 +279,11 @@ export default class Slot{
                         ease: "bounce.in",
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
+                            
                         },
                         onUpdate:()=>{
                             this.onSpinning()
+                            
                             if(data.y > hiddenReelY){
                                 this.reelContainer[index].children[27].y = 0
                                 this.reelContainer[index].children[28].y = 270
@@ -281,6 +294,7 @@ export default class Slot{
                             }
                         },
                         onComplete:()=>{
+                            this.playSound(4);
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -295,6 +309,7 @@ export default class Slot{
                                 duration:0.3,
                                 ease: "power1.out",
                                 onComplete:()=>{
+                                 
                                     bounceStop.kill()
                                     this.spinCount++
                                     data.y = this.reelY

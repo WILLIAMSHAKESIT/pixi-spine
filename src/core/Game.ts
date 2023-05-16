@@ -219,7 +219,7 @@ export default class Game{
             this.slotGame.notLongPress = true;
         });
 
-       // this.playSound(0)
+        this.playSound(0)
         Howler.mute(false)
     }
     private createCongrats(){
@@ -229,6 +229,7 @@ export default class Game{
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.playSound(1)
             this.isAutoPlay = false
             this.congrats.container.interactive = false
             this.slotGame.isFreeSpinDone = true
@@ -257,8 +258,13 @@ export default class Game{
     private createModal(){
         this.modal = new Modal(this.app,this.textureArray)
         this.modal.closeModal.addEventListener('pointerdown',() =>{
+            this.playSound(1)
+            
             this.controller.settingBtnSpite.interactive = true
             this.controller.autoPlay.interactive = true
+        })
+        this.modal.closeModal.addListener('mouseover',() =>{
+            this.playSound(2)
         })
     }
     private createGame(){
@@ -269,7 +275,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -286,11 +292,18 @@ export default class Game{
         this.gameContainer.addChild(this.controller.container)
 
         this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
+        this.controller.soundBtnSprite.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
+            this.playSound(1)
+            
             if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
+                Howler.mute(true)
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
             }else{
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
+                Howler.mute(false)
             }
         })
     }
@@ -397,11 +410,21 @@ export default class Game{
         check.y = (this.buyBonusFrame.height - check.height)*.94
         this.buyBonusFrame.addChild(check)
         let sY = -this.buyBonusFrame.height
+        close.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         close.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
         })
+        check.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         check.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
         check.interactive = false
@@ -527,7 +550,12 @@ export default class Game{
                 }
                 Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
+                symbol.addListener('mouseover',() =>{
+                    this.playSound(2)
+                })
                 symbol.addEventListener('pointerdown',()=>{
+                    this.playSound(1)
+                    
                     symbol.interactive = false
                     status = 'open'
                     arrayBlockValues[index].status = 'open'
@@ -584,6 +612,8 @@ export default class Game{
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
             this.popUps.container.addEventListener('pointerdown',()=>{
+                this.playSound(1)
+                
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
             })
@@ -626,6 +656,8 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             textScaleAnim.kill()
             this.endMatchingGame()
             clickContinueText.interactive = false
@@ -808,13 +840,23 @@ export default class Game{
     }
     private events(){
         //open system settings modal
+        this.controller.settingBtnSpite.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             this.controller.settingBtnSpite.interactive = false
             // call settings modal
             this.modal.createSystemSettings(this.isAutoPlay)
             // spin type toggle
             this.modal.betBtns.forEach((data,index)=>{
                 data.addEventListener('pointerdown',()=>{
+                    this.playSound(1)
+                    data.addListener('mouseover',() =>{
+                        this.playSound(2)
+                    })
+                    
                     if(index == 0){
                         this.betIndex--
                         this.betAmount = json.bet_amounts[this.betIndex]
@@ -848,7 +890,12 @@ export default class Game{
             }
             //sound events
             this.modal.soundBtns.forEach((data,index)=>{
+                data.addListener('mouseover',() =>{
+                    this.playSound(2)
+                })
                 data.addEventListener('pointerdown',()=>{
+                    this.playSound(1)
+                    
                     if(data.texture == this.textureToggleOff){
                         data.texture = this.textureToggleOn
                         if(index == 0){
@@ -866,7 +913,12 @@ export default class Game{
             this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
         })
         //open autoplay
+        this.controller.autoPlay.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             if(this.isAutoPlay){
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
@@ -892,7 +944,12 @@ export default class Game{
                 }
                 //toggle spin type
                 this.modal.btnArray.forEach((data,index)=>{
+                   data.addListener('mouseover',() =>{
+                        this.playSound(2)
+                    })
                     data.addEventListener('pointerdown',()=>{
+                        this.playSound(1)
+                        
                         if(index == 0){
                             this.modal.btnArray[1].texture = this.textureToggleOff
                             if(data.texture == this.textureToggleOff){
@@ -915,7 +972,12 @@ export default class Game{
                     })
                 })
                 //start slot auto spin
+                this.modal.rollBtn.addListener('mouseover',() =>{
+                    this.playSound(2)
+                })
                 this.modal.rollBtn.addEventListener('pointerdown',()=>{
+                    this.playSound(1)
+                    
                     this.buyBonusBtn.interactive = false
                     this.controller.autoPlay.interactive = true
                     this.controller.spinBtnSprite.texture = this.spinTextureOff
@@ -941,7 +1003,12 @@ export default class Game{
             }       
         })
         //single spin trigger
+        this.controller.spinBtnSprite.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             this.controller.spinBtnSprite.interactive = true
             if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay && !this.isMatchingGame ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
@@ -951,7 +1018,12 @@ export default class Game{
             }
         })
         //buy bonus
+        this.buyBonusBtn.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            
             this.buyBonusPopUp()
             this.enableButtons(false)
             this.isOpenModal = true
@@ -1053,7 +1125,12 @@ export default class Game{
         this.gameContainer.addChild(moneySlot)
 
 
+        wildSlot.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         wildSlot.addEventListener('pointerdown', () =>{
+            this.playSound(1)
+            
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=6
@@ -1069,7 +1146,12 @@ export default class Game{
         })
 
         
+        moneySlot.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         moneySlot.addEventListener('pointerdown', () =>{
+            this.playSound(1)
+            
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=12
