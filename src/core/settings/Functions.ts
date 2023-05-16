@@ -22,6 +22,9 @@ const symbolRandomizer = (arr:Array<any>) =>{
     let val = arr[Math.floor(Math.random()*arr.length)]
     return val - 1;
 }
+const random2Number = (min:number,max:number)=>{
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
 const loadTexture = (textureArray:any,objKey:string,texture:string) =>{
    return PIXI.Sprite.from(textureArray[`${objKey}`].textures[`${texture}.png`]);
 }
@@ -84,5 +87,6 @@ export default{
     getRandomInt,
     loadSpineAnimation,
     loadSpine,
-    animatedSprite
+    animatedSprite,
+    random2Number
 }

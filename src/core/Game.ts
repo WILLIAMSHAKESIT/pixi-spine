@@ -1074,8 +1074,6 @@ export default class Game{
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
-
-        
     }
     private startfreeSpinEvent(count:number){
         this.enableButtons(false)
