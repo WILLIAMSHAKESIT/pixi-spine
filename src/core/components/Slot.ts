@@ -23,7 +23,7 @@ export default class Slot{
     public frameBorder:PIXI.Sprite
     private reelPosX:Array<number> = [385.5,678.5,976.5,1271,1568.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
-    private reelEffectPosX:Array<number> = [366.5,666,967.5,1263,1558.5]
+    private reelEffectPosX:Array<number> = [369,666,967.5,1263,1558.5]
     private maskPosY:number = 130
     public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
@@ -219,10 +219,12 @@ export default class Slot{
             
         })
         const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
-        reelEffect.x = this.reelEffectPosX[0]
-        reelEffect.y = 501.5
+        reelEffect.height = this.frameBorder.height *1.08
+        reelEffect.width*=1.1
+        reelEffect.x = this.reelEffectPosX[4]
+        reelEffect.y = 535
         Functions.loadSpineAnimation(reelEffect,'animation',true,1)
-        // this.container.addChild(reelEffect)
+        this.container.addChild(reelEffect)
     }
     public startSpin(spinType:string){
         this.soundStop(5)
