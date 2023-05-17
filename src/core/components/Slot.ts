@@ -307,6 +307,7 @@ export default class Slot{
                         onComplete:()=>{
                             if(index<4){
                             this.playSound(4);
+                            }
                             this.checkIfBonus(index)
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
@@ -362,7 +363,7 @@ export default class Slot{
                                 }
                             })
                         }
-                    });
+                    })
                 }
             })
             bounceContainerArr.push(bounceStart)
