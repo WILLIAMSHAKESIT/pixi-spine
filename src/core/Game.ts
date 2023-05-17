@@ -220,6 +220,7 @@ export default class Game{
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
+        this.playSound(7)
         
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
@@ -235,6 +236,8 @@ export default class Game{
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
+                this.soundStop(6)
+                this.playSound(0)
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
@@ -524,6 +527,8 @@ export default class Game{
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
+            this.soundStop(0)
+            this.playSound(8)
             let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
             let arrayBlockValues:Array<any> = []
             let blockSpacing = 1.2
@@ -906,8 +911,7 @@ export default class Game{
             }else{
                 this.modal.soundBtns[1].texture = this.textureToggleOff
             }
-            
-            console.log(this.modal.soundBtns[1])
+
             this.modal.soundBtns.forEach((data,index)=>{
                 data.addListener('mouseover',() =>{
                     this.playSound(2)
@@ -1194,6 +1198,8 @@ export default class Game{
         })
     }
     private startfreeSpinEvent(count:number){
+        this.soundStop(0)
+        this.playSound(6)
         this.enableButtons(false)
         this.lightModeEvent(false)
         this.slotGame.isFreeSpin = true
@@ -1238,11 +1244,16 @@ export default class Game{
 
     private playSound(index:number){
         this.sound[index].play();
-        //this.soundVolume(index)
+        this.soundVolume(index)
     }
 
     private soundStop(index:number){
         this.sound[index].stop()
+    }
+
+    private soundVolume(index:number){
+        if(index == 1 || index == 2  || index == 3  || index == 4  || index == 5) // sound plinko ball collide
+            this.sound[index].volume(0.2)
     }
 
     private checkSoundToggle(){
