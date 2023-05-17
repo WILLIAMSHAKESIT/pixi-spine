@@ -23,7 +23,7 @@ export default class Slot{
     public frameBorder:PIXI.Sprite
     private reelPosX:Array<number> = [385.5,678.5,976.5,1271,1568.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
-    private reelEffectPosX:Array<number> = [366.5,666,967.5,1263,1558.5]
+    private reelEffectPosX:Array<number> = [369,666,967.5,1263,1558.5]
     private maskPosY:number = 130
     public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
@@ -219,10 +219,12 @@ export default class Slot{
             
         })
         const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
-        reelEffect.x = this.reelEffectPosX[0]
-        reelEffect.y = 501.5
-        Functions.loadSpineAnimation(reelEffect,'animation',true,1.1)
-        // this.container.addChild(reelEffect)
+        reelEffect.height = this.frameBorder.height *1.08
+        reelEffect.width*=1.1
+        reelEffect.x = this.reelEffectPosX[4]
+        reelEffect.y = 535
+        Functions.loadSpineAnimation(reelEffect,'animation',true,1)
+        this.container.addChild(reelEffect)
     }
     public startSpin(spinType:string){
         this.soundStop(5)
@@ -305,7 +307,7 @@ export default class Slot{
                         onComplete:()=>{
                             if(index<4){
                             this.playSound(4);
-                            }
+                            this.checkIfBonus(index)
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -365,6 +367,13 @@ export default class Slot{
             })
             bounceContainerArr.push(bounceStart)
             this.timeScale = 0
+        })
+    }
+    private checkIfBonus(i:number){
+        this.reelsSymbols[i].forEach((data:any,index:number)=>{
+            if(index > 26 && i == 0){
+                console.log(data.type)
+            }
         })
     }
     private reelContainWild(index:number){
@@ -461,7 +470,6 @@ export default class Slot{
         countsArray.forEach((data,index)=>{
            
             if(index == 0 && data.count>2){
-                
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){

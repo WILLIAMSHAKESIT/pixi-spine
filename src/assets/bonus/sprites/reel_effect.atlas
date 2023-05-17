@@ -1,41 +1,34 @@
 
 reel_effect.png
-size: 791,314
+size: 913,361
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-glow_center
+glow_bottom
+  rotate: true
+  xy: 753, 80
+  size: 279, 158
+  orig: 279, 158
+  offset: 0, 0
+  index: -1
+glow_side
+  rotate: true
+  xy: 2, 58
+  size: 129, 722
+  orig: 131, 724
+  offset: 1, 1
+  index: -1
+main_glow
   rotate: true
   xy: 2, 2
-  size: 89, 598
-  orig: 89, 598
+  size: 54, 735
+  orig: 54, 735
   offset: 0, 0
   index: -1
-line_bg
+particles
   rotate: true
-  xy: 2, 93
-  size: 7, 772
-  orig: 9, 775
+  xy: 2, 189
+  size: 170, 749
+  orig: 172, 751
   offset: 1, 1
-  index: -1
-line_bg2
-  rotate: true
-  xy: 2, 93
-  size: 7, 772
-  orig: 9, 775
-  offset: 1, 1
-  index: -1
-particle_side_1
-  rotate: true
-  xy: 2, 208
-  size: 104, 787
-  orig: 104, 787
-  offset: 0, 0
-  index: -1
-particle_side_11
-  rotate: true
-  xy: 2, 102
-  size: 104, 787
-  orig: 104, 787
-  offset: 0, 0
   index: -1
