@@ -216,15 +216,14 @@ export default class Slot{
             this.container.addChild(maskSprite)
             data.mask = maskSprite
 
-            
+            const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
+            reelEffect.height = this.frameBorder.height *1.08
+            reelEffect.width*=1.1
+            reelEffect.x = this.reelEffectPosX[index]
+            reelEffect.y = 535
+            Functions.loadSpineAnimation(reelEffect,'animation',true,1)
+            this.container.addChild(reelEffect)  
         })
-        const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
-        reelEffect.height = this.frameBorder.height *1.08
-        reelEffect.width*=1.1
-        reelEffect.x = this.reelEffectPosX[4]
-        reelEffect.y = 535
-        Functions.loadSpineAnimation(reelEffect,'animation',true,1)
-        this.container.addChild(reelEffect)
     }
     public startSpin(spinType:string){
         this.soundStop(5)
