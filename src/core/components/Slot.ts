@@ -134,7 +134,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 741
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -303,7 +303,9 @@ export default class Slot{
                             }
                         },
                         onComplete:()=>{
+                            if(index<4){
                             this.playSound(4);
+                            }
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -318,7 +320,7 @@ export default class Slot{
                                 duration:0.3,
                                 ease: "power1.out",
                                 onComplete:()=>{
-                                 
+                                   
                                     bounceStop.kill()
                                     this.spinCount++
                                     data.y = this.reelY
