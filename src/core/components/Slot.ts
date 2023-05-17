@@ -33,11 +33,11 @@ export default class Slot{
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
-        [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
-        [2,8,3,3,6,7,3,8,9,1,4,2,3,4,4,7,5,3,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,2,9,3,2,2,3,9,8,2,2,3,4,4,2,3,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [2,5,9,2,4,6,5,4,2,9,8,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
+        // [3,4,3,2,1,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [2,8,3,3,6,7,3,8,9,1,4,2,3,4,4,7,5,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,2,9,3,2,2,3,9,8,2,2,3,4,4,2,3,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [2,5,9,2,4,6,5,4,2,9,8,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
@@ -48,16 +48,17 @@ export default class Slot{
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,7,6,6,6,6,6,6,6,6,9,9,9,9,9,9,9]
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelY:number = -6941.2
     public timeScale:number = 0
     public autoPlayCount:number = 0
     private spinType:string = ''
+    private spinDuration:number = 0
     // methods 
     private matchingGame:()=>void
     private freeSpinEvent:()=>void
@@ -89,6 +90,10 @@ export default class Slot{
     private playSound: (index: number) => void;
     private soundStop: (index: number) => void; 
 
+    //
+    private preGeneratedTypes:Array<any> = []
+    private reelEffect:Array<any> = []
+    private spinReelAnimation:Array<any> = []
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
@@ -134,7 +139,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 741
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -170,7 +175,6 @@ export default class Slot{
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
-
         //create mini text
         const miniPrize = new PIXI.Text(`${json.jackpots.mini}`, style);
         miniPrize.x = (itemMini.width - miniPrize.width)/2;
@@ -221,7 +225,8 @@ export default class Slot{
             reelEffect.width*=1.1
             reelEffect.x = this.reelEffectPosX[index]
             reelEffect.y = 535
-            Functions.loadSpineAnimation(reelEffect,'animation',true,1.3)
+            reelEffect.visible = false
+            this.reelEffect.push(reelEffect)
             this.container.addChild(reelEffect)  
         })
     }
@@ -236,42 +241,40 @@ export default class Slot{
         let dY = 355.5
         let bounceOffset = -7000
         let durationBounceUp:number;
-        let duration:number;
+        // let duration:number;
         let delay:number;
         let bounceContainerArr:Array<any> = []
         this.onSpin()
         switch(spinType){
             case 'normal':
                 durationBounceUp = 0.4
-                duration = 1
+                this.spinDuration = 1
                 delay = 0.3
             break;
             case 'quick':
                 durationBounceUp = 0.2
-                duration = 0.3
+                this.spinDuration = 0.3
                 delay = 0.1
             break;
             case 'turbo':
                 durationBounceUp = 0.2
-                duration = 0.1
+                this.spinDuration = 0.1
                 delay = 0
             break;
             default:
                 durationBounceUp = 0.4
-                duration = 1
+                this.spinDuration = 1
                 delay = 0.5
             break
         }
         
         this.reelContainer.forEach((data,index)=>{
-       
             this.isSpinning = true
             let bounceStart = gsap.to(data, {
                 delay:index*delay,
                 duration:durationBounceUp,
                 y:bounceOffset,
                 onStart:()=>{
-                  
                     if(this.timeScale == 10 && spinType !== 'turbo'){
                         bounceContainerArr[0].delay(0)
                         bounceContainerArr[1].delay(0)
@@ -284,30 +287,32 @@ export default class Slot{
                     this.playSound(3)
                     bounceStart.kill()
                     let spin = gsap.to(data, {
-                        duration: duration,
+                        duration: this.spinDuration,
                         y: dY+45,
                         ease: "bounce.in",
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
-                            
+                            this.spinReelAnimation.push(spin)
+                            this.generateTypes(index)
                         },
                         onUpdate:()=>{
                             this.onSpinning()
-                            
-                            if(data.y > hiddenReelY){
-                                this.reelContainer[index].children[27].y = 0
-                                this.reelContainer[index].children[28].y = 270
-                                this.reelContainer[index].children[29].y = 540
+                            if(spin.repeat() !== 2 && spin.repeat() !== 4 && spin.repeat() !== 6){
+                                if(data.y > hiddenReelY){
+                                    this.reelContainer[index].children[27].y = 0
+                                    this.reelContainer[index].children[28].y = 270
+                                    this.reelContainer[index].children[29].y = 540
+                                }
                             }
                             if(this.timeScale == 10 && spinType !== 'turbo'){
                                 spin.timeScale(this.timeScale)
                             }
                         },
                         onComplete:()=>{
+                            this.reelEffectShow(index)
                             if(index<4){
-                            this.playSound(4);
+                                this.playSound(4);
                             }
-                            this.checkIfBonus(index)
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -322,7 +327,6 @@ export default class Slot{
                                 duration:0.3,
                                 ease: "power1.out",
                                 onComplete:()=>{
-                                   
                                     bounceStop.kill()
                                     this.spinCount++
                                     data.y = this.reelY
@@ -332,6 +336,7 @@ export default class Slot{
                                         this.reelContainWild(index)
                                     }
                                     if(this.spinCount == 5){
+                                        this.spinReelAnimation = []
                                         this.checkPattern()            
                                         this.spinCount = 0
                                         this.isSpinning = false
@@ -367,13 +372,6 @@ export default class Slot{
             })
             bounceContainerArr.push(bounceStart)
             this.timeScale = 0
-        })
-    }
-    private checkIfBonus(i:number){
-        this.reelsSymbols[i].forEach((data:any,index:number)=>{
-            if(index > 26 && i == 0){
-                console.log(data.type)
-            }
         })
     }
     private reelContainWild(index:number){
@@ -644,16 +642,60 @@ export default class Slot{
             data.symbol.skeleton.setSkinByName(onSpin?'blur':'no_blur')
         })
     }
+    private generateTypes(i:number){
+        let arr = Functions.arrayRandomizer(this.reelsValues[i])
+        this.preGeneratedTypes.push(arr)
+        if(i >= 2){
+            if((this.preGeneratedTypes[0][0] == 1 || this.preGeneratedTypes[0][1] == 1 || this.preGeneratedTypes[0][2] == 1) && (this.preGeneratedTypes[1][0] == 1 || this.preGeneratedTypes[1][1] == 1 || this.preGeneratedTypes[1][2] == 1)){
+                this.reelEffect[2].visible = true 
+                Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
+                this.spinReelAnimation[2].repeat(2)
+                if(i == 3){
+                    if((this.preGeneratedTypes[0][0] == 1 || this.preGeneratedTypes[0][1] == 1 || this.preGeneratedTypes[0][2] == 1) && (this.preGeneratedTypes[1][0] == 1 || this.preGeneratedTypes[1][1] == 1 || this.preGeneratedTypes[1][2] == 1) && (this.preGeneratedTypes[2][0] == 1 || this.preGeneratedTypes[2][1] == 1 || this.preGeneratedTypes[2][2] == 1)){
+                        this.spinReelAnimation[3].repeat(4)
+                    }
+                }
+                if(i == 4){
+                    if((this.preGeneratedTypes[0][0] == 1 || this.preGeneratedTypes[0][1] == 1 || this.preGeneratedTypes[0][2] == 1) && 
+                    (this.preGeneratedTypes[1][0] == 1 || this.preGeneratedTypes[1][1] == 1 || this.preGeneratedTypes[1][2] == 1) && 
+                    (this.preGeneratedTypes[2][0] == 1 || this.preGeneratedTypes[2][1] == 1 || this.preGeneratedTypes[2][2] == 1) &&
+                    (this.preGeneratedTypes[3][0] == 1 || this.preGeneratedTypes[3][1] == 1 || this.preGeneratedTypes[3][2] == 1)){
+                        this.spinReelAnimation[4].repeat(6)
+                    }
+                }
+            }
+        }
+    }
+    private reelEffectShow(index:number){
+        if(index == 2){
+            this.reelEffect[2].visible = false
+            if((this.preGeneratedTypes[0][0] == 1 || this.preGeneratedTypes[0][1] == 1 || this.preGeneratedTypes[0][2] == 1) && (this.preGeneratedTypes[1][0] == 1 || this.preGeneratedTypes[1][1] == 1 || this.preGeneratedTypes[1][2] == 1) && (this.preGeneratedTypes[2][0] == 1 || this.preGeneratedTypes[2][1] == 1 || this.preGeneratedTypes[2][2] == 1)){
+                this.reelEffect[3].visible = true
+                Functions.loadSpineAnimation(this.reelEffect[3],'animation',true,1)
+            }
+        }
+        if(index == 3){
+            this.reelEffect[2].visible = false
+            this.reelEffect[3].visible = false
+            if((this.preGeneratedTypes[0][0] == 1 || this.preGeneratedTypes[0][1] == 1 || this.preGeneratedTypes[0][2] == 1) && 
+            (this.preGeneratedTypes[1][0] == 1 || this.preGeneratedTypes[1][1] == 1 || this.preGeneratedTypes[1][2] == 1) && 
+            (this.preGeneratedTypes[2][0] == 1 || this.preGeneratedTypes[2][1] == 1 || this.preGeneratedTypes[2][2] == 1) &&
+            (this.preGeneratedTypes[3][0] == 1 || this.preGeneratedTypes[3][1] == 1 || this.preGeneratedTypes[3][2] == 1)){
+                this.reelEffect[4].visible = true
+                Functions.loadSpineAnimation(this.reelEffect[4],'animation',true,1)
+            }
+        }
+        if(index == 4){
+            this.reelEffect[4].visible = false
+        }
+    }
     public generateNewSymbols(i:number){
-        let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
-        arr.forEach((data,index)=>{
-            let reelValue = this.reelsValues[i]
-            let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
+        this.preGeneratedTypes[i].forEach((data:any,index:number)=>{
+            let symbolIndex = data
             let type = json.symbolAssets[symbolIndex-1].type
             let payout = json.symbolAssets[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
-           
             symbol.y = index * 270
             symbol.scale.set(0.9)
             let el ={
