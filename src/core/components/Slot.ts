@@ -221,7 +221,7 @@ export default class Slot{
             reelEffect.width*=1.1
             reelEffect.x = this.reelEffectPosX[index]
             reelEffect.y = 535
-            Functions.loadSpineAnimation(reelEffect,'animation',true,1)
+            Functions.loadSpineAnimation(reelEffect,'animation',true,1.3)
             this.container.addChild(reelEffect)  
         })
     }
