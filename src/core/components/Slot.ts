@@ -134,7 +134,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 741
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -222,7 +222,7 @@ export default class Slot{
             reelEffect.x = this.reelEffectPosX[index]
             reelEffect.y = 535
             Functions.loadSpineAnimation(reelEffect,'animation',true,1.3)
-            this.container.addChild(reelEffect)  
+            //this.container.addChild(reelEffect)  
         })
     }
     public startSpin(spinType:string){
@@ -372,7 +372,7 @@ export default class Slot{
     private checkIfBonus(i:number){
         this.reelsSymbols[i].forEach((data:any,index:number)=>{
             if(index > 26 && i == 0){
-                console.log(data.type)
+                //console.log(data.type)
             }
         })
     }
