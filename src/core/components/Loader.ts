@@ -55,6 +55,14 @@ export default class Loader{
         PIXI.Assets.add('green_crystal', 'assets/slot/sprites/green-crystal.json');
         PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
         PIXI.Assets.add('orange_crystal', 'assets/slot/sprites/orange-crystal.json');
+        //Event Characters
+        PIXI.Assets.add('2k', 'assets/slot/sprites/2k.json');
+        PIXI.Assets.add('3k', 'assets/slot/sprites/3k.json');
+        PIXI.Assets.add('5k', 'assets/slot/sprites/5k.json');
+        PIXI.Assets.add('x2', 'assets/slot/sprites/x2.json');
+        PIXI.Assets.add('x3', 'assets/slot/sprites/x3.json');
+        PIXI.Assets.add('x5', 'assets/slot/sprites/x5.json');
+
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
         //sounds
@@ -79,7 +87,7 @@ export default class Loader{
             'bonus','grass','pop_glow','coins','congrats','corgi',
             'transition','pop_ups','frame_glow','rock_block','reel_effect',
             'bird','blue_crystal','bonus','cameleon','snake','violet_crystal',
-            'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol'
+            'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol','2k','3k','5k','x2','x3','x5'
         ]);
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

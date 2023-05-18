@@ -98,17 +98,17 @@
             "pay":2
         },
         {
-            "symbol": "snake",
+            "symbol": "2k",
             "type":9,
             "pay":2
         },
         {
-            "symbol": "bonus_symbol",
+            "symbol": "3k",
             "type":10,
             "pay":3
         },
         {
-            "symbol": "wild",
+            "symbol": "5k",
             "type":11,
             "pay":3
         }
