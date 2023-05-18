@@ -345,7 +345,7 @@ export default class Game{
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
                  this.buyBonusBtn.interactive = true
             }
-            // this.updatePaylineAnimation(this.paylineGreetings)
+            this.updatePaylineAnimation(this.paylineGreetings)
         }
         if(this.slotGame.startCountWinFreeSpin){
             this.winFreeSpin += this.slotGame.totalWin
@@ -356,7 +356,7 @@ export default class Game{
         this.paylineContainersAnimation.forEach(data=>{
             this.controller.parentSprite.removeChild(data)
         })
-        // this.updatePaylineAnimation(this.paylineGreetings)
+        this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
         this.slotGame.totalWin = 0
