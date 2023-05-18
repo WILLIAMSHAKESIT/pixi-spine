@@ -38,11 +38,11 @@ export default class Slot{
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
-        [3,4,3,2,10,1,2,3,7,8,4,3,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
-        [2,8,3,3,10,7,3,8,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,2,9,3,10,2,3,9,8,10,2,3,4,4,2,11,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,11,1,1,1,11,1,1,10,11,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [2,5,9,2,4,6,5,4,2,9,10,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
+        // [3,4,3,2,10,1,2,3,7,8,4,3,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [2,8,3,3,10,7,3,8,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,2,9,3,10,2,3,9,8,10,2,3,4,4,2,11,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [1,1,1,1,11,1,1,1,11,1,1,10,11,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [2,5,9,2,4,6,5,4,2,9,10,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
         // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
@@ -53,11 +53,11 @@ export default class Slot{
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11]
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelY:number = -6773.7
     public timeScale:number = 0
@@ -99,6 +99,8 @@ export default class Slot{
     private preGeneratedTypes:Array<any> = []
     private reelEffect:Array<any> = []
     private spinReelAnimation:Array<any> = []
+
+    public isBonusTick:boolean = false
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
@@ -619,7 +621,7 @@ export default class Slot{
 
     private checkIfMatchingGameDone(){
         if(!this.isMatchingGame){
-            this.freeSpinEvent()
+            //this.freeSpinEvent()
         }
     }
 
@@ -664,6 +666,7 @@ export default class Slot{
                 if(i == 3){
                     if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType) && (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType)){
                         this.spinReelAnimation[3].repeat(4)
+                        this.isBonusTick = true
                     }
                 }
                 if(i == 4){
@@ -672,8 +675,10 @@ export default class Slot{
                     (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType) &&
                     (this.preGeneratedTypes[3][0] == this.bonusType || this.preGeneratedTypes[3][1] == this.bonusType || this.preGeneratedTypes[3][2] == this.bonusType)){
                         this.spinReelAnimation[4].repeat(6)
+                        this.isBonusTick = true
                     }
                 }
+
             }
         }
     }
@@ -694,6 +699,8 @@ export default class Slot{
             (this.preGeneratedTypes[3][0] == this.bonusType || this.preGeneratedTypes[3][1] == this.bonusType || this.preGeneratedTypes[3][2] == this.bonusType)){
                 this.reelEffect[4].visible = true
                 Functions.loadSpineAnimation(this.reelEffect[4],'animation',true,1)
+
+                
             }
         }
         if(index == 4){
@@ -731,7 +738,7 @@ export default class Slot{
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
             let type = json.symbolAssetsEvent[symbolIndex-1].type
             let payout = json.symbolAssetsEvent[symbolIndex-1].pay
-            let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
+            let symbol = new Spine(this.textureArray[`${json.symbolAssetsEvent[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
             symbol.scale.set(0.9)
             let el ={

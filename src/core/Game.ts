@@ -336,6 +336,7 @@ export default class Game{
         this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
+        console.log("done?")
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
@@ -350,6 +351,10 @@ export default class Game{
         if(this.slotGame.startCountWinFreeSpin){
             this.winFreeSpin += this.slotGame.totalWin
         }   
+        if(this.slotGame.isBonusTick){
+            this.freeSpinEvent()
+            this.slotGame.isBonusTick = false
+        }
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
