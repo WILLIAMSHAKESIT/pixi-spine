@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "Z1Qd4RzlKQIksWLmFnxPMiw/UA4",
+	"hash": "geRqBWNb14Jt8+g4cRpJzGD9d6c",
 	"spine": "3.8.75",
 	"x": -125,
 	"y": -121,
@@ -13,22 +13,22 @@
 	{ "name": "root" }
 ],
 "slots": [
-	{ "name": "character frame copy", "bone": "root", "attachment": "character frame copy" }
+	{ "name": "5k", "bone": "root", "attachment": "5k" }
 ],
 "skins": [
 	{
 		"name": "blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "name": "character frame blur", "y": -0.5, "width": 250, "height": 241 }
+			"5k": {
+				"5k": { "name": "5k_blur", "y": -0.5, "width": 248, "height": 239 }
 			}
 		}
 	},
 	{
 		"name": "no_blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "y": -0.5, "width": 250, "height": 241 }
+			"5k": {
+				"5k": { "y": -0.5, "width": 250, "height": 241 }
 			}
 		}
 	}

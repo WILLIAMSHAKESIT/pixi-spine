@@ -1,19 +1,19 @@
 
-snake.png
-size: 473,245
+cameleon.png
+size: 462,244
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-character frame blur
+Group 1 blur
   rotate: false
   xy: 252, 2
-  size: 219, 241
+  size: 208, 240
   orig: 250, 241
-  offset: 16, 0
+  offset: 21, 1
   index: -1
-character frame copy
+Group 1 copy
   rotate: false
-  xy: 2, 4
+  xy: 2, 3
   size: 248, 239
   orig: 250, 241
   offset: 1, 1

@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "+tB1NHvaUvMOwhbtGgitQEFlTzA",
+	"hash": "eHfTk6QYeuoJlCLbrVSouz00+Yk",
 	"spine": "3.8.75",
 	"x": -128,
 	"y": -103.85,
@@ -147,11 +147,11 @@
 "animations": {
 	"close": {
 		"slots": {
-			"glow_6": {
+			"bg_light": {
 				"color": [
-					{ "color": "ffffffff" },
-					{ "time": 1, "color": "ffffff00" },
-					{ "time": 2, "color": "ffffffff" }
+					{ "color": "ff9898ff" },
+					{ "time": 1, "color": "e2ff00ff" },
+					{ "time": 2, "color": "ff9898ff" }
 				]
 			},
 			"glow_4": {
@@ -159,6 +159,13 @@
 					{ "color": "ffffff00" },
 					{ "time": 1.5, "color": "ffffffff" },
 					{ "time": 2, "color": "ffffff00" }
+				]
+			},
+			"glow_6": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" },
+					{ "time": 2, "color": "ffffffff" }
 				]
 			},
 			"glow_3": {
@@ -171,13 +178,6 @@
 			"glow_bg_natural": {
 				"color": [
 					{ "color": "ffffff00" }
-				]
-			},
-			"bg_light": {
-				"color": [
-					{ "color": "ff9898ff" },
-					{ "time": 1, "color": "e2ff00ff" },
-					{ "time": 2, "color": "ff9898ff" }
 				]
 			}
 		},
@@ -258,10 +258,38 @@
 	},
 	"reveal": {
 		"slots": {
-			"piece3": {
+			"piece6": {
 				"color": [
-					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 0.9, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"mini": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.6667, "color": "ffffffff" }
+				]
+			},
+			"glow_7": {
+				"color": [
 					{ "time": 0.9, "color": "ffffff00" }
+				]
+			},
+			"glow_5": {
+				"color": [
+					{ "time": 0.9, "color": "ffffff00" }
+				]
+			},
+			"piece1": {
+				"color": [
+					{ "time": 0.6667, "color": "ffffffff" },
+					{ "time": 0.7667, "color": "ffffff00" }
+				]
+			},
+			"piece2": {
+				"color": [
+					{ "time": 0.7333, "color": "ffffffff" },
+					{ "time": 0.8333, "color": "ffffff00" }
 				]
 			},
 			"glow_8": {
@@ -269,20 +297,28 @@
 					{ "time": 0.9, "color": "ffffff00" }
 				]
 			},
-			"glow_1": {
+			"piece3": {
 				"color": [
+					{ "time": 0.8333, "color": "ffffffff" },
 					{ "time": 0.9, "color": "ffffff00" }
 				]
 			},
-			"glow_6": {
+			"piece7": {
 				"color": [
-					{ "color": "ffffffff" },
-					{ "time": 0.9, "color": "ffffff00" }
+					{ "time": 1, "color": "ffffffff" },
+					{ "time": 1.0667, "color": "ffffff00" }
 				]
 			},
-			"glow_7": {
+			"piece5": {
 				"color": [
-					{ "time": 0.9, "color": "ffffff00" }
+					{ "time": 1.0667, "color": "ffffffff" },
+					{ "time": 1.1667, "color": "ffffff00" }
+				]
+			},
+			"piece4": {
+				"color": [
+					{ "time": 1.1667, "color": "ffffffff" },
+					{ "time": 1.2333, "color": "ffffff00" }
 				]
 			},
 			"glow_4": {
@@ -292,16 +328,15 @@
 					{ "time": 2, "color": "ffffff00" }
 				]
 			},
-			"mini": {
+			"glow_6": {
 				"color": [
-					{ "color": "ffffff00" },
-					{ "time": 0.6667, "color": "ffffffff" }
+					{ "color": "ffffffff" },
+					{ "time": 0.9, "color": "ffffff00" }
 				]
 			},
-			"piece4": {
+			"glow_1": {
 				"color": [
-					{ "time": 1.1667, "color": "ffffffff" },
-					{ "time": 1.2333, "color": "ffffff00" }
+					{ "time": 0.9, "color": "ffffff00" }
 				]
 			},
 			"glow_3": {
@@ -310,45 +345,10 @@
 					{ "time": 0.9, "color": "ffffff00" }
 				]
 			},
-			"glow_5": {
-				"color": [
-					{ "time": 0.9, "color": "ffffff00" }
-				]
-			},
-			"piece2": {
-				"color": [
-					{ "time": 0.7333, "color": "ffffffff" },
-					{ "time": 0.8333, "color": "ffffff00" }
-				]
-			},
-			"piece5": {
-				"color": [
-					{ "time": 1.0667, "color": "ffffffff" },
-					{ "time": 1.1667, "color": "ffffff00" }
-				]
-			},
 			"glow_bg_natural": {
 				"color": [
 					{ "color": "ffffff00" },
 					{ "time": 0.6667, "color": "ffffffff" },
-					{ "time": 1, "color": "ffffff00" }
-				]
-			},
-			"piece7": {
-				"color": [
-					{ "time": 1, "color": "ffffffff" },
-					{ "time": 1.0667, "color": "ffffff00" }
-				]
-			},
-			"piece1": {
-				"color": [
-					{ "time": 0.6667, "color": "ffffffff" },
-					{ "time": 0.7667, "color": "ffffff00" }
-				]
-			},
-			"piece6": {
-				"color": [
-					{ "time": 0.9, "color": "ffffffff" },
 					{ "time": 1, "color": "ffffff00" }
 				]
 			}

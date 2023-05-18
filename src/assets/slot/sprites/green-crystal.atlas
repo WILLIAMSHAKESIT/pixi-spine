@@ -1,0 +1,20 @@
+
+green-crystal.png
+size: 511,262
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+green-crystal
+  rotate: true
+  xy: 260, 2
+  size: 258, 249
+  orig: 266, 257
+  offset: 4, 4
+  index: -1
+green-crystal_blur
+  rotate: false
+  xy: 2, 3
+  size: 256, 257
+  orig: 266, 257
+  offset: 5, 0
+  index: -1

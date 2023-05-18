@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "Z1Qd4RzlKQIksWLmFnxPMiw/UA4",
+	"hash": "KnKR67kw+2xBbIXM9HCkSulfM/c",
 	"spine": "3.8.75",
-	"x": -125,
-	"y": -121,
-	"width": 250,
-	"height": 241,
+	"x": -124,
+	"y": -120,
+	"width": 248,
+	"height": 239,
 	"images": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/symbols/symbols/images/",
 	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\junggl_story_assets\\symbols\\symbols\\images"
 },
@@ -13,22 +13,22 @@
 	{ "name": "root" }
 ],
 "slots": [
-	{ "name": "character frame copy", "bone": "root", "attachment": "character frame copy" }
+	{ "name": "Layer 1", "bone": "root", "attachment": "Layer 1" }
 ],
 "skins": [
 	{
 		"name": "blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "name": "character frame blur", "y": -0.5, "width": 250, "height": 241 }
+			"Layer 1": {
+				"Layer 1": { "name": "Layer 1 blur", "y": -0.5, "width": 248, "height": 239 }
 			}
 		}
 	},
 	{
 		"name": "no_blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "y": -0.5, "width": 250, "height": 241 }
+			"Layer 1": {
+				"Layer 1": { "y": -0.5, "width": 250, "height": 241 }
 			}
 		}
 	}

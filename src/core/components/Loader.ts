@@ -14,7 +14,6 @@ export default class Loader{
     public isMute: Boolean;
     
 
-
     constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
         this.app = new PIXI.Application({ width: 1920, height: 1080, antialias: false});
         this.sounds = sounds;
@@ -33,15 +32,6 @@ export default class Loader{
         PIXI.Assets.add('main', 'assets/main/sprites/main.json');
         PIXI.Assets.add('controller', 'assets/controller/sprites/controller.json');
         PIXI.Assets.add('slot', 'assets/slot/sprites/slot.json');
-        PIXI.Assets.add('bag_of_gold', 'assets/slot/sprites/bag_of_gold.json');
-        PIXI.Assets.add('barrels', 'assets/slot/sprites/barrels.json');
-        PIXI.Assets.add('boots', 'assets/slot/sprites/boots.json');
-        PIXI.Assets.add('dynamite_crate', 'assets/slot/sprites/dynamite_crate.json');
-        PIXI.Assets.add('gas_lamp', 'assets/slot/sprites/gas_lamp.json');
-        PIXI.Assets.add('pile_of_gold', 'assets/slot/sprites/pile_of_gold.json');
-        PIXI.Assets.add('snake', 'assets/slot/sprites/snake.json');
-        PIXI.Assets.add('trolley', 'assets/slot/sprites/trolley.json');
-        PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
         PIXI.Assets.add('modal', 'assets/modal/sprites/modal.json');
         PIXI.Assets.add('bonus', 'assets/bonus/sprites/bonus.json');
         PIXI.Assets.add('grass', 'assets/main/sprites/grass.json');
@@ -53,9 +43,20 @@ export default class Loader{
         PIXI.Assets.add('frame_glow', 'assets/bonus/sprites/frame_glow.json');
         PIXI.Assets.add('rock_block', 'assets/bonus/sprites/rock_block.json');
         PIXI.Assets.add('reel_effect', 'assets/bonus/sprites/reel_effect.json');
+        // new characters
+        PIXI.Assets.add('bird', 'assets/slot/sprites/bird.json');
+        PIXI.Assets.add('blue_crystal', 'assets/slot/sprites/blue-crystal.json');
+        PIXI.Assets.add('bonus_symbol', 'assets/slot/sprites/bonus.json');
+        PIXI.Assets.add('cameleon', 'assets/slot/sprites/cameleon.json');
+        PIXI.Assets.add('snake', 'assets/slot/sprites/snake.json');
+        PIXI.Assets.add('violet_crystal', 'assets/slot/sprites/violet-crystal.json');
+        PIXI.Assets.add('monkey', 'assets/slot/sprites/monkey.json');
+        PIXI.Assets.add('leopard', 'assets/slot/sprites/leopard.json');
+        PIXI.Assets.add('green_crystal', 'assets/slot/sprites/green-crystal.json');
+        PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
+        PIXI.Assets.add('orange_crystal', 'assets/slot/sprites/orange-crystal.json');
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
-
         //sounds
         this.soundSetup(`${this.soundsPath}music/main_music.mp3`,true); //0 
         this.soundSetup(`${this.soundsPath}sfx/ui/click.mp3`,false); //1
@@ -74,9 +75,11 @@ export default class Loader{
         const texturesPromise = PIXI.Assets.load([
             'main','slot','controller','bag_of_gold',
             'barrels','boots','dynamite_crate','gas_lamp',
-            'pile_of_gold','snake','trolley','wild','modal',
+            'pile_of_gold','snake','trolley','modal',
             'bonus','grass','pop_glow','coins','congrats','corgi',
-            'transition','pop_ups','frame_glow','rock_block','reel_effect'
+            'transition','pop_ups','frame_glow','rock_block','reel_effect',
+            'bird','blue_crystal','bonus','cameleon','snake','violet_crystal',
+            'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol'
         ]);
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

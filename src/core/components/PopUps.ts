@@ -148,7 +148,7 @@ export default class PopUps{
         this.logo = new Spine(this.textureArray.pop_ups.spineData)
         this.logo.scale.set(1.3)
         this.logo.x = (this.overlay.width)/2
-        this.logo.y = (this.overlay.height)/2
+        this.logo.y = ((this.overlay.height)/2)*0.7
         
         //set the skin
         this.logo.skeleton.setSkinByName(this.animationSkin)
@@ -162,7 +162,7 @@ export default class PopUps{
         let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
         moneyPosX = ((this.overlay.width - this.money.width)/2)*1.3
-        moneyPosY = ((this.overlay.height - this.money.height)/2)*1.15
+        moneyPosY = ((this.overlay.height - this.money.height)/2)*0.83
         this.money.x = moneyPosX
         this.money.y= moneyPosY
         this.middleContainer.addChild(this.money)

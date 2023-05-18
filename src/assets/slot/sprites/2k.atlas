@@ -1,0 +1,20 @@
+
+2k.png
+size: 364,246
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+2k
+  rotate: true
+  xy: 203, 2
+  size: 242, 159
+  orig: 250, 241
+  offset: 7, 41
+  index: -1
+2k_blur
+  rotate: true
+  xy: 2, 11
+  size: 233, 199
+  orig: 248, 239
+  offset: 7, 20
+  index: -1

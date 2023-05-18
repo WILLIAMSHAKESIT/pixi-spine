@@ -1,0 +1,49 @@
+{
+"skeleton": {
+	"hash": "S6cnes12Vmx4vI4sxEXDWUmyWuY",
+	"spine": "3.8.75",
+	"x": -125,
+	"y": -121,
+	"width": 250,
+	"height": 241,
+	"images": "../symbols/images/",
+	"audio": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/symbols/symbols/images"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "3k", "bone": "root", "attachment": "3k" }
+],
+"skins": [
+	{
+		"name": "blur",
+		"attachments": {
+			"3k": {
+				"3k": { "name": "3k_blur", "y": -0.5, "width": 248, "height": 239 }
+			}
+		}
+	},
+	{
+		"name": "no_blur",
+		"attachments": {
+			"3k": {
+				"3k": { "y": -0.5, "width": 250, "height": 241 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"root": {
+				"scale": [
+					{},
+					{ "time": 0.3333, "x": 1.2, "y": 1.2 },
+					{ "time": 0.6667 }
+				]
+			}
+		}
+	}
+}
+}

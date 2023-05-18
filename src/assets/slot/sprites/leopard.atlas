@@ -1,0 +1,20 @@
+
+leopard.png
+size: 460,244
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+leopard
+  rotate: false
+  xy: 2, 2
+  size: 248, 240
+  orig: 250, 242
+  offset: 1, 1
+  index: -1
+leopard-blur
+  rotate: false
+  xy: 252, 4
+  size: 206, 238
+  orig: 250, 242
+  offset: 22, 2
+  index: -1

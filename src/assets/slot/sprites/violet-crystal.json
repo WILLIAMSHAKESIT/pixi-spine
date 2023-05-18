@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "Z1Qd4RzlKQIksWLmFnxPMiw/UA4",
+	"hash": "nSBsaycem4BAdxGqZxiDqgrCk9M",
 	"spine": "3.8.75",
-	"x": -125,
-	"y": -121,
-	"width": 250,
-	"height": 241,
+	"x": -158,
+	"y": -153,
+	"width": 317,
+	"height": 305,
 	"images": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/symbols/symbols/images/",
 	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\junggl_story_assets\\symbols\\symbols\\images"
 },
@@ -13,22 +13,22 @@
 	{ "name": "root" }
 ],
 "slots": [
-	{ "name": "character frame copy", "bone": "root", "attachment": "character frame copy" }
+	{ "name": "violet-crystal", "bone": "root", "attachment": "violet-crystal" }
 ],
 "skins": [
 	{
 		"name": "blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "name": "character frame blur", "y": -0.5, "width": 250, "height": 241 }
+			"violet-crystal": {
+				"violet-crystal": { "name": "violet-crystal_blur", "x": 0.5, "y": -0.5, "width": 317, "height": 305 }
 			}
 		}
 	},
 	{
 		"name": "no_blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "y": -0.5, "width": 250, "height": 241 }
+			"violet-crystal": {
+				"violet-crystal": { "x": 0.5, "y": -0.5, "width": 317, "height": 305 }
 			}
 		}
 	}

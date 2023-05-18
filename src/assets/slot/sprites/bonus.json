@@ -1,9 +1,9 @@
 {
 "skeleton": {
-	"hash": "Z1Qd4RzlKQIksWLmFnxPMiw/UA4",
+	"hash": "wXfNz5tKeROFN402Qd4oudy+xGk",
 	"spine": "3.8.75",
-	"x": -125,
-	"y": -121,
+	"x": -125.56,
+	"y": -122.09,
 	"width": 250,
 	"height": 241,
 	"images": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/symbols/symbols/images/",
@@ -13,22 +13,22 @@
 	{ "name": "root" }
 ],
 "slots": [
-	{ "name": "character frame copy", "bone": "root", "attachment": "character frame copy" }
+	{ "name": "Layer 466", "bone": "root", "attachment": "Layer 466" }
 ],
 "skins": [
 	{
 		"name": "blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "name": "character frame blur", "y": -0.5, "width": 250, "height": 241 }
+			"Layer 466": {
+				"Layer 466": { "name": "Layer 466 blur", "x": -0.56, "y": -1.59, "width": 250, "height": 241 }
 			}
 		}
 	},
 	{
 		"name": "no_blur",
 		"attachments": {
-			"character frame copy": {
-				"character frame copy": { "y": -0.5, "width": 250, "height": 241 }
+			"Layer 466": {
+				"Layer 466": { "x": -0.56, "y": -1.59, "width": 250, "height": 241 }
 			}
 		}
 	}

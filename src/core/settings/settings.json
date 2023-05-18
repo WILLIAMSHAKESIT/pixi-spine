@@ -1,55 +1,58 @@
 {
-    "reelsValues": [
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7]
-    ],
     "symbolAssets":[
         {
-            "symbol": "bag_of_gold",
+            "symbol": "bird",
             "type":1,
             "pay":0.2
         },
         {
-            "symbol": "barrels",
+            "symbol": "snake",
             "type":2,
             "pay":0.3
         },
         {
-            "symbol": "boots",
+            "symbol": "monkey",
             "type":3,
             "pay":0.5
         },
         {
-            "symbol": "dynamite_crate",
+            "symbol": "leopard",
             "type":4,
             "pay":0.6
         },
         {
-            "symbol": "gas_lamp",
+            "symbol": "orange_crystal",
             "type":5,
             "pay":0.7
         },
         {
-            "symbol": "pile_of_gold",
+            "symbol": "violet_crystal",
             "type":6,
             "pay":1
         },
         {
-            "symbol": "snake",
+            "symbol": "green_crystal",
             "type":7,
             "pay":1.5
         },
         {
-            "symbol": "trolley",
+            "symbol": "cameleon",
             "type":8,
             "pay":2
         },
         {
-            "symbol": "wild",
+            "symbol": "snake",
             "type":9,
+            "pay":2
+        },
+        {
+            "symbol": "bonus_symbol",
+            "type":10,
+            "pay":3
+        },
+        {
+            "symbol": "wild",
+            "type":11,
             "pay":3
         }
     ],
@@ -112,9 +115,9 @@
         [28,29,29,29,28]
     ],
     "jackpots":{
-        "mini":25,
-        "major":100,
-        "grand":500
+        "mini":10000,
+        "major":50000,
+        "grand":100000
     },
     "bet_amounts":[1,5,10,20,50,100],
     "auto_play_values":[

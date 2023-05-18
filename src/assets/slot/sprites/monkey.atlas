@@ -1,0 +1,20 @@
+
+monkey.png
+size: 470,245
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Layer 449
+  rotate: false
+  xy: 2, 4
+  size: 248, 239
+  orig: 250, 241
+  offset: 1, 1
+  index: -1
+Layer 449 blur
+  rotate: false
+  xy: 252, 2
+  size: 216, 241
+  orig: 250, 241
+  offset: 17, 0
+  index: -1

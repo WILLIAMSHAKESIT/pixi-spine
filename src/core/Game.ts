@@ -345,7 +345,7 @@ export default class Game{
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
                  this.buyBonusBtn.interactive = true
             }
-            this.updatePaylineAnimation(this.paylineGreetings)
+            // this.updatePaylineAnimation(this.paylineGreetings)
         }
         if(this.slotGame.startCountWinFreeSpin){
             this.winFreeSpin += this.slotGame.totalWin
@@ -356,7 +356,7 @@ export default class Game{
         this.paylineContainersAnimation.forEach(data=>{
             this.controller.parentSprite.removeChild(data)
         })
-        this.updatePaylineAnimation(this.paylineGreetings)
+        // this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
         this.slotGame.totalWin = 0
@@ -576,7 +576,7 @@ export default class Game{
                         grandCount++
                         if(grandCount == 3){
                             popUpSkin = 'excellent'
-                            this.matchingGameWin = 500
+                            this.matchingGameWin = json.jackpots.grand
                             result = symbol
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
@@ -584,7 +584,7 @@ export default class Game{
                         majorCount++
                         if(majorCount == 3){
                             popUpSkin = 'impressive'
-                            this.matchingGameWin = 100
+                            this.matchingGameWin = json.jackpots.major
                             result = symbol
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
@@ -592,7 +592,7 @@ export default class Game{
                         miniCount++
                         if(miniCount == 3){
                             popUpSkin = 'nice'
-                            this.matchingGameWin = 25
+                            this.matchingGameWin = json.jackpots.mini
                             result = symbol
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
@@ -635,7 +635,7 @@ export default class Game{
     private matchGameResult(result:any){
         let frame = this.slotGame.frameBg
         let frameBgTexture = Functions.loadTexture(this.textureArray,'bonus','matchin_game_win_board').texture
-        let win = new PIXI.Text(`${this.matchingGameWin}`, this.whiteYellow)
+        let win = new PIXI.Text(`${Functions.numberWithCommas(this.matchingGameWin)}`, this.whiteYellow)
         let clickContinueText = new PIXI.Text(`click here to continue`, this.textStyle3)
         frame.texture = frameBgTexture
         result.x = (frame.width)/2
