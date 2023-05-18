@@ -58,49 +58,59 @@
     ],
     "symbolAssetsEvent":[
         {
-            "symbol": "corgi",
+            "symbol": "bird",
             "type":1,
             "pay":0.2
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "snake",
+            "type":2,
+            "pay":0.3
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "monkey",
+            "type":3,
+            "pay":0.5
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "leopard",
+            "type":4,
+            "pay":0.6
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "orange_crystal",
+            "type":5,
+            "pay":0.7
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "violet_crystal",
+            "type":6,
+            "pay":1
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "green_crystal",
+            "type":7,
+            "pay":1.5
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "cameleon",
+            "type":8,
+            "pay":2
         },
         {
-            "symbol": "corgi",
-            "type":1,
-            "pay":0.2
+            "symbol": "snake",
+            "type":9,
+            "pay":2
+        },
+        {
+            "symbol": "bonus_symbol",
+            "type":10,
+            "pay":3
+        },
+        {
+            "symbol": "wild",
+            "type":11,
+            "pay":3
         }
     ],
     "pattern":[

@@ -729,8 +729,8 @@ export default class Slot{
         arr.forEach((data,index)=>{
             let reelValue = this.reelsValues[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
-            let type = json.symbolAssets[symbolIndex-1].type
-            let payout = json.symbolAssets[symbolIndex-1].pay
+            let type = json.symbolAssetsEvent[symbolIndex-1].type
+            let payout = json.symbolAssetsEvent[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
             symbol.scale.set(0.9)
@@ -754,9 +754,9 @@ export default class Slot{
             let reelValue = this.reelsValues[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
             
-            let newSymbol1 = [0,0,4,2,3]
-            let newSymbol2 = [1,0,6,1,4]
-            let newSymbol3 = [4,3,0,2,2]
+            let newSymbol1 = [9,0,4,2,3]
+            let newSymbol2 = [1,9,6,1,4]
+            let newSymbol3 = [4,3,9,2,2]
             let type:any;
             let payout:any;
             let symbol:any;
