@@ -58,17 +58,17 @@
     ],
     "symbolAssetsEvent":[
         {
-            "symbol": "bird",
+            "symbol": "2k",
             "type":1,
             "pay":0.2
         },
         {
-            "symbol": "snake",
+            "symbol": "3k",
             "type":2,
             "pay":0.3
         },
         {
-            "symbol": "monkey",
+            "symbol": "5k",
             "type":3,
             "pay":0.5
         },
@@ -99,17 +99,17 @@
         },
         {
             "symbol": "2k",
-            "type":9,
-            "pay":2
+            "type":1,
+            "pay":0.2
         },
         {
             "symbol": "3k",
-            "type":10,
+            "type":1,
             "pay":3
         },
         {
             "symbol": "5k",
-            "type":11,
+            "type":1,
             "pay":3
         }
     ],

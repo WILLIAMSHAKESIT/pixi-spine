@@ -59,6 +59,20 @@ export default class Slot{
         [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
         [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
+    private reelsValuesMoneySlot:Array<Array<number>> = [
+        [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
+        [2,8,3,3,1,7,3,8,8,1,4,2,3,4,4,7,5,1,5,8,2,6,8,6,8,3,8,7,1,7],
+        [1,2,8,3,2,2,3,8,8,3,2,3,4,4,2,11,5,8,5,8,2,6,8,6,8,3,8,7,1,7],
+        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,3,8,7,1,7],
+        [2,5,8,2,4,6,5,4,2,8,3,5,3,3,8,2,4,5,3,5,8,8,1,6,6,4,3,7,3,2]
+    ]
+    private reelsValuesMultiplierSlot:Array<Array<number>> = [
+        [3,4,3,2,3,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        [2,8,3,3,1,7,3,8,9,1,4,2,3,4,4,7,5,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        [1,2,9,3,2,2,3,9,8,3,2,3,4,4,2,11,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
+        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
+        [2,5,9,2,4,6,5,4,2,9,3,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
+    ]
     private reelY:number = -6773.7
     public timeScale:number = 0
     public autoPlayCount:number = 0
@@ -302,7 +316,9 @@ export default class Slot{
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
                             this.spinReelAnimation.push(spin)
+                            if(!this.isFreeSpin){
                             this.generateTypes(index)
+                            }
                         },
                         onUpdate:()=>{
                             this.onSpinning()
@@ -318,7 +334,9 @@ export default class Slot{
                             }
                         },
                         onComplete:()=>{
+                            if(!this.isFreeSpin){
                             this.reelEffectShow(index)
+                            }
                             if(index<4){
                                 this.playSound(4);
                             }
@@ -656,7 +674,7 @@ export default class Slot{
         })
     }
     private generateTypes(i:number){
-        let arr = Functions.arrayRandomizer(this.reelsValues[i])
+        let arr = Functions.arrayRandomizer(this.reelsValues[i])      
         this.preGeneratedTypes.push(arr)
         if(i >= 2){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
@@ -733,8 +751,9 @@ export default class Slot{
     public generateNewSymbolsMainEvent(i:number){
         let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
+        
         arr.forEach((data,index)=>{
-            let reelValue = this.reelsValues[i]
+            let reelValue = this.reelsValuesMoneySlot[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
             let type = json.symbolAssetsEvent[symbolIndex-1].type
             let payout = json.symbolAssetsEvent[symbolIndex-1].pay
