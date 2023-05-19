@@ -194,6 +194,11 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){         
+                // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
+                // console.log(this.isAutoPlay, " this.isAutoPlay")
+                // console.log(this.isMatchingGame, " this.isMatchingGame")
+                // console.log(this.isFreeSpin, " this.isFreeSpin")
+                // console.log(this.isOpenModal, " this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
@@ -336,7 +341,6 @@ export default class Game{
         this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
-        console.log("done?")
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
