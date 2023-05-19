@@ -98,18 +98,18 @@
             "pay":2
         },
         {
-            "symbol": "2k",
-            "type":1,
-            "pay":0.2
+            "symbol": "snake",
+            "type":9,
+            "pay":2
         },
         {
-            "symbol": "3k",
-            "type":1,
+            "symbol": "bonus_symbol",
+            "type":10,
             "pay":3
         },
         {
-            "symbol": "5k",
-            "type":1,
+            "symbol": "wild",
+            "type":11,
             "pay":3
         }
     ],
@@ -155,18 +155,18 @@
             "pay":2
         },
         {
-            "symbol": "2k",
-            "type":1,
-            "pay":0.2
+            "symbol": "snake",
+            "type":9,
+            "pay":2
         },
         {
-            "symbol": "3k",
-            "type":1,
+            "symbol": "bonus_symbol",
+            "type":10,
             "pay":3
         },
         {
-            "symbol": "5k",
-            "type":1,
+            "symbol": "wild",
+            "type":11,
             "pay":3
         }
     ],
