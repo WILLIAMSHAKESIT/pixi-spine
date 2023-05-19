@@ -405,10 +405,13 @@ export default class Slot{
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
                 if(data.type == this.wildType){ 
-                    let spine = Functions.loadSpineAnimation(data.symbol,'animation',false,0.7)
-                    spine.state.addListener({complete:function(){
-                        // reset animation here
-                    }})
+                    Functions.loadSpineAnimation(data.symbol,'animation',false,0.7)
+                    // if(this.spinCount == 5){
+                    //     let spine = Functions.loadSpineAnimation(data.symbol,'animation',false,0.7)
+                    // }
+                    // spine.state.addListener({complete:function(){
+                    //     // reset animation here
+                    // }})
                     const globalPos = data.symbol.getGlobalPosition()
                     this.createWildCoin(globalPos.x,globalPos.y)
                     this.levelBarIndicator.width++

@@ -1,0 +1,13 @@
+
+plant3.png
+size: 522,385
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+plant3
+  rotate: false
+  xy: 2, 2
+  size: 518, 381
+  orig: 519, 381
+  offset: 0, 0
+  index: -1

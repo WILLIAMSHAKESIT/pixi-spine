@@ -62,6 +62,13 @@ export default class Loader{
         PIXI.Assets.add('x2', 'assets/slot/sprites/x2.json');
         PIXI.Assets.add('x3', 'assets/slot/sprites/x3.json');
         PIXI.Assets.add('x5', 'assets/slot/sprites/x5.json');
+        //background plants
+        PIXI.Assets.add('plant_1', 'assets/main/sprites/plant_1.json');
+        PIXI.Assets.add('plant_2', 'assets/main/sprites/plant2.json');
+        PIXI.Assets.add('plant_3', 'assets/main/sprites/plant3.json');
+        PIXI.Assets.add('plant_4', 'assets/main/sprites/plant4.json');
+        PIXI.Assets.add('plant_5', 'assets/main/sprites/banana.json');
+        PIXI.Assets.add('vines', 'assets/main/sprites/vines.json');
 
         //test
         PIXI.Assets.add('corgi', 'assets/corgi/corgi.json');
@@ -87,7 +94,8 @@ export default class Loader{
             'bonus','grass','pop_glow','coins','congrats','corgi',
             'transition','pop_ups','frame_glow','rock_block','reel_effect',
             'bird','blue_crystal','bonus','cameleon','snake','violet_crystal',
-            'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol','2k','3k','5k','x2','x3','x5'
+            'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol','2k','3k','5k','x2','x3','x5',
+            'plant_1','plant_2','plant_3','plant_4','plant_5','vines'
         ]);
         texturesPromise.then((resource) => {
             loadedAssets(resource,this.app)

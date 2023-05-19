@@ -125,9 +125,9 @@
         [28,29,29,29,28]
     ],
     "jackpots":{
-        "mini":10000,
-        "major":50000,
-        "grand":100000
+        "mini":5000,
+        "major":8000,
+        "grand":10000
     },
     "bet_amounts":[1,5,10,20,50,100],
     "auto_play_values":[
