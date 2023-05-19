@@ -43,21 +43,21 @@ export default class Slot{
         // [1,2,9,3,10,2,3,9,8,10,2,3,4,4,2,11,5,9,5,9,2,6,8,6,9,3,9,7,1,7],
         // [1,1,1,1,11,1,1,1,11,1,1,10,11,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
         // [2,5,9,2,4,6,5,4,2,9,10,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],
-        // [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]
+        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6],
+        [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6]
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11]
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
         [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
@@ -161,7 +161,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -736,8 +736,6 @@ export default class Slot{
             let payout = json.symbolAssets[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
-            symbol.width = this.blockWidth
-            symbol.height = this.blockHeight
             let el ={
                 type:type,
                 symbol:symbol,
@@ -749,6 +747,8 @@ export default class Slot{
             this.reelsSymbols[i][index].payout = data.payout
             this.reelsSymbols[i][index].symbol.skeleton.setSkinByName('no_blur')
             this.reelContainer[i].addChild(data.symbol)
+            symbol.width = this.blockWidth
+            symbol.height = this.blockHeight
         })
     }
     public generateNewSymbolsMainEvent(i:number){
@@ -860,6 +860,8 @@ export default class Slot{
                 this.reelContainer[index].children[29] = data.symbol
                 this.reelContainer[index].children[29].y = thirdPosY
             }
+            data.symbol.width = this.blockWidth
+            data.symbol.height = this.blockHeight
         })
     }
     private createReel(index:number){

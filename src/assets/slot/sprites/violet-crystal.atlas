@@ -1,20 +1,34 @@
 
 violet-crystal.png
-size: 606,311
+size: 749,271
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+shine
+  rotate: true
+  xy: 572, 89
+  size: 180, 175
+  orig: 180, 175
+  offset: 0, 0
+  index: -1
+violet crystal
+  rotate: true
+  xy: 2, 2
+  size: 267, 91
+  orig: 267, 91
+  offset: 0, 0
+  index: -1
 violet-crystal
   rotate: true
-  xy: 309, 2
-  size: 307, 295
-  orig: 317, 305
+  xy: 336, 26
+  size: 243, 234
+  orig: 253, 244
   offset: 5, 5
   index: -1
 violet-crystal_blur
-  rotate: false
-  xy: 2, 4
-  size: 305, 305
-  orig: 317, 305
-  offset: 6, 0
+  rotate: true
+  xy: 95, 23
+  size: 246, 239
+  orig: 248, 239
+  offset: 1, 0
   index: -1
