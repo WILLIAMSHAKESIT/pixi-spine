@@ -932,7 +932,7 @@ export default class Game{
         let settingBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'system_settings':'system_settings2').texture
         let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
-        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
+        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg').texture
         //change visibilities of normal game
        // this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
@@ -1272,6 +1272,7 @@ export default class Game{
             this.playSound(2)
         })
         wildSlot.addEventListener('pointerdown', () =>{
+            this.slotGame.whatEvent = 1
             this.playSound(1)
             
             this.overlay.removeChild(this.popGlow2)
@@ -1294,7 +1295,7 @@ export default class Game{
         })
         moneySlot.addEventListener('pointerdown', () =>{
             this.playSound(1)
-            
+            this.slotGame.whatEvent = 2
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=12

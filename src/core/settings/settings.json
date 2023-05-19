@@ -113,6 +113,63 @@
             "pay":3
         }
     ],
+    "symbolAssetsEvent2":[
+        {
+            "symbol": "x2",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "x3",
+            "type":2,
+            "pay":0.3
+        },
+        {
+            "symbol": "x5",
+            "type":3,
+            "pay":0.5
+        },
+        {
+            "symbol": "leopard",
+            "type":4,
+            "pay":0.6
+        },
+        {
+            "symbol": "orange_crystal",
+            "type":5,
+            "pay":0.7
+        },
+        {
+            "symbol": "violet_crystal",
+            "type":6,
+            "pay":1
+        },
+        {
+            "symbol": "green_crystal",
+            "type":7,
+            "pay":1.5
+        },
+        {
+            "symbol": "cameleon",
+            "type":8,
+            "pay":2
+        },
+        {
+            "symbol": "2k",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "3k",
+            "type":1,
+            "pay":3
+        },
+        {
+            "symbol": "5k",
+            "type":1,
+            "pay":3
+        }
+    ],
     "pattern":[
         [27,27,27,27,27],
         [28,28,28,28,28],

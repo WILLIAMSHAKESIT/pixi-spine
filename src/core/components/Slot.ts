@@ -115,6 +115,7 @@ export default class Slot{
     private spinReelAnimation:Array<any> = []
 
     public isBonusTick:boolean = false
+    public whatEvent:number = 0
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
@@ -752,15 +753,25 @@ export default class Slot{
         })
     }
     public generateNewSymbolsMainEvent(i:number){
+        console.log("test")
         let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
+        let jsonType:any;
+        if(this.whatEvent == 1){
+            jsonType = json.symbolAssetsEvent2
+        }
+        else{
+            jsonType = json.symbolAssetsEvent
+        }
+
+        console.log(jsonType)
         
         arr.forEach((data,index)=>{
             let reelValue = this.reelsValuesMoneySlot[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
-            let type = json.symbolAssetsEvent[symbolIndex-1].type
-            let payout = json.symbolAssetsEvent[symbolIndex-1].pay
-            let symbol = new Spine(this.textureArray[`${json.symbolAssetsEvent[symbolIndex-1].symbol}`].spineData)
+            let type = jsonType[symbolIndex-1].type
+            let payout = jsonType[symbolIndex-1].pay
+            let symbol = new Spine(this.textureArray[`${jsonType[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
             symbol.scale.set(0.9)
             let el ={
