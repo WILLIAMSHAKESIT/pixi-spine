@@ -699,8 +699,6 @@ export default class Slot{
                     }
                 }
             }
-
-            console.log(this.isFreeSpin)
             if(this.isFreeSpin){
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
             }
