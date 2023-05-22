@@ -42,7 +42,7 @@ export default class Transition{
                 this.container.removeChild(this.leaves)
                 this.gameContainer.removeChild(this.container)
                 clearTimeout(timeout)
-            },2000)
+            },50)
         };
     }
 }   

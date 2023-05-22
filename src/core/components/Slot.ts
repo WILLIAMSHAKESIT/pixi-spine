@@ -317,9 +317,9 @@ export default class Slot{
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
                             this.spinReelAnimation.push(spin)
-                           // if(!this.isFreeSpin){
+                            if(!this.isFreeSpin || this.freeSpinStart){
                             this.generateTypes(index)
-                           // }
+                            }
                         },
                         onUpdate:()=>{
                             this.onSpinning()
@@ -335,7 +335,7 @@ export default class Slot{
                             }
                         },
                         onComplete:()=>{
-                            if(!this.isFreeSpin){
+                            if(!this.isFreeSpin || this.freeSpinStart){
                             this.reelEffectShow(index)
                             }
                             if(index<4){
@@ -672,16 +672,21 @@ export default class Slot{
         })
     }
     private generateTypes(i:number){
+       
         let arr = Functions.arrayRandomizer(this.reelsValues[i])      
         this.preGeneratedTypes.push(arr)
         if(i >= 2){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
+                if(!this.freeSpinStart){
                 this.spinReelAnimation[2].repeat(2)
+                }
                 if(i == 3){
                     if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType) && (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType)){
-                        this.spinReelAnimation[3].repeat(4)
+                        if(!this.freeSpinStart){
+                            this.spinReelAnimation[3].repeat(4)
+                        }
                         this.isBonusTick = true
                     }
                 }
@@ -690,13 +695,17 @@ export default class Slot{
                     (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType) && 
                     (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType) &&
                     (this.preGeneratedTypes[3][0] == this.bonusType || this.preGeneratedTypes[3][1] == this.bonusType || this.preGeneratedTypes[3][2] == this.bonusType)){
-                        this.spinReelAnimation[4].repeat(6)
+                        if(!this.freeSpinStart){
+                         this.spinReelAnimation[4].repeat(6)
+                        }
                         this.isBonusTick = true
                     }
                 }
 
             }
+            //this.freeSpinStart = false
         }
+       
     }
     private reelEffectShow(index:number){
         if(index == 2){

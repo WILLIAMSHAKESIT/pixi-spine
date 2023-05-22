@@ -579,7 +579,7 @@ export default class Game{
         })
         check.addEventListener('pointerdown',()=>{
             this.playSound(1)
-            
+            this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
         check.interactive = false
@@ -1407,6 +1407,7 @@ export default class Game{
         this.playSound(6)
         this.enableButtons(false)
         this.lightModeEvent(false)
+        this.slotGame.freeSpinStart = false
         this.slotGame.isFreeSpin = true
         this.slotGame.isFreeSpinDone = false
         let show = setTimeout(() => {
@@ -1431,6 +1432,7 @@ export default class Game{
         this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){
+        console.log("ey")
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.transition.container)
     }
