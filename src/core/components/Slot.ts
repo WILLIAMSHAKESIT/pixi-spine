@@ -349,7 +349,6 @@ export default class Slot{
                             }else{
                                 this.generateNewSymbols(index)
                             }
-                            
                             let bounceStop = gsap.to(data,{
                                 y: dY,
                                 duration:0.3,
@@ -417,6 +416,9 @@ export default class Slot{
                         this.isMatchingGame = true
                         this.matchingGame()
                     }
+                }
+                if(data.type == this.bonusType){
+                    Functions.loadSpineAnimation(data.symbol,'fall',false,1)
                 }
             }
         })
