@@ -45,16 +45,16 @@ export default class Loader{
         PIXI.Assets.add('reel_effect', 'assets/bonus/sprites/reel_effect.json');
         // new characters
         PIXI.Assets.add('bird', 'assets/slot/sprites/bird.json');
-        PIXI.Assets.add('blue_crystal', 'assets/slot/sprites/blue-crystal.json');
+        PIXI.Assets.add('blue_crystal', 'assets/slot/sprites/blue_crystal.json');
         PIXI.Assets.add('bonus_symbol', 'assets/slot/sprites/bonus.json');
         PIXI.Assets.add('cameleon', 'assets/slot/sprites/cameleon.json');
         PIXI.Assets.add('snake', 'assets/slot/sprites/snake.json');
-        PIXI.Assets.add('violet_crystal', 'assets/slot/sprites/violet-crystal.json');
+        PIXI.Assets.add('violet_crystal', 'assets/slot/sprites/violet_crystal.json');
         PIXI.Assets.add('monkey', 'assets/slot/sprites/monkey.json');
         PIXI.Assets.add('leopard', 'assets/slot/sprites/leopard.json');
-        PIXI.Assets.add('green_crystal', 'assets/slot/sprites/green-crystal.json');
+        PIXI.Assets.add('green_crystal', 'assets/slot/sprites/green_crystal.json');
         PIXI.Assets.add('wild', 'assets/slot/sprites/wild.json');
-        PIXI.Assets.add('orange_crystal', 'assets/slot/sprites/orange-crystal.json');
+        PIXI.Assets.add('orange_crystal', 'assets/slot/sprites/orange_crystal.json');
         //Event Characters
         PIXI.Assets.add('2k', 'assets/slot/sprites/2k.json');
         PIXI.Assets.add('3k', 'assets/slot/sprites/3k.json');

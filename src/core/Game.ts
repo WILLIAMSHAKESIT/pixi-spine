@@ -878,7 +878,6 @@ export default class Game{
                 paylineContent[i].symbols.forEach((data:any,index:number)=>{
                     let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
                     symbols.x = index*65
-                    symbols.scale.set(.2)
                     container.addChild(symbols)
                     paylineTotal+=json.symbolAssets[data-1].pay
                 })

@@ -21,12 +21,12 @@
             "pay":0.6
         },
         {
-            "symbol": "orange_crystal",
+            "symbol": "cameleon",
             "type":5,
             "pay":0.7
         },
         {
-            "symbol": "violet_crystal",
+            "symbol": "orange_crystal",
             "type":6,
             "pay":1
         },
@@ -36,12 +36,12 @@
             "pay":1.5
         },
         {
-            "symbol": "cameleon",
+            "symbol": "violet_crystal",
             "type":8,
             "pay":2
         },
         {
-            "symbol": "snake",
+            "symbol": "blue_crystal",
             "type":9,
             "pay":2
         },
