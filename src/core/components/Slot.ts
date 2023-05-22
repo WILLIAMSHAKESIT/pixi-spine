@@ -362,7 +362,7 @@ export default class Slot{
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
                                     if(!this.isFreeSpin){
-                                       // this.reelContainWild(index)
+                                        this.reelContainWild(index)
                                     }
                                     if(this.spinCount == 5){
                                         this.spinReelAnimation = []
@@ -670,13 +670,11 @@ export default class Slot{
     private generateTypes(i:number){
         let arr = Functions.arrayRandomizer(this.reelsValues[i])      
         this.preGeneratedTypes.push(arr)
-        console.log(this.preGeneratedTypes[0])
         if(i >= 2 ){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
                 if(!this.freeSpinStart){
-                console.log("buzz")
                 this.spinReelAnimation[2].repeat(2)
                 }
                 if(i == 3){
@@ -791,6 +789,8 @@ export default class Slot{
             this.reelsSymbols[i][index].payout = data.payout
             this.reelsSymbols[i][index].symbol.skeleton.setSkinByName('no_blur')
             this.reelContainer[i].addChild(data.symbol)
+            symbol.width = this.blockWidth
+            symbol.height = this.blockHeight
         })
     }
     private generateNewSymbolsEvent(i:number){
@@ -848,6 +848,8 @@ export default class Slot{
             this.reelsSymbols[i][index].payout = data.payout
             this.reelsSymbols[i][index].symbol.skeleton.setSkinByName('no_blur')
             this.reelContainer[i].addChild(data.symbol)
+            symbol.width = this.blockWidth
+            symbol.height = this.blockHeight
         })
     }
     private updateVisibleBlocks(index:number){
