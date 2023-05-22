@@ -4,320 +4,340 @@
 			"frame": {
 				"x": 1,
 				"y": 1,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"3k.png": {
 			"frame": {
-				"x": 253,
+				"x": 53,
 				"y": 1,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"5k.png": {
 			"frame": {
-				"x": 505,
+				"x": 105,
 				"y": 1,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"bird.png": {
 			"frame": {
-				"x": 1,
-				"y": 244,
-				"w": 250,
-				"h": 245
+				"x": 157,
+				"y": 1,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 245
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 245
+				"w": 50,
+				"h": 50
 			}
 		},
 		"blue_crystal.png": {
 			"frame": {
-				"x": 253,
-				"y": 244,
-				"w": 264,
-				"h": 257
+				"x": 1,
+				"y": 53,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 264,
-				"h": 257
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 264,
-				"h": 257
+				"w": 50,
+				"h": 50
 			}
 		},
 		"bonus_symbol.png": {
 			"frame": {
-				"x": 519,
-				"y": 244,
-				"w": 250,
-				"h": 241
+				"x": 53,
+				"y": 53,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"cameleon.png": {
 			"frame": {
-				"x": 519,
-				"y": 487,
-				"w": 250,
-				"h": 241
+				"x": 105,
+				"y": 53,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"green_crystal.png": {
 			"frame": {
-				"x": 1,
-				"y": 730,
-				"w": 266,
-				"h": 257
+				"x": 157,
+				"y": 53,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 266,
-				"h": 257
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 266,
-				"h": 257
+				"w": 50,
+				"h": 50
 			}
 		},
 		"leopard.png": {
 			"frame": {
-				"x": 269,
-				"y": 730,
-				"w": 250,
-				"h": 242
+				"x": 1,
+				"y": 105,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 242
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 242
+				"w": 50,
+				"h": 50
 			}
 		},
 		"monkey.png": {
 			"frame": {
-				"x": 521,
-				"y": 730,
-				"w": 250,
-				"h": 241
+				"x": 53,
+				"y": 105,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
+			}
+		},
+		"orange_crystal.png": {
+			"frame": {
+				"x": 105,
+				"y": 105,
+				"w": 50,
+				"h": 50
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 50
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 50
 			}
 		},
 		"snake.png": {
 			"frame": {
-				"x": 757,
-				"y": 1,
-				"w": 250,
-				"h": 241
+				"x": 157,
+				"y": 105,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"violet_crystal.png": {
 			"frame": {
-				"x": 771,
-				"y": 244,
-				"w": 266,
-				"h": 256
+				"x": 1,
+				"y": 157,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 266,
-				"h": 256
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 266,
-				"h": 256
+				"w": 50,
+				"h": 50
 			}
 		},
 		"wild.png": {
 			"frame": {
-				"x": 773,
-				"y": 502,
-				"w": 248,
-				"h": 239
+				"x": 53,
+				"y": 157,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 248,
-				"h": 239
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 248,
-				"h": 239
+				"w": 50,
+				"h": 50
 			}
 		},
 		"x2.png": {
 			"frame": {
-				"x": 773,
-				"y": 743,
-				"w": 250,
-				"h": 241
+				"x": 105,
+				"y": 157,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"x3.png": {
 			"frame": {
-				"x": 269,
-				"y": 986,
-				"w": 250,
-				"h": 241
+				"x": 157,
+				"y": 157,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		},
 		"x5.png": {
 			"frame": {
-				"x": 521,
-				"y": 986,
-				"w": 250,
-				"h": 241
+				"x": 209,
+				"y": 1,
+				"w": 50,
+				"h": 50
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			},
 			"sourceSize": {
-				"w": 250,
-				"h": 241
+				"w": 50,
+				"h": 50
 			}
 		}
 	},
@@ -327,8 +347,8 @@
 		"image": "slot.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 1038,
-			"h": 1228
+			"w": 260,
+			"h": 208
 		},
 		"scale": "1"
 	}

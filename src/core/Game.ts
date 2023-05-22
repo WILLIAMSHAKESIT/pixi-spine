@@ -76,7 +76,7 @@ export default class Game{
     private noOfSpin:number = 0
     //frame glow 
     private frameGlow:Spine
-
+    private firefliesArray:Array<Spine> = []
     //sound
     private sounBtnSpriteOn:PIXI.Texture
     private sounBtnSpriteOff:PIXI.Texture
@@ -104,6 +104,7 @@ export default class Game{
         this.gameContainer = new PIXI.Container
         this.plantContainerRight = new PIXI.Container
         this.plantContainerLeft = new PIXI.Container
+        this.gameContainer.sortableChildren = true
         this.whiteYellow = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 120,
@@ -321,9 +322,41 @@ export default class Game{
         this.vines = new Spine(this.textureArray.vines.spineData)
         this.vines.x = this.vines.width*0.6
         this.vines.y = 6
-        Functions.loadSpineAnimation(this.vines,'animation',true,0.7)
+        Functions.loadSpineAnimation(this.vines,'animation',true,0.4)
         this.plantContainerLeft.addChild(this.vines)
         this.gameContainer.addChild(this.plantContainerLeft)
+        this.createButterfly()
+        
+    }
+    private createButterfly(){
+        //butterfly 
+        const butterfly = new Spine(this.textureArray.butterfly.spineData)
+        butterfly.scale.set(0.7)
+        butterfly.x = -100
+        butterfly.y = this.baseHeight
+        let fly = gsap.to(butterfly,{
+            x:(this.baseWidth - butterfly.width)*1.01,
+            y:this.plant1Right.y * 0.8,
+            delay:2,
+            duration:3,
+            onComplete:()=>{
+                let fly2 = gsap.to(butterfly,{
+                    x:this.baseWidth + butterfly.width,
+                    y:this.plant1Right.y * 0.9,
+                    delay:2,
+                    duration:3,
+                    onComplete:()=>{
+                        fly.kill()
+                        fly2.kill()
+                        this.createButterfly()
+                        this.plantContainerRight.removeChild(butterfly)
+                    }
+                })
+            }
+        })
+        Functions.loadSpineAnimation(butterfly,'animation',true,5)
+        butterfly.zIndex = 0
+        this.plantContainerRight.addChild(butterfly)
     }
     private createCongrats(){
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
@@ -845,7 +878,6 @@ export default class Game{
                 paylineContent[i].symbols.forEach((data:any,index:number)=>{
                     let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
                     symbols.x = index*65
-                    symbols.scale.set(.2)
                     container.addChild(symbols)
                     paylineTotal+=json.symbolAssets[data-1].pay
                 })
@@ -923,6 +955,9 @@ export default class Game{
         this.frameGlow.visible = bool?false:true
         if(!bool){
             Functions.loadSpineAnimation(this.frameGlow,'animation',true,0.15)
+            this.createFireflies()
+        }else{
+            this.firefliesArray.forEach(data=>this.gameContainer.removeChild(data))
         }
     }
     private lightModeEvent(bool:boolean){
@@ -947,6 +982,63 @@ export default class Game{
         this.frameGlow.visible = bool?false:true
         if(!bool){
             Functions.loadSpineAnimation(this.frameGlow,'animation',true,0.15)
+            this.createFireflies()
+        }else{
+            this.firefliesArray.forEach(data=>this.gameContainer.removeChild(data))
+        }
+    }
+    private createFireflies(){
+        //left fireflies
+        for(let i =0;i<= 10;i++){
+            const firefly = new Spine(this.textureArray.firefly.spineData)
+            firefly.x = Functions.getRandomInt(-10, this.slotGame.frameBorder.x)
+            firefly.y = Functions.getRandomInt(0, this.baseHeight - this.controller.parentSprite.height)
+            firefly.scale.set(Functions.getRandomInt(0.1,1))
+            firefly.alpha = 0
+            Functions.loadSpineAnimation(firefly,'animation',true,0.5)
+            let alph = gsap.to(firefly,{
+                delay:Functions.getRandomInt(1,5),
+                duration:Functions.getRandomInt(1,3),
+                alpha:1,
+                repeat:-1
+            })
+            var tl = gsap.timeline ()
+            .to(firefly,{
+                x: Functions.getRandomInt(0, this.slotGame.frameBorder.x), 
+                y: Functions.getRandomInt(this.baseHeight, 0),
+                delay:Functions.getRandomInt(1,5),
+                duration:Functions.getRandomInt(10,20),
+                ease:"none",
+                repeat:-1,
+            })
+            this.firefliesArray.push(firefly)
+            this.gameContainer.addChild(firefly)
+        }
+        //right fireflies
+        for(let i =0;i<= 10;i++){
+            const firefly = new Spine(this.textureArray.firefly.spineData)
+            firefly.x = Functions.getRandomInt(this.slotGame.frameBorder.x+this.slotGame.frameBorder.width, this.baseWidth)
+            firefly.y = Functions.getRandomInt(0, this.baseHeight - this.controller.parentSprite.height)
+            firefly.scale.set(Functions.getRandomInt(0.1,1))
+            firefly.alpha = 0
+            Functions.loadSpineAnimation(firefly,'animation',true,0.5)
+            let alph = gsap.to(firefly,{
+                delay:Functions.getRandomInt(1,5),
+                duration:Functions.getRandomInt(1,3),
+                alpha:1,
+                repeat:-1
+            })
+            var tl = gsap.timeline ()
+                .to(firefly,{
+                    x: Functions.getRandomInt(this.slotGame.frameBorder.x+this.slotGame.frameBorder.width, this.baseWidth), 
+                    y: Functions.getRandomInt(this.baseHeight, 0),
+                    delay:Functions.getRandomInt(1,5),
+                    duration:Functions.getRandomInt(10,20),
+                    ease:"none",
+                    repeat:-1,
+                })
+            this.firefliesArray.push(firefly)
+            this.gameContainer.addChild(firefly)
         }
     }
     private enableButtons(bool:boolean){
