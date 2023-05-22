@@ -329,14 +329,14 @@ export default class Game{
         
     }
     private createButterfly(){
-        //butterfly 
+        //butterfly 1
         const butterfly = new Spine(this.textureArray.butterfly.spineData)
-        butterfly.scale.set(0.7)
+        butterfly.scale.set(0.5)
         butterfly.x = -100
         butterfly.y = this.baseHeight
         let fly = gsap.to(butterfly,{
-            x:(this.baseWidth - butterfly.width)*1.01,
-            y:this.plant1Right.y * 0.8,
+            x:(this.baseWidth - butterfly.width)*0.99,
+            y:this.plant1Right.y * 0.85,
             delay:2,
             duration:3,
             onComplete:()=>{
