@@ -116,6 +116,7 @@ export default class Slot{
 
     public isBonusTick:boolean = false
     public whatEvent:number = 0
+    public generateTypeIndex = 0
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
@@ -318,8 +319,9 @@ export default class Slot{
                             this.applyMotionBlur(index,true)
                             this.spinReelAnimation.push(spin)
                             if(!this.isFreeSpin || this.freeSpinStart){
-                                this.generateTypes(index)   
+                                this.generateTypes(this.generateTypeIndex)   
                             }
+                            this.generateTypeIndex++
                         },
                         onUpdate:()=>{
                             this.onSpinning()
@@ -364,6 +366,7 @@ export default class Slot{
                                     }
                                     if(this.spinCount == 5){
                                         this.spinReelAnimation = []
+                                        this.generateTypeIndex = 0
                                         this.checkPattern()            
                                         this.spinCount = 0
                                         this.isSpinning = false
@@ -665,15 +668,15 @@ export default class Slot{
         })
     }
     private generateTypes(i:number){
+        console.log(i)
         let arr = Functions.arrayRandomizer(this.reelsValues[i])      
         this.preGeneratedTypes.push(arr)
-        if(i >= 3 ){
+        if(i >= 2 ){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
                 if(!this.freeSpinStart){
-                console.log("ey")
-                console.log(this.spinReelAnimation[2])
+                //console.log(this.spinReelAnimation[2])
                 this.spinReelAnimation[2].repeat(2)
                 }
                 if(i == 3){
