@@ -1432,7 +1432,6 @@ export default class Game{
         this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){
-        console.log("ey")
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.transition.container)
     }
