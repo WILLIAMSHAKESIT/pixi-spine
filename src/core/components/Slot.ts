@@ -38,11 +38,11 @@ export default class Slot{
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
-        // [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
-        // [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
-        // [1,2,9,3,10,2,3,9,8,10,2,3,11,4,2,11,5,9,5,9,2,6,8,6,9,3,11,7,1,7],
-        // [1,1,1,1,11,1,1,1,11,1,1,10,11,11,1,1,1,1,5,9,2,6,8,11,9,3,9,7,1,7],
-        // [11,5,9,2,4,6,11,11,2,9,10,5,3,3,8,11,4,5,3,5,8,9,1,6,6,11,3,7,3,2]
+        [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
+        [1,2,9,3,10,2,3,9,8,10,2,3,11,4,2,11,5,9,5,9,2,6,8,6,9,3,11,7,1,7],
+        [1,1,1,1,11,1,1,1,11,1,1,10,11,11,1,1,1,1,5,9,2,6,8,11,9,3,9,7,1,7],
+        [11,5,9,2,4,6,11,11,2,9,10,5,3,3,8,11,4,5,3,5,8,9,1,6,6,11,3,7,3,2]
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
@@ -53,11 +53,11 @@ export default class Slot{
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11]
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
         [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
@@ -116,7 +116,7 @@ export default class Slot{
 
     public isBonusTick:boolean = false
     public whatEvent:number = 0
-    public generateTypeIndex = 0
+    public generateTypeIndex:number = 0
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
         this.app = app
@@ -362,7 +362,7 @@ export default class Slot{
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
                                     if(!this.isFreeSpin){
-                                        this.reelContainWild(index)
+                                       // this.reelContainWild(index)
                                     }
                                     if(this.spinCount == 5){
                                         this.spinReelAnimation = []
@@ -668,15 +668,15 @@ export default class Slot{
         })
     }
     private generateTypes(i:number){
-        console.log(i)
         let arr = Functions.arrayRandomizer(this.reelsValues[i])      
         this.preGeneratedTypes.push(arr)
+        console.log(this.preGeneratedTypes[0])
         if(i >= 2 ){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
                 if(!this.freeSpinStart){
-                //console.log(this.spinReelAnimation[2])
+                console.log("buzz")
                 this.spinReelAnimation[2].repeat(2)
                 }
                 if(i == 3){
@@ -699,17 +699,22 @@ export default class Slot{
                     }
                 }
             }
+
+            console.log(this.isFreeSpin)
+            if(this.isFreeSpin){
+                Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
+            }
         }
     }
     private reelEffectShow(index:number){
-        if(index == 2){
+        if(index == 2 && !this.isFreeSpin){
             this.reelEffect[2].visible = false
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType) && (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType)){
                 this.reelEffect[3].visible = true
                 Functions.loadSpineAnimation(this.reelEffect[3],'animation',true,1)
             }
         }
-        if(index == 3){
+        if(index == 3 && !this.isFreeSpin){
             this.reelEffect[2].visible = false
             this.reelEffect[3].visible = false
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && 
@@ -722,8 +727,17 @@ export default class Slot{
                 
             }
         }
-        if(index == 4){
+        if(index == 4  && !this.isFreeSpin){
             this.reelEffect[4].visible = false
+        }
+
+        if(this.isFreeSpin && index == 0){
+            this.reelEffect[2].visible = true
+            this.isBonusTick = true
+        }
+
+        if(index == 4  && this.isFreeSpin){
+            this.reelEffect[2].visible = false
         }
     }
     public generateNewSymbols(i:number){
