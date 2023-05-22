@@ -39,7 +39,7 @@ const loadSpine = (textureArray:any,objKey:string)=>{
 const loadSpineAnimation = (spine:any,animation:string,loop:boolean,animationSpeed:number)=>{
     if (spine.state.hasAnimation(`${animation}`)) {
         // run animation
-        spine.state.setAnimation(1, `${animation}`, loop);
+        spine.state.setAnimation(1, `${animation}`, true);
         // animation spee
         spine.state.timeScale = animationSpeed;
         // update yourself
