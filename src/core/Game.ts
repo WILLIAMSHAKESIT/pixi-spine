@@ -967,7 +967,7 @@ export default class Game{
         let settingBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'system_settings':'system_settings2').texture
         let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
-        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg').texture
+        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
         //change visibilities of normal game
        // this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
