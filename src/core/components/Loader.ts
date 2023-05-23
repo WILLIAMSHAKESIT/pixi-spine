@@ -15,7 +15,7 @@ export default class Loader{
     
 
     constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
-        this.app = new PIXI.Application({ width: 1920, height: 1080, antialias: false});
+        this.app = new PIXI.Application({ width: 1920, height: 1080});
         this.sounds = sounds;
         (globalThis as any).__PIXI_APP__ = this.app;
         document.body.appendChild(this.app.view as any);
@@ -47,7 +47,7 @@ export default class Loader{
         PIXI.Assets.add('bird', 'assets/slot/sprites/bird.json');
         PIXI.Assets.add('blue_crystal', 'assets/slot/sprites/blue_crystal.json');
         PIXI.Assets.add('bonus_symbol', 'assets/slot/sprites/bonus.json');
-        PIXI.Assets.add('cameleon', 'assets/slot/sprites/cameleon.json');
+        PIXI.Assets.add('cameleon', 'assets/slot/sprites/chameleon.json');
         PIXI.Assets.add('snake', 'assets/slot/sprites/snake.json');
         PIXI.Assets.add('violet_crystal', 'assets/slot/sprites/violet_crystal.json');
         PIXI.Assets.add('monkey', 'assets/slot/sprites/monkey.json');

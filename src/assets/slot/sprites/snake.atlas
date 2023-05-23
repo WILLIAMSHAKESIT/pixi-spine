@@ -1,20 +1,244 @@
 
 snake.png
-size: 473,245
+size: 803,523
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-character frame blur
+char_framebg
   rotate: false
-  xy: 252, 2
-  size: 219, 241
-  orig: 250, 241
-  offset: 16, 0
-  index: -1
-character frame copy
-  rotate: false
-  xy: 2, 4
-  size: 248, 239
-  orig: 250, 241
+  xy: 231, 20
+  size: 211, 189
+  orig: 213, 191
   offset: 1, 1
+  index: -1
+char_frameborder_top
+  rotate: false
+  xy: 238, 311
+  size: 234, 210
+  orig: 236, 212
+  offset: 1, 1
+  index: -1
+char_frameborder_top_blur
+  rotate: false
+  xy: 2, 283
+  size: 234, 238
+  orig: 236, 241
+  offset: 1, 2
+  index: -1
+eyelidSnake1
+  rotate: true
+  xy: 469, 211
+  size: 14, 30
+  orig: 14, 30
+  offset: 0, 0
+  index: -1
+eyelidSnake2
+  rotate: true
+  xy: 2, 2
+  size: 14, 20
+  orig: 14, 20
+  offset: 0, 0
+  index: -1
+frame-bottom-snake
+  rotate: true
+  xy: 718, 291
+  size: 230, 70
+  orig: 232, 72
+  offset: 1, 1
+  index: -1
+frame-bottom-snake-blur
+  rotate: false
+  xy: 238, 211
+  size: 229, 98
+  orig: 232, 102
+  offset: 1, 2
+  index: -1
+glow-char1
+  rotate: false
+  xy: 673, 4
+  size: 49, 51
+  orig: 56, 59
+  offset: 3, 3
+  index: -1
+glow-char10
+  rotate: false
+  xy: 724, 49
+  size: 48, 51
+  orig: 54, 58
+  offset: 2, 3
+  index: -1
+glow-char11
+  rotate: true
+  xy: 719, 102
+  size: 64, 55
+  orig: 71, 61
+  offset: 3, 3
+  index: -1
+glow-char2
+  rotate: true
+  xy: 516, 2
+  size: 47, 51
+  orig: 54, 58
+  offset: 3, 4
+  index: -1
+glow-char3
+  rotate: true
+  xy: 660, 57
+  size: 64, 57
+  orig: 69, 60
+  offset: 2, 1
+  index: -1
+glow-char4
+  rotate: false
+  xy: 622, 2
+  size: 49, 53
+  orig: 56, 59
+  offset: 3, 3
+  index: -1
+glow-char5
+  rotate: false
+  xy: 753, 238
+  size: 48, 51
+  orig: 53, 58
+  offset: 1, 4
+  index: -1
+glow-char6
+  rotate: false
+  xy: 686, 234
+  size: 65, 55
+  orig: 70, 61
+  offset: 2, 3
+  index: -1
+glow-char7
+  rotate: true
+  xy: 602, 60
+  size: 64, 56
+  orig: 69, 60
+  offset: 2, 2
+  index: -1
+glow-char8
+  rotate: true
+  xy: 569, 2
+  size: 47, 51
+  orig: 53, 58
+  offset: 3, 3
+  index: -1
+glow-char9
+  rotate: true
+  xy: 702, 168
+  size: 64, 55
+  orig: 71, 60
+  offset: 3, 2
+  index: -1
+leaf1
+  rotate: true
+  xy: 444, 94
+  size: 115, 65
+  orig: 115, 65
+  offset: 0, 0
+  index: -1
+leaf1_blur
+  rotate: false
+  xy: 474, 227
+  size: 112, 92
+  orig: 114, 95
+  offset: 1, 2
+  index: -1
+leaf2
+  rotate: true
+  xy: 444, 4
+  size: 88, 70
+  orig: 88, 70
+  offset: 0, 0
+  index: -1
+leaf2_blur
+  rotate: true
+  xy: 588, 233
+  size: 86, 96
+  orig: 88, 100
+  offset: 1, 2
+  index: -1
+leaf3
+  rotate: false
+  xy: 516, 51
+  size: 84, 73
+  orig: 84, 73
+  offset: 0, 0
+  index: -1
+leaf3_blur
+  rotate: false
+  xy: 511, 126
+  size: 79, 99
+  orig: 83, 103
+  offset: 3, 2
+  index: -1
+leaf4
+  rotate: true
+  xy: 660, 123
+  size: 108, 40
+  orig: 108, 40
+  offset: 0, 0
+  index: -1
+leaf4_blur
+  rotate: true
+  xy: 592, 126
+  size: 105, 66
+  orig: 107, 70
+  offset: 1, 2
+  index: -1
+left eye ball snake
+  rotate: false
+  xy: 686, 292
+  size: 25, 27
+  orig: 27, 29
+  offset: 1, 1
+  index: -1
+left eyeris snake
+  rotate: false
+  xy: 24, 2
+  size: 9, 14
+  orig: 12, 16
+  offset: 1, 1
+  index: -1
+right eye ball
+  rotate: false
+  xy: 724, 23
+  size: 25, 24
+  orig: 27, 26
+  offset: 1, 1
+  index: -1
+right eyeris
+  rotate: false
+  xy: 501, 213
+  size: 8, 12
+  orig: 12, 14
+  offset: 1, 1
+  index: -1
+right hl
+  rotate: true
+  xy: 602, 52
+  size: 6, 8
+  orig: 8, 10
+  offset: 1, 1
+  index: -1
+snake
+  rotate: false
+  xy: 474, 321
+  size: 242, 200
+  orig: 242, 200
+  offset: 0, 0
+  index: -1
+snake_blur
+  rotate: true
+  xy: 2, 43
+  size: 238, 227
+  orig: 241, 229
+  offset: 2, 1
+  index: -1
+tounge
+  rotate: true
+  xy: 2, 18
+  size: 23, 40
+  orig: 23, 40
+  offset: 0, 0
   index: -1
