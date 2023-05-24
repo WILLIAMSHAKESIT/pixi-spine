@@ -1,0 +1,95 @@
+{
+	"frames": {
+		"loading_bg.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 650,
+				"h": 74
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 650,
+				"h": 74
+			},
+			"sourceSize": {
+				"w": 650,
+				"h": 74
+			}
+		},
+		"loading_progress.png": {
+			"frame": {
+				"x": 1,
+				"y": 77,
+				"w": 650,
+				"h": 74
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 650,
+				"h": 74
+			},
+			"sourceSize": {
+				"w": 650,
+				"h": 74
+			}
+		},
+		"soundBtnActive.png": {
+			"frame": {
+				"x": 1,
+				"y": 153,
+				"w": 297,
+				"h": 74
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 297,
+				"h": 74
+			},
+			"sourceSize": {
+				"w": 297,
+				"h": 74
+			}
+		},
+		"soundBtnInActive.png": {
+			"frame": {
+				"x": 300,
+				"y": 153,
+				"w": 297,
+				"h": 74
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 297,
+				"h": 74
+			},
+			"sourceSize": {
+				"w": 297,
+				"h": 74
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "loading.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 652,
+			"h": 228
+		},
+		"scale": "1"
+	}
+}
