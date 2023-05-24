@@ -1445,7 +1445,6 @@ export default class Game{
         // if(!this.sound[1].playing() || !this.sound[21].playing(21)){
         //     //this.playSound(1);
         // }
-        //console.log(this.sound, " test")
     }
 
     private playSound(index:number){
