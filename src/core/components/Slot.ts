@@ -655,10 +655,9 @@ export default class Slot{
         // add total win
         if(this.isFreeSpin){
             this.winFreeSpin += this.reelsSymbols[reelIndex][blockIndex].payout
-           
         }
         this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
-        Functions.loadSpineAnimation(this.reelsSymbols[reelIndex][blockIndex].symbol,'animation',true,1)
+        Functions.loadSpineAnimation(this.reelsSymbols[reelIndex][blockIndex].symbol,'animation',true,0.8)
         this.playSound(5);
         this.animateDone = false
     }
