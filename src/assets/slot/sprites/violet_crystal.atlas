@@ -43,6 +43,6 @@ stone_blur
   rotate: true
   xy: 235, 92
   size: 195, 239
-  orig: 195, 239
-  offset: 0, 0
+  orig: 197, 241
+  offset: 1, 1
   index: -1

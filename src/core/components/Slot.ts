@@ -18,15 +18,16 @@ export default class Slot{
     private baseWidth:number
     private baseHeight:number
     public container:PIXI.Container
+    private reelsContainer:PIXI.Container
     private readonly bonusType:number = 10
     private readonly wildType:number = 11
     //sprites
     public frameBg:PIXI.Sprite
     public frameBorder:PIXI.Sprite
-    private blockWidth:number = 260
-    private blockHeight:number = 250
-    private blockSpacing:number = 260
-    private reelPosX:Array<number> = [366.5,668.5,966,1266,1558.5]
+    private blockWidth:number = 280
+    private blockHeight:number = 260
+    private blockSpacing:number = 258
+    private reelPosX:Array<number> = [366.5,668.5,966,1263,1558.5]
     private maskPosX:Array<number> = [220,520,820,1118,1415]
     private reelEffectPosX:Array<number> = [369,666,967.5,1263,1558.5]
     private maskPosY:number = 130
@@ -37,6 +38,7 @@ export default class Slot{
     public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
+    private maskSprite:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
         [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
@@ -73,7 +75,8 @@ export default class Slot{
         [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,5,9,2,4,6,5,4,2,9,3,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
     ]
-    private reelY:number = -6773.7
+    private reelY:number = -6713.7
+    // private reelY:number = -6773.7
     public timeScale:number = 0
     public autoPlayCount:number = 0
     private spinType:string = ''
@@ -125,6 +128,7 @@ export default class Slot{
         this.textureArray = textureArray
         this.container = new PIXI.Container
         this.levelBarContainer = new PIXI.Container
+        this.reelsContainer = new PIXI.Container
         this.onSpinEnd = onSpinEnd
         this.createCongrats = createCongrats
         this.matchingGame = matchingGame
@@ -236,14 +240,8 @@ export default class Slot{
         this.reelContainer.forEach((data,index)=>{
             data.x = this.reelPosX[index]
             data.y = this.reelY
-            this.container.addChild(data)
-
-            const maskSprite = Functions.loadTexture(this.textureArray,'main','mask') 
-            maskSprite.x = this.maskPosX[index]
-            maskSprite.y = this.maskPosY
-            
-            this.container.addChild(maskSprite)
-            data.mask = maskSprite
+            this.reelsContainer.addChild(data)
+            this.container.addChild(this.reelsContainer)
 
             const reelEffect = new Spine(this.textureArray.reel_effect.spineData)
             reelEffect.height = this.frameBorder.height *1.08
@@ -254,6 +252,14 @@ export default class Slot{
             this.reelEffect.push(reelEffect)
             this.container.addChild(reelEffect)  
         })
+        //create mask for reels
+        this.maskSprite = Functions.loadTexture(this.textureArray,'main','mask_big') 
+        this.maskSprite.width = this.frameBorder.width 
+        // this.maskSprite.height = this.frameBg.height *1.5
+        this.maskSprite.x = this.frameBorder.x
+        this.maskSprite.y = this.frameBg.y-6
+        this.reelsContainer.mask = this.maskSprite
+        this.container.addChild(this.maskSprite)
     }
     public startSpin(spinType:string){
         this.soundStop(5)
@@ -262,11 +268,10 @@ export default class Slot{
         this.symbolCount2 = 0
         this.symbolCount3 = 0
         this.paylines = []
-        let hiddenReelY = -5000
+        let hiddenReelY = -100
         let dY = 250
         let bounceOffset = this.reelY-30
         let durationBounceUp:number;
-        // let duration:number;
         let delay:number;
         let bounceContainerArr:Array<any> = []
         this.onSpin()
@@ -307,13 +312,15 @@ export default class Slot{
                         bounceContainerArr[3].delay(0)
                         bounceContainerArr[4].delay(0)
                     }
+                    // reset the alpha value of symbols to 1 on spin
+                    this.resetTopSymbolsAlpha(index)
                 },
                 onComplete:()=>{
                     this.playSound(3)
                     bounceStart.kill()
                     let spin = gsap.to(data, {
                         duration: this.spinDuration,
-                        y: dY+45,
+                        y: dY+50,
                         ease: "bounce.in",
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
@@ -365,6 +372,8 @@ export default class Slot{
                                         this.reelContainWild(index)
                                     }
                                     if(this.spinCount == 5){
+                                        this.maskSprite.height = this.frameBorder.height 
+                                        this.maskSprite.y = this.frameBorder.y 
                                         this.spinReelAnimation = []
                                         this.generateTypeIndex = 0
                                         this.checkPattern()            
@@ -639,13 +648,18 @@ export default class Slot{
             }
         })
     }
-
+    private resetTopSymbolsAlpha(index:number){
+        this.maskSprite.height = this.frameBg.height - 8
+        this.maskSprite.y = this.frameBg.y + 8
+        this.reelsSymbols[index].forEach((data:any,i:number)=>{
+            data.symbol.alpha = 1
+        })
+    }
     private checkIfMatchingGameDone(){
         if(!this.isMatchingGame){
             //this.freeSpinEvent()
         }
     }
-
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
             arr.push({pattern:this.reelsSymbols[index][blockNo],blockNo:blockNo})
@@ -852,11 +866,16 @@ export default class Slot{
         })
     }
     private updateVisibleBlocks(index:number){
-        let firstPosY = 7020
-        let secondPosY = 7280
-        let thirdPosY = 7540
+        let firstPosY = 6966
+        let secondPosY = 7224
+        let thirdPosY = 7482
         let topThree = this.reelsSymbols[index].filter((data:any,index:number)=> index < 3)
         this.reelsSymbols[index].forEach((data:any,i:number)=>{
+            // hide the top symbols
+            if(i > 2){
+                data.symbol.alpha = 0
+            }
+            // show the visible symbols
             if(i == 27){
                 data.type = topThree[0].type
                 data.symbol = topThree[0].symbol
