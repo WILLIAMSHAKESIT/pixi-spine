@@ -24,7 +24,7 @@ export default class Loader{
             custom: {
               families: ['Eras ITC'],
             },
-          });
+        });
     }
 
     private init(loadedAssets:(assets:any,app:PIXI.Application)=>void){
@@ -99,7 +99,9 @@ export default class Loader{
             'monkey','leopard','green_crystal','wild','orange_crystal','bonus_symbol','2k','3k','5k','x2','x3','x5',
             'plant_1','plant_2','plant_3','plant_4','plant_5','vines','firefly','butterfly'
         ]);
+
         texturesPromise.then((resource) => {
+            console.log('test loaded')
             loadedAssets(resource,this.app)
         });
     }
