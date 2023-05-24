@@ -38,7 +38,7 @@ export default class Slot{
     public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
-    private maskSprite:PIXI.Sprite
+    public maskSprite:PIXI.Sprite
     private reelsValues:Array<Array<number>> = [
         [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
@@ -129,6 +129,7 @@ export default class Slot{
         this.container = new PIXI.Container
         this.levelBarContainer = new PIXI.Container
         this.reelsContainer = new PIXI.Container
+        this.container.sortableChildren = true
         this.onSpinEnd = onSpinEnd
         this.createCongrats = createCongrats
         this.matchingGame = matchingGame
@@ -167,7 +168,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -251,11 +252,12 @@ export default class Slot{
             reelEffect.visible = false
             this.reelEffect.push(reelEffect)
             this.container.addChild(reelEffect)  
+            reelEffect.zIndex = 1000
         })
         //create mask for reels
         this.maskSprite = Functions.loadTexture(this.textureArray,'main','mask_big') 
+        this.maskSprite.height = this.maskSprite.height
         this.maskSprite.width = this.frameBorder.width 
-        // this.maskSprite.height = this.frameBg.height *1.5
         this.maskSprite.x = this.frameBorder.x
         this.maskSprite.y = this.frameBg.y-6
         this.reelsContainer.mask = this.maskSprite
@@ -790,7 +792,6 @@ export default class Slot{
             let payout = jsonType[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${jsonType[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
-            symbol.scale.set(0.9)
             let el ={
                 type:type,
                 symbol:symbol,
@@ -844,12 +845,12 @@ export default class Slot{
                  payout = json.symbolAssets[symbolIndex-1].pay
                  symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
             }
+            
             // let type = json.symbolAssets[symbolIndex-1].type
             // let payout = json.symbolAssets[symbolIndex-1].pay
             // let symbol = new Spine(this.textureArray[`${json.symbolAssets[symbolIndex-1].symbol}`].spineData)
            
             symbol.y = index * this.blockSpacing
-            symbol.scale.set(0.9)
             let el ={
                 type:type,
                 symbol:symbol,

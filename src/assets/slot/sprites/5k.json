@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "rV0RG1mpAgMctecJtSjN//r4PM8",
+	"hash": "RAMaQZhiTKLBsovos5SP61ivyec",
 	"spine": "3.8.75",
 	"x": -105,
 	"y": -72.29,
@@ -52,8 +52,7 @@
 				"explode_00021": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 228, "height": 213 },
 				"explode_00022": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 228, "height": 213 },
 				"explode_00023": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 224, "height": 214 },
-				"explode_00024": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 224, "height": 214 },
-				"x2": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 209, "height": 144 }
+				"explode_00024": { "x": -7.66, "y": 1.69, "rotation": 91.29, "width": 224, "height": 214 }
 			}
 		}
 	},
@@ -69,7 +68,7 @@
 		"name": "no_blur",
 		"attachments": {
 			"x2": {
-				"x2": { "name": "5k", "x": -1.04, "y": -0.33, "rotation": -90.72, "width": 211, "height": 144 }
+				"x2": { "name": "5k", "x": -1.04, "y": -0.33, "rotation": -90.72, "width": 248, "height": 239 }
 			}
 		}
 	}
@@ -77,15 +76,6 @@
 "animations": {
 	"animation": {
 		"slots": {
-			"bottom_glow_x2": {
-				"color": [
-					{ "color": "ffffffff" },
-					{ "time": 0.2, "color": "ffffff26" },
-					{ "time": 0.4667, "color": "ffffffff" },
-					{ "time": 0.7667, "color": "ffffff26" },
-					{ "time": 1, "color": "ffffffff" }
-				]
-			},
 			"x2": {
 				"color": [
 					{ "color": "ffddddff", "curve": "stepped" },
@@ -93,6 +83,15 @@
 					{ "time": 0.5, "color": "ffffffff", "curve": "stepped" },
 					{ "time": 0.8333, "color": "ffffffff" },
 					{ "time": 1, "color": "ffddddff" }
+				]
+			},
+			"bottom_glow_x2": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.2, "color": "ffffff26" },
+					{ "time": 0.4667, "color": "ffffffff" },
+					{ "time": 0.7667, "color": "ffffff26" },
+					{ "time": 1, "color": "ffffffff" }
 				]
 			},
 			"explode_00008": {

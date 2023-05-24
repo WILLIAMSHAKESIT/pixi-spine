@@ -2,6 +2,7 @@ import 'pixi-spine'
 import * as PIXI from 'pixi.js';
 import Functions from '../settings/Functions';
 import json from '../settings/settings.json'
+import json2 from '../settings/modal-settings.json'
 export default class Modal{
     //app settings
     private app:PIXI.Application
@@ -12,6 +13,7 @@ export default class Modal{
     //containers
     private autoPlaySettingsCont:PIXI.Container
     private systemContainer:PIXI.Container
+    private infoContainer:PIXI.Container
     //sprites
     private overlay:PIXI.Sprite
     private modalFrame:PIXI.Sprite
@@ -27,6 +29,7 @@ export default class Modal{
     //text
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
+    private textStyle3:PIXI.TextStyle
     public betAmountText:PIXI.Text
     //
     public betAmount:number = 1
@@ -66,6 +69,13 @@ export default class Modal{
             fill: '#a7a7a7', 
             wordWrapWidth: 440,
         });
+        this.textStyle3 = new PIXI.TextStyle({  
+            fontFamily: 'Arial',
+            fontSize: 30,
+            fontWeight: 'normal',
+            fill: '#ffffff', 
+            wordWrapWidth: 440,
+        });
         this.init()
     }
 
@@ -88,6 +98,7 @@ export default class Modal{
             this.modalFrame.removeChild(this.systemContainer)
             this.modalFrame.removeChild(this.modalTitle)
             this.modalFrame.removeChild(this.autoPlaySettingsCont)
+            this.modalFrame.removeChild(this.infoContainer)
             this.app.stage.removeChild(this.container)
         })
         this.modalFrame.addChild(this.closeModal)
@@ -271,5 +282,56 @@ export default class Modal{
             this.modalFrame.removeChild(this.autoPlaySettingsCont)
             this.app.stage.removeChild(this.container)   
         })
+    }
+    public createInfoModal(){
+        let currentPage = 0
+        let lastPage = json2.modalInfoPage.length - 1
+        let paddingSide = 30
+        this.infoContainer = new PIXI.Container
+        const topTitleCont = new PIXI.Container
+        
+        const pageTitle =  Functions.loadTexture(this.textureArray,'modal','game_rules_title')
+        topTitleCont.addChild(pageTitle)
+
+        const pageDesc =  new PIXI.Text(`${json2.modalInfoPage[currentPage].desc}`,this.textStyle3)
+        pageDesc.y = pageTitle.height
+        topTitleCont.addChild(pageDesc)
+        pageTitle.x = (topTitleCont.width - pageTitle.width)/2
+        topTitleCont.x = (this.modalFrame.width - topTitleCont.width)/2
+        topTitleCont.y = paddingSide
+
+        const prevBtn = Functions.loadTexture(this.textureArray,'modal','left_arrow')
+        prevBtn.interactive = true
+        prevBtn.cursor = 'pointer'
+        prevBtn.x = paddingSide
+        prevBtn.y = (this.modalFrame.height - prevBtn.height)/2
+        this.infoContainer.addChild(prevBtn)
+        prevBtn.addEventListener('pointerdown',()=>{
+            this.updatePageContent()
+        })
+        
+        const nextBtn = Functions.loadTexture(this.textureArray,'modal','right_arrow')
+        nextBtn.interactive = true
+        nextBtn.cursor = 'pointer'
+        nextBtn.x = (this.modalFrame.width - nextBtn.width) - paddingSide
+        nextBtn.y = (this.modalFrame.height - nextBtn.height)/2
+        this.infoContainer.addChild(nextBtn)
+        nextBtn.addEventListener('pointerdown',()=>{
+            if(currentPage !== lastPage){
+                currentPage++
+                console.log(currentPage,lastPage)
+                console.log('test')
+            }
+            this.updatePageContent()
+        })
+        
+        this.infoContainer.addChild(topTitleCont)
+        this.modalFrame.addChild(this.infoContainer)
+        this.container.addChild(this.overlay,this.modalFrame)
+        this.app.stage.addChild(this.container)
+    }
+
+    private updatePageContent(){
+
     }
 }

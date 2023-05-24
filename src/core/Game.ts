@@ -372,6 +372,8 @@ export default class Game{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
+            this.slotGame.maskSprite.height = this.slotGame.frameBg.height - 8
+            this.slotGame.maskSprite.y = this.slotGame.frameBg.y - 8
             this.congrats.textAnimation.duration(0.3)
             this.isOpenModal= false
             this.createTransition()
@@ -1055,6 +1057,10 @@ export default class Game{
         this.buyBonusBtn.cursor = cursor
     }
     private events(){
+        // open info modal
+        this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.modal.createInfoModal()
+        })
         //open system settings modal
         this.controller.settingBtnSpite.addListener('mouseover',() =>{
             this.playSound(2)

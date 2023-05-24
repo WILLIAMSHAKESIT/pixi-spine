@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "Oa0q4FErUxvZg8Ur6rf7NTWFZoU",
+	"hash": "8wiDR0Y6ZEMbmFKwii7GF4iquL0",
 	"spine": "3.8.75",
 	"x": -106.5,
 	"y": -73,
@@ -69,7 +69,7 @@
 		"name": "no_blur",
 		"attachments": {
 			"x2": {
-				"x2": { "name": "2k", "x": -1.04, "y": -0.33, "rotation": -90.72, "width": 214, "height": 146 }
+				"x2": { "name": "2k", "x": -1.04, "y": -0.33, "rotation": -90.72, "width": 248, "height": 239 }
 			}
 		}
 	}
@@ -77,24 +77,6 @@
 "animations": {
 	"animation": {
 		"slots": {
-			"x2": {
-				"color": [
-					{ "color": "ffddddff", "curve": "stepped" },
-					{ "time": 0.3333, "color": "ffddddff" },
-					{ "time": 0.5, "color": "ffffffff", "curve": "stepped" },
-					{ "time": 0.8333, "color": "ffffffff" },
-					{ "time": 1, "color": "ffddddff" }
-				]
-			},
-			"bottom_glow_x2": {
-				"color": [
-					{ "color": "ffffffff" },
-					{ "time": 0.2, "color": "ffffff26" },
-					{ "time": 0.4667, "color": "ffffffff" },
-					{ "time": 0.7667, "color": "ffffff26" },
-					{ "time": 1, "color": "ffffffff" }
-				]
-			},
 			"explode_00008": {
 				"attachment": [
 					{ "time": 0.5, "name": "explode_00008" },
@@ -113,6 +95,24 @@
 					{ "time": 0.9333, "name": "explode_00021" },
 					{ "time": 0.9667, "name": "explode_00023" },
 					{ "time": 1, "name": "explode_00024" }
+				]
+			},
+			"x2": {
+				"color": [
+					{ "color": "ffddddff", "curve": "stepped" },
+					{ "time": 0.3333, "color": "ffddddff" },
+					{ "time": 0.5, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.8333, "color": "ffffffff" },
+					{ "time": 1, "color": "ffddddff" }
+				]
+			},
+			"bottom_glow_x2": {
+				"color": [
+					{ "color": "ffffffff" },
+					{ "time": 0.2, "color": "ffffff26" },
+					{ "time": 0.4667, "color": "ffffffff" },
+					{ "time": 0.7667, "color": "ffffff26" },
+					{ "time": 1, "color": "ffffffff" }
 				]
 			}
 		},

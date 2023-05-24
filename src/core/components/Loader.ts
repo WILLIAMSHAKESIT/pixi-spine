@@ -20,7 +20,7 @@ export default class Loader{
         this.app = new PIXI.Application({ width: 1920, height: 1080});
         this.loadingContainer = new PIXI.Container
         this.loadingTextStyle = new PIXI.TextStyle({  
-            fontFamily: 'arial',
+            fontFamily: 'Eras ITC',
             fontSize: 40,
             fontWeight: 'bolder',
             fill: '#ffffff', 
@@ -121,65 +121,83 @@ export default class Loader{
     private async loadingScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void){
         const soundBtnsCont = new PIXI.Container
         const loadingIncrement = 18
+        const loadingBarWidth = 641
+        //loading assets
         const loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
+        const loadingBg = new PIXI.Sprite(loadingAssets.loading.textures['loading_background.png'])
+        this.app.stage.addChild(loadingBg)
 
+        const logo = new PIXI.Sprite(loadingAssets.loading.textures['logo.png'])
+        this.loadingContainer.addChild(logo)
         const loadingBarBg = new PIXI.Sprite(loadingAssets.loading.textures['loading_bg.png'])
+        loadingBarBg.x = (logo.width - loadingBarBg.width)/2
+        loadingBarBg.y = logo.height*1.8
         this.loadingContainer.addChild(loadingBarBg)
 
         const loadingBar = new PIXI.Sprite(loadingAssets.loading.textures['loading_progress.png'])
+        loadingBar.x = ((logo.width) - loadingBar.width)/2
+        loadingBar.y = loadingBarBg.y + ((loadingBarBg.height - loadingBar.height)/2)-8
         loadingBar.width = 0
         this.loadingContainer.addChild(loadingBar)
 
-        const loadingText = new PIXI.Text(`Please Wait`, this.loadingTextStyle)
-        loadingText.x = (loadingBarBg.width - loadingText.width)/2
-        loadingText.y = (loadingBarBg.height - loadingText.height)/2
+        const loadingText = new PIXI.Text(`Loading`, this.loadingTextStyle)
+        loadingText.x = (logo.width - loadingText.width)/2
+        loadingText.y = loadingBarBg.y + (-(loadingText.y + (loadingText.height*1.3)))
         this.loadingContainer.addChild(loadingText)
         this.loadingContainer.x = (this.app.screen.width - this.loadingContainer.width)/2
         this.loadingContainer.y = (this.app.screen.height - this.loadingContainer.height)/2
         this.app.stage.addChild(this.loadingContainer)
 
+        //load game assets
         const assets = await PIXI.Assets.loadBundle('game-screen',(progress) => {
             // add the bar progress here
             if(progress < 1){
                 loadingBar.width+=loadingIncrement
             }else{
-                loadingBar.width = loadingBarBg.width
+                loadingBar.width = loadingBarWidth
             }
         });
-        this.loadingContainer.removeChild(loadingBarBg,loadingBar,loadingText)
 
-        const loadingTextNew = new PIXI.Text(`DO YOU WANT TO PLAY WITH SOUND?`, this.loadingTextStyle)
-        this.loadingContainer.addChild(loadingTextNew)
+        // this.loadingContainer.removeChild(loadingBarBg,loadingBar,loadingText)
 
-        const soundBtnInactive = new PIXI.Sprite(loadingAssets.loading.textures['soundBtnInActive.png'])
-        soundBtnsCont.addChild(soundBtnInactive)
-        const noText = new PIXI.Text(`NO`, this.loadingTextStyle2)
-        noText.x = (soundBtnInactive.width - noText.width)/2
-        noText.y = (soundBtnInactive.height - noText.height)/2
-        soundBtnInactive.addChild(noText)
+        // const loadingTextNew = new PIXI.Text(`DO YOU WANT TO PLAY WITH SOUND?`, this.loadingTextStyle)
+        // this.loadingContainer.addChild(loadingTextNew)
 
-        const soundBtnActive = new PIXI.Sprite(loadingAssets.loading.textures['soundBtnActive.png'])
-        soundBtnActive.x = soundBtnInactive.width*1.1
-        soundBtnsCont.addChild(soundBtnActive)
-        const yesText = new PIXI.Text(`YES`, this.loadingTextStyle2)
-        yesText.x = (soundBtnInactive.width - yesText.width)/2
-        yesText.y = (soundBtnInactive.height - yesText.height)/2
-        soundBtnActive.addChild(yesText)
+        // const soundBtnInactive = new PIXI.Sprite(loadingAssets.loading.textures['soundBtnInActive.png'])
+        // soundBtnInactive.interactive = true
+        // soundBtnInactive.cursor = 'pointer'
+        // soundBtnsCont.addChild(soundBtnInactive)
+        // const noText = new PIXI.Text(`NO`, this.loadingTextStyle2)
+        // noText.x = (soundBtnInactive.width - noText.width)/2
+        // noText.y = (soundBtnInactive.height - noText.height)/2
+        // soundBtnInactive.addChild(noText)
 
-        soundBtnsCont.x = (this.loadingContainer.width - soundBtnsCont.width)/2
-        soundBtnsCont.y = soundBtnsCont.height
-        this.loadingContainer.addChild(soundBtnsCont)
-        this.loadingContainer.x = (this.app.screen.width - this.loadingContainer.width)/2
-        this.loadingContainer.y = (this.app.screen.height - this.loadingContainer.height)/2
+        // const soundBtnActive = new PIXI.Sprite(loadingAssets.loading.textures['soundBtnActive.png'])
+        // soundBtnActive.interactive = true
+        // soundBtnActive.cursor = 'pointer'
+        // soundBtnActive.x = soundBtnInactive.width*1.1
+        // soundBtnsCont.addChild(soundBtnActive)
+        // const yesText = new PIXI.Text(`YES`, this.loadingTextStyle2)
+        // yesText.x = (soundBtnInactive.width - yesText.width)/2
+        // yesText.y = (soundBtnInactive.height - yesText.height)/2
+        // soundBtnActive.addChild(yesText)
+
+        // soundBtnsCont.x = (this.loadingContainer.width - soundBtnsCont.width)/2
+        // soundBtnsCont.y = soundBtnsCont.height
+        // this.loadingContainer.addChild(soundBtnsCont)
+        // this.loadingContainer.x = (this.app.screen.width - this.loadingContainer.width)/2
+        // this.loadingContainer.y = (this.app.screen.height - this.loadingContainer.height)/2
         
-        // soundBtnActive.addEventListener('pointerdown',()=>{this.soundPrompt()})
-        // assets are now available
+        // soundBtnInactive.addEventListener('pointerdown',()=>{this.goToGameScreen(loadedAssets,assets,false)})
+        // soundBtnActive.addEventListener('pointerdown',()=>{this.goToGameScreen(loadedAssets,assets,true)})
+    }
+    private goToGameScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void,assets:any,bool:boolean){
+        this.soundPrompt(bool)
         this.app.stage.removeChild(this.loadingContainer)
-        this.soundPrompt()
         loadedAssets(assets,this.app)
     }
-    private soundPrompt(){
-        this.sounds(true,this.soundsGlobal)
+    private soundPrompt(bool:boolean){
+        this.sounds(bool,this.soundsGlobal)
     }
 
     private soundSetup(src:string,loop:boolean){

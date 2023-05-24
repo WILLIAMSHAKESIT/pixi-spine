@@ -20,9 +20,89 @@
 				"h": 66
 			}
 		},
-		"close_button.png": {
+		"bird.png": {
 			"frame": {
 				"x": 135,
+				"y": 1,
+				"w": 193,
+				"h": 186
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 193,
+				"h": 186
+			},
+			"sourceSize": {
+				"w": 193,
+				"h": 186
+			}
+		},
+		"blue_crystal.png": {
+			"frame": {
+				"x": 330,
+				"y": 1,
+				"w": 170,
+				"h": 164
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 170,
+				"h": 164
+			},
+			"sourceSize": {
+				"w": 170,
+				"h": 164
+			}
+		},
+		"bonus.png": {
+			"frame": {
+				"x": 502,
+				"y": 1,
+				"w": 187,
+				"h": 181
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 187,
+				"h": 181
+			},
+			"sourceSize": {
+				"w": 187,
+				"h": 181
+			}
+		},
+		"chameleon.png": {
+			"frame": {
+				"x": 691,
+				"y": 1,
+				"w": 193,
+				"h": 186
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 193,
+				"h": 186
+			},
+			"sourceSize": {
+				"w": 193,
+				"h": 186
+			}
+		},
+		"close_button.png": {
+			"frame": {
+				"x": 886,
 				"y": 1,
 				"w": 69,
 				"h": 64
@@ -38,11 +118,31 @@
 			"sourceSize": {
 				"w": 69,
 				"h": 64
+			}
+		},
+		"game_rules_head.png": {
+			"frame": {
+				"x": 957,
+				"y": 1,
+				"w": 372,
+				"h": 50
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 372,
+				"h": 50
+			},
+			"sourceSize": {
+				"w": 372,
+				"h": 50
 			}
 		},
 		"game_rules_title.png": {
 			"frame": {
-				"x": 206,
+				"x": 1331,
 				"y": 1,
 				"w": 201,
 				"h": 27
@@ -60,9 +160,69 @@
 				"h": 27
 			}
 		},
+		"green_crystal.png": {
+			"frame": {
+				"x": 1534,
+				"y": 1,
+				"w": 169,
+				"h": 164
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 169,
+				"h": 164
+			},
+			"sourceSize": {
+				"w": 169,
+				"h": 164
+			}
+		},
+		"left_arrow.png": {
+			"frame": {
+				"x": 1705,
+				"y": 1,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
+		"leopard.png": {
+			"frame": {
+				"x": 957,
+				"y": 57,
+				"w": 193,
+				"h": 186
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 193,
+				"h": 186
+			},
+			"sourceSize": {
+				"w": 193,
+				"h": 186
+			}
+		},
 		"minus_bet.png": {
 			"frame": {
-				"x": 409,
+				"x": 1757,
 				"y": 1,
 				"w": 133,
 				"h": 66
@@ -82,8 +242,8 @@
 		},
 		"modal_frame.png": {
 			"frame": {
-				"x": 544,
-				"y": 1,
+				"x": 1,
+				"y": 245,
 				"w": 1313,
 				"h": 740
 			},
@@ -100,10 +260,30 @@
 				"h": 740
 			}
 		},
+		"monkey.png": {
+			"frame": {
+				"x": 1152,
+				"y": 57,
+				"w": 193,
+				"h": 186
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 193,
+				"h": 186
+			},
+			"sourceSize": {
+				"w": 193,
+				"h": 186
+			}
+		},
 		"off.png": {
 			"frame": {
 				"x": 1,
-				"y": 743,
+				"y": 69,
 				"w": 83,
 				"h": 41
 			},
@@ -122,8 +302,8 @@
 		},
 		"on.png": {
 			"frame": {
-				"x": 86,
-				"y": 743,
+				"x": 1347,
+				"y": 69,
 				"w": 83,
 				"h": 41
 			},
@@ -140,9 +320,29 @@
 				"h": 41
 			}
 		},
+		"orange_stone.png": {
+			"frame": {
+				"x": 1705,
+				"y": 69,
+				"w": 170,
+				"h": 164
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 170,
+				"h": 164
+			},
+			"sourceSize": {
+				"w": 170,
+				"h": 164
+			}
+		},
 		"overlay.png": {
 			"frame": {
-				"x": 1859,
+				"x": 1892,
 				"y": 1,
 				"w": 1920,
 				"h": 1080
@@ -160,9 +360,29 @@
 				"h": 1080
 			}
 		},
-		"paytable_slot_title.png": {
+		"paytable_slot_head.png": {
 			"frame": {
 				"x": 1,
+				"y": 1083,
+				"w": 454,
+				"h": 50
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 454,
+				"h": 50
+			},
+			"sourceSize": {
+				"w": 454,
+				"h": 50
+			}
+		},
+		"paytable_slot_title.png": {
+			"frame": {
+				"x": 457,
 				"y": 1083,
 				"w": 245,
 				"h": 27
@@ -180,9 +400,29 @@
 				"h": 27
 			}
 		},
+		"right_arrow.png": {
+			"frame": {
+				"x": 704,
+				"y": 1083,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
 		"roll.png": {
 			"frame": {
-				"x": 248,
+				"x": 756,
 				"y": 1083,
 				"w": 348,
 				"h": 81
@@ -202,7 +442,7 @@
 		},
 		"roll_active.png": {
 			"frame": {
-				"x": 598,
+				"x": 1106,
 				"y": 1083,
 				"w": 348,
 				"h": 81
@@ -222,7 +462,7 @@
 		},
 		"separate.png": {
 			"frame": {
-				"x": 3781,
+				"x": 3814,
 				"y": 1,
 				"w": 6,
 				"h": 374
@@ -240,9 +480,29 @@
 				"h": 374
 			}
 		},
+		"slot_pattern_head.png": {
+			"frame": {
+				"x": 1456,
+				"y": 1083,
+				"w": 429,
+				"h": 50
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 429,
+				"h": 50
+			},
+			"sourceSize": {
+				"w": 429,
+				"h": 50
+			}
+		},
 		"slot_pattern_title.png": {
 			"frame": {
-				"x": 948,
+				"x": 1887,
 				"y": 1083,
 				"w": 232,
 				"h": 27
@@ -260,9 +520,29 @@
 				"h": 27
 			}
 		},
+		"snake.png": {
+			"frame": {
+				"x": 2121,
+				"y": 1083,
+				"w": 193,
+				"h": 186
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 193,
+				"h": 186
+			},
+			"sourceSize": {
+				"w": 193,
+				"h": 186
+			}
+		},
 		"spin_amount_btn.png": {
 			"frame": {
-				"x": 1182,
+				"x": 2316,
 				"y": 1083,
 				"w": 221,
 				"h": 81
@@ -282,7 +562,7 @@
 		},
 		"spin_amount_btn_active.png": {
 			"frame": {
-				"x": 1405,
+				"x": 2539,
 				"y": 1083,
 				"w": 221,
 				"h": 81
@@ -302,7 +582,7 @@
 		},
 		"system_settings_title.png": {
 			"frame": {
-				"x": 1628,
+				"x": 2762,
 				"y": 1083,
 				"w": 290,
 				"h": 27
@@ -322,7 +602,7 @@
 		},
 		"total_bet_container.png": {
 			"frame": {
-				"x": 1920,
+				"x": 3054,
 				"y": 1083,
 				"w": 314,
 				"h": 107
@@ -339,6 +619,46 @@
 				"w": 314,
 				"h": 107
 			}
+		},
+		"violet_stone.png": {
+			"frame": {
+				"x": 3370,
+				"y": 1083,
+				"w": 169,
+				"h": 164
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 169,
+				"h": 164
+			},
+			"sourceSize": {
+				"w": 169,
+				"h": 164
+			}
+		},
+		"wild.png": {
+			"frame": {
+				"x": 3541,
+				"y": 1083,
+				"w": 184,
+				"h": 176
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 184,
+				"h": 176
+			},
+			"sourceSize": {
+				"w": 184,
+				"h": 176
+			}
 		}
 	},
 	"meta": {
@@ -347,8 +667,8 @@
 		"image": "modal.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 3788,
-			"h": 1191
+			"w": 3821,
+			"h": 1270
 		},
 		"scale": "1"
 	}

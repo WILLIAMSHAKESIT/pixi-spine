@@ -8,8 +8,8 @@ repeat: none
   rotate: true
   xy: 449, 611
   size: 212, 144
-  orig: 214, 146
-  offset: 1, 1
+  orig: 248, 239
+  offset: 18, 41
   index: -1
 2k_blur
   rotate: true
