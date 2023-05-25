@@ -405,7 +405,6 @@ export default class Modal{
         pageDesc.x = (this.modalFrame.width - pageDesc.width)/2
         pageText.text = `Page ${currentPage+1}/${lastPage+1}`
         pageText.x = (this.modalFrame.width - pageText.width)*0.95
-        pageText.y = (this.modalFrame.height - pageText.height)*0.95
 
         this.infoFirstPageContainer.alpha = 0
         this.infoSecondPageContainer.alpha = 0

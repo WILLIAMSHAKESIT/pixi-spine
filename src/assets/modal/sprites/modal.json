@@ -602,26 +602,6 @@
 		},
 		"orange_crystal.png": {
 			"frame": {
-				"x": 2798,
-				"y": 242,
-				"w": 170,
-				"h": 164
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 170,
-				"h": 164
-			},
-			"sourceSize": {
-				"w": 170,
-				"h": 164
-			}
-		},
-		"orange_stone.png": {
-			"frame": {
 				"x": 2440,
 				"y": 1643,
 				"w": 248,
@@ -642,7 +622,7 @@
 		},
 		"overlay.png": {
 			"frame": {
-				"x": 2970,
+				"x": 2945,
 				"y": 1,
 				"w": 1920,
 				"h": 1080
@@ -782,8 +762,8 @@
 		},
 		"separate.png": {
 			"frame": {
-				"x": 728,
-				"y": 1083,
+				"x": 4867,
+				"y": 1,
 				"w": 6,
 				"h": 374
 			},
@@ -962,8 +942,8 @@
 		},
 		"system_settings_title.png": {
 			"frame": {
-				"x": 1,
-				"y": 1572,
+				"x": 447,
+				"y": 1324,
 				"w": 290,
 				"h": 27
 			},
@@ -1002,7 +982,7 @@
 		},
 		"violet_crystal.png": {
 			"frame": {
-				"x": 447,
+				"x": 4631,
 				"y": 1324,
 				"w": 248,
 				"h": 239
@@ -1022,26 +1002,6 @@
 		},
 		"wild.png": {
 			"frame": {
-				"x": 4631,
-				"y": 1324,
-				"w": 248,
-				"h": 239
-			},
-			"rotated": false,
-			"trimmed": false,
-			"spriteSourceSize": {
-				"x": 0,
-				"y": 0,
-				"w": 248,
-				"h": 239
-			},
-			"sourceSize": {
-				"w": 248,
-				"h": 239
-			}
-		},
-		"x2.png": {
-			"frame": {
 				"x": 4411,
 				"y": 1681,
 				"w": 248,
@@ -1060,7 +1020,7 @@
 				"h": 239
 			}
 		},
-		"x3.png": {
+		"x2.png": {
 			"frame": {
 				"x": 671,
 				"y": 1922,
@@ -1080,9 +1040,29 @@
 				"h": 239
 			}
 		},
-		"x5.png": {
+		"x3.png": {
 			"frame": {
 				"x": 2440,
+				"y": 1922,
+				"w": 248,
+				"h": 239
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 248,
+				"h": 239
+			},
+			"sourceSize": {
+				"w": 248,
+				"h": 239
+			}
+		},
+		"x5.png": {
+			"frame": {
+				"x": 2690,
 				"y": 1922,
 				"w": 248,
 				"h": 239
@@ -1107,7 +1087,7 @@
 		"image": "modal.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 4891,
+			"w": 4880,
 			"h": 2384
 		},
 		"scale": "1"
