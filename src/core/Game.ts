@@ -1441,7 +1441,7 @@ export default class Game{
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
         this.gameContainer.addChild(this.transition.container)
     }
-
+    
     // sounds methods
     private sounds(soundInit:Boolean,soundArray:Array<any>){
         this.sound = soundArray;

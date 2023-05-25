@@ -1,12 +1,15 @@
 import 'pixi-spine' // Do this once at the very start of your code. This registers the loader!
 import * as PIXI from 'pixi.js';
 import {Spine} from 'pixi-spine';
+import IntroScreen from './IntroScreen';
 import WebFont from 'webfontloader';
 import {Howl} from 'howler';
 
 export default class Loader{
     private app:PIXI.Application
     private loadingContainer:PIXI.Container
+    private loadingAssets:any
+    private gameAssets:any
     //sounds
     private soundsPath: string = 'assets/sounds/';
     private sounds:(soundInit:Boolean,bgm: Array<any>) => void;
@@ -16,6 +19,9 @@ export default class Loader{
     //text styles
     private loadingTextStyle:PIXI.TextStyle
     private loadingTextStyle2:PIXI.TextStyle
+    private loadingBg:PIXI.Sprite
+    //intro screen
+    private intro:IntroScreen;
     constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
         this.app = new PIXI.Application({ width: 1920, height: 1080});
         this.loadingContainer = new PIXI.Container
@@ -98,6 +104,7 @@ export default class Loader{
                     {name: 'vines',srcs: 'assets/main/sprites/vines.json'},
                     {name: 'firefly',srcs: 'assets/main/sprites/firefly.json'},
                     {name: 'butterfly',srcs: 'assets/main/sprites/butterfly.json'},
+                    {name: 'intro',srcs: 'assets/intro/sprites/intro.json'},
                 ],
             }],
         };
@@ -123,19 +130,19 @@ export default class Loader{
         const loadingIncrement = 12
         const loadingBarWidth = 451
         //loading assets
-        const loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
-        const loadingBg = new PIXI.Sprite(loadingAssets.loading.textures['loading_background.png'])
-        this.app.stage.addChild(loadingBg)
+        this.loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
+        this.loadingBg = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_background.png'])
+        this.app.stage.addChild(this.loadingBg)
 
-        const logo = new PIXI.Sprite(loadingAssets.loading.textures['logo.png'])
+        const logo = new PIXI.Sprite(this.loadingAssets.loading.textures['logo.png'])
         logo.scale.set(1.3)
         this.loadingContainer.addChild(logo)
-        const loadingBarBg = new PIXI.Sprite(loadingAssets.loading.textures['loading_bg.png'])
+        const loadingBarBg = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_bg.png'])
         loadingBarBg.x = (logo.width - loadingBarBg.width)/2
         loadingBarBg.y = logo.height*1.8
         this.loadingContainer.addChild(loadingBarBg)
 
-        const loadingBar = new PIXI.Sprite(loadingAssets.loading.textures['loading_progress.png'])
+        const loadingBar = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_progress.png'])
         loadingBar.x = ((logo.width) - loadingBar.width)/2
         loadingBar.y = loadingBarBg.y + ((loadingBarBg.height - loadingBar.height)/2)-8
         loadingBar.width = 0
@@ -150,7 +157,7 @@ export default class Loader{
         this.app.stage.addChild(this.loadingContainer)
 
         //load game assets
-        const assets = await PIXI.Assets.loadBundle('game-screen',(progress) => {
+        this.gameAssets = await PIXI.Assets.loadBundle('game-screen',(progress) => {
             // add the bar progress here
             if(progress < 1){
                 loadingBar.width+=loadingIncrement
@@ -166,12 +173,12 @@ export default class Loader{
         loadingTextNew.y = loadingText.y-26
         this.loadingContainer.addChild(loadingTextNew)
 
-        const soundBtnInactive = new PIXI.Sprite(loadingAssets.loading.textures['ex.png'])
+        const soundBtnInactive = new PIXI.Sprite(this.loadingAssets.loading.textures['ex.png'])
         soundBtnInactive.interactive = true
         soundBtnInactive.cursor = 'pointer'
         soundBtnsCont.addChild(soundBtnInactive)
 
-        const soundBtnActive = new PIXI.Sprite(loadingAssets.loading.textures['check.png'])
+        const soundBtnActive = new PIXI.Sprite(this.loadingAssets.loading.textures['check.png'])
         soundBtnActive.interactive = true
         soundBtnActive.cursor = 'pointer'
         soundBtnActive.x = soundBtnInactive.width*2.5
@@ -183,13 +190,18 @@ export default class Loader{
         this.loadingContainer.x = (this.app.screen.width - this.loadingContainer.width)/2
         this.loadingContainer.y = (this.app.screen.height - this.loadingContainer.height)/2
         
-        soundBtnInactive.addEventListener('pointerdown',()=>{this.goToGameScreen(loadedAssets,assets,false)})
-        soundBtnActive.addEventListener('pointerdown',()=>{this.goToGameScreen(loadedAssets,assets,true)})
+        soundBtnInactive.addEventListener('pointerdown',()=>{this.introScreen(loadedAssets,false)})
+        soundBtnActive.addEventListener('pointerdown',()=>{this.introScreen(loadedAssets,true)})
     }
-    private goToGameScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void,assets:any,bool:boolean){
+    private introScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void,bool:boolean){
         this.soundPrompt(bool)
         this.app.stage.removeChild(this.loadingContainer)
-        loadedAssets(assets,this.app)
+        this.app.stage.removeChild(this.loadingBg)
+        this.createIntro(loadedAssets)
+    }
+    private createIntro(loadedAssets:(assets:any,app:PIXI.Application)=>void){
+        this.intro = new IntroScreen(this.app,this.gameAssets,loadedAssets.bind(this))
+        this.app.stage.addChild(this.intro.container)
     }
     private soundPrompt(bool:boolean){
         this.sounds(bool,this.soundsGlobal)
