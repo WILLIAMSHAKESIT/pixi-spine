@@ -307,7 +307,11 @@ export default class Modal{
         prevBtn.y = (this.modalFrame.height - prevBtn.height)/2
         this.infoContainer.addChild(prevBtn)
         prevBtn.addEventListener('pointerdown',()=>{
-            this.updatePageContent()
+            if(currentPage !== 0){
+                currentPage--
+                console.log(currentPage)
+            }
+            // this.updatePageContent(pageTitle,pageDesc)
         })
         
         const nextBtn = Functions.loadTexture(this.textureArray,'modal','right_arrow')
@@ -320,9 +324,8 @@ export default class Modal{
             if(currentPage !== lastPage){
                 currentPage++
                 console.log(currentPage,lastPage)
-                console.log('test')
             }
-            this.updatePageContent()
+            // this.updatePageContent()
         })
         
         this.infoContainer.addChild(topTitleCont)
@@ -331,7 +334,7 @@ export default class Modal{
         this.app.stage.addChild(this.container)
     }
 
-    private updatePageContent(){
-
-    }
+    // private updatePageContent(pageTitle:PIXI.Text,pageDesc){
+        
+    // }
 }
