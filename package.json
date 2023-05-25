@@ -28,7 +28,9 @@
   "dependencies": {
     "gsap": "^3.11.5",
     "howler": "^2.2.3",
+    "pixi-scrollbox": "^2.3.1",
     "pixi-spine": "^4.0.3",
+    "pixi-viewport": "^5.0.1",
     "pixi.js": "^7.2.4",
     "typescript": "^5.0.4"
   }

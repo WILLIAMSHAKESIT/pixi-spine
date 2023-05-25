@@ -9,6 +9,13 @@ export default class Modal{
     private baseHeight:number
     private baseWidth:number
     public container:PIXI.Container
+    private infoFirstPageContainer:PIXI.Container
+    private infoSecondPageContainer:PIXI.Container
+    private infoThirdPageContainer:PIXI.Container
+    private infoFourthPageContainer:PIXI.Container
+    private infoFifthPageContainer:PIXI.Container
+    private infoSixthPageContainer:PIXI.Container
+    private infoSeventhPageContainer:PIXI.Container
     private textureArray:Array<any>
     //containers
     private autoPlaySettingsCont:PIXI.Container
@@ -30,6 +37,8 @@ export default class Modal{
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
     private textStyle3:PIXI.TextStyle
+    private textStyle4:PIXI.TextStyle
+    private textStyle4Center:PIXI.TextStyle
     public betAmountText:PIXI.Text
     //
     public betAmount:number = 1
@@ -39,6 +48,7 @@ export default class Modal{
     private spinBtnTextureOff:PIXI.Texture
     public betBtns:Array<any> = []
     public soundBtns:Array<any> = []
+
     constructor(app:PIXI.Application,textureArray:Array<any>){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -47,6 +57,13 @@ export default class Modal{
         this.spinBtnTextureOn =  Functions.loadTexture(this.textureArray,'modal','spin_amount_btn_active').texture
         this.spinBtnTextureOff =  Functions.loadTexture(this.textureArray,'modal','spin_amount_btn').texture
         this.container = new PIXI.Container()
+        this.infoFirstPageContainer = new PIXI.Container
+        this.infoSecondPageContainer = new PIXI.Container
+        this.infoThirdPageContainer = new PIXI.Container
+        this.infoFourthPageContainer = new PIXI.Container
+        this.infoFifthPageContainer = new PIXI.Container
+        this.infoSixthPageContainer = new PIXI.Container
+        this.infoSeventhPageContainer = new PIXI.Container
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 36,
@@ -74,7 +91,26 @@ export default class Modal{
             fontSize: 30,
             fontWeight: 'normal',
             fill: '#ffffff', 
-            wordWrapWidth: 440,
+            wordWrap: true,
+            wordWrapWidth: 1200,
+            align:'center'
+        });
+        this.textStyle4 = new PIXI.TextStyle({  
+            fontFamily: 'Arial',
+            fontSize: 20,
+            fontWeight: 'normal',
+            fill: '#fff', 
+            wordWrap: true,
+            wordWrapWidth: 400,
+        });
+        this.textStyle4Center = new PIXI.TextStyle({  
+            fontFamily: 'Arial',
+            fontSize: 20,
+            fontWeight: 'normal',
+            fill: '#fff', 
+            wordWrap: true,
+            wordWrapWidth: 600,
+            align:'center'
         });
         this.init()
     }
@@ -284,21 +320,27 @@ export default class Modal{
         })
     }
     public createInfoModal(){
+        this.infoContainer = new PIXI.Container
+        
         let currentPage = 0
         let lastPage = json2.modalInfoPage.length - 1
         let paddingSide = 30
-        this.infoContainer = new PIXI.Container
-        const topTitleCont = new PIXI.Container
+        let args:any = null
         
-        const pageTitle =  Functions.loadTexture(this.textureArray,'modal','game_rules_title')
-        topTitleCont.addChild(pageTitle)
+        const pageTitle =  Functions.loadTexture(this.textureArray,'modal','paytable_slot_title')
+        pageTitle.x = (this.modalFrame.width - pageTitle.width)/2
+        pageTitle.y = paddingSide
+        this.infoContainer.addChild(pageTitle)
 
         const pageDesc =  new PIXI.Text(`${json2.modalInfoPage[currentPage].desc}`,this.textStyle3)
-        pageDesc.y = pageTitle.height
-        topTitleCont.addChild(pageDesc)
-        pageTitle.x = (topTitleCont.width - pageTitle.width)/2
-        topTitleCont.x = (this.modalFrame.width - topTitleCont.width)/2
-        topTitleCont.y = paddingSide
+        pageDesc.x = (this.modalFrame.width - pageDesc.width)/2
+        pageDesc.y = (pageTitle.height+paddingSide)*1.2
+        this.infoContainer.addChild(pageDesc)
+        
+        const pageText = new PIXI.Text(`Page ${currentPage+1}/${lastPage+1}`,this.textStyle2)
+        pageText.x = (this.modalFrame.width - pageText.width)*0.95
+        pageText.y = (this.modalFrame.height - pageText.height)*0.95
+        this.infoContainer.addChild(pageText)
 
         const prevBtn = Functions.loadTexture(this.textureArray,'modal','left_arrow')
         prevBtn.interactive = true
@@ -306,12 +348,18 @@ export default class Modal{
         prevBtn.x = paddingSide
         prevBtn.y = (this.modalFrame.height - prevBtn.height)/2
         this.infoContainer.addChild(prevBtn)
+
+        args = {
+            pageTitle:pageTitle,
+            pageDesc:pageDesc,
+            pageText:pageText
+        }
+
         prevBtn.addEventListener('pointerdown',()=>{
             if(currentPage !== 0){
                 currentPage--
-                console.log(currentPage)
             }
-            // this.updatePageContent(pageTitle,pageDesc)
+            this.updatePageContent(args,currentPage,lastPage)
         })
         
         const nextBtn = Functions.loadTexture(this.textureArray,'modal','right_arrow')
@@ -323,18 +371,180 @@ export default class Modal{
         nextBtn.addEventListener('pointerdown',()=>{
             if(currentPage !== lastPage){
                 currentPage++
-                console.log(currentPage,lastPage)
             }
-            // this.updatePageContent()
+            this.updatePageContent(args,currentPage,lastPage)
         })
+
+        this.infoFirstPageContainer.alpha = 1
+        this.infoSecondPageContainer.alpha = 0
+        this.infoThirdPageContainer.alpha = 0
+        this.infoFourthPageContainer.alpha = 0
+        this.infoFifthPageContainer.alpha = 0
+        this.infoSixthPageContainer.alpha = 0
+        this.infoSeventhPageContainer.alpha = 0
         
-        this.infoContainer.addChild(topTitleCont)
+        this.createInfoFirstPage()
+        this.createInfoSecondPage()
+        this.createInfoThirdPage()
+        this.creatFourthPage()
+        this.createFifthPage()
+        this.createSixthPage()
+        this.createSeventhPage()
+
         this.modalFrame.addChild(this.infoContainer)
         this.container.addChild(this.overlay,this.modalFrame)
         this.app.stage.addChild(this.container)
     }
+    private updatePageContent(args:any,currentPage:number,lastPage:number){
+        const {pageTitle,pageDesc,pageText} = args
+        const elContent = json2.modalInfoPage[currentPage]
 
-    // private updatePageContent(pageTitle:PIXI.Text,pageDesc){
+        pageTitle.texture = Functions.loadTexture(this.textureArray,'modal',`${elContent.title}`).texture
+        pageTitle.x = (this.modalFrame.width - pageTitle.width)/2
+        pageDesc.text = elContent.desc
+        pageDesc.x = (this.modalFrame.width - pageDesc.width)/2
+        pageText.text = `Page ${currentPage+1}/${lastPage+1}`
+        pageText.x = (this.modalFrame.width - pageText.width)*0.95
+        pageText.y = (this.modalFrame.height - pageText.height)*0.95
+
+        this.infoFirstPageContainer.alpha = 0
+        this.infoSecondPageContainer.alpha = 0
+        this.infoThirdPageContainer.alpha = 0
+        this.infoFourthPageContainer.alpha = 0
+        this.infoFifthPageContainer.alpha = 0
+        this.infoSixthPageContainer.alpha = 0
+        this.infoSeventhPageContainer.alpha = 0
+
+        if(currentPage == 0){
+            this.infoFirstPageContainer.alpha = 1    
+        }else if(currentPage == 1){
+            this.infoSecondPageContainer.alpha = 1
+        }else if(currentPage == 2){
+            this.infoThirdPageContainer.alpha = 1
+        }else if(currentPage == 3){
+            this.infoFourthPageContainer.alpha = 1
+        }else if(currentPage == 4){
+            this.infoFifthPageContainer.alpha = 1
+        }else if(currentPage == 5){
+            this.infoSixthPageContainer.alpha = 1
+        }else{
+            this.infoSeventhPageContainer.alpha = 1
+        }
+
+        this.infoFirstPageContainer.x = (this.infoContainer.width - this.infoFirstPageContainer.width)/2
+        this.infoContainer.x = 0
+    }
+    private createInfoFirstPage(){
+        let paddingTop = 120
+        let xGap = 1.2
+        const contOne = new PIXI.Container
+        const contTwo = new PIXI.Container
+        const contThree = new PIXI.Container
+        json2.mainSymbols.forEach((data,index)=>{
+            const sprite = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const text = new PIXI.Text(`${data.text}`,this.textStyle4)
+            sprite.scale.set(0.7)
+            if(index <= 4){
+                sprite.x = (sprite.width*index)*xGap
+                sprite.y = 0
+                text.y = sprite.height
+                text.x = (sprite.x + ((sprite.width-text.width)/2))
+                contOne.addChild(sprite,text)
+            }else if(index >= 5 && index <=8){
+                sprite.x = (sprite.width*(index-5))*xGap
+                sprite.y = sprite.height*1.2
+                text.y = sprite.height+sprite.y
+                text.x = (sprite.x + ((sprite.width-text.width)/2))
+                contTwo.addChild(sprite,text)
+            }else{
+                index == 10?sprite.x = 0:sprite.x = sprite.width*3.5
+                sprite.y = sprite.height*2
+                text.y = (sprite.y+(sprite.height-text.height)/2)
+                text.x = (sprite.x + sprite.width)+10
+                contThree.addChild(sprite,text)
+            }
+        })
+        this.infoFirstPageContainer.addChild(contOne)
+        contOne.x = (this.infoContainer.width - contOne.width)/2
+        contOne.y = paddingTop
+        this.infoFirstPageContainer.addChild(contTwo)
+        contTwo.x = (this.infoContainer.width - contTwo.width)/2
+        contTwo.y = paddingTop*1.2
+        this.infoFirstPageContainer.addChild(contThree)
+        contThree.x = (this.infoContainer.width - contThree.width)/2
+        contThree.y = paddingTop*1.7
+        this.infoFirstPageContainer.x = (this.infoContainer.width - this.infoFirstPageContainer.width)/2
+        this.infoContainer.addChild(this.infoFirstPageContainer)
+    }
+    private createInfoSecondPage(){
+        const symbolsContainer = new PIXI.Container
+        const jackpotView = Functions.loadTexture(this.textureArray,'modal','jackpot_img')
+        const descText = 'In the jackpot game pick stone to reveal a jackpot symbol, Match 3 of the same symbol to be awarded the corresponding jackpot!'
+        const desc = new PIXI.Text(`${descText}`,this.textStyle4Center)
+        json2.jackpotSymbols.forEach((data,index)=>{
+            const symbols = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const text = new PIXI.Text(`${data.text}`,this.textStyle4)
+            symbols.scale.set(1.6)
+            symbols.x = (symbols.width*index)*1.2
+            text.x = symbols.x + (symbols.width-text.width)/2 
+            text.y = symbols.height*1.1
+            symbolsContainer.addChild(symbols,text)
+        })
+        jackpotView.y = symbolsContainer.height
+        desc.y = (jackpotView.y + jackpotView.height)*1.05
+        this.infoSecondPageContainer.addChild(symbolsContainer)
+        this.infoSecondPageContainer.addChild(jackpotView)
+        this.infoSecondPageContainer.addChild(desc)
+        symbolsContainer.x = (this.infoSecondPageContainer.width - symbolsContainer.width)/2
+        this.infoSecondPageContainer.x = (this.modalFrame.width - this.infoSecondPageContainer.width)/2
+        this.infoSecondPageContainer.y = (this.modalFrame.height - this.infoSecondPageContainer.height)/2
+        this.infoContainer.addChild(this.infoSecondPageContainer)
+    }
+    private createInfoThirdPage(){
+        const imgContainer = new PIXI.Container
+
+        json2.freeSpinImages.forEach((data,index)=>{
+            const img = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const text = new PIXI.Text(`${data.text}`,this.textStyle)
+            const desc = new PIXI.Text(`${data.desc}`,this.textStyle4Center)
+            img.scale.set(0.7)
+            img.x = (index==0?img.width:0)*1.3
+            text.x= img.x + (img.width-text.width)/2
+            text.y = -text.height
+            desc.x = img.x + (img.width-desc.width)/2
+            desc.y = img.height*1.2
+            imgContainer.addChild(img,text,desc)
+        })
         
-    // }
+        imgContainer.x = (this.modalFrame.width - imgContainer.width)/2
+        this.infoThirdPageContainer.addChild(imgContainer)
+        this.infoThirdPageContainer.x = (this.infoContainer.width - this.infoThirdPageContainer.width)/2
+        this.infoThirdPageContainer.y = ((this.modalFrame.height - this.infoThirdPageContainer.height)/2)*1.4
+        this.infoContainer.addChild(this.infoThirdPageContainer)
+    }
+    private creatFourthPage(){
+        const img = Functions.loadTexture(this.textureArray,'modal',`patterns`)
+        img.scale.set(0.8)
+        img.x = (this.modalFrame.width - img.width)/2
+        img.y = (this.modalFrame.height - img.height)/2
+        this.infoFourthPageContainer.addChild(img)
+        this.infoContainer.addChild(this.infoFourthPageContainer)
+    }
+    private createFifthPage(){
+        const img = Functions.loadTexture(this.textureArray,'modal',`how_to_play_content`)
+        img.x = (this.modalFrame.width-img.width)/2
+        img.y = (this.modalFrame.height-img.height)/2
+        this.infoFifthPageContainer.addChild(img)
+        this.infoContainer.addChild(this.infoFifthPageContainer)
+    }
+    private createSixthPage(){
+        const img = Functions.loadTexture(this.textureArray,'modal',`settings_menu_content`)
+        img.x = (this.modalFrame.width-img.width)/2
+        img.y = (this.modalFrame.height-img.height)/2
+        this.infoSixthPageContainer.addChild(img)
+        this.infoContainer.addChild(this.infoSixthPageContainer)
+    }   
+    private createSeventhPage(){
+        this.infoContainer.addChild(this.infoSeventhPageContainer)
+    }
 }
