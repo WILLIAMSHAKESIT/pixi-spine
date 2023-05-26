@@ -124,7 +124,7 @@ export default class Loader{
     }
     private async loadingScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void){
         const soundBtnsCont = new PIXI.Container
-        const loadingIncrement = 12
+        const loadingIncrement = 9
         const loadingBarWidth = 451
         //loading assets
         this.loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
@@ -144,7 +144,6 @@ export default class Loader{
         loadingBar.y = loadingBarBg.y + ((loadingBarBg.height - loadingBar.height)/2)-8
         loadingBar.width = 0
         this.loadingContainer.addChild(loadingBar)
-
         const loadingText = new PIXI.Text(`Loading`, this.loadingTextStyle)
         loadingText.x = (logo.width - loadingText.width)/2
         loadingText.y = loadingBarBg.y + (-(loadingText.y + (loadingText.height*1.3)))

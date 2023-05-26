@@ -637,10 +637,11 @@ export default class Game{
     private hideBonusPopUp(dY:number,sY:number){
         this.enableButtons(true)
         let fadeOutGlow = gsap.to(this.popGlow,{
-            duration:0.8,
+            duration:0.3,
             alpha:0,
             onComplete:()=>{
                 fadeOutGlow.kill()
+                this.overlay.removeChild(this.popGlow)
                 let bonusFrameHide = gsap.to(this.buyBonusFrame, {
                     delay:0.2,
                     duration:0.2,
@@ -855,6 +856,9 @@ export default class Game{
             this.enableButtons(true)
             this.slotGame.levelBarIndicator.width = 0
             this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
+            // update text 
+            this.textStyle.fontSize = 50
+            this.textStyle3.fontSize = 40 
             this.updatePaylineTopText('SPIN TO WIN')
             this.updatePaylineBottomText('Tap space or enter to skip')
             if(this.slotGame.freeSpinStart){

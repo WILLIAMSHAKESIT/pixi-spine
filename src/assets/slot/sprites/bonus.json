@@ -1,6 +1,6 @@
 {
 "skeleton": {
-	"hash": "4M8WRIv4jXRUynSe7jYKOMUf7xk",
+	"hash": "d+58uTeJtbOSstgOyVTIhnRMx9Y",
 	"spine": "3.8.75",
 	"x": -124,
 	"y": -109,
@@ -511,80 +511,69 @@
 		"bones": {
 			"root": {
 				"translate": [
-					{},
-					{ "time": 0.0667, "y": -10 },
-					{ "time": 0.1667 }
+					{ "y": -24.44 },
+					{ "time": 0.3333 }
 				]
 			},
 			"bone": {
 				"translate": [
-					{},
-					{ "time": 0.0667, "x": 0.11, "y": -10 },
-					{ "time": 0.1333, "curve": "stepped" },
-					{ "time": 0.1667 }
+					{ "x": 0.11, "y": -10 },
+					{ "time": 0.2, "curve": "stepped" },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine7": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -13.14 },
-					{ "time": 0.1667 }
+					{ "angle": -13.14 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine19": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -12.78 },
-					{ "time": 0.1667 }
+					{ "angle": -12.78 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine13": {
 				"rotate": [
-					{ "angle": 5.86 },
-					{ "time": 0.0667, "angle": -13.33 },
-					{ "time": 0.1667 }
+					{ "angle": -13.33 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine17": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -20.46 },
-					{ "time": 0.1667 }
+					{ "angle": -20.46 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine31": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": 15.94 },
-					{ "time": 0.1667 }
+					{ "angle": 15.94 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine32": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -14.47 },
-					{ "time": 0.1667 }
+					{ "angle": -14.47 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine29": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -13.22 },
-					{ "time": 0.1667 }
+					{ "angle": -13.22 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine2": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -7.53 },
-					{ "time": 0.1667 }
+					{ "angle": -7.53 },
+					{ "time": 0.3333 }
 				]
 			},
 			"vine27": {
 				"rotate": [
-					{},
-					{ "time": 0.0667, "angle": -24.26 },
-					{ "time": 0.1667 }
+					{ "angle": -24.26 },
+					{ "time": 0.3333 }
 				]
 			}
 		}

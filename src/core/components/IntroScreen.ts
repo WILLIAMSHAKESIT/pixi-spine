@@ -44,11 +44,11 @@ export default class IntroScreen{
             },
             {
                 img:"slide_3",
-                text:"WIN MULTIPLIER SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
+                text:"WIN MONEY SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
             },
             {
                 img:"slide_4",
-                text:"WIN MONEY SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
+                text:"WIN MULTIPLIER SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
             },
         ]
         this.textStyle = new PIXI.TextStyle({  
@@ -115,15 +115,7 @@ export default class IntroScreen{
             this.arrayContents.push(dataArray)
 
             radio.addEventListener('pointerdown',()=>{
-                this.arrayContents.forEach((data:any)=>{data.slideImg.alpha = 0})
-                slideImg.alpha = 1
-                //set radios
-                this.arrayContents.forEach((data:any)=>{data.radio.texture = radio.texture,data.radio.interactive = true})
-                radio.interactive = false
-                radio.texture = this.radioOn
-                // set text
-                this.arrayContents.forEach((data:any)=>{data.text.alpha = 0})
-                text.alpha = 1
+                this.setActiveSlide(index)
             })
             this.playSlideAnimation(index,slideImg)
         })
@@ -162,11 +154,7 @@ export default class IntroScreen{
             duration:1,
             alpha:1,
             onStart:()=>{
-                this.arrayContents.forEach((data:any)=>{data.radio.texture = this.radioOff,data.radio.interactive = true})
-                this.arrayContents[index].radio.interactive = false
-                this.arrayContents[index].radio.texture = this.radioOn
-                this.arrayContents.forEach((data:any)=>{data.text.alpha = 0})
-                this.arrayContents[index].text.alpha = 1
+               this.setActiveSlide(index)
             },
             onComplete:()=>{
                 slideFadeIn.kill()
@@ -184,4 +172,13 @@ export default class IntroScreen{
             }
         })
     } 
+    private setActiveSlide(index:number){
+        this.arrayContents.forEach((data:any)=>{data.slideImg.alpha = 0})
+        this.arrayContents[index].slideImg.alpha = 1
+        this.arrayContents.forEach((data:any)=>{data.radio.texture = this.radioOff,data.radio.interactive = true})
+        this.arrayContents[index].radio.interactive = false
+        this.arrayContents[index].radio.texture = this.radioOn
+        this.arrayContents.forEach((data:any)=>{data.text.alpha = 0})
+        this.arrayContents[index].text.alpha = 1
+    }   
 }

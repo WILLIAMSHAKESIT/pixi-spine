@@ -62,11 +62,11 @@ export default class Slot{
         // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
-        [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
-        [2,8,3,3,1,7,3,8,8,1,4,2,3,4,4,7,5,1,5,8,2,6,8,6,8,3,8,7,1,7],
-        [1,2,8,3,2,2,3,8,8,3,2,3,4,4,2,11,5,8,5,8,2,6,8,6,8,3,8,7,1,7],
-        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,3,8,7,1,7],
-        [2,5,8,2,4,6,5,4,2,8,3,5,3,3,8,2,4,5,3,5,8,8,1,6,6,4,3,7,3,2]
+        [11,4,11,2,11,1,2,11,7,8,4,11,2,8,11,2,1,11,5,8,2,6,8,6,8,11,8,7,1,7],
+        [2,8,11,11,1,7,11,8,8,1,4,2,11,4,4,7,5,1,5,8,2,6,8,6,8,11,8,7,1,7],
+        [1,2,8,11,2,2,11,8,8,11,2,11,4,4,2,11,5,8,5,8,2,6,8,6,8,11,8,7,1,7],
+        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,11,8,7,1,7],
+        [2,5,8,2,4,6,5,4,2,8,11,5,11,11,8,2,4,5,11,5,8,8,1,6,6,4,11,7,11,2]
     ]
     private reelsValuesMultiplierSlot:Array<Array<number>> = [
         [3,4,3,2,3,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -168,7 +168,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 740
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -432,7 +432,7 @@ export default class Slot{
                     }
                 }
                 if(data.type == this.bonusType){
-                    Functions.loadSpineAnimation(data.symbol,'fall',false,1)
+                    Functions.loadSpineAnimation(data.symbol,'fall',false,0.6)
                 }
             }
         })
@@ -511,8 +511,9 @@ export default class Slot{
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
-           
+           console.log(data)
             if(index == 0 && data.count>2){
+                console.log(data.count)
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
