@@ -24,6 +24,8 @@ export default class IntroScreen{
     private transition:Transition
     public btnScaleAnimation:any
     private arrayContents:Array<any> = []
+
+    private slideDelays:Array<number> = [0,4,8,12,16]
     constructor(app:PIXI.Application,assets:any){
         this.app = app
         this.baseWidth = this.app.screen.width
@@ -34,42 +36,39 @@ export default class IntroScreen{
         this.slides = [
             {
                 img:"slide_1",
-                text:"Hello my friends"
+                text:"PICK STONES TO REVEAL JACKPOT MATCH 3 TO WIN"
             },
             {
                 img:"slide_2",
-                text:"Hello my sd"
+                text:"WILD SYMBOL TRIGGERS JACKPOT GAME"
             },
             {
                 img:"slide_3",
-                text:"Hello my frieasdnds"
+                text:"WIN MULTIPLIER SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
             },
             {
                 img:"slide_4",
-                text:"Hello my asd"
+                text:"WIN MONEY SYMBOLS ON REEL 2,3,4 AND 5 IN FREE SPIN FEATURE"
             },
         ]
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
-            fontSize: 36,
+            fontSize: 40,
             fontWeight: 'bold',
-            fill: ['#ffffff', '#ffffff'], // gradient
-            strokeThickness: 5,
+            fill: ['#ffd957', '#ec9a0c'], // gradient
             dropShadow: true,
-            dropShadowColor: '#000000',
-            dropShadowBlur: 4,
-            dropShadowAngle: Math.PI / 6,
+            dropShadowColor: '#622911',
+            dropShadowBlur: 0,
+            dropShadowAngle: Math.PI / 3,
             dropShadowDistance: 6,
             wordWrap: true,
-            wordWrapWidth: 440,
+            wordWrapWidth: 800,
             lineJoin: 'round',
+            align:'center'
         });
         this.init()
     }
     private init(){
-        // const slideImgs:any = []
-        // const radios:any = []
-        // const texts:any = []
         this.radioCont = new PIXI.Container
         this.bg = new PIXI.Sprite(this.assets.intro.textures['intro_bg.png'])
         this.radioOn =  new PIXI.Sprite(this.assets.intro.textures[`radio_on.png`]).texture
@@ -159,7 +158,7 @@ export default class IntroScreen{
     
     private playSlideAnimation(index:number,slideImg:PIXI.Sprite){
         let slideFadeIn = gsap.to(slideImg,{
-            delay:index*3,
+            delay:this.slideDelays[index],
             duration:1,
             alpha:1,
             onStart:()=>{
@@ -172,7 +171,7 @@ export default class IntroScreen{
             onComplete:()=>{
                 slideFadeIn.kill()
                 let slideFadeOut = gsap.to(slideImg,{
-                    delay:index*3,
+                    delay:2,
                     duration:1,
                     alpha:0,
                     onComplete:()=>{
