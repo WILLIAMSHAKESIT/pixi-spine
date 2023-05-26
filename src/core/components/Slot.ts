@@ -28,9 +28,7 @@ export default class Slot{
     private blockHeight:number = 260
     private blockSpacing:number = 258
     private reelPosX:Array<number> = [366.5,668.5,966,1263,1558.5]
-    private maskPosX:Array<number> = [220,520,820,1118,1415]
     private reelEffectPosX:Array<number> = [369,666,967.5,1263,1558.5]
-    private maskPosY:number = 130
     public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
     private spinCount:number= 0
@@ -121,8 +119,11 @@ export default class Slot{
     public whatEvent:number = 0
     public generateTypeIndex:number = 0
 
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void){
+    private bonusSymbolsCount:number = 0
+    private sound:Array<any>
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>){
         this.app = app
+        this.sound = sound
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
@@ -264,6 +265,7 @@ export default class Slot{
         this.container.addChild(this.maskSprite)
     }
     public startSpin(spinType:string){
+        this.bonusSymbolsCount = 0
         this.soundStop(5)
         this.spinType = spinType
         this.symbolCount = 0
@@ -318,7 +320,7 @@ export default class Slot{
                     this.resetTopSymbolsAlpha(index)
                 },
                 onComplete:()=>{
-                    this.playSound(3)
+                    // this.playSound(3)
                     bounceStart.kill()
                     let spin = gsap.to(data, {
                         duration: this.spinDuration,
@@ -432,6 +434,12 @@ export default class Slot{
                     }
                 }
                 if(data.type == this.bonusType){
+                    this.bonusSymbolsCount++
+                    if(this.bonusSymbolsCount > 1){
+                        this.playSound(10)
+                    }else{
+                        this.playSound(9)
+                    }
                     Functions.loadSpineAnimation(data.symbol,'fall',false,0.6)
                 }
             }
@@ -511,7 +519,6 @@ export default class Slot{
         countsArray.push(isPattern9)
         
         countsArray.forEach((data,index)=>{
-           console.log(data)
             if(index == 0 && data.count>2){
                 console.log(data.count)
                 let totalLinePay:number = 0
@@ -675,7 +682,7 @@ export default class Slot{
         }
         this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
         Functions.loadSpineAnimation(this.reelsSymbols[reelIndex][blockIndex].symbol,'animation',true,0.8)
-        this.playSound(5);
+        // this.playSound(5);
         this.animateDone = false
     }
     private applyMotionBlur(index:number,onSpin:boolean){
@@ -689,6 +696,9 @@ export default class Slot{
         if(i >= 2 ){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
+                if(!this.sound[11].playing){
+                    this.playSound(11)
+                }
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
                 if(!this.freeSpinStart){
                 this.spinReelAnimation[2].repeat(2)
@@ -714,6 +724,7 @@ export default class Slot{
                 }
             }
             if(this.isFreeSpin){
+                this.playSound(11)
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
             }
         }
@@ -724,6 +735,7 @@ export default class Slot{
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType) && (this.preGeneratedTypes[2][0] == this.bonusType || this.preGeneratedTypes[2][1] == this.bonusType || this.preGeneratedTypes[2][2] == this.bonusType)){
                 this.reelEffect[3].visible = true
                 Functions.loadSpineAnimation(this.reelEffect[3],'animation',true,1)
+                this.playSound(11)
             }
         }
         if(index == 3 && !this.isFreeSpin){
@@ -735,8 +747,7 @@ export default class Slot{
             (this.preGeneratedTypes[3][0] == this.bonusType || this.preGeneratedTypes[3][1] == this.bonusType || this.preGeneratedTypes[3][2] == this.bonusType)){
                 this.reelEffect[4].visible = true
                 Functions.loadSpineAnimation(this.reelEffect[4],'animation',true,1)
-
-                
+                this.playSound(11)
             }
         }
         if(index == 4  && !this.isFreeSpin){

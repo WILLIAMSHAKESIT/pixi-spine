@@ -110,11 +110,19 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/ui/click.mp3`,false); //1
         this.soundSetup(`${this.soundsPath}sfx/ui/hover.mp3`,false); //2
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_spin.mp3`,false); //3
-        this.soundSetup(`${this.soundsPath}sfx/reel/reel_stop2.mp3`,false); //4
+        this.soundSetup(`${this.soundsPath}sfx/reel/reel_stop.mp3`,false); //4
         this.soundSetup(`${this.soundsPath}sfx/reel/common_effect.mp3`,false); //5
-        this.soundSetup(`${this.soundsPath}music/event_music.wav`,false); //6
+        this.soundSetup(`${this.soundsPath}music/event_music.mp3`,false); //6
         this.soundSetup(`${this.soundsPath}sfx/win/event_win.wav`,false); //7
         this.soundSetup(`${this.soundsPath}music/matchgame_music.mp3`,true); //8 
+        this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact.mp3`,false); //9 
+        this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact2.mp3`,false); //10
+        this.soundSetup(`${this.soundsPath}sfx/reel/bonus_power.mp3`,false); //11
+        this.soundSetup(`${this.soundsPath}sfx/ui/confirm.mp3`,false); //12
+        this.soundSetup(`${this.soundsPath}sfx/ui/reject.mp3`,false); //13
+        this.soundSetup(`${this.soundsPath}sfx/ui/pops_show.mp3`,false); //14
+        this.soundSetup(`${this.soundsPath}sfx/ui/buy_bonus_confirm.mp3`,false); //15
+        this.soundSetup(`${this.soundsPath}music/spin_music.mp3`,false); //16
 
         await PIXI.Assets.init({ manifest: manifest });
         
