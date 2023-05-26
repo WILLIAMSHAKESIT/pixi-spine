@@ -1,6 +1,7 @@
 import 'pixi-spine'
 import * as PIXI from 'pixi.js';
 import Transition from './Transition';
+import { gsap } from "gsap";
 
 export default class IntroScreen{
     private app:PIXI.Application
@@ -13,24 +14,23 @@ export default class IntroScreen{
     // sprites
     private bg:PIXI.Sprite
     private logo:PIXI.Sprite
-    private playBtn:PIXI.Sprite
+    public playBtn:PIXI.Sprite
 
     private radioOn:PIXI.Texture
+    private radioOff:PIXI.Texture
     private slides:Array<any>
     private textStyle:PIXI.TextStyle
 
     private transition:Transition
-
-    private loadedAssets:(assets:any,app:PIXI.Application)=>void;
-
-    constructor(app:PIXI.Application,assets:any,loadedAssets:(assets:any,app:PIXI.Application)=>void){
+    public btnScaleAnimation:any
+    private arrayContents:Array<any> = []
+    constructor(app:PIXI.Application,assets:any){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.assets = assets
         this.container = new PIXI.Container
         this.centerContainer = new PIXI.Container
-        this.loadedAssets = loadedAssets
         this.slides = [
             {
                 img:"slide_1",
@@ -67,9 +67,9 @@ export default class IntroScreen{
         this.init()
     }
     private init(){
-        const slideImgs:any = []
-        const radios:any = []
-        const texts:any = []
+        // const slideImgs:any = []
+        // const radios:any = []
+        // const texts:any = []
         this.radioCont = new PIXI.Container
         this.bg = new PIXI.Sprite(this.assets.intro.textures['intro_bg.png'])
         this.radioOn =  new PIXI.Sprite(this.assets.intro.textures[`radio_on.png`]).texture
@@ -85,9 +85,9 @@ export default class IntroScreen{
             }
             slideImg.y = (this.logo.height+this.logo.y)*1.2
             this.centerContainer.addChild(slideImg)
-            slideImgs.push(slideImg)
 
             const radio = new PIXI.Sprite(this.assets.intro.textures[`radio_off.png`])
+            this.radioOff = radio.texture
             if(index == 0){
                 radio.texture = this.radioOn 
             }
@@ -96,7 +96,6 @@ export default class IntroScreen{
             radio.y = 750
             radio.interactive = true
             radio.cursor = 'pointer'
-            radios.push(radio)
             this.radioCont.addChild(radio)
             this.centerContainer.addChild(this.radioCont)
 
@@ -107,20 +106,27 @@ export default class IntroScreen{
 
             text.x = (this.centerContainer.width - text.width)/2
             text.y = radio.y*1.1
-            texts.push(text)
             this.centerContainer.addChild(text)
 
+            let dataArray = {
+                slideImg:slideImg,
+                text:text,
+                radio:radio
+             }
+            this.arrayContents.push(dataArray)
+
             radio.addEventListener('pointerdown',()=>{
-                slideImgs.forEach((data:any)=>{data.alpha = 0})
+                this.arrayContents.forEach((data:any)=>{data.slideImg.alpha = 0})
                 slideImg.alpha = 1
                 //set radios
-                radios.forEach((data:any)=>{data.texture = radio.texture,data.interactive = true})
+                this.arrayContents.forEach((data:any)=>{data.radio.texture = radio.texture,data.radio.interactive = true})
                 radio.interactive = false
                 radio.texture = this.radioOn
                 // set text
-                texts.forEach((data:any)=>{data.alpha = 0})
+                this.arrayContents.forEach((data:any)=>{data.text.alpha = 0})
                 text.alpha = 1
             })
+            this.playSlideAnimation(index,slideImg)
         })
 
         this.radioCont.x = (this.centerContainer.width - this.radioCont.width)/2
@@ -134,21 +140,49 @@ export default class IntroScreen{
         this.playBtn.y = (this.baseHeight - this.playBtn.height)*0.9
         this.playBtn.interactive = true
         this.playBtn.cursor = 'pointer'
-        this.container.addChild(this.playBtn)
-        this.playBtn.addEventListener('pointerdown',()=>{
-            this.createTransition()
-            let timeOut = setTimeout(()=>{
-                clearTimeout(timeOut)
-            },1000)
-            let timeOut2 = setTimeout(()=>{
-                this.loadedAssets(this.assets,this.app)
-                clearTimeout(timeOut2)
-            },2000)
-        })
-    }
+        this.btnScaleAnimation = gsap.timeline({ 
+            repeat: -1,
+            onUpdate:()=>{
+                this.playBtn.x = (this.baseWidth - this.playBtn.width)*0.9
+                this.playBtn.y = (this.baseHeight - this.playBtn.height)*0.9
+            }
+        });
 
-    private createTransition(){
-        this.transition = new Transition(this.app,this.container,this.assets)
-        this.app.stage.addChild(this.transition.container)
+        this.btnScaleAnimation.to(this.playBtn.scale, 
+            { duration: 0.5,x: 1.2, y: 1.2 }
+        )
+        .to(this.playBtn.scale, { duration: 0.5, x: 1, y: 1 });
+        // Start the animation
+        this.btnScaleAnimation.play();
+        this.container.addChild(this.playBtn)
     }
+    
+    private playSlideAnimation(index:number,slideImg:PIXI.Sprite){
+        let slideFadeIn = gsap.to(slideImg,{
+            delay:index*3,
+            duration:1,
+            alpha:1,
+            onStart:()=>{
+                this.arrayContents.forEach((data:any)=>{data.radio.texture = this.radioOff,data.radio.interactive = true})
+                this.arrayContents[index].radio.interactive = false
+                this.arrayContents[index].radio.texture = this.radioOn
+                this.arrayContents.forEach((data:any)=>{data.text.alpha = 0})
+                this.arrayContents[index].text.alpha = 1
+            },
+            onComplete:()=>{
+                slideFadeIn.kill()
+                let slideFadeOut = gsap.to(slideImg,{
+                    delay:index*3,
+                    duration:1,
+                    alpha:0,
+                    onComplete:()=>{
+                        slideFadeOut.kill()
+                        if(index == 3){
+                            this.arrayContents.forEach((data,index)=>{this.playSlideAnimation(index,data.slideImg)})
+                        }
+                    }
+                })
+            }
+        })
+    } 
 }

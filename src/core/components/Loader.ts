@@ -1,7 +1,6 @@
 import 'pixi-spine' // Do this once at the very start of your code. This registers the loader!
 import * as PIXI from 'pixi.js';
 import {Spine} from 'pixi-spine';
-import IntroScreen from './IntroScreen';
 import WebFont from 'webfontloader';
 import {Howl} from 'howler';
 
@@ -20,8 +19,6 @@ export default class Loader{
     private loadingTextStyle:PIXI.TextStyle
     private loadingTextStyle2:PIXI.TextStyle
     private loadingBg:PIXI.Sprite
-    //intro screen
-    private intro:IntroScreen;
     constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
         this.app = new PIXI.Application({ width: 1920, height: 1080});
         this.loadingContainer = new PIXI.Container
@@ -197,11 +194,7 @@ export default class Loader{
         this.soundPrompt(bool)
         this.app.stage.removeChild(this.loadingContainer)
         this.app.stage.removeChild(this.loadingBg)
-        this.createIntro(loadedAssets)
-    }
-    private createIntro(loadedAssets:(assets:any,app:PIXI.Application)=>void){
-        this.intro = new IntroScreen(this.app,this.gameAssets,loadedAssets.bind(this))
-        this.app.stage.addChild(this.intro.container)
+        loadedAssets(this.gameAssets,this.app)
     }
     private soundPrompt(bool:boolean){
         this.sounds(bool,this.soundsGlobal)

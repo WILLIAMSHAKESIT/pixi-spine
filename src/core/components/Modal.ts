@@ -374,7 +374,7 @@ export default class Modal{
             }
             this.updatePageContent(args,currentPage,lastPage)
         })
-
+        
         this.infoFirstPageContainer.alpha = 1
         this.infoSecondPageContainer.alpha = 0
         this.infoThirdPageContainer.alpha = 0

@@ -7,6 +7,7 @@ import PopUps from './components/PopUps';
 import Controller from './components/Controller';
 import Modal from './components/Modal';
 import Transition from './components/Transition';
+import IntroScreen from './components/IntroScreen';
 import Functions from './settings/Functions';
 import json from './settings/settings.json'
 import {Spine} from 'pixi-spine';
@@ -43,6 +44,7 @@ export default class Game{
     private buyBonusBtn:PIXI.Sprite
     private buyBonusFrame:PIXI.Sprite
     private overlay:PIXI.Sprite
+    private intro:IntroScreen
     // values
     private betAmount:number = 1
     private betIndex:number = 0
@@ -208,6 +210,7 @@ export default class Game{
         this.createModal()
         this.events()
         this.updateTextValues()
+        this.createIntro()
         this.app.stage.addChild(this.gameContainer);
 
         window.document.addEventListener('keydown', (e)=> {
@@ -239,6 +242,19 @@ export default class Game{
 
         this.playSound(0)
         Howler.mute(true)
+    }
+    private createIntro(){
+        this.intro = new IntroScreen(this.app,this.textureArray)
+        this.gameContainer.addChild(this.intro.container)
+        
+        this.intro.playBtn.addEventListener('pointerdown',()=>{
+            this.createTransition()
+            let timeOut = setTimeout(()=>{
+                this.gameContainer.removeChild(this.intro.container)
+                this.intro.btnScaleAnimation.kill()
+                clearTimeout(timeOut)
+            },this.transitionDelay)
+        })
     }
     private createPlants(){
         //plant 5
