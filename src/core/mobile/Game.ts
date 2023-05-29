@@ -16,7 +16,7 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import {Howler} from 'howler';
 // give the plugin a reference to the PIXI object
 PixiPlugin.registerPIXI(PIXI);
-export default class Game{
+export default class GameMobile{
     private app:PIXI.Application
     private textureArray:any
     private gameContainer:PIXI.Container;
@@ -82,13 +82,12 @@ export default class Game{
     //sound
     private sounBtnSpriteOn:PIXI.Texture
     private sounBtnSpriteOff:PIXI.Texture
+    //sound 
     private sound:Array<any>;
     private globalSound:Boolean = false;
     private ambientCheck:Boolean = false;
     private sfxCheck:Boolean = false;
     public load:Loader;
-    private fadeDurationBgm:number = 3000
-    private fadeOutDelay:number = 8000
     //plants
     private plant1Right:Spine
     private plant2Right:Spine
@@ -102,7 +101,51 @@ export default class Game{
     private plant5Left:Spine
     private vines:Spine
 
-    private lastSpinTime:number = 0
+
+    //FOR MOBILE TEMPORARY
+
+    //settings
+    private screenSetting:any;
+
+    private paylineTextY:number = 0
+    private paylineTextX:number = 0
+    
+    private paylineTextBtmY:number = 0
+    private paylineTextBtmX:number = 0
+
+    private paylineSymbolX:number = 0
+    private paylineSymbolY:number = 0
+
+    private paylineContainer:PIXI.Sprite
+    
+    private infoContainer:PIXI.Sprite
+
+    //GET BONUS
+    private freeSpinHeight:number = 0
+    private freeSpinWidth:number = 0
+    private freeSpinX:number = 0
+    private freeSpinY:number = 0
+       
+    private moneySlot:PIXI.Sprite
+    private wildSlot:PIXI.Sprite
+    private glowX:number = 0
+    private glowX2:number = 0
+    private glowY2:number = 0
+    private moneyBoardX:number = 0
+    private moneyBoardY:number = 0
+    private leavesRotate:number = 0 
+
+    private isOpenSetting:boolean = false
+    private isOpenBuyBonusFrame:boolean = false
+    private isOpenAutoplay:boolean = false
+    private isOpenCongrats:boolean = false
+    private isOpenInfo:boolean = false
+    private openTransition:boolean = false
+
+    private eventStart:boolean = false
+
+    //FOR MOBILE TEMPORARY
+     
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
         this.gameContainer = new PIXI.Container
@@ -201,6 +244,18 @@ export default class Game{
         this.sounBtnSpriteOn =  Functions.loadTexture(this.textureArray,'controller','sound_on_button').texture
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
         this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
+
+        //FOR MOBILE
+        this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
+        this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
+
+        this.paylineContainer = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_text')
+        this.infoContainer = Functions.loadTexture(this.textureArray,'controller_mobile','info_container')
+        this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
+        //FOR MOBILE
+         this.screenSetting = Functions.screenSize();
+        this.app.renderer.resize(1920,1080);
+
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         this.createGame()
@@ -217,6 +272,11 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){         
+                // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
+                // console.log(this.isAutoPlay, " this.isAutoPlay")
+                // console.log(this.isMatchingGame, " this.isMatchingGame")
+                // console.log(this.isFreeSpin, " this.isFreeSpin")
+                // console.log(this.isOpenModal, " this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
@@ -236,40 +296,522 @@ export default class Game{
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
+        window.addEventListener('resize',()=>{
+            this.screenSize()
+        })
+        this.screenSize()
+
+        this.playSound(0)
         Howler.mute(true)
-        // toggle sound on tab enter and leave
-        document.addEventListener("visibilitychange", ()=> {
-            if (document.hidden){
-                Howler.mute(true)
-            } else {
-                Howler.mute(false)
-            }
-        });
     }
+    private screenSize(){
+        
+        this.screenSetting = Functions.screenSize();
+        this.gameBackground.width = this.screenSetting.baseWidth
+        this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
+        //this.app.renderer.options.width = this.screenSetting.newGameWidth
+        //this.app.renderer.options.height = this.screenSetting.newGameHeight ;
+        //this.app.renderer.options. = this.screenSetting.newGameY  + this.screenSetting.newGameX ;
+
+        if(this.screenSetting.screentype == 'portrait'){
+            this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
+            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
+            //slot container rescale
+            this.slotGame.container.scale.set(0.7)
+            this.slotGame.container.x = -80
+
+            //background rescale
+            this.gameBackground.height = this.screenSetting.baseHeight
+            this.gameBackground.width = this.screenSetting.baseWidth
+            
+            //levelbarIndicator
+            this.slotGame.levelBarBg.x = this.screenSetting.baseWidth / 2
+            this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height +100
+            this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
+            this.slotGame.levelBarIndicator.y = this.slotGame.levelBarBg.y
+            this.slotGame.itemMini.x = this.slotGame.levelBarBg.x -15 
+            this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
+            this.slotGame.itemMajor.x = this.slotGame.levelBarBg.x + 230 
+            this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
+            this.slotGame.itemGrand.x = this.slotGame.levelBarBg.x + 496
+            this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
+
+            //FREE SPIN
+            this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
+            //CONTROLLER PARENT
+            if(this.isMatchingGame || this.eventStart){
+                this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile_darkmode','mobile_controllers_darkmode').texture
+                this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller_mobile_darkmode','system_settings_darkmode').texture
+                this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile_darkmode','info_darkmode').texture
+                
+            }else{
+                this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','controller_parent').texture
+                this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','system_settings').texture
+                this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','info_button').texture
+            }
+         
+            this.controller.parentSprite.width = this.screenSetting.baseWidth
+            this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
+            this.controller.container.x = 0
+            //CONTROLLER CHILDREN
+            this.controller.spinBtnSprite.y = this.controller.parentSprite.y + 15
+            this.controller.spinBtnSprite.x = 445
+            this.controller.spinBtnSprite.scale.set(2.3)
+
+            this.controller.autoPlay.x = 878
+            this.controller.autoPlay.y = this.controller.parentSprite.y + 116
+            this.controller.autoPlay.scale.set(2.4)
+
+
+            this.controller.settingBtnSpite.x = 130
+            this.controller.settingBtnSpite.y = this.controller.parentSprite.y + 116
+
+            this.controller.betContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_container').texture
+            this.controller.betContainerSprite.y = this.screenSetting.baseHeight/2 + 350
+            this.controller.betContainerSprite.x = 70
+            this.controller.betContainerSprite.scale.set(0.8)
+            this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+            this.controller.betText.y = this.controller.betContainerSprite.height / 2 - 35
+            this.controller.betText.scale.set(1.3)
+
+            this.controller.creditContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_container').texture
+            this.controller.creditContainerSprite.y = this.screenSetting.baseHeight/2 + 350
+            this.controller.creditContainerSprite.x = 730
+            this.controller.creditContainerSprite.scale.set(0.8)
+            this.controller.creditText.x = this.controller.betContainerSprite.width / 2
+            this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
+            this.controller.creditText.scale.set(1.3)
+
+            this.paylineTextY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1130
+            this.paylineText.y = this.paylineTextY
+            this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
+
+            this.paylineTextBtmY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1060
+            this.paylineTextBtmX = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
+            this.paylineTextBottom.y = this.paylineTextBtmY
+            this.paylineTextBottom.x =  this.paylineTextBtmX
+
+            this.paylineSymbolX = (this.controller.parentSprite.width - this.paylineText.width)/2 
+            this.paylineSymbolY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1000
+
+            this.paylineContainer.alpha = 1
+
+            this.infoContainer.alpha = 111
+            this.infoContainer.y = this.buyBonusBtn.y
+            this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
+
+            this.controller.infoBtnSprite.x = this.gameBackground.width - this.controller.infoBtnSprite.width - 16
+            this.controller.infoBtnSprite.y = 500
+
+            this.controller.soundBtnSprite.alpha = 0
+
+            
+            this.freeSpinHeight = 800
+            this.freeSpinX = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
+            this.glowX = 590
+
+            //BONUS FRAME
+            if(this.isOpenBuyBonusFrame){
+                this.buyBonusFrame.x = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
+                this.popGlow.x = this.buyBonusFrame.x + 325
+            }
+            
+            //POPGLOW
+            this.glowX2 = 570
+            this.glowY2 = 1644
+            this.popGlow2.x = 570
+            this.popGlow2.y = 1644
+            this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 - 400
+            this.moneySlot.y = 380
+            //this.moneyBoardX = 
+            this.moneyBoardY = 380
+            //this.transition.leaves.rotation = 0
+            this.leavesRotate = 190
+
+            this.frameGlow.y = this.screenSetting.baseHeight - this.controller.parentSprite.height + 240
+            this.frameGlow.x = this.frameGlow.width / 2 - 180
+
+
+            //MODALS
+            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'controller_mobile','modal_container').texture
+            this.modal.modalFrame.x = (this.gameBackground.width - this.modal.modalFrame.width)  / 2
+            this.modal.modalFrame.y = (this.gameBackground.height - this.modal.modalFrame.height)  / 2
+           
+            if(this.isOpenSetting){
+                this.modal.modalTitle.x = (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
+                this.modal.closeModal.y = 45
+                this.modal.separator.alpha = 0
+
+                this.modal.leftContainer.scale.set(1.7)
+                this.modal.leftContainer.x = (this.modal.modalFrame.width - this.modal.leftContainer.width)/2 
+                this.modal.leftContainer.y = 300
+            
+                this.modal.rightContainer.scale.set(1.5)
+                this.modal.rightContainer.y = (this.modal.modalFrame.height - this.modal.rightContainer.height)/2 
+                this.modal.rightContainer.x =  (this.modal.modalFrame.width - this.modal.rightContainer.width)/2 
+            }
+
+            if(this.isOpenAutoplay){
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
+                this.modal.closeModal.y = 45
+                this.modal.btnContainer.visible = false
+                this.modal.btn2Container.visible = true
+                this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
+                this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
+                this.modal.btn2Container.scale.set(1.3)
+                this.modal.btn2Container.x = 0
+                this.modal.btn2Container.y = -300
+                this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
+                this.modal.bottomContainer.scale.set(1.3)
+            }
+
+            if(this.isOpenInfo){
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
+                this.modal.closeModal.y = 45
+                  //PREVIOUS AND NEXT BUTTON
+                this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height)/2
+                this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
+                this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
+                this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
+                this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
+                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
+           
+            }
+
+            //CONGRATS POPUP
+            if(this.isOpenCongrats){
+                this.congrats.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
+                this.congrats.logo.x = (this.overlay.width)/2
+                this.congrats.logo.y = (this.overlay.height)/2
+                this.congrats.popGlow.x =  (this.overlay.width)/2
+                this.congrats.descText.x = (this.overlay.width - this.congrats.descText.width)/2
+                this.congrats.descText.y = ((this.overlay.height - this.congrats.descText.height)/2)*0.46
+                this.congrats.spins.x = (this.overlay.width - this.congrats.spins.width)/2
+                this.congrats.spins.y = (this.overlay.height - this.congrats.spins.height)/2 - 200
+                this.congrats.clickAnyTxt.x =  (this.overlay.width - this.congrats.clickAnyTxt.width)/2
+                this.congrats.clickAnyTxt.y =  (this.overlay.width - this.congrats.clickAnyTxt.width) + 30
+                this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
+                this.congrats.money.y = ((this.overlay.height - this.congrats.money.height)/2)- 330
+            }
+
+            // //LOADER
+            // this.load.loadingContainer.x = (this.screenSetting.baseWidth - this.load.loadingContainer.width)/2
+            // this.load.loadingContainer.y = (this.screenSetting.height  - this.load.loadingContainer.height)/2
+            // this.load.loadingTextNew.x = 0
+
+            //INFO MODAL
+           
+          
+
+            // ALIGNING OF ALL PAGES X AXIS
+            this.modal.infoFirstPageContainerPortrait.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainerPortrait.width)/2- 200
+            this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
+            this.modal.infoThirdPageContainerPortrait.x = (this.modal.modalFrame.width - this.modal.infoThirdPageContainerPortrait.width)/2 
+           
+            // ALIGNING OF ALL PAGES Y AXIS
+                this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoFifthPageContainerPortrait.height)/2 
+              this.modal.infoThirdPageContainerPortrait.y = (this.modal.modalFrame.height - this.modal.infoThirdPageContainerPortrait.height)/2 
+           
+            //CHECK THE CURRENT PAGE
+            if(this.modal.currentPage == 0) {
+                this.modal.infoFirstPageContainerPortrait.alpha = 1
+                this.modal.infoFirstPageContainer.alpha = 0
+            }else if(this.modal.currentPage == 1){
+                this.modal.infoSecondPageContainer.alpha = 1
+                this.modal.infoSecondPageContainer.scale.set(1.4)      
+            }
+            else if(this.modal.currentPage == 2){
+                this.modal.infoThirdPageContainerPortrait.alpha = 1
+                this.modal.infoThirdPageContainer.alpha = 0
+                this.modal.imgContainerPortrait.x = (this.modal.modalFrame.width - this.modal.imgContainerPortrait.width)/2 + 40
+                this.modal.imgContainerPortrait.y = (this.modal.modalFrame.height - this.modal.imgContainerPortrait.height)/2 - 350
+            }
+            else if(this.modal.currentPage == 3){
+                this.modal.infoFourthPageContainerPortrait.alpha = 1
+                this.modal.infoFourthPageContainer.alpha =0   
+                this.modal.image4thPortrait.x = (this.modal.modalFrame.width - this.modal.image4thPortrait.width)/2
+                this.modal.image4thPortrait.y = (this.modal.modalFrame.height - this.modal.image4thPortrait.height)/2 +30    
+            }
+            else if(this.modal.currentPage == 4){
+                this.modal.infoFifthPageContainerPortrait.alpha = 1
+                this.modal.infoFifthPageContainer.alpha =0   
+                this.modal.image5thPortrait.x = (this.modal.modalFrame.width - this.modal.image5thPortrait.width)/2
+                this.modal.image5thPortrait.y = (this.modal.modalFrame.height - this.modal.image5thPortrait.height)/2 +30    
+            }
+            else if(this.modal.currentPage == 5){
+                this.modal.infoSixthPageContainerPortrait.alpha = 1
+                this.modal.infoSixthPageContainer.alpha =0   
+                this.modal.image6thPortrait.x = (this.modal.modalFrame.width - this.modal.image6thPortrait.width)/2
+                this.modal.image6thPortrait.y = (this.modal.modalFrame.height - this.modal.image6thPortrait.height)/2 +30    
+            }
+
+
+
+            //HOME
+            this.intro.bg.height = this.screenSetting.baseHeight
+            this.intro.bg.width = this.screenSetting.baseWidth
+            this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
+            this.intro.playBtn.x = (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
+            this.intro.playBtn.y = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
+            this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
+            this.intro.playBtnY = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
+
+
+            //TRANSITION
+            if(this.openTransition){
+            this.transition.leaves.rotation = 190
+            this.transition.leaves.x = 100 
+            }
+
+
+        }else{ 
+ 
+            //MODAL
+            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal','modal_frame').texture
+            this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)/2
+            this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)/2
+            this.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
+            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
+            this.slotGame.container.scale.set(1)
+            this.slotGame.container.x = 0
+
+            //CONTROLLER PARENT
+            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent').texture
+            this.controller.parentSprite.width = this.screenSetting.baseWidth
+            this.controller.container.y = 0
+            this.controller.container.x = 0
+
+            //FREE SPIN
+            this.buyBonusBtn.y =  (this.baseHeight - this.buyBonusBtn.height)/2
+           
+            //levelbarIndicator
+            this.slotGame.levelBarBg.x = (this.slotGame.frameBorder.width - this.slotGame.levelBarBg.width)+50
+            this.slotGame.levelBarBg.y =  this.slotGame.frameBorder.y * 0.7
+            this.slotGame.levelBarIndicator.x =  this.slotGame.levelBarBg.x + 5
+            this.slotGame.levelBarIndicator.y =this.slotGame.levelBarBg.y
+            this.slotGame.itemMini.x = this.slotGame.levelBarBg.x 
+            this.slotGame.itemMini.y =  this.slotGame.levelBarBg.y - 30
+            this.slotGame.itemMajor.x =this.slotGame.itemMini.x + this.slotGame.itemMini.width
+            this.slotGame.itemMajor.y = this.slotGame.itemMini.y - 13
+            this.slotGame.itemGrand.x = this.slotGame.itemMajor.x + this.slotGame.itemMajor.width
+            this.slotGame.itemGrand.y =  10
+
+            //CONTROLLER CHILDREN
+            this.controller.spinBtnSprite.scale.set(1)
+            this.controller.spinBtnSprite.y = this.controller.parentSprite.y + 15
+            this.controller.spinBtnSprite.x =  (this.controller.parentSprite.width - this.controller.spinBtnSprite.width) - 147
+            
+            this.controller.autoPlay.scale.set(1)
+            this.controller.autoPlay.x = (this.controller.parentSprite.width - this.controller.autoPlay.width) - 45
+            this.controller.autoPlay.y = (this.controller.parentSprite.y + this.controller.parentSprite.height) - this.controller.autoPlay.height*1.2
+           
+
+            this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
+            this.controller.settingBtnSpite.x = this.controller.settingBtnSpite.width *1.5
+            this.controller.settingBtnSpite.y = this.controller.parentSprite.y+90
+
+            this.controller.betContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller','bet_container').texture
+            this.controller.betContainerSprite.scale.set(1)
+            this.controller.betContainerSprite.y = this.controller.parentSprite.y + 90
+            this.controller.betContainerSprite.x = this.controller.betContainerSprite.width*0.95
+           
+            this.controller.betText.scale.set(1)
+            this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+            this.controller.betText.y = this.controller.betContainerSprite.height / 2 - 35
+           
+            this.controller.creditContainerSprite.scale.set(1)
+            this.controller.creditContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller','credits_container').texture
+            this.controller.creditContainerSprite.y = this.controller.parentSprite.y + 90
+            this.controller.creditContainerSprite.x =  (this.controller.parentSprite.width - this.controller.creditContainerSprite.width)*0.82
+            
+            this.controller.creditText.scale.set(1)
+            this.controller.creditText.x =  (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2
+            this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
+            
+
+            this.paylineTextY =30
+            this.paylineText.y = this.paylineTextY
+            this.paylineText.x =  (this.controller.parentSprite.width - this.paylineText.width)/2
+            this.paylineTextBtmY = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
+            this.paylineTextBtmX = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
+            this.paylineTextBottom.y = this.paylineTextBtmY
+            this.paylineTextBottom.x =  this.paylineTextBtmX
+            this.paylineSymbolX = (this.controller.parentSprite.width -500)/2
+            this.paylineSymbolY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 10
+
+            this.paylineContainer.alpha = 0
+            
+            this.infoContainer.alpha = 0
+            this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
+            this.controller.infoBtnSprite.x =this.controller.infoBtnSprite.width*1.64
+            this.controller.infoBtnSprite.y =  this.controller.parentSprite.y+10
+            
+            this.controller.soundBtnSprite.alpha = 1
+
+            //BONUS FRAME
+            if(this.isOpenBuyBonusFrame){
+                this.buyBonusFrame.x = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
+                this.popGlow.x = this.buyBonusFrame.x + 325
+            }
+
+            //POPGLOW
+            this.glowX2 = 1370
+            this.glowY2 = 1044
+            this.popGlow2.x = 1370
+            this.popGlow2.y = 1044
+            this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 + 400
+            this.moneySlot.y = -240
+            this.moneyBoardY = -240
+
+           // this.transition.leaves.rotation = 0
+           this.frameGlow.x = ((this.slotGame.frameBorder.x + this.slotGame.frameBorder.width)/2)+40
+           this.frameGlow.y = (this.slotGame.frameBorder.y + this.slotGame.frameBorder.height) - 20 
+           this.freeSpinX = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
+           this.glowX = 960
+
+            //CONTROLLER PARENT
+            if(this.isMatchingGame || this.eventStart){
+            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent2').texture
+            this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
+            this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
+            }
+
+            //MODALS
+            if(this.isOpenSetting){
+            this.modal.modalTitle.x =  (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
+            this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
+            this.modal.closeModal.y = 30
+            this.modal.separator.alpha = 1
+
+            this.modal.leftContainer.scale.set(1)
+            this.modal.leftContainer.x = (this.modal.separator.x - this.modal.leftContainer.width) / 2 
+            this.modal.leftContainer.y =  (this.modal.modalFrame.height - this.modal.leftContainer.height)/2 + 50
+            
+            this.modal.rightContainer.scale.set(1)
+            this.modal.rightContainer.y = (this.modal.modalFrame.height - this.modal.rightContainer.height)/2 
+            this.modal.rightContainer.x =  this.modal.separator.x + 60
+            this.modal.separator.x = (this.modal.modalFrame.width - this.modal.separator.width)/2
+            this.modal.separator.y = (this.modal.modalFrame.height - this.modal.separator.height)/2
+            }
+            if(this.isOpenAutoplay){
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
+                this.modal.closeModal.y = 30
+                this.modal.btnContainer.visible = true
+                this.modal.btn2Container.visible = false
+                this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
+                this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
+                this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
+                this.modal.btn2Container.scale.set(1)
+                this.modal.bottomContainer.scale.set(1)
+            }
+            
+            if(this.isOpenInfo){
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
+                this.modal.closeModal.y = 45
+                 //PREVIOUS AND NEXT BUTTON
+                this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height)/2
+                this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
+                this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
+                this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
+                this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
+                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
+                
+            }
+
+            //CONGRATS POPUP
+            if(this.isOpenCongrats){
+                this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal','overlay').texture
+                this.congrats.logo.x = (this.overlay.width)/2
+                this.congrats.logo.y = (this.overlay.height)/1.2
+                this.congrats.popGlow.x =  (this.overlay.width)/2
+                this.congrats.descText.x = (this.overlay.width - this.congrats.descText.width)/2
+                this.congrats.descText.y = ((this.overlay.height - this.congrats.descText.height)/2)*0.74
+                this.congrats.spins.x = (this.overlay.width - this.congrats.spins.width)/2
+                this.congrats.spins.y = (this.overlay.height - this.congrats.spins.height)/1.5
+                this.congrats.clickAnyTxt.x =  (this.overlay.width - this.congrats.clickAnyTxt.width)/2
+                this.congrats.clickAnyTxt.y =  (this.overlay.height - this.congrats.clickAnyTxt.height)/1.4
+                this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
+                this.congrats.money.y =((this.overlay.height - this.congrats.money.height)/2)*1.06
+            }
+
+            //INFO MODAL
+            this.modal.infoSecondPageContainer.scale.set(1)
+
+           
+
+            // ALIGNING OF ALL PAGES X AXIS INFO MODAL
+            this.modal.infoFirstPageContainer.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainer.width)/2
+            this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
+            this.modal.infoThirdPageContainer.x = (this.modal.modalFrame.width - this.modal.infoThirdPageContainer.width)/2 
+            this.modal.infoFourthPageContainer.x =0
+
+            // ALIGNING OF ALL PAGES Y AXIS INFO MODAL
+            this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoSecondPageContainer.height)/2
+            this.modal.infoThirdPageContainer.y =((this.modal.modalFrame.height - this.modal.infoThirdPageContainer.height)/2) + 50
+  
+            //CHECK THE CURRENT PAGE FOR INFO MODAL
+            if(this.modal.currentPage == 0) {
+                this.modal.infoFirstPageContainerPortrait.alpha = 0
+                this.modal.infoFirstPageContainer.alpha = 1
+            }
+            else if(this.modal.currentPage == 1){
+                this.modal.infoSecondPageContainer.alpha = 1
+            }
+            else if(this.modal.currentPage == 2){
+                this.modal.infoThirdPageContainerPortrait.alpha = 0
+                this.modal.infoThirdPageContainer.alpha = 1    
+                this.modal.imgContainer.x = (this.modal.modalFrame.width - this.modal.imgContainer.width)/2
+                this.modal.imgContainer.y = (this.modal.modalFrame.height - this.modal.imgContainer.height)/2 - 120
+            }
+            else if(this.modal.currentPage == 3){
+                this.modal.infoFourthPageContainerPortrait.alpha = 0
+                this.modal.infoFourthPageContainer.alpha = 1    
+                this.modal.image4th.x = (this.modal.modalFrame.width - this.modal.image4th.width)/2
+                this.modal.image4th.y = (this.modal.modalFrame.height - this.modal.image4th.height)/2 +30   
+            }
+            else if(this.modal.currentPage == 4){
+                this.modal.infoFifthPageContainerPortrait.alpha = 0
+                this.modal.infoFifthPageContainer.alpha = 1   
+                this.modal.image5th.x = (this.modal.modalFrame.width - this.modal.image5th.width)/2
+                this.modal.image5th.y = (this.modal.modalFrame.height - this.modal.image5th.height)/2 +30    
+            }
+            else if(this.modal.currentPage == 5){
+                this.modal.infoSixthPageContainerPortrait.alpha = 0
+                this.modal.infoSixthPageContainer.alpha = 1  
+                this.modal.image6th.x = (this.modal.modalFrame.width - this.modal.image6th.width)/2
+                this.modal.image6th.y = (this.modal.modalFrame.height - this.modal.image6th.height)/2 +30    
+            }
+
+            //HOME
+            this.intro.bg.height = this.screenSetting.baseHeight
+            this.intro.bg.width = this.screenSetting.baseWidth
+            this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
+            this.intro.playBtn.x = (this.screenSetting.baseWidth - this.intro.playBtn.width)*0.9
+            this.intro.playBtn.y = (this.screenSetting.baseHeight - this.intro.playBtn.height)*0.9
+            this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width)*0.9
+            this.intro.playBtnY = (this.screenSetting.height - this.intro.playBtn.height) *0.9
+
+
+            //TRANSITION
+            if(this.openTransition){
+                this.transition.leaves.rotation = 0
+                this.transition.leaves.x = 935.5
+            }
+           
+        }
+    }
+
+
+
     private createIntro(){
-        this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.intro.container)
+        
         this.intro.playBtn.addEventListener('pointerdown',()=>{
-            // initialize the sound on game enter
-            if(this.globalSound){
-                Howler.mute(false)
-                this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
-                this.ambientCheck = true
-                this.sfxCheck = true
-            }
-            this.playSound(12)
-            this.playSound(0)
-            this.playSound(16)
-            this.soundVolume(16,0)
-            this.playSound(17)
-            this.soundVolume(17,0)
-            this.playSound(6)
-            this.soundVolume(6,0)
             this.intro.playBtn.interactive = false
             this.createTransition()
             let timeOut = setTimeout(()=>{
-                this.enableButtons(true)
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
                 clearTimeout(timeOut)
@@ -395,16 +937,17 @@ export default class Game{
         this.plantContainerRight.addChild(butterfly)
     }
     private createCongrats(){
-        this.fadeSound(6,0,this.fadeDurationBgm)
-        this.soundVolume(0,0)
-        this.playSound(7)
-        this.fadeSound(7,1,this.fadeDurationBgm)
+        this.isOpenCongrats = true
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
+        this.screenSize()
+        this.playSound(7)
         
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.playSound(1)
+            this.eventStart = false
             this.isAutoPlay = false
             this.congrats.container.interactive = false
             this.slotGame.isFreeSpinDone = true
@@ -417,31 +960,31 @@ export default class Game{
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
-                this.fadeSound(7,0,this.fadeDurationBgm)
-                this.fadeSound(0,1,this.fadeDurationBgm)
+                this.soundStop(6)
+                this.playSound(0)
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
-                    this.soundStop(7)
                     clearTimeout(show);
                 }, 1000);
                 this.slotGame.reelContainer.forEach((data,index)=>{
                     this.slotGame.generateNewSymbols(index)      
                 })  
+                this.screenSize()
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
-        this.modal = new Modal(this.app,this.textureArray)
+        this.modal = new Modal(this.app,this.textureArray, this.screenSize.bind(this))
         this.modal.closeModal.addEventListener('pointerdown',() =>{
             this.playSound(1)
-            
             this.controller.settingBtnSpite.interactive = true
             this.controller.autoPlay.interactive = true
+            this.controller.infoBtnSprite.interactive = true
         })
         this.modal.closeModal.addListener('mouseover',() =>{
             this.playSound(2)
@@ -455,7 +998,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -468,6 +1011,9 @@ export default class Game{
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
+        this.gameContainer.addChild(this.paylineContainer)
+        this.gameContainer.addChild(this.infoContainer)
+        this.paylineContainer.y = 780
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
 
@@ -536,17 +1082,6 @@ export default class Game{
             this.freeSpinEvent()
             this.slotGame.isBonusTick = false
         }
-            let timeout = setTimeout(()=>{
-                if(!this.isAutoPlay){
-                    if(this.sound[16].volume() == 1){
-                        this.fadeSound(16,0,this.fadeDurationBgm)
-                    }
-                    if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
-                        this.fadeSound(0,1,this.fadeDurationBgm)
-                    }
-                }
-                clearTimeout(timeout)
-            },this.fadeOutDelay)
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
@@ -556,17 +1091,6 @@ export default class Game{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        if(!this.sound[0].playing()){
-            this.playSound(0)
-        }
-        if(!this.sound[16].playing()){
-            this.playSound(16)
-        }
-        if(!this.slotGame.isFreeSpin){
-            this.fadeSound(16,1,this.fadeDurationBgm)
-            this.fadeSound(17,0,this.fadeDurationBgm)
-            this.fadeSound(0,0,this.fadeDurationBgm)
-        }
         this.slotGame.totalWin = 0
         this.userCredit-=this.betAmount
         this.updateCreditValues()
@@ -594,10 +1118,9 @@ export default class Game{
         let glowX = 956
         let glowY = 1044
         let dY = -80
-
         // buy bonus modal 
         // glow animation
-        this.popGlow.x = glowX
+        this.popGlow.x = this.glowX
         this.popGlow.y = glowY
         this.popGlow.alpha = 0
         this.popGlow.scale.x = 1.1
@@ -605,13 +1128,15 @@ export default class Game{
         Functions.loadSpineAnimation(this.popGlow,'glow',true,0.1)
         this.overlay.addChild(this.popGlow)
         
-        this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
-        this.buyBonusFrame.x = (this.baseWidth - this.buyBonusFrame.width)/2
+        
+        this.buyBonusFrame.x = this.freeSpinX
         this.buyBonusFrame.y = dY
+    
+        
         //amount
         const amount = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
         amount.x = (this.buyBonusFrame.width - amount.width)/2
-        amount.y = (this.buyBonusFrame.height - amount.height) * 0.85
+        amount.y = (this.buyBonusFrame.height - amount.height) *0.85
         this.buyBonusFrame.addChild(amount)
         //close buy btn
         const close = Functions.loadTexture(this.textureArray,'bonus','ex')
@@ -631,22 +1156,23 @@ export default class Game{
         close.addListener('mouseover',() =>{
             this.playSound(2)
         })
-        // reject bonus
         close.addEventListener('pointerdown',()=>{
-            this.playSound(13) 
+            this.isOpenBuyBonusFrame = false
+            this.playSound(1)
+            
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
         })
         check.addListener('mouseover',() =>{
             this.playSound(2)
         })
-        // accept bonus
         check.addEventListener('pointerdown',()=>{
-            this.playSound(12)
+            this.isOpenBuyBonusFrame = false
+            this.playSound(1)
             this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
-            check.interactive = false
+        check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpinAutoPlay(1)
                 clearTimeout(timeOut)
@@ -683,11 +1209,10 @@ export default class Game{
     private hideBonusPopUp(dY:number,sY:number){
         this.enableButtons(true)
         let fadeOutGlow = gsap.to(this.popGlow,{
-            duration:0.3,
+            duration:0.8,
             alpha:0,
             onComplete:()=>{
                 fadeOutGlow.kill()
-                this.overlay.removeChild(this.popGlow)
                 let bonusFrameHide = gsap.to(this.buyBonusFrame, {
                     delay:0.2,
                     duration:0.2,
@@ -734,17 +1259,11 @@ export default class Game{
         }) 
     }
     private matchingGame(){
-        this.fadeSound(17,0,this.fadeDurationBgm)
-        this.soundStop(17)
-        this.soundStop(16)
-        this.soundStop(0)
-        this.playSound(15)
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
+            this.soundStop(0)
             this.playSound(8)
-            this.soundVolume(8,0)
-            this.fadeSound(8,1,2000)
             let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
             let arrayBlockValues:Array<any> = []
             let blockSpacing = 1.2
@@ -757,7 +1276,6 @@ export default class Game{
             let topText = 'MATCH 3 TO WIN'
             let bottomText = 'PICK STONE TO REVEAL JACKPOTS'
             let popUpSkin = ''
-            let soundTimeOut = 2000
             this.enableButtons(false)
             this.lightMode(false)
             //create blocks
@@ -779,18 +1297,18 @@ export default class Game{
                 }
                 Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
+                symbol.addListener('mouseover',() =>{
+                    this.playSound(2)
+                })
                 symbol.addEventListener('pointerdown',()=>{
-                    this.playSound(20)
+                    this.playSound(1)
+                    
                     symbol.interactive = false
                     status = 'open'
                     arrayBlockValues[index].status = 'open'
                     Functions.loadSpineAnimation(symbol,'reveal',false,0.7)
                     if(data == 'grand'){
                         grandCount++
-                        let timeOut = setTimeout(()=>{
-                            this.playSound(23)
-                            clearTimeout(timeOut)
-                        },soundTimeOut)
                         if(grandCount == 3){
                             popUpSkin = 'excellent'
                             this.matchingGameWin = json.jackpots.grand
@@ -798,10 +1316,6 @@ export default class Game{
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else if(data == 'major'){
-                        let timeOut = setTimeout(()=>{
-                            this.playSound(22)
-                            clearTimeout(timeOut)
-                        },soundTimeOut)
                         majorCount++
                         if(majorCount == 3){
                             popUpSkin = 'impressive'
@@ -810,10 +1324,6 @@ export default class Game{
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else{
-                        let timeOut = setTimeout(()=>{
-                            this.playSound(21)
-                            clearTimeout(timeOut)
-                        },soundTimeOut)
                         miniCount++
                         if(miniCount == 3){
                             popUpSkin = 'nice'
@@ -836,6 +1346,7 @@ export default class Game{
             this.textStyle3.fontSize = 30 
             this.updatePaylineTopText(topText)
             this.updatePaylineBottomText(bottomText)
+            this.screenSize()
             clearTimeout(timeOut)
         },this.transitionDelay)
     }
@@ -848,13 +1359,11 @@ export default class Game{
         })
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
-            this.playSound(7)
-            this.fadeSound(8,0,2000)
             this.popUps.container.addEventListener('pointerdown',()=>{
+                this.playSound(1)
+                
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
-                this.fadeSound(7,0,2000)
-                this.fadeSound(8,1,2000)
             })
             clearTimeout(popDelay)
         },timeOut)
@@ -895,14 +1404,8 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
-            this.playSound(0)
-            this.soundStop(16)
-            this.soundVolume(16,0)
-            this.soundStop(17)
-            this.soundVolume(17,0)
-            this.fadeSound(0,1,2000)
-            this.fadeSound(8,0,2000)
-            this.playSound(12)
+            this.playSound(1)
+            
             textScaleAnim.kill()
             this.endMatchingGame()
             clickContinueText.interactive = false
@@ -923,11 +1426,9 @@ export default class Game{
             this.gameContainer.cursor = ''
             this.lightMode(true)
             this.enableButtons(true)
+            this.screenSize()
             this.slotGame.levelBarIndicator.width = 0
             this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
-            // update text 
-            this.textStyle.fontSize = 50
-            this.textStyle3.fontSize = 40 
             this.updatePaylineTopText('SPIN TO WIN')
             this.updatePaylineBottomText('Tap space or enter to skip')
             if(this.slotGame.freeSpinStart){
@@ -989,12 +1490,12 @@ export default class Game{
         let greetY = 30
         this.paylineText.text = text
         this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = greetY
+        this.paylineText.y = this.paylineTextY
     }
     private updatePaylineBottomText(text:string){
         this.paylineTextBottom.text = text
         this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
+        this.paylineTextBottom.y =this.paylineTextBtmY
     }
     private animatePaySymbols(containerWithText:any,i:number){
         let lastIndex = i+1
@@ -1004,8 +1505,8 @@ export default class Game{
             duration:1,
             alpha:1,
             onStart:()=>{
-                containerWithText.x = (parentContainer.width - containerWithText.width)/2
-                containerWithText.y = (parentContainer.height - containerWithText.height)-10
+                containerWithText.x = this.paylineSymbolX
+                containerWithText.y = this.paylineSymbolY
             },
             onComplete:()=>{
                 containerWithText.alpha = 0
@@ -1147,19 +1648,26 @@ export default class Game{
     }
     private events(){
         // open info modal
-        this.controller.infoBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.isOpenInfo = true
+            this.controller.infoBtnSprite.interactive = false
+            this.controller.settingBtnSpite.interactive = false
+            this.controller.autoPlay.interactive = false
             this.modal.createInfoModal()
+            this.screenSize()
         })
         //open system settings modal
         this.controller.settingBtnSpite.addListener('mouseover',() =>{
             this.playSound(2)
         })
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
+            this.isOpenSetting = true
             this.playSound(1)
+
+            this.controller.infoBtnSprite.interactive = false
             this.controller.settingBtnSpite.interactive = false
+            this.controller.autoPlay.interactive = false
+
             // call settings modal
             this.modal.createSystemSettings(this.isAutoPlay)
             // spin type toggle
@@ -1169,6 +1677,7 @@ export default class Game{
                     data.addListener('mouseover',() =>{
                         this.playSound(2)
                     })
+                    
                     if(index == 0){
                         this.betIndex--
                         this.betAmount = json.bet_amounts[this.betIndex]
@@ -1211,6 +1720,7 @@ export default class Game{
             }else{
                 this.modal.soundBtns[1].texture = this.textureToggleOff
             }
+
             this.modal.soundBtns.forEach((data,index)=>{
                 data.addListener('mouseover',() =>{
                     this.playSound(2)
@@ -1241,18 +1751,16 @@ export default class Game{
             // re position bet amount tex on click
             this.modal.betAmountText.text = this.betAmount
             this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
+            this.screenSize()
         })
         //open autoplay
         this.controller.autoPlay.addListener('mouseover',() =>{
             this.playSound(2)
         })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
-            let timeOut = setTimeout(()=>{
-                this.fadeSound(16,0,this.fadeDurationBgm)
-                this.fadeSound(0,1,this.fadeDurationBgm)
-                this.playSound(1)
-                clearTimeout(timeOut)
-            },this.fadeOutDelay)
+            this.isOpenAutoplay = true
+            this.playSound(1)
+            
             if(this.isAutoPlay){
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
@@ -1262,9 +1770,12 @@ export default class Game{
                 this.buyBonusBtn.interactive = true
                 
             }else{
+                this.controller.infoBtnSprite.interactive = false
+                this.controller.settingBtnSpite.interactive = false
                 this.controller.autoPlay.interactive = false
                 this.modal.btnArray = []
                 this.modal.createAutoPlaySettings()
+                this.screenSize()
                 this.controller.spinBtnSprite.texture = this.spinTextureOn
                 this.controller.spinBtnSprite.interactive = true
                 // initialize active spintype button
@@ -1334,7 +1845,8 @@ export default class Game{
                 this.modal.rollBtn.addEventListener('mouseleave',()=>{
                     this.modal.rollBtn.texture = this.textureRollOff
                 })
-            }       
+            }    
+            this.screenSize()   
         })
         //single spin trigger
         this.controller.spinBtnSprite.addListener('mouseover',() =>{
@@ -1352,32 +1864,30 @@ export default class Game{
             }
         })
         //buy bonus
+        this.buyBonusBtn.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
-            this.playSound(30)
+            this.playSound(1)
+            this.isOpenBuyBonusFrame = true
             this.buyBonusPopUp()
             this.enableButtons(false)
             this.isOpenModal = true
         })
     }
     private freeSpinEvent(){
-        this.playSound(14)
-        this.fadeSound(16,0,this.fadeDurationBgm)
-        this.fadeSound(17,0,this.fadeDurationBgm)
-        this.fadeSound(0,0,this.fadeDurationBgm)
-        this.fadeSound(6,1,this.fadeDurationBgm)
-        this.soundStop(16)
-
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
 
         let glowX = 570
         let glowX2 = 1370
         let glowY = 1044
+        let glowY2 = 1644
         let dY = -80
 
         // glow animation
-        this.popGlow2.x = glowX2
-        this.popGlow2.y = glowY
+        this.popGlow2.x = this.glowX2
+        this.popGlow2.y = this.glowY2
         this.popGlow2.alpha = 0
         this.popGlow2.scale.x = 1.1
         this.popGlow2.scale.y = 1.3
@@ -1391,17 +1901,16 @@ export default class Game{
         this.popGlow.scale.x = 1.1
         this.popGlow.scale.y = 1.3
         
-        const wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
-        wildSlot.x = (this.baseWidth - wildSlot.width)/2 - 400
-        wildSlot.y = -200
-        let sY = -wildSlot.height
-        let wildSlotFrameShow = gsap.from(wildSlot, {
+        //const wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
+        this.wildSlot.x = (this.baseWidth - this.wildSlot.width)/2 - 400
+        this.wildSlot.y = -200
+        let sY = -this.wildSlot.height
+        let wildSlotFrameShow = gsap.from(this.wildSlot, {
             delay:.3,
             y:sY,
             onComplete:()=>{
                 wildSlotFrameShow.kill()
-                this.playSound(15)
-                let bounceUp = gsap.to(wildSlot,{
+                let bounceUp = gsap.to(this.wildSlot,{
                     y:dY-160,
                     onComplete:()=>{
                         bounceUp.kill()
@@ -1418,25 +1927,28 @@ export default class Game{
             }
         })
         this.gameContainer.addChild(this.overlay)
+
         //amount
         const amount = new PIXI.Text(`6`, this.textStyle2)
-        amount.x = (wildSlot.width - amount.width)/2
-        amount.y = (wildSlot.height - amount.height) * 0.85
-        wildSlot.addChild(amount)
-        wildSlot.cursor = 'pointer'
-        wildSlot.interactive = true
-        this.gameContainer.addChild(wildSlot)
+        amount.x = (this.wildSlot.width - amount.width)/2
+        amount.y = (this.wildSlot.height - amount.height) * 0.85
+        this.wildSlot.addChild(amount)
+        this.wildSlot.cursor = 'pointer'
+        this.wildSlot.interactive = true
+      
 
-        const moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
-        moneySlot.x = (this.baseWidth - moneySlot.width)/2 + 400
-        moneySlot.y = -200
-        let moneySlotFrameShow = gsap.from(moneySlot, {
+       // const moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
+        // moneySlot.x = (this.baseWidth - moneySlot.width)/2 + 400
+        // moneySlot.y = -200
+        //this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 - 400
+        //this.moneySlot.y = -200
+        let moneySlotFrameShow = gsap.from(this.moneySlot, {
             delay:.3,
             y:sY,
             onComplete:()=>{
                 moneySlotFrameShow.kill()
-                let bounceUp = gsap.to(moneySlot,{
-                    y:dY-160,
+                let bounceUp = gsap.to(this.moneySlot,{
+                    y:this.moneyBoardY,
                     onComplete:()=>{
                         bounceUp.kill()
                         let fadeInGlow = gsap.to(this.popGlow2,{
@@ -1454,24 +1966,28 @@ export default class Game{
 
         //amount
         const amount2 = new PIXI.Text(`12`, this.textStyle2)
-        amount2.x = (moneySlot.width - amount2.width)/2
-        amount2.y = (moneySlot.height - amount2.height) * 0.85
-        moneySlot.addChild(amount2)
-        moneySlot.cursor = 'pointer'
-        moneySlot.interactive = true
-        this.gameContainer.addChild(moneySlot)
+        amount2.x = (this.moneySlot.width - amount2.width)/2
+        amount2.y = (this.moneySlot.height - amount2.height) * 0.85
+        this.moneySlot.addChild(amount2)
+        this.moneySlot.cursor = 'pointer'
+        this.moneySlot.interactive = true
+        this.gameContainer.addChild(this.moneySlot)
+        this.gameContainer.addChild(this.wildSlot)
 
-        wildSlot.addEventListener('pointerdown', () =>{
-            this.slotGame.whatEvent = 1
-            this.playSound(12)
+
+        this.wildSlot.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
+        this.wildSlot.addEventListener('pointerdown', () =>{
+            this.playSound(1)
             
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=6
             this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
-            this.gameContainer.removeChild(wildSlot)
-            this.gameContainer.removeChild(moneySlot)
+            this.gameContainer.removeChild(this.wildSlot)
+            this.gameContainer.removeChild(this.moneySlot)
             this.createTransition()
             let timeout = setTimeout(()=>{
                 this.startfreeSpinEvent(this.noOfSpin)
@@ -1479,16 +1995,20 @@ export default class Game{
             },this.transitionDelay)
         })
 
-        moneySlot.addEventListener('pointerdown', () =>{
-            this.playSound(12)
-            this.slotGame.whatEvent = 2
+        
+        this.moneySlot.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
+        this.moneySlot.addEventListener('pointerdown', () =>{
+            this.playSound(1)
+            
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=12
             this.slotGame.startCountWinFreeSpin = true
             this.slotGame.autoplayDoneEvent = false
-            this.gameContainer.removeChild(wildSlot)
-            this.gameContainer.removeChild(moneySlot)
+            this.gameContainer.removeChild(this.wildSlot)
+            this.gameContainer.removeChild(this.moneySlot)
             this.createTransition()
             let timeout = setTimeout(()=>{
                 this.startfreeSpinEvent(this.noOfSpin)
@@ -1497,6 +2017,9 @@ export default class Game{
         })
     }
     private startfreeSpinEvent(count:number){
+        this.eventStart = true
+        this.soundStop(0)
+        this.playSound(6)
         this.enableButtons(false)
         this.lightModeEvent(false)
         this.slotGame.freeSpinStart = false
@@ -1506,6 +2029,7 @@ export default class Game{
             this.isFreeSpin = false
             clearTimeout(show);
         }, 100);
+        this.screenSize()
         this.slotGame.reelContainer.forEach((data,index)=>{
             this.slotGame.generateNewSymbolsMainEvent(index)      
         })  
@@ -1524,7 +2048,8 @@ export default class Game{
         this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){
-        this.transition = new Transition(this.app,this.gameContainer,this.textureArray)
+        this.transition = new Transition(this.app,this.gameContainer,this.textureArray, this.screenSetting.screentype)
+        this.openTransition = true
         this.gameContainer.addChild(this.transition.container)
     }
     
@@ -1532,21 +2057,25 @@ export default class Game{
     private sounds(soundInit:Boolean,soundArray:Array<any>){
         this.sound = soundArray;
         this.globalSound = soundInit;
+
+        // prevent background music from stacking when click multiple times
+        // if(!this.sound[1].playing() || !this.sound[21].playing(21)){
+        //     //this.playSound(1);
+        // }
     }
 
     private playSound(index:number){
         this.sound[index].play();
+        this.soundVolume(index)
     }
 
     private soundStop(index:number){
         this.sound[index].stop()
     }
 
-    private soundVolume(index:number,volume:number){
-        this.sound[index].volume(volume)
-    }
-    private fadeSound(index:number,volumeTo:any,duration:number){
-        this.sound[index].fade(this.sound[index].volume(),volumeTo,duration)
+    private soundVolume(index:number){
+        if(index == 1 || index == 2  || index == 3  || index == 4  || index == 5) // sound plinko ball collide
+            this.sound[index].volume(0.2)
     }
 
     private checkSoundToggle(){

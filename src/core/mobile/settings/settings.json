@@ -1,0 +1,215 @@
+{
+    "symbolAssets":[
+        {
+            "symbol": "bird",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "snake",
+            "type":2,
+            "pay":0.3
+        },
+        {
+            "symbol": "monkey",
+            "type":3,
+            "pay":0.5
+        },
+        {
+            "symbol": "leopard",
+            "type":4,
+            "pay":0.6
+        },
+        {
+            "symbol": "cameleon",
+            "type":5,
+            "pay":0.7
+        },
+        {
+            "symbol": "orange_crystal",
+            "type":6,
+            "pay":1
+        },
+        {
+            "symbol": "green_crystal",
+            "type":7,
+            "pay":1.5
+        },
+        {
+            "symbol": "violet_crystal",
+            "type":8,
+            "pay":2
+        },
+        {
+            "symbol": "blue_crystal",
+            "type":9,
+            "pay":2
+        },
+        {
+            "symbol": "bonus_symbol",
+            "type":10,
+            "pay":3
+        },
+        {
+            "symbol": "wild",
+            "type":11,
+            "pay":3
+        }
+    ],
+    "symbolAssetsEvent":[
+        {
+            "symbol": "2k",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "3k",
+            "type":2,
+            "pay":0.3
+        },
+        {
+            "symbol": "5k",
+            "type":3,
+            "pay":0.5
+        },
+        {
+            "symbol": "leopard",
+            "type":4,
+            "pay":0.6
+        },
+        {
+            "symbol": "orange_crystal",
+            "type":5,
+            "pay":0.7
+        },
+        {
+            "symbol": "violet_crystal",
+            "type":6,
+            "pay":1
+        },
+        {
+            "symbol": "green_crystal",
+            "type":7,
+            "pay":1.5
+        },
+        {
+            "symbol": "cameleon",
+            "type":8,
+            "pay":2
+        },
+        {
+            "symbol": "snake",
+            "type":9,
+            "pay":2
+        },
+        {
+            "symbol": "bonus_symbol",
+            "type":10,
+            "pay":3
+        },
+        {
+            "symbol": "wild",
+            "type":11,
+            "pay":3
+        }
+    ],
+    "symbolAssetsEvent2":[
+        {
+            "symbol": "x2",
+            "type":1,
+            "pay":0.2
+        },
+        {
+            "symbol": "x3",
+            "type":2,
+            "pay":0.3
+        },
+        {
+            "symbol": "x5",
+            "type":3,
+            "pay":0.5
+        },
+        {
+            "symbol": "leopard",
+            "type":4,
+            "pay":0.6
+        },
+        {
+            "symbol": "orange_crystal",
+            "type":5,
+            "pay":0.7
+        },
+        {
+            "symbol": "violet_crystal",
+            "type":6,
+            "pay":1
+        },
+        {
+            "symbol": "green_crystal",
+            "type":7,
+            "pay":1.5
+        },
+        {
+            "symbol": "cameleon",
+            "type":8,
+            "pay":2
+        },
+        {
+            "symbol": "snake",
+            "type":9,
+            "pay":2
+        },
+        {
+            "symbol": "bonus_symbol",
+            "type":10,
+            "pay":3
+        },
+        {
+            "symbol": "wild",
+            "type":11,
+            "pay":3
+        }
+    ],
+    "pattern":[
+        [27,27,27,27,27],
+        [28,28,28,28,28],
+        [29,29,29,29,29],
+        [27,28,29,28,27],
+        [29,28,27,28,29],
+        [27,27,28,27,27],
+        [29,29,28,29,29],
+        [28,27,27,27,28],
+        [28,29,29,29,28]
+    ],
+    "jackpots":{
+        "mini":5000,
+        "major":8000,
+        "grand":10000
+    },
+    "bet_amounts":[1,5,10,20,50,100],
+    "auto_play_values":[
+        {"value":1,"x":0},
+        {"value":5,"x":1},
+        {"value":10,"x":2},
+        {"value":25,"x":3},
+        {"value":50,"x":4},
+        {"value":75,"x":0},
+        {"value":100,"x":1},
+        {"value":250,"x":2},
+        {"value":500,"x":3},
+        {"value":1000,"x":4}
+    ],
+    "auto_play_values2":[
+        {"value":1,"x":0},
+        {"value":5,"x":1},
+        {"value":10,"x":2},
+        {"value":25,"x":0},
+        {"value":50,"x":1},
+        {"value":75,"x":2},
+        {"value":100,"x":0},
+        {"value":250,"x":1},
+        {"value":500,"x":2},
+        {"value":1000,"x":1}
+    ],
+    "matchgame_values":["mini","mini","mini","mini","mini","mini","major","grand","grand","mini","major","grand"]
+}

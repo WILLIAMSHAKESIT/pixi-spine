@@ -173,7 +173,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -426,7 +426,7 @@ export default class Slot{
             if(index > 26){
                 if(data.type == this.wildType){ 
                     this.playSound(18)
-                    this.soundVolume(18,0.5)
+                    this.soundVolume(18,0.2)
                     Functions.loadSpineAnimation(data.symbol,'open',false,1.1)
                     const globalPos = data.symbol.getGlobalPosition()
                     this.createWildCoin(globalPos.x,globalPos.y)
