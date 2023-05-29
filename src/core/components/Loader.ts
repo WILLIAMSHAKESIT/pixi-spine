@@ -112,8 +112,8 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_spin.mp3`,false); //3
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_stop.mp3`,false); //4
         this.soundSetup(`${this.soundsPath}sfx/reel/common_effect.mp3`,false); //5
-        this.soundSetup(`${this.soundsPath}music/event_music.mp3`,false); //6
-        this.soundSetup(`${this.soundsPath}sfx/win/event_win.wav`,false); //7
+        this.soundSetup(`${this.soundsPath}music/event_music.mp3`,true); //6
+        this.soundSetup(`${this.soundsPath}sfx/win/new_win.mp3`,true); //7
         this.soundSetup(`${this.soundsPath}music/matchgame_music.mp3`,true); //8 
         this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact.mp3`,false); //9 
         this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact2.mp3`,false); //10
@@ -122,7 +122,21 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/ui/reject.mp3`,false); //13
         this.soundSetup(`${this.soundsPath}sfx/ui/pops_show.mp3`,false); //14
         this.soundSetup(`${this.soundsPath}sfx/ui/buy_bonus_confirm.mp3`,false); //15
-        this.soundSetup(`${this.soundsPath}music/spin_music.mp3`,false); //16
+        this.soundSetup(`${this.soundsPath}music/spin_music.mp3`,true); //16
+        this.soundSetup(`${this.soundsPath}music/win_music.mp3`,true); //17
+        this.soundSetup(`${this.soundsPath}sfx/reel/wild_reveal.mp3`,false); //18
+        this.soundSetup(`${this.soundsPath}sfx/reel/wild_bar_money.mp3`,false); //19
+        this.soundSetup(`${this.soundsPath}sfx/bonus/rock_click.mp3`,false); //20
+        this.soundSetup(`${this.soundsPath}sfx/bonus/mini.mp3`,false); //21
+        this.soundSetup(`${this.soundsPath}sfx/bonus/major.mp3`,false); //22
+        this.soundSetup(`${this.soundsPath}sfx/bonus/grand.mp3`,false); //23
+        this.soundSetup(`${this.soundsPath}sfx/reel/normal_payline.mp3`,false); //24
+        this.soundSetup(`${this.soundsPath}sfx/reel/monkey.mp3`,false); //25
+        this.soundSetup(`${this.soundsPath}sfx/reel/chameleon.mp3`,false); //26
+        this.soundSetup(`${this.soundsPath}sfx/reel/bird.mp3`,false); //27
+        this.soundSetup(`${this.soundsPath}sfx/reel/snake.mp3`,false); //28
+        this.soundSetup(`${this.soundsPath}sfx/reel/leopard.mp3`,false); //29
+        this.soundSetup(`${this.soundsPath}sfx/ui/confirm2.mp3`,false); //30
 
         await PIXI.Assets.init({ manifest: manifest });
         
@@ -132,7 +146,7 @@ export default class Loader{
     }
     private async loadingScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void){
         const soundBtnsCont = new PIXI.Container
-        const loadingIncrement = 9
+        const loadingIncrement = 11
         const loadingBarWidth = 451
         //loading assets
         this.loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
@@ -149,9 +163,16 @@ export default class Loader{
 
         const loadingBar = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_progress.png'])
         loadingBar.x = ((logo.width) - loadingBar.width)/2
-        loadingBar.y = loadingBarBg.y + ((loadingBarBg.height - loadingBar.height)/2)-8
-        loadingBar.width = 0
+        loadingBar.y = loadingBarBg.y + ((loadingBarBg.height - loadingBar.height)/2)-5
         this.loadingContainer.addChild(loadingBar)
+        
+        const loadingBarMask = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_progress_mask.png'])
+        loadingBarMask.width = 0
+        loadingBarMask.x = loadingBar.x
+        loadingBarMask.y = loadingBar.y
+        this.loadingContainer.addChild(loadingBarMask)
+        loadingBar.mask = loadingBarMask
+
         const loadingText = new PIXI.Text(`Loading`, this.loadingTextStyle)
         loadingText.x = (logo.width - loadingText.width)/2
         loadingText.y = loadingBarBg.y + (-(loadingText.y + (loadingText.height*1.3)))
@@ -164,9 +185,9 @@ export default class Loader{
         this.gameAssets = await PIXI.Assets.loadBundle('game-screen',(progress) => {
             // add the bar progress here
             if(progress < 1){
-                loadingBar.width+=loadingIncrement
+                loadingBarMask.width+=loadingIncrement
             }else{
-                loadingBar.width = loadingBarWidth
+                loadingBarMask.width = loadingBarWidth
             }
         });
 

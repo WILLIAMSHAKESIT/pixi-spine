@@ -82,12 +82,13 @@ export default class Game{
     //sound
     private sounBtnSpriteOn:PIXI.Texture
     private sounBtnSpriteOff:PIXI.Texture
-    //sound 
     private sound:Array<any>;
     private globalSound:Boolean = false;
     private ambientCheck:Boolean = false;
     private sfxCheck:Boolean = false;
     public load:Loader;
+    private fadeDurationBgm:number = 3000
+    private fadeOutDelay:number = 8000
     //plants
     private plant1Right:Spine
     private plant2Right:Spine
@@ -216,11 +217,6 @@ export default class Game{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){         
-                // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
-                // console.log(this.isAutoPlay, " this.isAutoPlay")
-                // console.log(this.isMatchingGame, " this.isMatchingGame")
-                // console.log(this.isFreeSpin, " this.isFreeSpin")
-                // console.log(this.isOpenModal, " this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
@@ -241,22 +237,39 @@ export default class Game{
             this.slotGame.notLongPress = true;
         });
         Howler.mute(true)
+        // toggle sound on tab enter and leave
+        document.addEventListener("visibilitychange", ()=> {
+            if (document.hidden){
+                Howler.mute(true)
+            } else {
+                Howler.mute(false)
+            }
+        });
     }
     private createIntro(){
+        this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.intro.container)
-        
         this.intro.playBtn.addEventListener('pointerdown',()=>{
+            // initialize the sound on game enter
+            if(this.globalSound){
+                Howler.mute(false)
+                this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
+                this.ambientCheck = true
+                this.sfxCheck = true
+            }
+            this.playSound(12)
+            this.playSound(0)
+            this.playSound(16)
+            this.soundVolume(16,0)
+            this.playSound(17)
+            this.soundVolume(17,0)
+            this.playSound(6)
+            this.soundVolume(6,0)
+            this.intro.playBtn.interactive = false
             this.createTransition()
             let timeOut = setTimeout(()=>{
-                this.playSound(0)
-                this.playSound(16)
-                this.soundVolume(16,0)
-                // initialize the sound on game enter
-                if(this.globalSound){
-                    Howler.mute(false)
-                    this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
-                }
+                this.enableButtons(true)
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
                 clearTimeout(timeOut)
@@ -382,14 +395,16 @@ export default class Game{
         this.plantContainerRight.addChild(butterfly)
     }
     private createCongrats(){
+        this.fadeSound(6,0,this.fadeDurationBgm)
+        this.soundVolume(0,0)
+        this.playSound(7)
+        this.fadeSound(7,1,this.fadeDurationBgm)
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
-        this.playSound(7)
         
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
-            this.playSound(1)
             this.isAutoPlay = false
             this.congrats.container.interactive = false
             this.slotGame.isFreeSpinDone = true
@@ -402,13 +417,14 @@ export default class Game{
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
-                this.soundStop(6)
-                this.playSound(0)
+                this.fadeSound(7,0,this.fadeDurationBgm)
+                this.fadeSound(0,1,this.fadeDurationBgm)
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
+                    this.soundStop(7)
                     clearTimeout(show);
                 }, 1000);
                 this.slotGame.reelContainer.forEach((data,index)=>{
@@ -439,7 +455,7 @@ export default class Game{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound)
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -520,15 +536,17 @@ export default class Game{
             this.freeSpinEvent()
             this.slotGame.isBonusTick = false
         }
-            // let timeInterval = setInterval(()=>{
-            //     this.lastSpinTime++
-            //     console.log(this.lastSpinTime)
-            // //     this.fadeSound(16,0,4000)
-            // //     this.fadeSound(0,1,4000)
-            //     // clearTimeout(timeOut)
-            // },1000)
-        this.fadeSound(16,0,4000)
-        this.fadeSound(0,1,4000)
+            let timeout = setTimeout(()=>{
+                if(!this.isAutoPlay){
+                    if(this.sound[16].volume() == 1){
+                        this.fadeSound(16,0,this.fadeDurationBgm)
+                    }
+                    if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
+                        this.fadeSound(0,1,this.fadeDurationBgm)
+                    }
+                }
+                clearTimeout(timeout)
+            },this.fadeOutDelay)
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
@@ -538,8 +556,17 @@ export default class Game{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        this.fadeSound(16,2,4000)
-        this.fadeSound(0,0,4000)
+        if(!this.sound[0].playing()){
+            this.playSound(0)
+        }
+        if(!this.sound[16].playing()){
+            this.playSound(16)
+        }
+        if(!this.slotGame.isFreeSpin){
+            this.fadeSound(16,1,this.fadeDurationBgm)
+            this.fadeSound(17,0,this.fadeDurationBgm)
+            this.fadeSound(0,0,this.fadeDurationBgm)
+        }
         this.slotGame.totalWin = 0
         this.userCredit-=this.betAmount
         this.updateCreditValues()
@@ -564,7 +591,6 @@ export default class Game{
         this.gameContainer.addChild(this.buyBonusBtn)
     }
     private buyBonusPopUp(){
-        this.playSound(14)
         let glowX = 956
         let glowY = 1044
         let dY = -80
@@ -607,8 +633,7 @@ export default class Game{
         })
         // reject bonus
         close.addEventListener('pointerdown',()=>{
-            this.playSound(13)
-            
+            this.playSound(13) 
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
         })
@@ -621,7 +646,7 @@ export default class Game{
             this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
-        check.interactive = false
+            check.interactive = false
             let timeOut = setTimeout(()=>{
                 this.startSpinAutoPlay(1)
                 clearTimeout(timeOut)
@@ -656,7 +681,6 @@ export default class Game{
         this.gameContainer.addChild(this.overlay)
     }
     private hideBonusPopUp(dY:number,sY:number){
-        this.playSound(14)
         this.enableButtons(true)
         let fadeOutGlow = gsap.to(this.popGlow,{
             duration:0.3,
@@ -710,11 +734,17 @@ export default class Game{
         }) 
     }
     private matchingGame(){
+        this.fadeSound(17,0,this.fadeDurationBgm)
+        this.soundStop(17)
+        this.soundStop(16)
+        this.soundStop(0)
+        this.playSound(15)
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
-            this.soundStop(0)
             this.playSound(8)
+            this.soundVolume(8,0)
+            this.fadeSound(8,1,2000)
             let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
             let arrayBlockValues:Array<any> = []
             let blockSpacing = 1.2
@@ -727,6 +757,7 @@ export default class Game{
             let topText = 'MATCH 3 TO WIN'
             let bottomText = 'PICK STONE TO REVEAL JACKPOTS'
             let popUpSkin = ''
+            let soundTimeOut = 2000
             this.enableButtons(false)
             this.lightMode(false)
             //create blocks
@@ -748,18 +779,18 @@ export default class Game{
                 }
                 Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
-                symbol.addListener('mouseover',() =>{
-                    this.playSound(2)
-                })
                 symbol.addEventListener('pointerdown',()=>{
-                    this.playSound(1)
-                    
+                    this.playSound(20)
                     symbol.interactive = false
                     status = 'open'
                     arrayBlockValues[index].status = 'open'
                     Functions.loadSpineAnimation(symbol,'reveal',false,0.7)
                     if(data == 'grand'){
                         grandCount++
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(23)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         if(grandCount == 3){
                             popUpSkin = 'excellent'
                             this.matchingGameWin = json.jackpots.grand
@@ -767,6 +798,10 @@ export default class Game{
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else if(data == 'major'){
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(22)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         majorCount++
                         if(majorCount == 3){
                             popUpSkin = 'impressive'
@@ -775,6 +810,10 @@ export default class Game{
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else{
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(21)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         miniCount++
                         if(miniCount == 3){
                             popUpSkin = 'nice'
@@ -809,11 +848,13 @@ export default class Game{
         })
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
+            this.playSound(7)
+            this.fadeSound(8,0,2000)
             this.popUps.container.addEventListener('pointerdown',()=>{
-                this.playSound(1)
-                
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
+                this.fadeSound(7,0,2000)
+                this.fadeSound(8,1,2000)
             })
             clearTimeout(popDelay)
         },timeOut)
@@ -854,8 +895,14 @@ export default class Game{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
-            this.playSound(1)
-            
+            this.playSound(0)
+            this.soundStop(16)
+            this.soundVolume(16,0)
+            this.soundStop(17)
+            this.soundVolume(17,0)
+            this.fadeSound(0,1,2000)
+            this.fadeSound(8,0,2000)
+            this.playSound(12)
             textScaleAnim.kill()
             this.endMatchingGame()
             clickContinueText.interactive = false
@@ -1100,6 +1147,9 @@ export default class Game{
     }
     private events(){
         // open info modal
+        this.controller.infoBtnSprite.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
             this.modal.createInfoModal()
         })
@@ -1109,7 +1159,6 @@ export default class Game{
         })
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
             this.playSound(1)
-            
             this.controller.settingBtnSpite.interactive = false
             // call settings modal
             this.modal.createSystemSettings(this.isAutoPlay)
@@ -1120,7 +1169,6 @@ export default class Game{
                     data.addListener('mouseover',() =>{
                         this.playSound(2)
                     })
-                    
                     if(index == 0){
                         this.betIndex--
                         this.betAmount = json.bet_amounts[this.betIndex]
@@ -1163,7 +1211,6 @@ export default class Game{
             }else{
                 this.modal.soundBtns[1].texture = this.textureToggleOff
             }
-
             this.modal.soundBtns.forEach((data,index)=>{
                 data.addListener('mouseover',() =>{
                     this.playSound(2)
@@ -1200,8 +1247,12 @@ export default class Game{
             this.playSound(2)
         })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
-            this.playSound(1)
-            
+            let timeOut = setTimeout(()=>{
+                this.fadeSound(16,0,this.fadeDurationBgm)
+                this.fadeSound(0,1,this.fadeDurationBgm)
+                this.playSound(1)
+                clearTimeout(timeOut)
+            },this.fadeOutDelay)
             if(this.isAutoPlay){
                 this.controller.spinBtnSprite.interactive = true 
                 this.controller.spinBtnSprite.cursor = 'pointer' 
@@ -1302,13 +1353,20 @@ export default class Game{
         })
         //buy bonus
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
-            this.playSound(12)
+            this.playSound(30)
             this.buyBonusPopUp()
             this.enableButtons(false)
             this.isOpenModal = true
         })
     }
     private freeSpinEvent(){
+        this.playSound(14)
+        this.fadeSound(16,0,this.fadeDurationBgm)
+        this.fadeSound(17,0,this.fadeDurationBgm)
+        this.fadeSound(0,0,this.fadeDurationBgm)
+        this.fadeSound(6,1,this.fadeDurationBgm)
+        this.soundStop(16)
+
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
 
@@ -1343,7 +1401,6 @@ export default class Game{
             onComplete:()=>{
                 wildSlotFrameShow.kill()
                 this.playSound(15)
-                this.playSound(6)
                 let bounceUp = gsap.to(wildSlot,{
                     y:dY-160,
                     onComplete:()=>{
@@ -1361,7 +1418,6 @@ export default class Game{
             }
         })
         this.gameContainer.addChild(this.overlay)
-
         //amount
         const amount = new PIXI.Text(`6`, this.textStyle2)
         amount.x = (wildSlot.width - amount.width)/2
@@ -1441,7 +1497,6 @@ export default class Game{
         })
     }
     private startfreeSpinEvent(count:number){
-        this.soundStop(0)
         this.enableButtons(false)
         this.lightModeEvent(false)
         this.slotGame.freeSpinStart = false
@@ -1477,11 +1532,6 @@ export default class Game{
     private sounds(soundInit:Boolean,soundArray:Array<any>){
         this.sound = soundArray;
         this.globalSound = soundInit;
-
-        // prevent background music from stacking when click multiple times
-        // if(!this.sound[1].playing() || !this.sound[21].playing(21)){
-        //     //this.playSound(1);
-        // }
     }
 
     private playSound(index:number){

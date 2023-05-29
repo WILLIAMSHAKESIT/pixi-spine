@@ -155,7 +155,7 @@ export default class Congrats{
         // Set up animation
         const startValue = 0;
         const endValue = this.amount;
-        this.durationCount = 4;
+        this.durationCount = 30;
         const delay = 0.4;
         const ease = "power1.out";
 

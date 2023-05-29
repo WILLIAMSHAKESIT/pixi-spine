@@ -109,6 +109,8 @@ export default class Slot{
     //sound
     private playSound: (index: number) => void;
     private soundStop: (index: number) => void; 
+    private fadeSound: (sound: number,volume:number,duration:number) => void; 
+    private soundVolume: (sound: number,volume:number) => void; 
 
     //
     private preGeneratedTypes:Array<any> = []
@@ -121,7 +123,7 @@ export default class Slot{
 
     private bonusSymbolsCount:number = 0
     private sound:Array<any>
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>){
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void){
         this.app = app
         this.sound = sound
         this.baseWidth = this.app.screen.width
@@ -140,6 +142,8 @@ export default class Slot{
         this.onSpin = onSpin
         this.playSound = playSound;
         this.soundStop = soundStop;
+        this.fadeSound = fadeSound
+        this.soundVolume = soundVolume
         this.init()
     }
 
@@ -260,7 +264,7 @@ export default class Slot{
         this.maskSprite.height = this.maskSprite.height
         this.maskSprite.width = this.frameBorder.width 
         this.maskSprite.x = this.frameBorder.x
-        this.maskSprite.y = this.frameBg.y-6
+        this.maskSprite.y = this.frameBg.y-5
         this.reelsContainer.mask = this.maskSprite
         this.container.addChild(this.maskSprite)
     }
@@ -421,6 +425,8 @@ export default class Slot{
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
                 if(data.type == this.wildType){ 
+                    this.playSound(18)
+                    this.soundVolume(18,0.5)
                     Functions.loadSpineAnimation(data.symbol,'open',false,1.1)
                     const globalPos = data.symbol.getGlobalPosition()
                     this.createWildCoin(globalPos.x,globalPos.y)
@@ -520,7 +526,6 @@ export default class Slot{
         
         countsArray.forEach((data,index)=>{
             if(index == 0 && data.count>2){
-                console.log(data.count)
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
                 for(let i=0;i<data.count;i++){
@@ -660,7 +665,7 @@ export default class Slot{
     }
     private resetTopSymbolsAlpha(index:number){
         this.maskSprite.height = this.frameBg.height - 8
-        this.maskSprite.y = this.frameBg.y + 8
+        this.maskSprite.y = this.frameBg.y + 3
         this.reelsSymbols[index].forEach((data:any,i:number)=>{
             data.symbol.alpha = 1
         })
@@ -676,14 +681,36 @@ export default class Slot{
         })
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
+        let symbol = this.reelsSymbols[reelIndex][blockIndex]
         // add total win
         if(this.isFreeSpin){
-            this.winFreeSpin += this.reelsSymbols[reelIndex][blockIndex].payout
+            this.winFreeSpin += symbol.payout
         }
-        this.totalWin += this.reelsSymbols[reelIndex][blockIndex].payout
-        Functions.loadSpineAnimation(this.reelsSymbols[reelIndex][blockIndex].symbol,'animation',true,0.8)
+        this.totalWin += symbol.payout
+        Functions.loadSpineAnimation(symbol.symbol,'animation',true,0.8)
         // this.playSound(5);
         this.animateDone = false
+        if(reelIndex == 0){
+            let type = symbol.type
+            if(!this.isFreeSpin){
+                this.fadeSound(17,1,2000)
+                this.fadeSound(16,0,2000)
+                this.soundStop(0)
+            }
+            if(type == 1){
+                this.playSound(27)
+            }else if(type == 2){
+                this.playSound(28)
+            }else if(type == 3){
+                this.playSound(25)
+            }else if(type == 4){
+                this.playSound(29)
+            }else if(type == 5){
+                this.playSound(26)
+            }else{
+                this.playSound(24)
+            }
+        } 
     }
     private applyMotionBlur(index:number,onSpin:boolean){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
@@ -696,7 +723,7 @@ export default class Slot{
         if(i >= 2 ){
             if((this.preGeneratedTypes[0][0] == this.bonusType || this.preGeneratedTypes[0][1] == this.bonusType || this.preGeneratedTypes[0][2] == this.bonusType) && (this.preGeneratedTypes[1][0] == this.bonusType || this.preGeneratedTypes[1][1] == this.bonusType || this.preGeneratedTypes[1][2] == this.bonusType)){
                 this.reelEffect[2].visible = true 
-                if(!this.sound[11].playing){
+                if(!this.sound[11].playing()){
                     this.playSound(11)
                 }
                 Functions.loadSpineAnimation(this.reelEffect[2],'animation',true,1)
@@ -953,6 +980,10 @@ export default class Slot{
                 duration:duration,
                 onComplete:()=>{
                     coinAnimation.kill()
+                    if(i == 0){
+                        this.playSound(19)
+                        this.soundVolume(19,0.2)
+                    }
                     let coinFade = gsap.to(coin,{
                         delay:0.5,
                         duration:0.3,
