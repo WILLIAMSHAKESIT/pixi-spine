@@ -710,8 +710,8 @@ export default class GameMobile{
             }
             
             if(this.isOpenInfo){
-                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
-                this.modal.closeModal.y = 45
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
+                this.modal.closeModal.y = 30
                  //PREVIOUS AND NEXT BUTTON
                 this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height)/2
                 this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
