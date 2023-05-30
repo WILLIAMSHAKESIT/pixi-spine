@@ -56,10 +56,14 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
         arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout,type:arr[i].pattern.type,symbol:arr[i].pattern.symbol})
     }
      for (let i = 1; i < arr.length; i++) {
-        if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 ) {
+        if(i-1 == 0 && arr[0].pattern.type == 11){
+            count++;
+            console.log("buzz?")
+        }
+        if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11  ) {
             count++;
             arrType = arr[i-1].pattern.type
-            console.log(arr[i-1].pattern.type)
+          //  console.log(arr[i-1].pattern.type)
         } else {
             break; 
         }
