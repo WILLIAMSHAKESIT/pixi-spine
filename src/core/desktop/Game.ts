@@ -1524,8 +1524,8 @@ export default class Game{
         }, 1000);
     }
     private checkIfFreeSpin(bool:boolean){
-        this.enableButtons(false)
-        this.isFreeSpin = true
+        //this.enableButtons(false)
+        //this.isFreeSpin = true
     }
     private createPopUps(skin:string){
         this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray,skin,this.matchingGameWin)
