@@ -375,13 +375,15 @@ export default class GameMobile{
             this.controller.betText.y = this.controller.betContainerSprite.height / 2 - 35
             this.controller.betText.scale.set(1.3)
 
+            this.controller.creditContainerSprite.scale.set(0.8)
             this.controller.creditContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_container').texture
+            
             this.controller.creditContainerSprite.y = this.screenSetting.baseHeight/2 + 350
             this.controller.creditContainerSprite.x = 730
-            this.controller.creditContainerSprite.scale.set(0.8)
-            this.controller.creditText.x = this.controller.betContainerSprite.width / 2
-            this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
             this.controller.creditText.scale.set(1.3)
+            this.controller.creditText.x = (this.controller.creditContainerSprite.width -this.controller.creditText.width)  / 2 
+            this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
+         
 
             this.paylineTextY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1130
             this.paylineText.y = this.paylineTextY
@@ -740,8 +742,6 @@ export default class GameMobile{
 
             //INFO MODAL
             this.modal.infoSecondPageContainer.scale.set(1)
-
-           
 
             // ALIGNING OF ALL PAGES X AXIS INFO MODAL
             this.modal.infoFirstPageContainer.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainer.width)/2
