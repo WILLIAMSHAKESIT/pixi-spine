@@ -1,8 +1,28 @@
 {
 	"frames": {
-		"check.png": {
+		"Group 13.png": {
 			"frame": {
 				"x": 1,
+				"y": 1,
+				"w": 668,
+				"h": 352
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 668,
+				"h": 352
+			},
+			"sourceSize": {
+				"w": 668,
+				"h": 352
+			}
+		},
+		"check.png": {
+			"frame": {
+				"x": 671,
 				"y": 1,
 				"w": 83,
 				"h": 82
@@ -22,7 +42,7 @@
 		},
 		"ex.png": {
 			"frame": {
-				"x": 86,
+				"x": 756,
 				"y": 1,
 				"w": 83,
 				"h": 82
@@ -43,7 +63,7 @@
 		"loading_background.png": {
 			"frame": {
 				"x": 1,
-				"y": 85,
+				"y": 355,
 				"w": 1920,
 				"h": 1080
 			},
@@ -62,7 +82,7 @@
 		},
 		"loading_bg.png": {
 			"frame": {
-				"x": 171,
+				"x": 841,
 				"y": 1,
 				"w": 474,
 				"h": 79
@@ -82,7 +102,7 @@
 		},
 		"loading_progress.png": {
 			"frame": {
-				"x": 647,
+				"x": 1317,
 				"y": 1,
 				"w": 451,
 				"h": 50
@@ -102,8 +122,8 @@
 		},
 		"loading_progress_mask.png": {
 			"frame": {
-				"x": 1100,
-				"y": 1,
+				"x": 1317,
+				"y": 53,
 				"w": 451,
 				"h": 50
 			},
@@ -122,22 +142,22 @@
 		},
 		"logo.png": {
 			"frame": {
-				"x": 1,
-				"y": 1167,
-				"w": 978,
-				"h": 155
+				"x": 671,
+				"y": 105,
+				"w": 704,
+				"h": 127
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 978,
-				"h": 155
+				"w": 704,
+				"h": 127
 			},
 			"sourceSize": {
-				"w": 978,
-				"h": 155
+				"w": 704,
+				"h": 127
 			}
 		}
 	},
@@ -148,7 +168,7 @@
 		"format": "RGBA8888",
 		"size": {
 			"w": 1922,
-			"h": 1323
+			"h": 1436
 		},
 		"scale": "1"
 	}

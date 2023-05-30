@@ -63,7 +63,6 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
         if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11  ) {
             count++;
             arrType = arr[i-1].pattern.type
-          //  console.log(arr[i-1].pattern.type)
         } else {
             break; 
         }
@@ -75,7 +74,25 @@ const numberWithCommas =(x:number)=> {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const containsTwoDifferentValues=(arr:any)=> {
+    // Create an empty set to store unique values
+    var uniqueValues = new Set();
 
+    // Iterate over each element in the array
+    for (var i = 0; i < arr.length; i++) {
+        // Add the current element to the set
+        uniqueValues.add(arr[i]);
+
+        // If the set contains more than 2 values, return false
+        if (uniqueValues.size > 2) {
+        return false;
+        }
+    }
+
+    // Return true if the set contains exactly 2 values
+    return uniqueValues.size === 2;
+}
+  
 //RANDMON INT
 const getRandomInt = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -92,5 +109,6 @@ export default{
     loadSpineAnimation,
     loadSpine,
     animatedSprite,
-    random2Number
+    random2Number,
+    containsTwoDifferentValues
 }

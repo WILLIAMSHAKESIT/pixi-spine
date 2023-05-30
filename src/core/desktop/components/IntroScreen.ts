@@ -124,6 +124,7 @@ export default class IntroScreen{
         this.container.addChild(this.centerContainer)
         this.centerContainer.x = (this.baseWidth - this.centerContainer.width)/2
         this.centerContainer.y = (this.baseHeight - this.centerContainer.height)/2
+        this.logo.x = (this.centerContainer.width - this.logo.width)/2
 
         // create play btn 
         this.playBtn =  new PIXI.Sprite(this.assets.intro.textures[`play_btn.png`])

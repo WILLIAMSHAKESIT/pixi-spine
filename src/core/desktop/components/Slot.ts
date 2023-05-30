@@ -32,6 +32,7 @@ export default class Slot{
     public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
     private spinCount:number= 0
+    private logo:PIXI.Sprite
     public isSpinning:boolean = false
     public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
@@ -48,16 +49,11 @@ export default class Slot{
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
-        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
-        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
-        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
-        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
-        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11]
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
+        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
+        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
+        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
+        // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11]
     ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
         [11,4,11,2,11,1,2,11,7,8,4,11,2,8,11,2,1,11,5,8,2,6,8,6,8,11,8,7,1,7],
@@ -149,6 +145,7 @@ export default class Slot{
 
     private init(){
         this.createParent()
+        this.createLogo()
         this.createLevelBar()
         this.createReels()
     }
@@ -164,6 +161,12 @@ export default class Slot{
         this.frameBorder.x = this.frameBg.x - frameX
         this.frameBorder.y = this.frameBg.y - frameY
         this.container.addChild(this.frameBorder)
+    }
+    private createLogo(){
+        this.logo = Functions.loadTexture(this.textureArray,'main','logo') 
+        this.logo.x = this.frameBorder.x
+        this.logo.y = 20
+        this.container.addChild(this.logo)
     }
     private createLevelBar(){
         //create level bar background
@@ -209,6 +212,7 @@ export default class Slot{
             wordWrapWidth: 440,
             lineJoin: 'round',
         });
+
         //create mini text
         const miniPrize = new PIXI.Text(`${Functions.numberWithCommas(json.jackpots.mini)}`, style);
         miniPrize.x = (itemMini.width - miniPrize.width)/2;
@@ -355,9 +359,7 @@ export default class Slot{
                             if(!this.isFreeSpin || this.freeSpinStart){
                             this.reelEffectShow(index)
                             }
-                            if(index<4){
-                                this.playSound(4);
-                            }
+                            this.playSound(4);
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
@@ -693,6 +695,9 @@ export default class Slot{
         if(reelIndex == 0){
             let type = symbol.type
             if(!this.isFreeSpin){
+                if(!this.sound[17].playing() && !this.isFreeSpin){
+                    this.playSound(17)
+                }
                 this.fadeSound(17,1,2000)
                 this.fadeSound(16,0,2000)
                 this.soundStop(0)
