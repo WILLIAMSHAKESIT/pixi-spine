@@ -395,7 +395,9 @@ export default class Game{
     private createCongrats(){
         this.fadeSound(6,0,this.fadeDurationBgm)
         this.soundVolume(0,0)
-        this.playSound(7)
+        if(!this.sound[7].playing()){
+            this.playSound(7)
+        }
         this.fadeSound(7,1,this.fadeDurationBgm)
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
@@ -415,6 +417,9 @@ export default class Game{
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
+                if(!this.sound[0].playing()){
+                    this.playSound(0)
+                }
                 this.fadeSound(7,0,this.fadeDurationBgm)
                 this.fadeSound(0,1,this.fadeDurationBgm)
                 this.gameContainer.removeChild(this.congrats.container)
@@ -475,7 +480,6 @@ export default class Game{
         })
         this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
             this.playSound(1)
-            
             if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
                 Howler.mute(true)
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
@@ -554,7 +558,7 @@ export default class Game{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        if(!this.sound[0].playing()){
+        if(!this.sound[0].playing() && !this.slotGame.isFreeSpin){
             this.playSound(0)
         }
         if(!this.sound[16].playing() && !this.slotGame.isFreeSpin){
@@ -1217,7 +1221,6 @@ export default class Game{
                     this.playSound(1)
                     if(data.texture == this.textureToggleOff){
                         Howler.mute(false)
-                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
                         data.texture = this.textureToggleOn
                         if(index == 0){
                            this.ambientCheck = true
@@ -1226,12 +1229,16 @@ export default class Game{
                         }
                     }else{
                         data.texture = this.textureToggleOff
-                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
                         if(index == 0){
                             this.ambientCheck = false 
                         }else{
                             this.sfxCheck = false
                         }  
+                    }
+                    if(this.modal.soundBtns[0].texture == this.textureToggleOff && this.modal.soundBtns[1].texture == this.textureToggleOff){
+                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
+                    }else{
+                        this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn
                     }
                     this.checkSoundToggle()
                 })
@@ -1365,6 +1372,8 @@ export default class Game{
         this.playSound(6)
         this.fadeSound(6,1,this.fadeDurationBgm)
         this.soundStop(16)
+        this.soundStop(17)
+        this.soundStop(0)
 
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
@@ -1551,9 +1560,17 @@ export default class Game{
     private checkSoundToggle(){
         if(this.ambientCheck){
             this.sound[0].mute(false)
+            this.sound[6].mute(false)
+            this.sound[8].mute(false)
+            this.sound[16].mute(false)
+            this.sound[17].mute(false)
         }
         else{
             this.sound[0].mute(true)
+            this.sound[6].mute(true)
+            this.sound[8].mute(true)
+            this.sound[16].mute(true)
+            this.sound[17].mute(true)
         }
         if(this.sfxCheck){
             this.sound[1].mute(false)
@@ -1561,12 +1578,54 @@ export default class Game{
             this.sound[3].mute(false)
             this.sound[4].mute(false)
             this.sound[5].mute(false)
+            this.sound[7].mute(false)
+            this.sound[9].mute(false)
+            this.sound[10].mute(false)
+            this.sound[11].mute(false)
+            this.sound[12].mute(false)
+            this.sound[13].mute(false)
+            this.sound[13].mute(false)
+            this.sound[15].mute(false)
+            this.sound[18].mute(false)
+            this.sound[19].mute(false)
+            this.sound[20].mute(false)
+            this.sound[21].mute(false)
+            this.sound[22].mute(false)
+            this.sound[23].mute(false)
+            this.sound[24].mute(false)
+            this.sound[25].mute(false)
+            this.sound[26].mute(false)
+            this.sound[27].mute(false)
+            this.sound[28].mute(false)
+            this.sound[29].mute(false)
+            this.sound[30].mute(false)
         }else{
             this.sound[1].mute(true)
             this.sound[2].mute(true)
             this.sound[3].mute(true)
             this.sound[4].mute(true)
             this.sound[5].mute(true)
+            this.sound[7].mute(true)
+            this.sound[9].mute(true)
+            this.sound[10].mute(true)
+            this.sound[11].mute(true)
+            this.sound[12].mute(true)
+            this.sound[13].mute(true)
+            this.sound[13].mute(true)
+            this.sound[15].mute(true)
+            this.sound[18].mute(true)
+            this.sound[19].mute(true)
+            this.sound[20].mute(true)
+            this.sound[21].mute(true)
+            this.sound[22].mute(true)
+            this.sound[23].mute(true)
+            this.sound[24].mute(true)
+            this.sound[25].mute(true)
+            this.sound[26].mute(true)
+            this.sound[27].mute(true)
+            this.sound[28].mute(true)
+            this.sound[29].mute(true)
+            this.sound[30].mute(true)
         }
     }
     
