@@ -66,7 +66,6 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
             if(i > 1){
                 if(i<3){
                     if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 || arr[i-1].pattern.type == 11  ) {
-
                         count++;
                         arrType = arr[i-1].pattern.type
                     } else {
