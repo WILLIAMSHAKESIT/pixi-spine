@@ -60,13 +60,13 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
         if(i-1 == 0 && arr[0].pattern.type == 11){
             count++;
             zeroWild++
-            console.log("buzz?")
+        
         }
         if(zeroWild>0){
             if(i > 1){
                 if(i<3){
                     if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 || arr[i-1].pattern.type == 11  ) {
-                        console.log("yey")
+
                         count++;
                         arrType = arr[i-1].pattern.type
                     } else {
@@ -75,7 +75,7 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
                 }
                 else{
                     if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 || arr[i].pattern.type == arr[i-2].pattern.type  ) {
-                        console.log("yey")
+        
                         count++;
                         arrType = arr[i-1].pattern.type
                     } else {
@@ -86,7 +86,6 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
             }
         }else{
             if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11   ) {
-                console.log("yey")
                 count++;
                 arrType = arr[i-1].pattern.type
             } else {
