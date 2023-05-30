@@ -549,7 +549,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:1,symbols:lineSymbols,payout:totalLinePay})
@@ -564,7 +564,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:2,symbols:lineSymbols,payout:totalLinePay})
@@ -579,7 +579,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                    //this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:3,symbols:lineSymbols,payout:totalLinePay})
@@ -594,7 +594,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:4,symbols:lineSymbols,payout:totalLinePay})
@@ -609,7 +609,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:5,symbols:lineSymbols,payout:totalLinePay})
@@ -624,7 +624,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:6,symbols:lineSymbols,payout:totalLinePay})
@@ -639,7 +639,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:7,symbols:lineSymbols,payout:totalLinePay})
@@ -654,7 +654,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                  //  this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:8,symbols:lineSymbols,payout:totalLinePay})
@@ -669,7 +669,7 @@ export default class Slot{
                 }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
-                    this.freeSpinStart = true
+                   // this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
                 this.paylines.push({payline:9,symbols:lineSymbols,payout:totalLinePay})
