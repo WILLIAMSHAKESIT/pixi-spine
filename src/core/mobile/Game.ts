@@ -570,12 +570,14 @@ export default class GameMobile{
  
             //MODAL
             this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal','modal_frame').texture
-            this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)/2
-            this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)/2
+            this.slotGame.container.scale.set(1)
+    
             this.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
-            this.slotGame.container.scale.set(1)
+            
             this.slotGame.container.x = 0
+            this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)/2
+            this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)/2
 
             //CONTROLLER PARENT
             this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent').texture
