@@ -145,6 +145,11 @@ export default class GameMobile{
     private eventStart:boolean = false
 
     //FOR MOBILE TEMPORARY
+
+
+    // SOUNDS
+    private fadeDurationBgm:number = 3000
+    private fadeOutDelay:number = 8000
      
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -808,13 +813,28 @@ export default class GameMobile{
 
 
     private createIntro(){
+        this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.intro.container)
         
         this.intro.playBtn.addEventListener('pointerdown',()=>{
+            // initialize the sound on game enter
+            if(this.globalSound){
+                Howler.mute(false)
+                this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
+                this.ambientCheck = true
+                this.sfxCheck = true
+            }
+            this.playSound(12)
+            this.playSound(0)
+            this.playSound(16)
+            this.soundVolume(16,0)
+            this.playSound(17)
+            this.soundVolume(17,0)
             this.intro.playBtn.interactive = false
             this.createTransition()
             let timeOut = setTimeout(()=>{
+                this.enableButtons(true)
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
                 clearTimeout(timeOut)
@@ -940,6 +960,10 @@ export default class GameMobile{
         this.plantContainerRight.addChild(butterfly)
     }
     private createCongrats(){
+        this.fadeSound(6,0,this.fadeDurationBgm)
+        this.soundVolume(0,0)
+        this.playSound(7)
+        this.fadeSound(7,1,this.fadeDurationBgm)
         this.isOpenCongrats = true
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
@@ -1001,7 +1025,7 @@ export default class GameMobile{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -1094,6 +1118,17 @@ export default class GameMobile{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
+        if(!this.sound[0].playing()){
+            this.playSound(0)
+        }
+        if(!this.sound[16].playing() && !this.slotGame.isFreeSpin){
+            this.playSound(16)
+        }
+        if(!this.slotGame.isFreeSpin){
+            this.fadeSound(16,1,this.fadeDurationBgm)
+            this.fadeSound(17,0,this.fadeDurationBgm)
+            this.fadeSound(0,0,this.fadeDurationBgm)
+        }
         this.slotGame.totalWin = 0
         this.userCredit-=this.betAmount
         this.updateCreditValues()
@@ -1279,6 +1314,7 @@ export default class GameMobile{
             let topText = 'MATCH 3 TO WIN'
             let bottomText = 'PICK STONE TO REVEAL JACKPOTS'
             let popUpSkin = ''
+            let soundTimeOut = 2000
             this.enableButtons(false)
             this.lightMode(false)
             //create blocks
@@ -1301,10 +1337,10 @@ export default class GameMobile{
                 Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
                 symbol.addListener('mouseover',() =>{
-                    this.playSound(2)
+                    this.playSound(20)
                 })
                 symbol.addEventListener('pointerdown',()=>{
-                    this.playSound(1)
+                    this.playSound(20)
                     
                     symbol.interactive = false
                     status = 'open'
@@ -1312,6 +1348,10 @@ export default class GameMobile{
                     Functions.loadSpineAnimation(symbol,'reveal',false,0.7)
                     if(data == 'grand'){
                         grandCount++
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(23)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         if(grandCount == 3){
                             popUpSkin = 'excellent'
                             this.matchingGameWin = json.jackpots.grand
@@ -1320,6 +1360,10 @@ export default class GameMobile{
                         }
                     }else if(data == 'major'){
                         majorCount++
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(22)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         if(majorCount == 3){
                             popUpSkin = 'impressive'
                             this.matchingGameWin = json.jackpots.major
@@ -1327,6 +1371,10 @@ export default class GameMobile{
                             this.matchinGameWinPop(arrayBlockValues,popUpSkin,result)
                         }
                     }else{
+                        let timeOut = setTimeout(()=>{
+                            this.playSound(21)
+                            clearTimeout(timeOut)
+                        },soundTimeOut)
                         miniCount++
                         if(miniCount == 3){
                             popUpSkin = 'nice'
@@ -1362,11 +1410,15 @@ export default class GameMobile{
         })
         let popDelay = setTimeout(()=>{
             this.createPopUps(popUpSkin)
+            this.playSound(7)
+            this.fadeSound(8,0,2000)
             this.popUps.container.addEventListener('pointerdown',()=>{
                 this.playSound(1)
                 
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
+                this.fadeSound(7,0,2000)
+                this.fadeSound(8,1,2000)
             })
             clearTimeout(popDelay)
         },timeOut)
@@ -1407,7 +1459,14 @@ export default class GameMobile{
         clickContinueText.interactive= true
         clickContinueText.cursor = 'pointer'
         clickContinueText.addEventListener('pointerdown',()=>{
-            this.playSound(1)
+            this.playSound(0)
+            this.soundStop(16)
+            this.soundVolume(16,0)
+            this.soundStop(17)
+            this.soundVolume(17,0)
+            this.fadeSound(0,1,2000)
+            this.fadeSound(8,0,2000)
+            this.playSound(12)
             
             textScaleAnim.kill()
             this.endMatchingGame()
@@ -1871,7 +1930,7 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
-            this.playSound(1)
+            this.playSound(30)
             this.isOpenBuyBonusFrame = true
             this.buyBonusPopUp()
             this.enableButtons(false)
@@ -1879,6 +1938,13 @@ export default class GameMobile{
         })
     }
     private freeSpinEvent(){
+        this.playSound(14)
+        this.fadeSound(16,0,this.fadeDurationBgm)
+        this.fadeSound(17,0,this.fadeDurationBgm)
+        this.fadeSound(0,0,this.fadeDurationBgm)
+        this.playSound(6)
+        this.fadeSound(6,1,this.fadeDurationBgm)
+        this.soundStop(16)
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
 
@@ -1913,6 +1979,7 @@ export default class GameMobile{
             y:sY,
             onComplete:()=>{
                 wildSlotFrameShow.kill()
+                this.playSound(15)
                 let bounceUp = gsap.to(this.wildSlot,{
                     y:dY-160,
                     onComplete:()=>{
@@ -1983,6 +2050,8 @@ export default class GameMobile{
         })
         this.wildSlot.addEventListener('pointerdown', () =>{
             this.playSound(1)
+            this.slotGame.whatEvent = 1
+            this.playSound(12)
             
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
@@ -2003,7 +2072,8 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.moneySlot.addEventListener('pointerdown', () =>{
-            this.playSound(1)
+            this.playSound(12)
+            this.slotGame.whatEvent = 2
             
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
@@ -2069,17 +2139,19 @@ export default class GameMobile{
 
     private playSound(index:number){
         this.sound[index].play();
-        this.soundVolume(index)
     }
 
     private soundStop(index:number){
         this.sound[index].stop()
     }
 
-    private soundVolume(index:number){
-        if(index == 1 || index == 2  || index == 3  || index == 4  || index == 5) // sound plinko ball collide
-            this.sound[index].volume(0.2)
+    private soundVolume(index:number,volume:number){
+        this.sound[index].volume(volume)
     }
+    private fadeSound(index:number,volumeTo:any,duration:number){
+        this.sound[index].fade(this.sound[index].volume(),volumeTo,duration)
+    }
+
 
     private checkSoundToggle(){
         if(this.ambientCheck){
