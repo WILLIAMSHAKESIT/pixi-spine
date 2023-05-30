@@ -504,7 +504,7 @@ export default class Slot{
                 this.containPattern(blocks,pattern9)
             }
         })
-        
+
         //pattern count consecutive
         let isPattern1 = Functions.hasConsecutiveSameValues(pattern1)
         let isPattern2 = Functions.hasConsecutiveSameValues(pattern2)
