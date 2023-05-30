@@ -136,6 +136,7 @@ export default class Slot{
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void){
         this.app = app
+        this.sound = sound
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
@@ -280,6 +281,7 @@ export default class Slot{
         this.container.addChild(this.maskSprite)
     }
     public startSpin(spinType:string){
+        this.bonusSymbolsCount = 0
         this.soundStop(5)
         this.spinType = spinType
         this.symbolCount = 0

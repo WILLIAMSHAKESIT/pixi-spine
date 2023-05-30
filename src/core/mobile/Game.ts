@@ -992,8 +992,10 @@ export default class GameMobile{
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
+                
                 let show = setTimeout(() => {
                     this.isFreeSpin = false
+                    this.soundStop(7)
                     clearTimeout(show);
                 }, 1000);
                 this.slotGame.reelContainer.forEach((data,index)=>{
