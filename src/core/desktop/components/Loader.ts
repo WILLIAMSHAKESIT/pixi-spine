@@ -195,7 +195,7 @@ export default class Loader{
 
         const loadingTextNew = new PIXI.Text(`DO YOU WANT TO PLAY WITH SOUND?`, this.loadingTextStyle)
         loadingTextNew.x = (this.loadingContainer.width - loadingTextNew.width)/2
-        loadingTextNew.y = loadingText.y-26
+        loadingTextNew.y = loadingText.y-11
         this.loadingContainer.addChild(loadingTextNew)
 
         const soundBtnInactive = new PIXI.Sprite(this.loadingAssets.loading.textures['ex.png'])
