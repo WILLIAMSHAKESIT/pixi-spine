@@ -230,6 +230,8 @@ export default class GameMobile{
     }
     private init(res:any,app:PIXI.Application){
         this.app = app
+        this.screenSetting = Functions.screenSize();
+        this.app.renderer.resize(1920,1080);
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = res
@@ -253,8 +255,7 @@ export default class GameMobile{
         this.infoContainer = Functions.loadTexture(this.textureArray,'controller_mobile','info_container')
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         //FOR MOBILE
-         this.screenSetting = Functions.screenSize();
-        this.app.renderer.resize(1920,1080);
+
 
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
