@@ -278,11 +278,11 @@ export default class GameMobile{
 
         window.document.addEventListener('keydown', (e)=> {
             if(e.code === 'Space'  || e.key === 'Enter'){         
-                console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
-                console.log(this.isAutoPlay, " this.isAutoPlay")
-                console.log(this.isMatchingGame, " this.isMatchingGame")
-                console.log(this.isFreeSpin, " this.isFreeSpin")
-                console.log(this.isOpenModal, " this.isOpenModal")
+                // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
+                // console.log(this.isAutoPlay, " this.isAutoPlay")
+                // console.log(this.isMatchingGame, " this.isMatchingGame")
+                // console.log(this.isFreeSpin, " this.isFreeSpin")
+                // console.log(this.isOpenModal, " this.isOpenModal")
                 if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
