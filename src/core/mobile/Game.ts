@@ -818,6 +818,7 @@ export default class GameMobile{
         this.gameContainer.addChild(this.intro.container)
         
         this.intro.playBtn.addEventListener('pointerdown',()=>{
+            this.intro.playBtn.interactive = false
             // initialize the sound on game enter
             if(this.globalSound){
                 Howler.mute(false)
