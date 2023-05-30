@@ -583,7 +583,7 @@ export default class GameMobile{
             this.controller.container.x = 0
 
             //FREE SPIN
-            this.buyBonusBtn.y =  (this.baseHeight - this.buyBonusBtn.height)/2
+            this.buyBonusBtn.y =  (this.screenSetting.baseHeight - this.buyBonusBtn.height)/2
            
             //levelbarIndicator
             this.slotGame.levelBarBg.x = (this.slotGame.frameBorder.width - this.slotGame.levelBarBg.width)+50
