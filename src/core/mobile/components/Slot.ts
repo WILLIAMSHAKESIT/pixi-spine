@@ -446,6 +446,7 @@ export default class Slot{
                     this.soundVolume(18,0.2)
                     Functions.loadSpineAnimation(data.symbol,'open',false,1.1)
                     const globalPos = data.symbol.getGlobalPosition()
+                   
                     this.createWildCoin(globalPos.x,globalPos.y)
                     this.levelBarIndicator.width++
                     // reset level bar and start matching game
@@ -985,7 +986,7 @@ export default class Slot{
         let duration = 1
         for(let i = 0;i<=3;i++){
             const coin = Functions.animatedSprite(this.textureArray['coins'],'new_coin_spinning')
-            coin.x = (coinX)
+            coin.x = (coinX ) 
             coin.y = (coinY * 0.75)
             coin.alpha = 0.4
             coin.scale.set(0.15)

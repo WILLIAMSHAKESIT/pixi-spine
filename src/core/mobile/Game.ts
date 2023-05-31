@@ -2108,7 +2108,7 @@ export default class GameMobile{
         })
     }
     private startfreeSpinEvent(count:number){
-      console.log("sdsds")
+
         this.eventStart = true
         this.soundStop(0)
         this.playSound(6)
