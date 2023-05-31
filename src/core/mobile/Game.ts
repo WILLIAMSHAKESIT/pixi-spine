@@ -2065,8 +2065,6 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.wildSlot.addEventListener('pointerdown', () =>{
-
-           console.log("U CALL ME TWICE!")
             this.playSound(1)
             this.slotGame.whatEvent = 1
             this.playSound(12)
@@ -2083,16 +2081,14 @@ export default class GameMobile{
                 this.startfreeSpinEvent(this.noOfSpin)
                 clearTimeout(timeout)
             },this.transitionDelay)
+            this.isOpenFreeSpinModals = false
         })
 
         
         this.moneySlot.addListener('mouseover',() =>{
             this.playSound(2)
         })
-        this.moneySlot.addEventListener('pointerdown', () =>{
-   
-            console.log("U CALL ME TWICE!")
-           
+        this.moneySlot.addEventListener('pointerdown', () =>{         
             this.playSound(12)
             this.slotGame.whatEvent = 2
             
@@ -2108,6 +2104,7 @@ export default class GameMobile{
                 this.startfreeSpinEvent(this.noOfSpin)
                 clearTimeout(timeout)
             },this.transitionDelay)
+            this.isOpenFreeSpinModals = false
         })
     }
     private startfreeSpinEvent(count:number){
