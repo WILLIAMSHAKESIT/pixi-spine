@@ -189,7 +189,7 @@ export default class Slot{
 
         //create level bar background
         this.levelBarBg = Functions.loadTexture(this.textureArray,'main','bar_bg')
-        this.levelBarBg.x = (this.frameBorder.width - this.levelBarBg.width)+50
+        // this.levelBarBg.x = (this.frameBorder.width - this.levelBarBg.width)+50
         this.levelBarBg.y = this.frameBorder.y * 0.7
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
@@ -245,7 +245,6 @@ export default class Slot{
         grandPrize.x = (this.itemGrand.width - grandPrize.width)/2;
         grandPrize.y = 40;
         this.itemGrand.addChild(grandPrize)
-
         this.container.addChild(this.levelBarContainer)
     }
     private createReels(){

@@ -326,8 +326,8 @@ export default class GameMobile{
         //this.app.renderer.options.width = this.screenSetting.newGameWidth
         //this.app.renderer.options.height = this.screenSetting.newGameHeight ;
         //this.app.renderer.options. = this.screenSetting.newGameY  + this.screenSetting.newGameX ;
-        let portraitBg = Functions.loadTexture(this.textureArray,'intro','intro_bg_mobile').texture
-        let landscapeBg = Functions.loadTexture(this.textureArray,'intro','intro_bg').texture
+        let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
+        let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -341,16 +341,13 @@ export default class GameMobile{
             this.gameBackground.width = this.screenSetting.baseWidth
             
             //levelbarIndicator
-            this.slotGame.levelBarBg.x = this.screenSetting.baseWidth / 2
             this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height +100
             this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y = this.slotGame.levelBarBg.y
-            this.slotGame.itemMini.x = this.slotGame.levelBarBg.x -15 
             this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
-            this.slotGame.itemMajor.x = this.slotGame.levelBarBg.x + 230 
             this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
-            this.slotGame.itemGrand.x = this.slotGame.levelBarBg.x + 496
             this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
+            this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
 
             //FREE SPIN
             this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
@@ -611,16 +608,13 @@ export default class GameMobile{
             this.buyBonusBtn.y =  (this.screenSetting.baseHeight - this.buyBonusBtn.height)/2
            
             //levelbarIndicator
-            this.slotGame.levelBarBg.x = (this.slotGame.frameBorder.width - this.slotGame.levelBarBg.width)+50
             this.slotGame.levelBarBg.y =  this.slotGame.frameBorder.y * 0.7
-            this.slotGame.levelBarIndicator.x =  this.slotGame.levelBarBg.x + 5
+            this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y =this.slotGame.levelBarBg.y
-            this.slotGame.itemMini.x = this.slotGame.levelBarBg.x 
             this.slotGame.itemMini.y =  this.slotGame.levelBarBg.y - 30
-            this.slotGame.itemMajor.x =this.slotGame.itemMini.x + this.slotGame.itemMini.width
             this.slotGame.itemMajor.y = this.slotGame.itemMini.y - 13
-            this.slotGame.itemGrand.x = this.slotGame.itemMajor.x + this.slotGame.itemMajor.width
             this.slotGame.itemGrand.y =  10
+            this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
 
             //CONTROLLER CHILDREN
             this.controller.spinBtnSprite.scale.set(1)
@@ -1659,7 +1653,7 @@ export default class GameMobile{
         this.controller.settingBtnSpite.texture = settingBtnTexture
         this.controller.spinBtnSprite.texture = spinBtnTexture
         this.controller.autoPlay.texture = autoPlayTexture
-        this.gameBackground.texture = Functions.loadTexture(this.textureArray,'main','bg2').texture
+        this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
