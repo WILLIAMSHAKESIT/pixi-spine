@@ -281,6 +281,7 @@ export default class Slot{
         this.container.addChild(this.maskSprite)
     }
     public startSpin(spinType:string){
+       // console.log("EY YOU CALL ME")
         this.bonusSymbolsCount = 0
         this.soundStop(5)
         this.spinType = spinType
@@ -372,10 +373,13 @@ export default class Slot{
                             }
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
+                            
                                 this.generateNewSymbolsEvent(index)
                             }else if(this.isFreeSpin && !this.isFreeSpinDone){
+                       
                                 this.generateNewSymbolsMainEvent(index)
                             }else{
+                              
                                 this.generateNewSymbols(index)
                             }
                             let bounceStop = gsap.to(data,{
@@ -419,6 +423,7 @@ export default class Slot{
                                         this.autoPlayCount--
                                         // set the credit base 
                                         this.onSpinEnd()
+                                        //console.log(this.autoPlayCount, " z")
                                         if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
                                             this.createCongrats()
                                         }

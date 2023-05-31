@@ -144,6 +144,8 @@ export default class GameMobile{
 
     private eventStart:boolean = false
 
+    private isOpenFreeSpinModals:boolean = false
+
     //FOR MOBILE TEMPORARY
 
 
@@ -429,8 +431,10 @@ export default class GameMobile{
             this.glowY2 = 1644
             this.popGlow2.x = 570
             this.popGlow2.y = 1644
+            if(this.isOpenFreeSpinModals){
             this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 - 400
             this.moneySlot.y = 380
+            }
             //this.moneyBoardX = 
             this.moneyBoardY = 380
             //this.transition.leaves.rotation = 0
@@ -670,8 +674,11 @@ export default class GameMobile{
             this.glowY2 = 1044
             this.popGlow2.x = 1370
             this.popGlow2.y = 1044
+
+            if(this.isOpenFreeSpinModals){
             this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 + 400
             this.moneySlot.y = -240
+            }
             this.moneyBoardY = -240
 
            // this.transition.leaves.rotation = 0
@@ -1140,6 +1147,7 @@ export default class GameMobile{
         this.slotGame.startSpin(spinType)
     }
     private startSpinAutoPlay(spinCount:number){
+       
         this.slotGame.autoPlayCount = spinCount
         this.startSpin(this.spinType)
         this.modal.totalSpin = 0 
@@ -1933,6 +1941,7 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
+          
             this.playSound(30)
             this.isOpenBuyBonusFrame = true
             this.buyBonusPopUp()
@@ -1941,6 +1950,10 @@ export default class GameMobile{
         })
     }
     private freeSpinEvent(){
+        this.isOpenFreeSpinModals = true
+        this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
+        this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
+        this.screenSize()
         this.playSound(14)
         this.fadeSound(16,0,this.fadeDurationBgm)
         this.fadeSound(17,0,this.fadeDurationBgm)
@@ -2052,6 +2065,8 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.wildSlot.addEventListener('pointerdown', () =>{
+
+           console.log("U CALL ME TWICE!")
             this.playSound(1)
             this.slotGame.whatEvent = 1
             this.playSound(12)
@@ -2075,6 +2090,9 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.moneySlot.addEventListener('pointerdown', () =>{
+   
+            console.log("U CALL ME TWICE!")
+           
             this.playSound(12)
             this.slotGame.whatEvent = 2
             
@@ -2093,6 +2111,7 @@ export default class GameMobile{
         })
     }
     private startfreeSpinEvent(count:number){
+      console.log("sdsds")
         this.eventStart = true
         this.soundStop(0)
         this.playSound(6)
