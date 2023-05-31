@@ -217,8 +217,6 @@ export default class Loader{
 
         this.loadingContainer.removeChild(this.loadingBarBg,this.loadingBar,this.loadingText)
 
-
-     
         this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2
         this.loadingTextNew.y = this.loadingText.y-26
         this.loadingContainer.addChild(this.loadingTextNew)
@@ -241,16 +239,20 @@ export default class Loader{
         this.loadingContainer.x = (this.app.screen.width - this.loadingContainer.width)/2
         this.loadingContainer.y = (this.app.screen.height - this.loadingContainer.height)/2
         
-        this.soundBtnInactive.addEventListener('pointerdown',()=>{this.introScreen(loadedAssets,false)})
-        this.soundBtnActive.addEventListener('pointerdown',()=>{this.introScreen(loadedAssets,true)})
+        this.soundBtnInactive.addEventListener('pointerdown',()=>{
+            this.introScreen(loadedAssets,false)
+        })
+        this.soundBtnActive.addEventListener('pointerdown',()=>{
+            this.introScreen(loadedAssets,true)
+        })
         this.screenSize()
 
         //this.introScreen(loadedAssets,true)
     }
     private introScreen(loadedAssets:(assets:any,app:PIXI.Application)=>void,bool:boolean){
         this.soundPrompt(bool)
-        // this.app.stage.removeChild(this.loadingContainer)
-        // this.app.stage.removeChild(this.loadingBg)
+        this.app.stage.removeChild(this.loadingContainer)
+        this.app.stage.removeChild(this.loadingBg)
         loadedAssets(this.gameAssets,this.app)
     }
 
@@ -259,6 +261,8 @@ export default class Loader{
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
 
         if(this.screenSetting.screentype == 'portrait'){
+            this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background_mobile').texture
+            this.loadingBg.width = this.screenSetting.baseWidth
             this.loadingBg.height = this.screenSetting.baseHeight
             this.loadingContainer.scale.set(0.9)
             this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
@@ -266,6 +270,8 @@ export default class Loader{
             this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 + 50
             this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
         }else{
+            this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background').texture
+            this.loadingBg.width = this.screenSetting.baseWidth
             this.loadingBg.height = this.screenSetting.baseHeight
             this.loadingContainer.scale.set(1)       
             this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2

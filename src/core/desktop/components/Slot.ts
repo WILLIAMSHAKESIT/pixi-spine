@@ -356,7 +356,7 @@ export default class Slot{
                         },
                         onComplete:()=>{
                             if(!this.isFreeSpin || this.freeSpinStart){
-                            this.reelEffectShow(index)
+                                this.reelEffectShow(index)
                             }
                             this.playSound(4);
                             spin.kill()
@@ -378,7 +378,7 @@ export default class Slot{
                                     this.updateVisibleBlocks(index)
                                     this.applyMotionBlur(index,false)
                                     if(!this.isFreeSpin){
-                                        this.reelContainWild(index)
+                                        this.reelContainWildAndBonus(index)
                                     }
                                     if(this.spinCount == 5){
                                         this.maskSprite.height = this.frameBorder.height 
@@ -422,9 +422,10 @@ export default class Slot{
             this.timeScale = 0
         })
     }
-    private reelContainWild(index:number){
+    private reelContainWildAndBonus(index:number){
         this.reelsSymbols[index].forEach((data:any,index:number)=>{
             if(index > 26){
+                //check if reel contain wild
                 if(data.type == this.wildType){ 
                     this.playSound(18)
                     this.soundVolume(18,0.2)
@@ -440,6 +441,7 @@ export default class Slot{
                         this.matchingGame()
                     }
                 }
+                //check if reel contain bonus
                 if(data.type == this.bonusType){
                     this.bonusSymbolsCount++
                     if(this.bonusSymbolsCount > 1){
@@ -487,7 +489,7 @@ export default class Slot{
                     this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
-                // validate not to match bonus and wild symbol
+                // validate not to add payline bonus and wild symbol
                 if(lineSymbols.length == data.count){
                     if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                         this.paylines.push({payline:index+1,symbols:lineSymbols,payout:totalLinePay})

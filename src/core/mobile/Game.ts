@@ -150,7 +150,7 @@ export default class GameMobile{
 
 
     // SOUNDS
-    private fadeDurationBgm:number = 3000
+    private fadeDurationBgm:number = 4000
     private fadeOutDelay:number = 8000
      
     constructor(){
@@ -308,9 +308,15 @@ export default class GameMobile{
             this.screenSize()
         })
         this.screenSize()
-
-        this.playSound(0)
         Howler.mute(true)
+        // toggle sound on tab enter and leave
+        document.addEventListener("visibilitychange", ()=> {
+            if (document.hidden){
+                Howler.mute(true)
+            } else {
+                Howler.mute(false)
+            }
+        });
     }
     private screenSize(){
         
@@ -320,7 +326,8 @@ export default class GameMobile{
         //this.app.renderer.options.width = this.screenSetting.newGameWidth
         //this.app.renderer.options.height = this.screenSetting.newGameHeight ;
         //this.app.renderer.options. = this.screenSetting.newGameY  + this.screenSetting.newGameX ;
-
+        let portraitBg = Functions.loadTexture(this.textureArray,'intro','intro_bg_mobile').texture
+        let landscapeBg = Functions.loadTexture(this.textureArray,'intro','intro_bg').texture
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -329,6 +336,7 @@ export default class GameMobile{
             this.slotGame.container.x = -80
 
             //background rescale
+            this.gameBackground.texture = portraitBg
             this.gameBackground.height = this.screenSetting.baseHeight
             this.gameBackground.width = this.screenSetting.baseWidth
             
@@ -561,6 +569,7 @@ export default class GameMobile{
 
 
             //HOME
+            this.intro.bg.texture = portraitBg
             this.intro.bg.height = this.screenSetting.baseHeight
             this.intro.bg.width = this.screenSetting.baseWidth
             this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
@@ -568,7 +577,7 @@ export default class GameMobile{
             this.intro.playBtn.y = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
             this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
             this.intro.playBtnY = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
-
+            this.intro.logo.x = (this.intro.centerContainer.width - this.intro.logo.width)/2
 
             //TRANSITION
             if(this.openTransition){
@@ -578,7 +587,9 @@ export default class GameMobile{
 
 
         }else{ 
- 
+            //GAME BACKGROUND 
+            this.gameBackground.texture = landscapeBg
+
             //MODAL
             this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal','modal_frame').texture
             this.slotGame.container.scale.set(1)
@@ -799,6 +810,7 @@ export default class GameMobile{
             }
 
             //HOME
+            this.intro.bg.texture = landscapeBg
             this.intro.bg.height = this.screenSetting.baseHeight
             this.intro.bg.width = this.screenSetting.baseWidth
             this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
@@ -806,7 +818,7 @@ export default class GameMobile{
             this.intro.playBtn.y = (this.screenSetting.baseHeight - this.intro.playBtn.height)*0.9
             this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width)*0.9
             this.intro.playBtnY = (this.screenSetting.height - this.intro.playBtn.height) *0.9
-
+            this.intro.logo.x = (this.intro.centerContainer.width - this.intro.logo.width)/2
 
             //TRANSITION
             if(this.openTransition){
@@ -817,15 +829,11 @@ export default class GameMobile{
         }
     }
 
-
-
     private createIntro(){
         this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.intro.container)
-        
         this.intro.playBtn.addEventListener('pointerdown',()=>{
-            this.intro.playBtn.interactive = false
             // initialize the sound on game enter
             if(this.globalSound){
                 Howler.mute(false)
@@ -843,6 +851,7 @@ export default class GameMobile{
             this.createTransition()
             let timeOut = setTimeout(()=>{
                 this.enableButtons(true)
+                this.intro.container.removeChild(this.intro.playBtn)
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
                 clearTimeout(timeOut)
@@ -970,18 +979,18 @@ export default class GameMobile{
     private createCongrats(){
         this.fadeSound(6,0,this.fadeDurationBgm)
         this.soundVolume(0,0)
-        this.playSound(7)
+        if(!this.sound[7].playing()){
+            this.playSound(7)
+        }
         this.fadeSound(7,1,this.fadeDurationBgm)
         this.isOpenCongrats = true
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
         this.gameContainer.addChild(this.congrats.container)
         this.screenSize()
-        this.playSound(7)
         
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
-            this.playSound(1)
             this.eventStart = false
             this.isAutoPlay = false
             this.congrats.container.interactive = false
@@ -995,8 +1004,11 @@ export default class GameMobile{
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
-                this.soundStop(6)
-                this.playSound(0)
+                if(!this.sound[0].playing()){
+                    this.playSound(0)
+                }
+                this.fadeSound(7,0,this.fadeDurationBgm)
+                this.fadeSound(0,1,this.fadeDurationBgm)
                 this.gameContainer.removeChild(this.congrats.container)
                 this.enableButtons(true)
                 this.lightModeEvent(true)
@@ -1119,6 +1131,17 @@ export default class GameMobile{
             this.freeSpinEvent()
             this.slotGame.isBonusTick = false
         }
+        let timeout = setTimeout(()=>{
+            if(!this.isAutoPlay){
+                if(this.sound[16].volume() == 1){
+                    this.fadeSound(16,0,this.fadeDurationBgm)
+                }
+                if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
+                    this.fadeSound(0,1,this.fadeDurationBgm)
+                }
+            }
+            clearTimeout(timeout)
+        },this.fadeOutDelay)
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
@@ -1128,7 +1151,7 @@ export default class GameMobile{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        if(!this.sound[0].playing()){
+        if(!this.sound[0].playing() && !this.slotGame.isFreeSpin){
             this.playSound(0)
         }
         if(!this.sound[16].playing() && !this.slotGame.isFreeSpin){
@@ -1207,7 +1230,7 @@ export default class GameMobile{
         })
         close.addEventListener('pointerdown',()=>{
             this.isOpenBuyBonusFrame = false
-            this.playSound(1)
+            this.playSound(13)
             
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
@@ -1216,8 +1239,8 @@ export default class GameMobile{
             this.playSound(2)
         })
         check.addEventListener('pointerdown',()=>{
+            this.playSound(12)
             this.isOpenBuyBonusFrame = false
-            this.playSound(1)
             this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
@@ -1308,11 +1331,14 @@ export default class GameMobile{
         }) 
     }
     private matchingGame(){
+        this.fadeSound(17,0,this.fadeDurationBgm)
+        this.soundStop(17)
+        this.soundStop(16)
+        this.soundStop(0)
+        this.playSound(15)
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
-            this.soundStop(0)
-            this.playSound(8)
             let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
             let arrayBlockValues:Array<any> = []
             let blockSpacing = 1.2
@@ -1347,12 +1373,8 @@ export default class GameMobile{
                 }
                 Functions.loadSpineAnimation(symbol,'close',true,0.4)
                 symbol.skeleton.setSkinByName(data)
-                symbol.addListener('mouseover',() =>{
-                    this.playSound(20)
-                })
                 symbol.addEventListener('pointerdown',()=>{
                     this.playSound(20)
-                    
                     symbol.interactive = false
                     status = 'open'
                     arrayBlockValues[index].status = 'open'
@@ -1424,8 +1446,6 @@ export default class GameMobile{
             this.playSound(7)
             this.fadeSound(8,0,2000)
             this.popUps.container.addEventListener('pointerdown',()=>{
-                this.playSound(1)
-                
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
                 this.fadeSound(7,0,2000)
@@ -1478,7 +1498,6 @@ export default class GameMobile{
             this.fadeSound(0,1,2000)
             this.fadeSound(8,0,2000)
             this.playSound(12)
-            
             textScaleAnim.kill()
             this.endMatchingGame()
             clickContinueText.interactive = false
@@ -1640,7 +1659,7 @@ export default class GameMobile{
         this.controller.settingBtnSpite.texture = settingBtnTexture
         this.controller.spinBtnSprite.texture = spinBtnTexture
         this.controller.autoPlay.texture = autoPlayTexture
-        this.gameBackground.texture = gameBackgroundTexture
+        this.gameBackground.texture = Functions.loadTexture(this.textureArray,'main','bg2').texture
         this.buyBonusBtn.visible = bool
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
@@ -1720,6 +1739,10 @@ export default class GameMobile{
         this.buyBonusBtn.cursor = cursor
     }
     private events(){
+        // open info modal
+        this.controller.infoBtnSprite.addListener('mouseover',() =>{
+            this.playSound(2)
+        })
         // open info modal
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
             this.isOpenInfo = true
@@ -1831,8 +1854,14 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            let timeOut = setTimeout(()=>{
+                this.fadeSound(16,0,this.fadeDurationBgm)
+                this.fadeSound(0,1,this.fadeDurationBgm)
+                this.playSound(1)
+                clearTimeout(timeOut)
+            },this.fadeOutDelay)
+
             this.isOpenAutoplay = true
-            this.playSound(1)
             
             if(this.isAutoPlay){
                 this.controller.spinBtnSprite.interactive = true 
@@ -1950,10 +1979,6 @@ export default class GameMobile{
         })
     }
     private freeSpinEvent(){
-        this.isOpenFreeSpinModals = true
-        this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
-        this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
-        this.screenSize()
         this.playSound(14)
         this.fadeSound(16,0,this.fadeDurationBgm)
         this.fadeSound(17,0,this.fadeDurationBgm)
@@ -1961,6 +1986,12 @@ export default class GameMobile{
         this.playSound(6)
         this.fadeSound(6,1,this.fadeDurationBgm)
         this.soundStop(16)
+        this.soundStop(17)
+        this.soundStop(0)
+        this.isOpenFreeSpinModals = true
+        this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
+        this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
+        this.screenSize()
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
 
@@ -2062,12 +2093,9 @@ export default class GameMobile{
 
 
         this.wildSlot.addListener('mouseover',() =>{
-            this.playSound(2)
+            // this.playSound(2)
         })
         this.wildSlot.addEventListener('pointerdown', () =>{
-
-           console.log("U CALL ME TWICE!")
-            this.playSound(1)
             this.slotGame.whatEvent = 1
             this.playSound(12)
             
@@ -2090,9 +2118,6 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.moneySlot.addEventListener('pointerdown', () =>{
-   
-            console.log("U CALL ME TWICE!")
-           
             this.playSound(12)
             this.slotGame.whatEvent = 2
             
@@ -2111,10 +2136,7 @@ export default class GameMobile{
         })
     }
     private startfreeSpinEvent(count:number){
-      console.log("sdsds")
         this.eventStart = true
-        this.soundStop(0)
-        this.playSound(6)
         this.enableButtons(false)
         this.lightModeEvent(false)
         this.slotGame.freeSpinStart = false
@@ -2152,11 +2174,6 @@ export default class GameMobile{
     private sounds(soundInit:Boolean,soundArray:Array<any>){
         this.sound = soundArray;
         this.globalSound = soundInit;
-
-        // prevent background music from stacking when click multiple times
-        // if(!this.sound[1].playing() || !this.sound[21].playing(21)){
-        //     //this.playSound(1);
-        // }
     }
 
     private playSound(index:number){
@@ -2178,9 +2195,17 @@ export default class GameMobile{
     private checkSoundToggle(){
         if(this.ambientCheck){
             this.sound[0].mute(false)
+            this.sound[6].mute(false)
+            this.sound[8].mute(false)
+            this.sound[16].mute(false)
+            this.sound[17].mute(false)
         }
         else{
             this.sound[0].mute(true)
+            this.sound[6].mute(true)
+            this.sound[8].mute(true)
+            this.sound[16].mute(true)
+            this.sound[17].mute(true)
         }
         if(this.sfxCheck){
             this.sound[1].mute(false)
@@ -2188,12 +2213,54 @@ export default class GameMobile{
             this.sound[3].mute(false)
             this.sound[4].mute(false)
             this.sound[5].mute(false)
+            this.sound[7].mute(false)
+            this.sound[9].mute(false)
+            this.sound[10].mute(false)
+            this.sound[11].mute(false)
+            this.sound[12].mute(false)
+            this.sound[13].mute(false)
+            this.sound[13].mute(false)
+            this.sound[15].mute(false)
+            this.sound[18].mute(false)
+            this.sound[19].mute(false)
+            this.sound[20].mute(false)
+            this.sound[21].mute(false)
+            this.sound[22].mute(false)
+            this.sound[23].mute(false)
+            this.sound[24].mute(false)
+            this.sound[25].mute(false)
+            this.sound[26].mute(false)
+            this.sound[27].mute(false)
+            this.sound[28].mute(false)
+            this.sound[29].mute(false)
+            this.sound[30].mute(false)
         }else{
             this.sound[1].mute(true)
             this.sound[2].mute(true)
             this.sound[3].mute(true)
             this.sound[4].mute(true)
             this.sound[5].mute(true)
+            this.sound[7].mute(true)
+            this.sound[9].mute(true)
+            this.sound[10].mute(true)
+            this.sound[11].mute(true)
+            this.sound[12].mute(true)
+            this.sound[13].mute(true)
+            this.sound[13].mute(true)
+            this.sound[15].mute(true)
+            this.sound[18].mute(true)
+            this.sound[19].mute(true)
+            this.sound[20].mute(true)
+            this.sound[21].mute(true)
+            this.sound[22].mute(true)
+            this.sound[23].mute(true)
+            this.sound[24].mute(true)
+            this.sound[25].mute(true)
+            this.sound[26].mute(true)
+            this.sound[27].mute(true)
+            this.sound[28].mute(true)
+            this.sound[29].mute(true)
+            this.sound[30].mute(true)
         }
     }
     
