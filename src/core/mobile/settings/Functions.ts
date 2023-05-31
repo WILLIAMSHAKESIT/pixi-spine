@@ -71,7 +71,7 @@ const screenSize = () => {
     }
   
     newGameX = (viewport.width - newGameWidth) / 2;
-      newGameY = (viewport.height - newGameHeight) / 2;
+    newGameY = (viewport.height - newGameHeight) / 2;
   
     return {
       screentype,
