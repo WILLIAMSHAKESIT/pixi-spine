@@ -328,7 +328,6 @@ export default class Slot{
                     this.resetTopSymbolsAlpha(index)
                 },
                 onComplete:()=>{
-                    // this.playSound(3)
                     bounceStart.kill()
                     let spin = gsap.to(data, {
                         duration: this.spinDuration,
@@ -466,6 +465,7 @@ export default class Slot{
             }
             countsArray.push(Functions.hasConsecutiveSameValues(pattern))
         })
+
         countsArray.forEach((data,index)=>{
             if(index == arr[index] && data.count>2){
                 let totalLinePay:number = 0

@@ -56,17 +56,15 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
     for (let i = 0; i < arr.length; i++) {
         arrRes.push({block:arr[i].blockNo,payout:arr[i].pattern.payout,type:arr[i].pattern.type,symbol:arr[i].pattern.symbol})
     }
-     for (let i = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
         if(i-1 == 0 && arr[0].pattern.type == 11){
             count++;
             zeroWild++
-            console.log("buzz?")
         }
         if(zeroWild>0){
             if(i > 1){
                 if(i<3){
                     if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 || arr[i-1].pattern.type == 11  ) {
-                        console.log("yey")
                         count++;
                         arrType = arr[i-1].pattern.type
                     } else {
@@ -75,7 +73,6 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
                 }
                 else{
                     if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11 || arr[i].pattern.type == arr[i-2].pattern.type  ) {
-                        console.log("yey")
                         count++;
                         arrType = arr[i-1].pattern.type
                     } else {
@@ -86,14 +83,12 @@ const hasConsecutiveSameValues=(arr:Array<any>)=> {
             }
         }else{
             if (arr[i].pattern.type == arr[i-1].pattern.type || arr[i].pattern.type == 11   ) {
-                console.log("yey")
                 count++;
                 arrType = arr[i-1].pattern.type
             } else {
                 break; 
             }
         }
-      
     } 
     return {count:count,blocks:arrRes,arrTypes:arrType};      
 }  

@@ -87,7 +87,7 @@ export default class Game{
     private ambientCheck:Boolean = false;
     private sfxCheck:Boolean = false;
     public load:Loader;
-    private fadeDurationBgm:number = 3000
+    private fadeDurationBgm:number = 4000
     private fadeOutDelay:number = 8000
     //plants
     private plant1Right:Spine
