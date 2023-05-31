@@ -319,13 +319,19 @@ export default class GameMobile{
         });
     }
     private screenSize(){
-        
+        let el = document.getElementsByTagName("canvas")[0];
         this.screenSetting = Functions.screenSize();
         this.gameBackground.width = this.screenSetting.baseWidth
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
-        //this.app.renderer.options.width = this.screenSetting.newGameWidth
-        //this.app.renderer.options.height = this.screenSetting.newGameHeight ;
-        //this.app.renderer.options. = this.screenSetting.newGameY  + this.screenSetting.newGameX ;
+        // this.app.renderer.options.width = this.screenSetting.newGameWidth;
+        // this.app.renderer.options.height = this.screenSetting.newGameHeight;
+        el.style.width =  this.screenSetting.newGameWidth + "px";
+        el.style.height =  this.screenSetting.newGameHeight + "px";
+        el.style.margin =   this.screenSetting.newGameY + "px " + this.screenSetting.newGameX + "px";
+        // this.app.renderer.options.margin = this.screenSetting.newGameY  + this.screenSetting.newGameX;
+        // this.app.renderer.view.style.width = this.screenSettings.newGameWidth + "px";
+            // this.app.renderer.view.style.height = this.screenSettings.newGameHeight + "px";
+            // this.app.renderer.view.style.margin = this.screenSettings.newGameY + "px " + this.screenSettings.newGameX + "px";
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
         if(this.screenSetting.screentype == 'portrait'){
@@ -348,7 +354,7 @@ export default class GameMobile{
             this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
             this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
-
+            console.log(this.slotGame.levelBarIndicator.getGlobalPosition(),'ingame')
             //FREE SPIN
             this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
             //CONTROLLER PARENT
@@ -578,11 +584,9 @@ export default class GameMobile{
 
             //TRANSITION
             if(this.openTransition){
-            this.transition.leaves.rotation = 190
+            this.transition.leaves.rotation = 10890.6
             this.transition.leaves.x = 100 
             }
-
-
         }else{ 
             //GAME BACKGROUND 
             this.gameBackground.texture = landscapeBg

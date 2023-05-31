@@ -214,7 +214,6 @@ export default class Loader{
             }
         });
        
-
         this.loadingContainer.removeChild(this.loadingBarBg,this.loadingBar,this.loadingText)
 
         this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2
