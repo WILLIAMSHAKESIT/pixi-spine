@@ -25,6 +25,13 @@ canvas{
     height: 1440px;
 }
 
+@media(max-width:2188px){
+    canvas{
+        max-width: 100%;
+        width: 100%;
+        height: unset;
+    }
+}
 @media(max-width:1593px){
     canvas{
         max-width: 100%;
