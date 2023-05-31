@@ -409,7 +409,7 @@ export default class GameMobile{
             this.paylineTextBottom.y = this.paylineTextBtmY
             this.paylineTextBottom.x =  this.paylineTextBtmX
 
-            this.paylineSymbolX = (this.controller.parentSprite.width - this.paylineText.width)/2 
+            this.paylineSymbolX = (this.controller.parentSprite.width - this.paylineText.width)/2 -20
             this.paylineSymbolY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1000
 
             this.paylineContainer.alpha = 1
