@@ -348,7 +348,7 @@ export default class GameMobile{
             this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
             this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
-
+            console.log(this.slotGame.levelBarIndicator.getGlobalPosition(),'ingame')
             //FREE SPIN
             this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
             //CONTROLLER PARENT

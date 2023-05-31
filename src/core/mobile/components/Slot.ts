@@ -39,6 +39,8 @@ export default class Slot{
     public levelBarContainer:PIXI.Container
     public levelBarIndicator:PIXI.Sprite
     public maskSprite:PIXI.Sprite
+    //settings
+    private screenSetting:any;
     private reelsValues:Array<Array<number>> = [
         [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
@@ -185,7 +187,7 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 450
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -810,13 +812,27 @@ export default class Slot{
         return arr
     }
     private createWildCoin(coinX:number,coinY:number){
-        let barPosX = this.levelBarIndicator.x + this.levelBarIndicator.width
-        let barPosY = this.levelBarIndicator.y
+        this.screenSetting = Functions.screenSize();
+        let levelBarX = this.levelBarIndicator.getGlobalPosition().x
+        let levelBarY = this.levelBarIndicator.getGlobalPosition().y
+        let barPosX = 0
+        let barPosY = 0
         let duration = 1
+        if(this.screenSetting.screentype == 'portrait'){
+            barPosX = levelBarX*3.2
+            barPosY = levelBarY*1.43
+            coinY = coinY*1.4 
+            coinX = coinX>804?coinX*1.5:coinX*1.6
+        }else{
+            barPosX = levelBarX + this.levelBarIndicator.width
+            barPosY = levelBarY
+            coinY = coinY*0.75 
+            coinX = coinX
+        }
         for(let i = 0;i<=3;i++){
             const coin = Functions.animatedSprite(this.textureArray['coins'],'new_coin_spinning')
             coin.x = (coinX)
-            coin.y = (coinY * 0.75)
+            coin.y = (coinY)
             coin.alpha = 0.4
             coin.scale.set(0.15)
             coin.animationSpeed = 0.5
