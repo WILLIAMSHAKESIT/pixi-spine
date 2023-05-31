@@ -356,7 +356,9 @@ export default class GameMobile{
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
             console.log(this.slotGame.levelBarIndicator.getGlobalPosition(),'ingame')
             //FREE SPIN
+          
             this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
+            this.buyBonusBtn.x = 0
             //CONTROLLER PARENT
             if(this.isMatchingGame || this.eventStart){
                 this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile_darkmode','mobile_controllers_darkmode').texture
@@ -834,20 +836,24 @@ export default class GameMobile{
 
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
+                this.buyBonusBtn.x = 0
             }
             else if(this.screenSetting.isSafe == 'B'){
    
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
+                this.buyBonusBtn.x = 50
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 150;
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 150;
+                this.buyBonusBtn.x = 200
             }
             else{
 
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 200;
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 200;
+                this.buyBonusBtn.x = 200
             }
            
         }
