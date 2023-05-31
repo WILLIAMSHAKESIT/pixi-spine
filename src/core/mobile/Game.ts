@@ -323,15 +323,6 @@ export default class GameMobile{
         this.screenSetting = Functions.screenSize();
         this.gameBackground.width = this.screenSetting.baseWidth
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
-        // this.app.renderer.options.width = this.screenSetting.newGameWidth;
-        // this.app.renderer.options.height = this.screenSetting.newGameHeight;
-        el.style.width =  this.screenSetting.newGameWidth + "px";
-        el.style.height =  this.screenSetting.newGameHeight + "px";
-        el.style.margin =   this.screenSetting.newGameY + "px " + this.screenSetting.newGameX + "px";
-        // this.app.renderer.options.margin = this.screenSetting.newGameY  + this.screenSetting.newGameX;
-        // this.app.renderer.view.style.width = this.screenSettings.newGameWidth + "px";
-            // this.app.renderer.view.style.height = this.screenSettings.newGameHeight + "px";
-            // this.app.renderer.view.style.margin = this.screenSettings.newGameY + "px " + this.screenSettings.newGameX + "px";
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
         if(this.screenSetting.screentype == 'portrait'){
@@ -576,11 +567,12 @@ export default class GameMobile{
             this.intro.bg.height = this.screenSetting.baseHeight
             this.intro.bg.width = this.screenSetting.baseWidth
             this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
+            this.intro.centerContainer.y = (this.intro.bg.height - this.intro.centerContainer.height)/3 
             this.intro.playBtn.x = (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
-            this.intro.playBtn.y = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
             this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
             this.intro.playBtnY = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
             this.intro.logo.x = (this.intro.centerContainer.width - this.intro.logo.width)/2
+            this.intro.playBtn.y = (this.screenSetting.baseHeight - this.intro.playBtn.height)*0.8
 
             //TRANSITION
             if(this.openTransition){
@@ -812,12 +804,13 @@ export default class GameMobile{
             this.intro.bg.height = this.screenSetting.baseHeight
             this.intro.bg.width = this.screenSetting.baseWidth
             this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
+            this.intro.centerContainer.y = (this.intro.bg.height - this.intro.centerContainer.height)/2 
             this.intro.playBtn.x = (this.screenSetting.baseWidth - this.intro.playBtn.width)*0.9
             this.intro.playBtn.y = (this.screenSetting.baseHeight - this.intro.playBtn.height)*0.9
             this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width)*0.9
             this.intro.playBtnY = (this.screenSetting.height - this.intro.playBtn.height) *0.9
             this.intro.logo.x = (this.intro.centerContainer.width - this.intro.logo.width)/2
-
+            
             //TRANSITION
             if(this.openTransition){
                 this.transition.leaves.rotation = 0

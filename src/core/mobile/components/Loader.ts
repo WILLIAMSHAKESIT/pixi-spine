@@ -256,9 +256,12 @@ export default class Loader{
     }
 
     private screenSize(){
+        let el = document.getElementsByTagName("canvas")[0];
         this.screenSetting = Functions.screenSize();
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
-
+        el.style.width =  this.screenSetting.newGameWidth + "px";
+        el.style.height =  this.screenSetting.newGameHeight + "px";
+        el.style.margin =   this.screenSetting.newGameY + "px " + this.screenSetting.newGameX + "px";
         if(this.screenSetting.screentype == 'portrait'){
             this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background_mobile').texture
             this.loadingBg.width = this.screenSetting.baseWidth
