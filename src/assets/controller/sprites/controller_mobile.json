@@ -142,8 +142,8 @@
 		},
 		"system_settings.png": {
 			"frame": {
-				"x": 10,
-				"y": 1950,
+				"x": 3359,
+				"y": 10,
 				"w": 172,
 				"h": 171
 			},
@@ -159,6 +159,26 @@
 				"w": 172,
 				"h": 171
 			}
+		},
+		"tablet_controllers.png": {
+			"frame": {
+				"x": 10,
+				"y": 2084,
+				"w": 1920,
+				"h": 176
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1920,
+				"h": 176
+			},
+			"sourceSize": {
+				"w": 1920,
+				"h": 176
+			}
 		}
 	},
 	"meta": {
@@ -167,8 +187,8 @@
 		"image": "controller_mobile.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 3349,
-			"h": 2160
+			"w": 3541,
+			"h": 2270
 		},
 		"scale": "1"
 	}

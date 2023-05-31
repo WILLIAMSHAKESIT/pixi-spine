@@ -381,7 +381,8 @@ export default class GameMobile{
             this.controller.autoPlay.y = this.controller.parentSprite.y + 116
             this.controller.autoPlay.scale.set(2.4)
 
-
+            this.controller.settingBtnSpite.scale.set(1)
+           
             this.controller.settingBtnSpite.x = 130
             this.controller.settingBtnSpite.y = this.controller.parentSprite.y + 116
 
@@ -421,6 +422,7 @@ export default class GameMobile{
             this.infoContainer.y = this.buyBonusBtn.y
             this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
 
+            this.controller.infoBtnSprite.scale.set(1)
             this.controller.infoBtnSprite.x = this.gameBackground.width - this.controller.infoBtnSprite.width - 16
             this.controller.infoBtnSprite.y = 500
 
@@ -603,7 +605,7 @@ export default class GameMobile{
             this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)/2
 
             //CONTROLLER PARENT
-            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent').texture
+            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','tablet_controllers').texture
             this.controller.parentSprite.width = this.screenSetting.baseWidth
             this.controller.container.y = 0
             this.controller.container.x = 0
@@ -621,18 +623,19 @@ export default class GameMobile{
             this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
 
             //CONTROLLER CHILDREN
-            this.controller.spinBtnSprite.scale.set(1)
-            this.controller.spinBtnSprite.y = this.controller.parentSprite.y + 15
-            this.controller.spinBtnSprite.x =  (this.controller.parentSprite.width - this.controller.spinBtnSprite.width) - 147
+            this.controller.spinBtnSprite.scale.set(1.3)
+            this.controller.spinBtnSprite.y = this.controller.parentSprite.y - 450
+            this.controller.spinBtnSprite.x =  (this.controller.parentSprite.width - this.controller.spinBtnSprite.width) 
             
-            this.controller.autoPlay.scale.set(1)
+            this.controller.autoPlay.scale.set(1.4)
             this.controller.autoPlay.x = (this.controller.parentSprite.width - this.controller.autoPlay.width) - 45
-            this.controller.autoPlay.y = (this.controller.parentSprite.y + this.controller.parentSprite.height) - this.controller.autoPlay.height*1.2
+            this.controller.autoPlay.y = (this.controller.parentSprite.y + this.controller.parentSprite.height) - this.controller.autoPlay.height*1.2 - 330
            
 
             this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
-            this.controller.settingBtnSpite.x = this.controller.settingBtnSpite.width *1.5
-            this.controller.settingBtnSpite.y = this.controller.parentSprite.y+90
+            this.controller.settingBtnSpite.scale.set(1.3)
+            this.controller.settingBtnSpite.x = this.controller.settingBtnSpite.width *1.5 -93
+            this.controller.settingBtnSpite.y = this.controller.parentSprite.y+72
 
             this.controller.betContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller','bet_container').texture
             this.controller.betContainerSprite.scale.set(1)
@@ -667,10 +670,11 @@ export default class GameMobile{
             
             this.infoContainer.alpha = 0
             this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
-            this.controller.infoBtnSprite.x =this.controller.infoBtnSprite.width*1.64
-            this.controller.infoBtnSprite.y =  this.controller.parentSprite.y+10
+            this.controller.infoBtnSprite.scale.set(1.2)
+            this.controller.infoBtnSprite.x = (this.controller.parentSprite.width - this.controller.spinBtnSprite.width) - 89
+            this.controller.infoBtnSprite.y =  this.controller.parentSprite.y+55
             
-            this.controller.soundBtnSprite.alpha = 1
+            this.controller.soundBtnSprite.alpha = 0
 
             //BONUS FRAME
             if(this.isOpenBuyBonusFrame){
@@ -822,6 +826,28 @@ export default class GameMobile{
             if(this.openTransition){
                 this.transition.leaves.rotation = 0
                 this.transition.leaves.x = 935.5
+            }
+
+
+            
+            if(this.screenSetting.isSafe == 'A'){
+
+                this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
+                this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
+            }
+            else if(this.screenSetting.isSafe == 'B'){
+   
+                this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
+                this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
+            }
+            else if(this.screenSetting.isSafe == 'C'){
+                this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 150;
+                this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 150;
+            }
+            else{
+
+                this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 200;
+                this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 200;
             }
            
         }
