@@ -338,14 +338,17 @@ export default class GameMobile{
             this.gameBackground.width = this.screenSetting.baseWidth
             
             //levelbarIndicator
+            this.slotGame.levelBarContainer.scale.set(1)
             this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height +100
             this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y = this.slotGame.levelBarBg.y
             this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
             this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
             this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
+            this.slotGame.logo.scale.set(1)
+            this.slotGame.logo.y = 20
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
-            console.log(this.slotGame.levelBarIndicator.getGlobalPosition(),'ingame')
+            this.slotGame.logo.x = (this.slotGame.frameBorder.width - this.slotGame.logo.width)/1.6
             //FREE SPIN
           
             this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
@@ -420,7 +423,6 @@ export default class GameMobile{
             this.controller.infoBtnSprite.y = 500
 
             this.controller.soundBtnSprite.alpha = 0
-
             
             this.freeSpinHeight = 800
             this.freeSpinX = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
@@ -564,8 +566,6 @@ export default class GameMobile{
                 this.modal.image6thPortrait.y = (this.modal.modalFrame.height - this.modal.image6thPortrait.height)/2 +30    
             }
 
-
-
             //HOME
             this.intro.bg.texture = portraitBg
             this.intro.bg.height = this.screenSetting.baseHeight
@@ -580,8 +580,25 @@ export default class GameMobile{
 
             //TRANSITION
             if(this.openTransition){
-            this.transition.leaves.rotation = 10890.6
-            this.transition.leaves.x = 100 
+                this.transition.leaves.rotation = 10890.6
+                this.transition.leaves.x = 100 
+            }
+
+            //safe area
+            if(this.screenSetting.isSafe == 'A'){
+                this.slotGame.container.y = 200
+                console.log('mob a')
+            }
+            else if(this.screenSetting.isSafe == 'B'){
+                console.log('mob b')
+                this.slotGame.container.y = 150
+            }
+            else if(this.screenSetting.isSafe == 'C'){
+                this.slotGame.container.y = 70
+                console.log('mob c')
+            }
+            else{
+                console.log('mob d')
             }
         }else{ 
             //GAME BACKGROUND 
@@ -609,12 +626,17 @@ export default class GameMobile{
            
             //levelbarIndicator
             this.slotGame.levelBarBg.y =  this.slotGame.frameBorder.y * 0.7
+            this.slotGame.levelBarContainer.scale.set(0.6)
             this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y =this.slotGame.levelBarBg.y
             this.slotGame.itemMini.y =  this.slotGame.levelBarBg.y - 30
             this.slotGame.itemMajor.y = this.slotGame.itemMini.y - 13
             this.slotGame.itemGrand.y =  10
+            this.slotGame.logo.scale.set(0.7)
+            this.slotGame.logo.x = this.slotGame.frameBorder.x
+            this.slotGame.logo.y = this.slotGame.frameBorder.y
             this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
+             this.slotGame.container.y = 0
 
             //CONTROLLER CHILDREN
             this.controller.spinBtnSprite.scale.set(1.3)
@@ -822,31 +844,45 @@ export default class GameMobile{
                 this.transition.leaves.rotation = 0
                 this.transition.leaves.x = 935.5
             }
-
-
-            
+            //safe area
             if(this.screenSetting.isSafe == 'A'){
-
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 0
+                //slot
+                this.slotGame.levelBarContainer.y = 50
+                console.log('desk a')
             }
             else if(this.screenSetting.isSafe == 'B'){
-   
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 50
+                console.log('desk b')
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 150;
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 150;
                 this.buyBonusBtn.x = 200
+                // slot
+                this.slotGame.logo.scale.set(1)
+                this.slotGame.logo.y = 0
+                this.slotGame.levelBarContainer.scale.set(1)
+                this.slotGame.levelBarContainer.y = 0
+                this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
+                console.log('desk c')
             }
             else{
 
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 200;
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 200;
                 this.buyBonusBtn.x = 200
+                this.slotGame.logo.scale.set(1)
+                this.slotGame.logo.x = 191.5
+                this.slotGame.logo.y = 10.5
+                this.slotGame.levelBarContainer.scale.set(1)
+                this.slotGame.levelBarContainer.y = 0
+                this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.92
+                console.log('desk d')
             }
            
         }

@@ -136,7 +136,7 @@ export default class Slot{
     private bonusSymbolsCount:number = 0
     private sound:Array<any>
 
-    private logo:PIXI.Sprite
+    public logo:PIXI.Sprite
 
     constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void){
         this.app = app
@@ -183,8 +183,6 @@ export default class Slot{
     }
     private createLogo(){
         this.logo = Functions.loadTexture(this.textureArray,'main','logo') 
-        this.logo.x = this.frameBorder.x
-        this.logo.y = 20
         this.container.addChild(this.logo)
     }
     private createLevelBar(){
