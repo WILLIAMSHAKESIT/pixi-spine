@@ -32,7 +32,7 @@ export default class Slot{
     public reelContainer:Array<any> = []
     private reelsSymbols:Array<any> = []
     private spinCount:number= 0
-    private logo:PIXI.Sprite
+    public logo:PIXI.Sprite
     public isSpinning:boolean = false
     public notLongPress:boolean = true
     public levelBarContainer:PIXI.Container
@@ -176,7 +176,7 @@ export default class Slot{
         this.levelBarContainer.addChild(levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = levelBarBg.x + 5
         this.levelBarIndicator.y = levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
