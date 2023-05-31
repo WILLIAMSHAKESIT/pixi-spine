@@ -696,7 +696,7 @@ export default class GameMobile{
 
             //CONTROLLER PARENT
             if(this.isMatchingGame || this.eventStart){
-            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller','controller_parent2').texture
+            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','tablet_controllers').texture
             this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
             this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
             }
