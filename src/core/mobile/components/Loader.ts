@@ -260,24 +260,26 @@ export default class Loader{
 
         if(this.screenSetting.screentype == 'portrait'){
             this.loadingBg.height = this.screenSetting.baseHeight
-  
+            this.loadingContainer.scale.set(0.9)
             this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
             this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
-            this.loadingContainer.scale.set(0.9)
+           
 
-            this.loadingTextNew.x = (this.screenSetting.baseWidth - this.loadingTextNew.width)/2 + 50
+            this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 + 50
 
             this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
         }else{
             this.loadingBg.height = this.screenSetting.baseHeight
             this.loadingContainer.scale.set(1)
+           
             this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
             this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
            
+           
 
 
-            this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 -50
-            this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 - 70
+            this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 
+            this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
         }
     }
     private soundPrompt(bool:boolean){
