@@ -196,7 +196,7 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 450
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -829,7 +829,7 @@ export default class Slot{
         let barPosY = 0
         let duration = 1
         if(this.screenSetting.screentype == 'portrait'){
-            barPosX = levelBarX*3.2
+            barPosX = levelBarX*1.8 + this.levelBarIndicator.width
             barPosY = levelBarY*1.43
             coinY = coinY*1.4 
             coinX = coinX>804?coinX*1.5:coinX*1.6
