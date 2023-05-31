@@ -44,11 +44,11 @@ export default class Slot{
         [1,2,9,3,10,2,3,9,8,10,2,3,11,4,2,11,5,9,5,9,2,6,8,6,9,3,11,7,1,7],
         [1,1,1,1,11,1,1,1,11,1,1,10,11,11,1,1,1,1,5,9,2,6,8,11,9,3,9,7,1,7],
         [11,5,9,2,4,6,11,11,2,9,10,5,3,3,8,11,4,5,3,5,8,9,1,6,6,11,3,7,3,2]
-        // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
-        // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9]
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],
+        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,9,9,9,9,9,9,9]
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,10,10,10,10,10,10,10,10,10,10,11],
@@ -454,7 +454,6 @@ export default class Slot{
     }
     private checkPattern(){
         let arr = Array.from({length: json.pattern.length}, (_, index) => index)
-
         this.paylines = []
         let countsArray:Array<any> = []
 
@@ -470,18 +469,30 @@ export default class Slot{
             if(index == arr[index] && data.count>2){
                 let totalLinePay:number = 0
                 let lineSymbols:Array<any> = []
-                for(let i=0;i<data.count;i++){
-                    //add animation
-                    totalLinePay+=data.blocks[i].payout
-                    lineSymbols.push(data.blocks[i].type)
-                    this.animatePatterns(i,data.blocks[i].block)
-                }
+                    for(let i=0;i<data.count;i++){
+                        //add animation
+                        lineSymbols.push(data.blocks[i].type)
+                        // validate not to match bonus and wild symbol
+                        if(lineSymbols.length == data.count){
+                            if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
+                                lineSymbols.forEach((el,i)=>{
+                                    totalLinePay+=data.blocks[i].payout
+                                    this.animatePatterns(i,data.blocks[i].block)
+                                })
+                            }
+                        }
+                    }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
                     this.checkIfMatchingGameDone()
                 }
-                this.paylines.push({payline:index+1,symbols:lineSymbols,payout:totalLinePay})
+                // validate not to match bonus and wild symbol
+                if(lineSymbols.length == data.count){
+                    if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
+                        this.paylines.push({payline:index+1,symbols:lineSymbols,payout:totalLinePay})
+                    }
+                }
             }
         })
     }
