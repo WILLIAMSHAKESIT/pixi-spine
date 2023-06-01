@@ -326,7 +326,7 @@ export default class GameMobile{
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
-        let setputa = setTimeout(() => {
+        // let setputa = setTimeout(() => {
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -912,8 +912,8 @@ export default class GameMobile{
         this.wildSlot.zIndex = 5
         this.popGlow.zIndex = 4
         this.popGlow2.zIndex = 4
-        clearTimeout(setputa)
-        },60)
+        // clearTimeout(setputa)
+        // },60)
     }
 
     private createIntro(){
