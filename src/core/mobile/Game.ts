@@ -1198,7 +1198,7 @@ export default class GameMobile{
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
             this.updateCreditValues()
-            if(this.slotGame.autoPlayCount == 0 && !this.slotGame.isFreeSpin){
+            if(this.slotGame.autoPlayCount >= 1 && !this.slotGame.isFreeSpin){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
                  this.buyBonusBtn.interactive = true
