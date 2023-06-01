@@ -1193,11 +1193,7 @@ export default class GameMobile{
         } 
     }
     private onSpinEnd(){
-        if(this.userCredit < 1 || this.betAmount > this.userCredit){
-            alert("No more balance!");
-            this.isAutoPlay = false
-            this.slotGame.autoPlayCount = 0
-        }
+
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
@@ -1227,6 +1223,13 @@ export default class GameMobile{
             }
             clearTimeout(timeout)
         },this.fadeOutDelay)
+
+        if(this.userCredit < 1 || this.betAmount > this.userCredit){
+            
+            this.isAutoPlay = false
+            this.slotGame.autoPlayCount = 0
+            alert("No more balance!");
+        }
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
@@ -1249,7 +1252,9 @@ export default class GameMobile{
         }
         this.slotGame.totalWin = 0
         this.userCredit-=this.betAmount
+
         this.updateCreditValues()
+
     }
     private startSpin(spinType:string){
         if(this.userCredit < 1 || this.betAmount > this.userCredit){

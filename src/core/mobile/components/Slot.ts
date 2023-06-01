@@ -408,7 +408,9 @@ export default class Slot{
                                         this.checkPattern()            
                                         this.spinCount = 0
                                         this.isSpinning = false
+                                        this.onSpinEnd()
                                         if(this.autoPlayCount > 1){
+                                           
                                             let spinSpeed = 1000;
                                             if(spinType == 'turbo'){
                                                 spinSpeed = 200
@@ -427,7 +429,7 @@ export default class Slot{
                                         }
                                         this.autoPlayCount--
                                         // set the credit base 
-                                        this.onSpinEnd()
+                                       
                                         //console.log(this.autoPlayCount, " z")
                                         if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
                                             this.createCongrats()
