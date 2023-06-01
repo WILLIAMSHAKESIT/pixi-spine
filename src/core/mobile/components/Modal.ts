@@ -173,7 +173,7 @@ export default class Modal{
             fontWeight: 'normal',
             fill: '#ffffff', 
             wordWrap: true,
-            wordWrapWidth: 1200,
+            wordWrapWidth: 1000,
             align:'center'
         });
         this.textStyle4 = new PIXI.TextStyle({  

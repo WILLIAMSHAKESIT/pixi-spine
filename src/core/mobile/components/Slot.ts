@@ -457,7 +457,7 @@ export default class Slot{
                     this.createWildCoin(globalPos.x,globalPos.y)
                     this.levelBarIndicator.width++
                     // reset level bar and start matching game
-                    if(this.levelBarIndicator.width == this.levelBarWidth){
+                    if(this.levelBarIndicator.width >= this.levelBarWidth){
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
                         this.isMatchingGame = true
