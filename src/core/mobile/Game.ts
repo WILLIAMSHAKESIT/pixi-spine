@@ -593,8 +593,11 @@ export default class GameMobile{
             }
             else if(this.screenSetting.isSafe == 'B'){
                 console.log('mob b')
+                this.slotGame.container.y = 200
                 this.controller.container.y = 350
                 this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
+                this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
+                this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.slotGame.container.y = 70
@@ -859,6 +862,7 @@ export default class GameMobile{
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 50
                 this.controller.container.y = -20
+                this.paylineContainer.y = ((this.controller.parentSprite.height - this.paylineContainer.height)/2)+15
                 console.log('desk b')
             }
             else if(this.screenSetting.isSafe == 'C'){
@@ -1130,7 +1134,6 @@ export default class GameMobile{
         this.controller = new Controller(this.app,this.textureArray)
         // this.gameContainer.addChild(this.paylineContainer)
         this.controller.container.addChild(this.infoContainer)
-        // this.paylineContainer.y = 780
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
 

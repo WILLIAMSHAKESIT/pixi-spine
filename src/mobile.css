@@ -6,6 +6,10 @@
     font-family: 'Eras ITC';
     src: url('./fonts/ErasBoldITC_1.woff');
 }
+:root {
+    touch-action: pan-x pan-y;
+    height: 100% 
+}
 html{
     padding: 0;
     margin: 0;
@@ -17,3 +21,4 @@ body{
     background: #000;
     overflow: hidden;
 }
+
