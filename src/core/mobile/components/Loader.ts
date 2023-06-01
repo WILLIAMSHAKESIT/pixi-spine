@@ -262,27 +262,29 @@ export default class Loader{
         el.style.width =  this.screenSetting.newGameWidth + "px";
         el.style.height =  this.screenSetting.newGameHeight + "px";
         el.style.margin =   this.screenSetting.newGameY + "px " + this.screenSetting.newGameX + "px";
-        if(this.screenSetting.screentype == 'portrait'){
-            // el.style.width =  this.screenSetting.newGameWidth + "px";
-            this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background_mobile').texture
-            this.loadingBg.width = this.screenSetting.baseWidth
-            this.loadingBg.height = this.screenSetting.baseHeight
-            this.loadingContainer.scale.set(0.9)
-            this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
-            this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
-            this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 + 50
-            this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
-        }else{
-            // el.style.width =  this.screenSetting.newGameWidth+100 + "px";
-            this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background').texture
-            this.loadingBg.width = this.screenSetting.baseWidth
-            this.loadingBg.height = this.screenSetting.baseHeight
-            this.loadingContainer.scale.set(1)       
-            this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
-            this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
-            this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 
-            this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
-        }
+        // let setputa = setTimeout(() => {
+            if(this.screenSetting.screentype == 'portrait'){
+                // el.style.width =  this.screenSetting.newGameWidth + "px";
+                this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background_mobile').texture
+                this.loadingBg.width = this.screenSetting.baseWidth
+                this.loadingBg.height = this.screenSetting.baseHeight
+                this.loadingContainer.scale.set(0.9)
+                this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
+                this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
+                this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 + 50
+                this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
+            }else{
+                // el.style.width =  this.screenSetting.newGameWidth+100 + "px";
+                this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background').texture
+                this.loadingBg.width = this.screenSetting.baseWidth
+                this.loadingBg.height = this.screenSetting.baseHeight
+                this.loadingContainer.scale.set(1)       
+                this.loadingContainer.x = (this.screenSetting.baseWidth - this.loadingContainer.width)/2
+                this.loadingContainer.y = (this.screenSetting.baseHeight  - this.loadingContainer.height)/2
+                this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 
+            }
+        //     clearInterval(setputa)
+        // },60)
     }
     private soundPrompt(bool:boolean){
         this.sounds(bool,this.soundsGlobal)

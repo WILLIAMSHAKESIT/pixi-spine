@@ -891,8 +891,13 @@ export default class GameMobile{
                 this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.92
                 console.log('desk d')
             }
-           
         }
+        // set arrangements on resize
+        this.overlay.zIndex = 1
+        this.moneySlot.zIndex = 5
+        this.wildSlot.zIndex = 5
+        this.popGlow.zIndex = 4
+        this.popGlow2.zIndex = 4
         clearTimeout(setputa)
         },60)
     }
