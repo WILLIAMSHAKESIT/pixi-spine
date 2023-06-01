@@ -162,7 +162,7 @@ export default class PopUps{
         let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
         moneyPosX = ((this.overlay.width - this.money.width)/2)*1.3
-        moneyPosY = Functions.screenSize().screentype == 'portrait'? (this.logo.y + (this.logo.height-this.money.height)/2)*0.77: (this.logo.y + (this.logo.height-this.money.height)/2)*0.83
+        moneyPosY = Functions.screenSize().screentype == 'portrait'? (this.logo.y + (this.logo.height-this.money.height)/2)*0.77: (this.logo.y + (this.logo.height-this.money.height)/2)*0.66
         this.money.x = moneyPosX
         this.money.y = moneyPosY
         this.middleContainer.addChild(this.money)
@@ -188,7 +188,7 @@ export default class PopUps{
             onUpdate: () => {
                 this.money.text = Functions.numberWithCommas(parseInt(this.money.text)).toString();
                 this.money.x = ((this.overlay.width - this.money.width)/2)*1.03
-                this.money.y =  Functions.screenSize().screentype == 'portrait'? (this.logo.y + (this.logo.height-this.money.height)/2)*0.77: (this.logo.y + (this.logo.height-this.money.height)/2)*0.83
+                this.money.y = moneyPosY
             },
             onComplete:()=>{
                 textAnimation.kill()
