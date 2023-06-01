@@ -1893,6 +1893,8 @@ export default class GameMobile{
                 this.controller.spinBtnSprite.texture = this.spinTextureOn 
                 this.slotGame.autoPlayCount = 0
                 this.buyBonusBtn.interactive = true
+                this.controller.settingBtnSpite.interactive = true
+                this.controller.infoBtnSprite.interactive = true
                 
             }else{
                 this.controller.infoBtnSprite.interactive = false
