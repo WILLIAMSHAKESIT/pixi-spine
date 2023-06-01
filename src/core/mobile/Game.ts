@@ -584,6 +584,13 @@ export default class GameMobile{
                 this.transition.leaves.x = 100 
             }
 
+            // PLANTS
+            this.plantContainerRight.x = -827
+            this.plantContainerRight.y = this.controller.container.y
+            this.plantContainerLeft.y = this.controller.container.y
+            this.vines.y = -435.5
+
+
             //safe area
             if(this.screenSetting.isSafe == 'A'){
                 this.slotGame.container.y = 200
@@ -848,6 +855,12 @@ export default class GameMobile{
                 this.transition.leaves.rotation = 0
                 this.transition.leaves.x = 935.5
             }
+
+            // PLANTS 
+            this.plantContainerLeft. y = 0
+            this.plantContainerRight.x = 0
+            this.plantContainerRight.y = 0
+            this.vines.y = 6
             //safe area
             if(this.screenSetting.isSafe == 'A'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
@@ -871,6 +884,7 @@ export default class GameMobile{
                 this.buyBonusBtn.x = 200
                 // slot
                 this.slotGame.logo.scale.set(1)
+                this.slotGame.logo.x = this.slotGame.frameBorder.x*1.24
                 this.slotGame.logo.y = 0
                 this.slotGame.levelBarContainer.scale.set(1)
                 this.slotGame.levelBarContainer.y = 0
@@ -1688,6 +1702,9 @@ export default class GameMobile{
         }else{
             posX = this.paylineContainer.x + (this.paylineContainer.width - containerWithText.width)/2
             posY = this.controller.parentSprite.y + this.paylineContainer.y + this.paylineText.height
+            if(this.screenSetting.isSafe == 'A'){
+                posY = this.controller.parentSprite.y + this.paylineContainer.y + 20
+            }
         }
 
         let lastIndex = i+1
