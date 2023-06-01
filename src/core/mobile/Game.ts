@@ -1119,7 +1119,7 @@ export default class GameMobile{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this), this.checkBalance.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -1192,13 +1192,28 @@ export default class GameMobile{
             this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2 
         } 
     }
+    private checkBalance(){
+        if(this.userCredit < 1 || this.betAmount > this.userCredit){
+            this.isAutoPlay = false
+            this.slotGame.autoPlayCount = 0
+            this.controller.spinBtnSprite.interactive = true 
+            this.controller.spinBtnSprite.cursor = 'pointer' 
+            this.isAutoPlay = false
+            this.controller.spinBtnSprite.texture = this.spinTextureOn 
+            this.slotGame.autoPlayCount = 0
+            this.buyBonusBtn.interactive = true
+            this.controller.settingBtnSpite.interactive = true
+            this.controller.infoBtnSprite.interactive = true
+            alert("No more balance!");
+        }
+    }
     private onSpinEnd(){
-
+   
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
             this.updateCreditValues()
-            if(this.slotGame.autoPlayCount >= 1 && !this.slotGame.isFreeSpin){
+            if(this.slotGame.autoPlayCount == 0 && !this.slotGame.isFreeSpin){
                 this.isAutoPlay = false
                  this.controller.spinBtnSprite.texture = this.spinTextureOn
                  this.buyBonusBtn.interactive = true
@@ -1223,13 +1238,6 @@ export default class GameMobile{
             }
             clearTimeout(timeout)
         },this.fadeOutDelay)
-
-        if(this.userCredit < 1 || this.betAmount > this.userCredit){
-            
-            this.isAutoPlay = false
-            this.slotGame.autoPlayCount = 0
-            alert("No more balance!");
-        }
     }
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'

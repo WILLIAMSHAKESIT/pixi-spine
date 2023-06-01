@@ -91,6 +91,7 @@ export default class Slot{
     private onSpinning:()=>void
     private onSpinEnd:()=>void
     private onSpin:()=>void
+    private checkBalance:()=>void
     private levelBarWidth:number = 742
     // payout
     public totalWin:number = 0
@@ -138,7 +139,7 @@ export default class Slot{
 
     public logo:PIXI.Sprite
 
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void){
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void,checkBalance:()=>void){
         this.app = app
         this.sound = sound
         this.baseWidth = this.app.screen.width
@@ -157,8 +158,9 @@ export default class Slot{
         this.onSpin = onSpin
         this.playSound = playSound;
         this.soundStop = soundStop;
-        this.fadeSound = fadeSound
-        this.soundVolume = soundVolume
+        this.fadeSound = fadeSound;
+        this.soundVolume = soundVolume;
+        this.checkBalance = checkBalance;
         this.init()
     }
 
@@ -408,9 +410,8 @@ export default class Slot{
                                         this.checkPattern()            
                                         this.spinCount = 0
                                         this.isSpinning = false
-                                        this.onSpinEnd()
+                                        this.checkBalance()
                                         if(this.autoPlayCount > 1){
-                                           
                                             let spinSpeed = 1000;
                                             if(spinType == 'turbo'){
                                                 spinSpeed = 200
@@ -429,7 +430,7 @@ export default class Slot{
                                         }
                                         this.autoPlayCount--
                                         // set the credit base 
-                                       
+                                        this.onSpinEnd()
                                         //console.log(this.autoPlayCount, " z")
                                         if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
                                             this.createCongrats()
