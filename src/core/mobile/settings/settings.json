@@ -58,17 +58,17 @@
     ],
     "symbolAssetsEvent":[
         {
-            "symbol": "2k",
+            "symbol": "bird",
             "type":1,
             "pay":0.2
         },
         {
-            "symbol": "3k",
+            "symbol": "snake",
             "type":2,
             "pay":0.3
         },
         {
-            "symbol": "5k",
+            "symbol": "monkey",
             "type":3,
             "pay":0.5
         },
@@ -78,12 +78,12 @@
             "pay":0.6
         },
         {
-            "symbol": "orange_crystal",
+            "symbol": "cameleon",
             "type":5,
             "pay":0.7
         },
         {
-            "symbol": "violet_crystal",
+            "symbol": "orange_crystal",
             "type":6,
             "pay":1
         },
@@ -93,39 +93,39 @@
             "pay":1.5
         },
         {
-            "symbol": "cameleon",
+            "symbol": "violet_crystal",
             "type":8,
             "pay":2
         },
         {
-            "symbol": "snake",
-            "type":9,
-            "pay":2
-        },
-        {
-            "symbol": "bonus_symbol",
-            "type":10,
-            "pay":3
-        },
-        {
-            "symbol": "wild",
+            "symbol": "2k",
             "type":11,
-            "pay":3
+            "pay":2000
+        },
+        {
+            "symbol": "3k",
+            "type":11,
+            "pay":3000
+        },
+        {
+            "symbol": "5k",
+            "type":11,
+            "pay":5000
         }
     ],
     "symbolAssetsEvent2":[
         {
-            "symbol": "x2",
+            "symbol": "bird",
             "type":1,
             "pay":0.2
         },
         {
-            "symbol": "x3",
+            "symbol": "snake",
             "type":2,
             "pay":0.3
         },
         {
-            "symbol": "x5",
+            "symbol": "monkey",
             "type":3,
             "pay":0.5
         },
@@ -135,12 +135,12 @@
             "pay":0.6
         },
         {
-            "symbol": "orange_crystal",
+            "symbol": "cameleon",
             "type":5,
             "pay":0.7
         },
         {
-            "symbol": "violet_crystal",
+            "symbol": "orange_crystal",
             "type":6,
             "pay":1
         },
@@ -150,22 +150,22 @@
             "pay":1.5
         },
         {
-            "symbol": "cameleon",
+            "symbol": "violet_crystal",
             "type":8,
             "pay":2
         },
         {
-            "symbol": "snake",
-            "type":9,
+            "symbol": "x2",
+            "type":11,
             "pay":2
         },
         {
-            "symbol": "bonus_symbol",
-            "type":10,
+            "symbol": "x3",
+            "type":11,
             "pay":3
         },
         {
-            "symbol": "wild",
+            "symbol": "x5",
             "type":11,
             "pay":3
         }
@@ -179,7 +179,13 @@
         [27,27,28,27,27],
         [29,29,28,29,29],
         [28,27,27,27,28],
-        [28,29,29,29,28]
+        [28,29,29,29,28],
+        [29,27,27,27,27],
+        [27,28,28,28,28],
+        [29,28,28,28,28],
+        [28,28,29,28,28],
+        [28,28,29,28,29],
+        [27,28,29,28,29]
     ],
     "jackpots":{
         "mini":5000,

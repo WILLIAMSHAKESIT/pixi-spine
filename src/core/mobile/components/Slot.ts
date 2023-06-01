@@ -194,7 +194,7 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 0
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
@@ -455,10 +455,11 @@ export default class Slot{
                     this.createWildCoin(globalPos.x,globalPos.y)
                     this.levelBarIndicator.width++
                     // reset level bar and start matching game
-                    if(this.levelBarIndicator.width >= this.levelBarWidth){
+                    if(this.levelBarIndicator.width == this.levelBarWidth){
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
                         this.isMatchingGame = true
+                        console.log('test')
                         this.matchingGame()
                     }
                 }

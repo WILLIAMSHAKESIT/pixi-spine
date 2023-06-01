@@ -148,7 +148,8 @@ export default class GameMobile{
     private isOpenFreeSpinModals:boolean = false
 
     //FOR MOBILE TEMPORARY
-
+    private isLightMode:boolean = true
+    private popUpActive:boolean = false
 
     // SOUNDS
     private fadeDurationBgm:number = 4000
@@ -324,9 +325,9 @@ export default class GameMobile{
         this.screenSetting = Functions.screenSize();
         this.gameBackground.width = this.screenSetting.baseWidth
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
-        let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
-        let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
-        let setputa = setTimeout(() => {
+        let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.isLightMode?'bg_mobile':'bg_mobile2' }`).texture
+        let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.isLightMode?'bg':'bg2'}`).texture
+        // let setputa = setTimeout(() => {
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -585,7 +586,7 @@ export default class GameMobile{
             }
 
             // PLANTS
-            this.plantContainerRight.x = -827
+            this.plantContainerRight.x = -780
             this.plantContainerRight.y = this.controller.container.y
             this.plantContainerLeft.y = this.controller.container.y
             this.vines.y = -435.5
@@ -616,6 +617,14 @@ export default class GameMobile{
                 this.infoContainer.x = (this.controller.infoBtnSprite.x)*0.98
                 this.buyBonusBtn.x = 50
                 console.log('mob d')
+            }
+
+            //POP  UPS
+            if(this.popUpActive){
+                this.popUps.logo.scale.set(1.2)
+                this.popUps.logo.x = (this.overlay.width)/2
+                this.popUps.logo.y = ((this.overlay.height)/2)*0.7
+                this.popUps.overlay.width = this.screenSetting.baseWidth
             }
         }else{ 
             //GAME BACKGROUND 
@@ -905,6 +914,14 @@ export default class GameMobile{
                 this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.92
                 console.log('desk d')
             }
+
+            //POP  UPS
+            if(this.popUpActive){
+                this.popUps.logo.scale.set(1.3)
+                this.popUps.logo.x = (this.overlay.width)/2
+                this.popUps.logo.y = ((this.overlay.height)/2)*0.7
+                this.popUps.overlay.width = this.screenSetting.baseWidth
+            }
         }
         // set arrangements on resize
         this.overlay.zIndex = 1
@@ -912,8 +929,8 @@ export default class GameMobile{
         this.wildSlot.zIndex = 5
         this.popGlow.zIndex = 4
         this.popGlow2.zIndex = 4
-        clearTimeout(setputa)
-        },60)
+        // clearTimeout(setputa)
+        // },60)
     }
 
     private createIntro(){
@@ -1076,6 +1093,7 @@ export default class GameMobile{
         this.fadeSound(7,1,this.fadeDurationBgm)
         this.isOpenCongrats = true
         this.congrats = new Congrats(this.app,this.textureArray, this.winFreeSpin, this.noOfSpin)
+        this.congrats.container.zIndex = 4
         this.gameContainer.addChild(this.congrats.container)
         this.screenSize()
         
@@ -1444,13 +1462,18 @@ export default class GameMobile{
     }
     private matchingGame(){
         this.fadeSound(17,0,this.fadeDurationBgm)
-        this.soundStop(17)
-        this.soundStop(16)
-        this.soundStop(0)
+        this.fadeSound(0,0,this.fadeDurationBgm)
+        this.fadeSound(16,0,this.fadeDurationBgm)
         this.playSound(15)
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
+            this.soundStop(17)
+            this.soundStop(16)
+            this.soundStop(0)
+            this.playSound(8)
+            this.soundVolume(8,0)
+            this.fadeSound(8,1,2000)
             let randomizeArray = Functions.arrayRandomizer(json.matchgame_values)
             let arrayBlockValues:Array<any> = []
             let blockSpacing = 1.2
@@ -1557,6 +1580,7 @@ export default class GameMobile{
             this.playSound(7)
             this.fadeSound(8,0,2000)
             this.popUps.container.addEventListener('pointerdown',()=>{
+                this.popUpActive = false
                 this.popUps.container.interactive = false
                 this.matchGameResult(result)
                 this.fadeSound(7,0,2000)
@@ -1732,13 +1756,27 @@ export default class GameMobile{
         this.paylineAnimations.push(fadeIn)
     }
     private lightMode(bool:boolean){
+        this.isLightMode = bool
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
         let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
         let infoBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'info_button':'info_button2').texture
         let settingBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'system_settings':'system_settings2').texture
         let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
-        let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
+        let gameBackgroundTexture:PIXI.Texture
+        if(this.screenSetting.screentype == 'portrait'){
+            if(bool){
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg_mobile').texture
+            }else{
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg_mobile2').texture
+            }
+        }else{
+            if(bool){
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg').texture
+            }else{
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg2').texture
+            }
+        }
         //change visibilities of normal game
         this.slotGame.reelContainer.forEach(data=>{data.visible = bool})
         this.paylineContainersAnimation.forEach(data=>{data.visible = bool})
@@ -1761,6 +1799,7 @@ export default class GameMobile{
         }
     }
     private lightModeEvent(bool:boolean){
+        this.isLightMode = bool
         let frameBgTexture = Functions.loadTexture(this.textureArray,'main',bool?'slot_frame_bg':'slot_frame_bg2').texture
         let parentSpriteTexture = Functions.loadTexture(this.textureArray,'controller',bool?'controller_parent':'controller_parent2').texture
         let infoBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'info_button':'info_button2').texture
@@ -1768,6 +1807,19 @@ export default class GameMobile{
         let spinBtnTexture = Functions.loadTexture(this.textureArray,'controller',bool?'spin_button':'spin_button2').texture
         let autoPlayTexture = Functions.loadTexture(this.textureArray,'controller',bool?'autoplay_button':'autoplay_button2').texture
         let gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main',bool?'bg':'bg2').texture
+        if(this.screenSetting.screentype == 'portrait'){
+            if(bool){
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg_mobile').texture
+            }else{
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg_mobile2').texture
+            }
+        }else{
+            if(bool){
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg').texture
+            }else{
+                gameBackgroundTexture = Functions.loadTexture(this.textureArray,'main','bg2').texture
+            }
+        }
         //change visibilities of normal game
        // this.slotGame.frameBg.texture = frameBgTexture
         this.controller.parentSprite.texture = parentSpriteTexture
@@ -2281,13 +2333,16 @@ export default class GameMobile{
         // this.isFreeSpin = true
     }
     private createPopUps(skin:string){
+        this.popUpActive = true
         this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray,skin,this.matchingGameWin)
+        this.popUps.container.zIndex = 5
         this.gameContainer.addChild(this.popUps.container)
     }
     private createTransition(){
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray, this.screenSetting.screentype)
         this.openTransition = true
         this.gameContainer.addChild(this.transition.container)
+        this.transition.container.zIndex = 100
     }
     
     // sounds methods
