@@ -263,6 +263,7 @@ export default class Loader{
         el.style.height =  this.screenSetting.newGameHeight + "px";
         el.style.margin =   this.screenSetting.newGameY + "px " + this.screenSetting.newGameX + "px";
         if(this.screenSetting.screentype == 'portrait'){
+            // el.style.width =  this.screenSetting.newGameWidth + "px";
             this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background_mobile').texture
             this.loadingBg.width = this.screenSetting.baseWidth
             this.loadingBg.height = this.screenSetting.baseHeight
@@ -272,6 +273,7 @@ export default class Loader{
             this.loadingTextNew.x = (this.loadingContainer.width - this.loadingTextNew.width)/2 + 50
             this.soundBtnsCont.x = (this.loadingContainer.width - this.soundBtnsCont.width)/2 + 50
         }else{
+            // el.style.width =  this.screenSetting.newGameWidth+100 + "px";
             this.loadingBg.texture = Functions.loadTexture(this.loadingAssets,'loading','loading_background').texture
             this.loadingBg.width = this.screenSetting.baseWidth
             this.loadingBg.height = this.screenSetting.baseHeight

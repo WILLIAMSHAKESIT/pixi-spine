@@ -13,7 +13,7 @@ export default class Transition{
     public container:PIXI.Container
     public overlay:PIXI.Sprite
     public leaves:Spine
-    private gameContainer:PIXI.Container
+    private gameContainer:any
     public spine:any
     private screenOrient:string
     private posX:number
@@ -21,7 +21,7 @@ export default class Transition{
     constructor(app:PIXI.Application,gameContainer:PIXI.Container,textureArray:any,screenOrient:string){
         this.app = app
         this.container = new PIXI.Container
-        this.gameContainer = new PIXI.Container
+        this.gameContainer = gameContainer
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray

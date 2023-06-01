@@ -33,6 +33,7 @@ export default class Game{
     private popUps:PopUps
     private transition:Transition
     private spinType:string = 'normal'
+    private paylineContainer:PIXI.Container
     //texttures
     private textureToggleOn:PIXI.Texture
     private textureToggleOff:PIXI.Texture
@@ -108,6 +109,7 @@ export default class Game{
         this.gameContainer = new PIXI.Container
         this.plantContainerRight = new PIXI.Container
         this.plantContainerLeft = new PIXI.Container
+        this.paylineContainer = new PIXI.Container
         this.gameContainer.sortableChildren = true
         this.whiteYellow = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
@@ -836,8 +838,7 @@ export default class Game{
             // update text 
             this.textStyle.fontSize = 46
             this.textStyle3.fontSize = 30 
-            this.updatePaylineTopText(topText)
-            this.updatePaylineBottomText(bottomText)
+            this.updatePaylineText(bottomText,topText)
             clearTimeout(timeOut)
         },this.transitionDelay)
     }
@@ -930,8 +931,7 @@ export default class Game{
             // update text 
             this.textStyle.fontSize = 50
             this.textStyle3.fontSize = 40 
-            this.updatePaylineTopText('SPIN TO WIN')
-            this.updatePaylineBottomText('Tap space or enter to skip')
+            this.updatePaylineText('Tap space or enter to skip','SPIN TO WIN')
             if(this.slotGame.freeSpinStart){
                 this.freeSpinEvent()
             }
@@ -941,14 +941,20 @@ export default class Game{
 
     }
     private createPaylineAnimation(){
-        let greetY = 30
         this.paylineText =  new PIXI.Text('SPIN TO WIN', this.textStyle)
         this.paylineTextBottom = new PIXI.Text('Tap space or enter to skip', this.textStyle3)
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = greetY
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
-        this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
+        this.paylineContainer.addChild(this.paylineText,this.paylineTextBottom)
+        this.updatePaylineText(this.paylineTextBottom.text,this.paylineText.text)
+        this.controller.parentSprite.addChild(this.paylineContainer)
+    }
+    private updatePaylineText(bottomText:string,topText:string){
+        this.paylineTextBottom.text = bottomText
+        this.paylineText.text = topText 
+        this.paylineText.x = (this.paylineContainer.width - this.paylineText.width)/2
+        this.paylineTextBottom.x = (this.paylineContainer.width - this.paylineTextBottom.width)/2
+        this.paylineTextBottom.y = (this.paylineText.height)
+        this.paylineContainer.x = (this.controller.parentSprite.width - this.paylineContainer.width)/2
+        this.paylineContainer.y = 38
     }
     private updatePaylineAnimation(greetings:string){
         this.paylineContainersAnimation = []
@@ -958,11 +964,10 @@ export default class Game{
         this.paylineText.text = greetings
         let paylineTotal = 0
         let bottomText = this.isAutoPlay?`Free spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
-        this.updatePaylineBottomText(bottomText)       
         if(this.slotGame.paylines.length !== 0){
             for(let i=0;i<paylineContent.length;i++){
                 bottomText = ''
-                this.updatePaylineBottomText(bottomText)
+                this.updatePaylineText(bottomText,this.paylineText.text)
                 let payline = paylineContent[i].payline
                 let payout = Functions.numberWithCommas(paylineContent[i].payout)
                 const container = new PIXI.Container
@@ -982,21 +987,9 @@ export default class Game{
                 this.animatePaySymbols(containerWithText,i)
                 parentContainer.addChild(containerWithText)
             }
-            this.updatePaylineTopText(`WIN ${Functions.numberWithCommas(paylineTotal)}`)
+            this.updatePaylineText(bottomText,`WIN ${Functions.numberWithCommas(paylineTotal)}`)
         }
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.updatePaylineBottomText(bottomText)
-    }
-    private updatePaylineTopText(text:string){
-        let greetY = 30
-        this.paylineText.text = text
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = greetY
-    }
-    private updatePaylineBottomText(text:string){
-        this.paylineTextBottom.text = text
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
+        this.updatePaylineText(bottomText,this.paylineText.text)
     }
     private animatePaySymbols(containerWithText:any,i:number){
         let lastIndex = i+1
@@ -1043,6 +1036,7 @@ export default class Game{
         this.controller.autoPlay.texture = autoPlayTexture
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
+        this.slotGame.logo.visible = bool 
         this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
         this.frameGlow.visible = bool?false:true

@@ -28,6 +28,7 @@ export default class Controller{
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
         this.container = new PIXI.Container()
+        this.container.sortableChildren = true
         this.textStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
             fontSize: 55,
