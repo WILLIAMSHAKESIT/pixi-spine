@@ -1136,6 +1136,11 @@ export default class GameMobile{
         this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
     }
     private onSpinEnd(){
+        if(this.userCredit < 1 || this.betAmount > this.userCredit){
+            alert("No more balance!");
+            this.isAutoPlay = false
+            this.slotGame.autoPlayCount = 0
+        }
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
@@ -1190,13 +1195,21 @@ export default class GameMobile{
         this.updateCreditValues()
     }
     private startSpin(spinType:string){
+        if(this.userCredit < 1 || this.betAmount > this.userCredit){
+            alert("No more balance!");
+        }else{
         this.slotGame.startSpin(spinType)
+        }
     }
     private startSpinAutoPlay(spinCount:number){
-       
-        this.slotGame.autoPlayCount = spinCount
-        this.startSpin(this.spinType)
-        this.modal.totalSpin = 0 
+        if(this.userCredit < 1){
+            alert("No more balance!");
+        }else{
+            this.slotGame.autoPlayCount = spinCount
+            this.startSpin(this.spinType)
+            this.modal.totalSpin = 0 
+        }
+     
     }
     private createBuyBonus(){
         this.buyBonusBtn = Functions.loadTexture(this.textureArray,'bonus','buy_free_spin_btn')
