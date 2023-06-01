@@ -11,13 +11,20 @@ html{
     margin: 0;
 }
 body{
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    background: #000;
+    overflow: hidden;
+}
+body.desktop{
     background-color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-canvas{
+canvas.desktop{
     width: auto;
     max-width: fit-content;
     max-height: 100vh;
@@ -26,14 +33,14 @@ canvas{
 }
 
 @media(max-width:2188px){
-    canvas{
+    canvas.desktop{
         max-width: 100%;
         width: 100%;
         height: unset;
     }
 }
 @media(max-width:1593px){
-    canvas{
+    canvas.desktop{
         max-width: 100%;
         width: unset;
         height: unset;

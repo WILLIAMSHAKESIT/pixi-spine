@@ -610,12 +610,16 @@ export default class GameMobile{
             else if(this.screenSetting.isSafe == 'C'){
                 this.slotGame.container.y = 70
                 this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
+                this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
+                this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
                 console.log('mob c')
             }
             else{
                 this.controller.infoBtnSprite.x = (this.gameBackground.width - this.controller.infoBtnSprite.width)*0.96
                 this.infoContainer.x = (this.controller.infoBtnSprite.x)*0.98
                 this.buyBonusBtn.x = 50
+                this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
+                this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
                 console.log('mob d')
             }
 
@@ -625,6 +629,8 @@ export default class GameMobile{
                 this.popUps.logo.x = (this.overlay.width)/2
                 this.popUps.logo.y = ((this.overlay.height)/2)*0.7
                 this.popUps.overlay.width = this.screenSetting.baseWidth
+                this.popUps.money.x = ((this.popUps.overlay.width - this.popUps.money.width)/2)
+                this.popUps.money.y = ((this.popUps.overlay.height - this.popUps.money.height)/2)*0.77
             }
         }else{ 
             //GAME BACKGROUND 
@@ -922,6 +928,8 @@ export default class GameMobile{
                 this.popUps.logo.x = (this.overlay.width)/2
                 this.popUps.logo.y = ((this.overlay.height)/2)*0.7
                 this.popUps.overlay.width = this.screenSetting.baseWidth
+                this.popUps.money.x = ((this.popUps.overlay.width - this.popUps.money.width)/2)
+                this.popUps.money.y = ((this.popUps.overlay.height - this.popUps.money.height)/2)*0.83
             }
         }
         // set arrangements on resize

@@ -26,7 +26,7 @@ export default class PopUps{
     private textStyleYellow:PIXI.TextStyle
     //text
     private descText:PIXI.Text
-    private money:PIXI.Text
+    public money:PIXI.Text
     private spins:PIXI.Text
     //value 
     private noOfSpin:number = 0
@@ -162,9 +162,9 @@ export default class PopUps{
         let moneyPosX:any;
         this.money = new PIXI.Text('0', this.textStyleYellow)
         moneyPosX = ((this.overlay.width - this.money.width)/2)*1.3
-        moneyPosY = ((this.overlay.height - this.money.height)/2)*0.83
+        moneyPosY = Functions.screenSize().screentype == 'portrait'? ((this.overlay.height - this.money.height)/2)*0.77: ((this.overlay.height - this.money.height)/2)*0.83
         this.money.x = moneyPosX
-        this.money.y= moneyPosY
+        this.money.y = moneyPosY
         this.middleContainer.addChild(this.money)
 
         // Set up animation

@@ -1,3 +1,4 @@
+require('../../main.css')
 import 'pixi-spine' 
 import * as PIXI from 'pixi.js';
 import Loader from "./components/Loader";
@@ -738,7 +739,6 @@ export default class Game{
         }) 
     }
     private matchingGame(){
-        console.log('test')
         this.fadeSound(17,0,this.fadeDurationBgm)
         this.fadeSound(0,0,this.fadeDurationBgm)
         this.fadeSound(16,0,this.fadeDurationBgm)

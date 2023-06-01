@@ -462,7 +462,6 @@ export default class Slot{
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
                         this.isMatchingGame = true
-                        console.log('test')
                         this.matchingGame()
                     }
                 }
@@ -826,7 +825,7 @@ export default class Slot{
     private createWildCoin(coinX:number,coinY:number){
         this.screenSetting = Functions.screenSize();
         let levelBarX = this.levelBarIndicator.getGlobalPosition().x
-        let levelBarY = this.levelBarIndicator.getGlobalPosition().y
+        let levelBarY = this.levelBarIndicator.y
         let barPosX = 0
         let barPosY = 0
         let duration = 1
