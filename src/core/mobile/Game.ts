@@ -310,7 +310,9 @@ export default class GameMobile{
         window.addEventListener('resize',()=>{
             this.screenSize()
         })
+        this.createTransition()
         this.screenSize()
+        
         Howler.mute(true)
         // toggle sound on tab enter and leave
         document.addEventListener("visibilitychange", ()=> {
@@ -581,8 +583,9 @@ export default class GameMobile{
 
             //TRANSITION
             if(this.openTransition){
-                this.transition.leaves.rotation = 10890.6
-                this.transition.leaves.x = 100 
+                this.transition.container.rotation = PIXI.DEG_TO_RAD * 4
+                this.transition.container.x = 54.5
+                this.transition.container.y = -97
             }
 
             // PLANTS
@@ -868,8 +871,9 @@ export default class GameMobile{
             
             //TRANSITION
             if(this.openTransition){
-                this.transition.leaves.rotation = 0
-                this.transition.leaves.x = 935.5
+                this.transition.container.rotation = PIXI.DEG_TO_RAD * 0
+                this.transition.container.x = 0
+                this.transition.container.y = 0
             }
 
             // PLANTS 
