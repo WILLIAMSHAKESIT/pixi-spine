@@ -482,8 +482,9 @@ export default class GameMobile{
                 this.modal.btn2Container.scale.set(1.3)
                 this.modal.btn2Container.x = 0
                 this.modal.btn2Container.y = -300
-                this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
                 this.modal.bottomContainer.scale.set(1.3)
+                this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
+                
             }
 
             if(this.isOpenInfo){
@@ -496,7 +497,6 @@ export default class GameMobile{
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
                 this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
-           
             }
 
             //CONGRATS POPUP
@@ -752,6 +752,8 @@ export default class GameMobile{
             this.modal.separator.y = (this.modal.modalFrame.height - this.modal.separator.height)/2
             }
             if(this.isOpenAutoplay){
+                this.modal.btn2Container.scale.set(1)
+                this.modal.bottomContainer.scale.set(1)
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
                 this.modal.closeModal.y = 30
                 this.modal.btnContainer.visible = true
@@ -759,8 +761,7 @@ export default class GameMobile{
                 this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
                 this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
                 this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
-                this.modal.btn2Container.scale.set(1)
-                this.modal.bottomContainer.scale.set(1)
+            
             }
             
             if(this.isOpenInfo){
