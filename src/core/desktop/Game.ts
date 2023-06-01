@@ -738,14 +738,17 @@ export default class Game{
         }) 
     }
     private matchingGame(){
+        console.log('test')
         this.fadeSound(17,0,this.fadeDurationBgm)
-        this.soundStop(17)
-        this.soundStop(16)
-        this.soundStop(0)
+        this.fadeSound(0,0,this.fadeDurationBgm)
+        this.fadeSound(16,0,this.fadeDurationBgm)
         this.playSound(15)
         this.createTransition()
         this.isMatchingGame = true
         let timeOut = setTimeout(()=>{
+            this.soundStop(17)
+            this.soundStop(16)
+            this.soundStop(0)
             this.playSound(8)
             this.soundVolume(8,0)
             this.fadeSound(8,1,2000)

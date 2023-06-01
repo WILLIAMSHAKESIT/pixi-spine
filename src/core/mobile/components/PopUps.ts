@@ -14,7 +14,7 @@ export default class PopUps{
     public middleContainer:PIXI.Container
     private coinsContainer:PIXI.Container
     private gameContainer:PIXI.Container
-    private overlay:PIXI.Sprite
+    public overlay:PIXI.Sprite
     private popGlow:Spine
     public logo:Spine
     private leftCoinAnimation: any;
