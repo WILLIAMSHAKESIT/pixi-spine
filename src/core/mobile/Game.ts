@@ -45,6 +45,7 @@ export default class GameMobile{
     private buyBonusFrame:PIXI.Sprite
     private overlay:PIXI.Sprite
     private intro:IntroScreen
+    private paylineBackDrop:PIXI.Sprite
     // values
     private betAmount:number = 1
     private betIndex:number = 0
@@ -116,7 +117,7 @@ export default class GameMobile{
     private paylineSymbolX:number = 0
     private paylineSymbolY:number = 0
 
-    private paylineContainer:PIXI.Sprite
+    private paylineContainer:PIXI.Container
     
     private infoContainer:PIXI.Sprite
 
@@ -158,6 +159,7 @@ export default class GameMobile{
         this.gameContainer = new PIXI.Container
         this.plantContainerRight = new PIXI.Container
         this.plantContainerLeft = new PIXI.Container
+        this.paylineContainer = new PIXI.Container
         this.gameContainer.sortableChildren = true
         this.whiteYellow = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',
@@ -251,6 +253,7 @@ export default class GameMobile{
         this.spinTextureOff = Functions.loadTexture(this.textureArray,'controller','spin_pause_button').texture
         this.sounBtnSpriteOff =  Functions.loadTexture(this.textureArray,'controller','sound_off_button').texture
         this.sounBtnSpriteOn =  Functions.loadTexture(this.textureArray,'controller','sound_on_button').texture
+        this.paylineBackDrop = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_text')
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
         this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
 
@@ -258,7 +261,6 @@ export default class GameMobile{
         this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
         this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
 
-        this.paylineContainer = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_text')
         this.infoContainer = Functions.loadTexture(this.textureArray,'controller_mobile','info_container')
         this.buyBonusFrame = Functions.loadTexture(this.textureArray,'bonus','get_free_spin')
         //FOR MOBILE
@@ -319,12 +321,12 @@ export default class GameMobile{
         });
     }
     private screenSize(){
-        let el = document.getElementsByTagName("canvas")[0];
         this.screenSetting = Functions.screenSize();
         this.gameBackground.width = this.screenSetting.baseWidth
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
+        let setputa = setTimeout(() => {
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -351,8 +353,6 @@ export default class GameMobile{
             this.slotGame.logo.x = (this.slotGame.frameBorder.width - this.slotGame.logo.width)/1.6
             //FREE SPIN
           
-            this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
-            this.buyBonusBtn.x = 0
             //CONTROLLER PARENT
             if(this.isMatchingGame || this.eventStart){
                 this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile_darkmode','mobile_controllers_darkmode').texture
@@ -386,41 +386,41 @@ export default class GameMobile{
             this.controller.betContainerSprite.y = this.screenSetting.baseHeight/2 + 350
             this.controller.betContainerSprite.x = 70
             this.controller.betContainerSprite.scale.set(0.8)
-            this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+            this.controller.betText.x = (this.controller.betContainerSprite.width - (this.controller.betText.width/2))/2 
             this.controller.betText.y = this.controller.betContainerSprite.height / 2 - 35
             this.controller.betText.scale.set(1.3)
 
-            this.controller.creditContainerSprite.scale.set(0.8)
+            
             this.controller.creditContainerSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','rectangle_container').texture
+            this.controller.creditContainerSprite.scale.set(0.8)
             
             this.controller.creditContainerSprite.y = this.screenSetting.baseHeight/2 + 350
             this.controller.creditContainerSprite.x = 730
             this.controller.creditText.scale.set(1.3)
-            this.controller.creditText.x = (this.controller.creditContainerSprite.width -this.controller.creditText.width)  / 2 
+            this.controller.creditText.x = (this.controller.creditContainerSprite.width - (this.controller.creditText.width/2))/2
             this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
-         
+            
+            this.updatePaylineText(this.paylineTextBottom.text,this.paylineText.text)
+            this.controller.parentSprite.removeChild(this.paylineContainer)
+            this.gameContainer.addChild(this.paylineContainer)
+            this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
+            this.paylineBackDrop.visible = true
+            this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
 
-            this.paylineTextY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1130
-            this.paylineText.y = this.paylineTextY
-            this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-
-            this.paylineTextBtmY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1060
-            this.paylineTextBtmX = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-            this.paylineTextBottom.y = this.paylineTextBtmY
-            this.paylineTextBottom.x =  this.paylineTextBtmX
-
-            this.paylineSymbolX = (this.controller.parentSprite.width - this.paylineText.width)/2 -20
+            this.paylineSymbolX = 0
             this.paylineSymbolY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 1000
-
-            this.paylineContainer.alpha = 1
-
-            this.infoContainer.alpha = 111
-            this.infoContainer.y = this.buyBonusBtn.y
-            this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
 
             this.controller.infoBtnSprite.scale.set(1)
             this.controller.infoBtnSprite.x = this.gameBackground.width - this.controller.infoBtnSprite.width - 16
-            this.controller.infoBtnSprite.y = 500
+            this.controller.infoBtnSprite.y = 700
+
+            this.infoContainer.alpha = 111
+            this.infoContainer.y = this.controller.infoBtnSprite.y - 20
+            this.infoContainer.zIndex = -1
+            this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
+
+            this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
+            this.buyBonusBtn.x = 0
 
             this.controller.soundBtnSprite.alpha = 0
             
@@ -433,7 +433,7 @@ export default class GameMobile{
                 this.buyBonusFrame.x = (this.screenSetting.baseWidth - this.buyBonusFrame.width)/2
                 this.popGlow.x = this.buyBonusFrame.x + 325
             }
-            
+
             //POPGLOW
             this.glowX2 = 570
             this.glowY2 = 1644
@@ -587,17 +587,24 @@ export default class GameMobile{
             //safe area
             if(this.screenSetting.isSafe == 'A'){
                 this.slotGame.container.y = 200
+                this.controller.container.y = 300
+                this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
                 console.log('mob a')
             }
             else if(this.screenSetting.isSafe == 'B'){
                 console.log('mob b')
-                this.slotGame.container.y = 150
+                this.controller.container.y = 350
+                this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.slotGame.container.y = 70
+                this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
                 console.log('mob c')
             }
             else{
+                this.controller.infoBtnSprite.x = (this.gameBackground.width - this.controller.infoBtnSprite.width)*0.96
+                this.infoContainer.x = (this.controller.infoBtnSprite.x)*0.98
+                this.buyBonusBtn.x = 50
                 console.log('mob d')
             }
         }else{ 
@@ -671,24 +678,18 @@ export default class GameMobile{
             this.controller.creditText.x =  (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2
             this.controller.creditText.y = this.controller.betContainerSprite.height / 2 - 35
             
-
-            this.paylineTextY =30
-            this.paylineText.y = this.paylineTextY
-            this.paylineText.x =  (this.controller.parentSprite.width - this.paylineText.width)/2
-            this.paylineTextBtmY = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
-            this.paylineTextBtmX = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-            this.paylineTextBottom.y = this.paylineTextBtmY
-            this.paylineTextBottom.x =  this.paylineTextBtmX
-            this.paylineSymbolX = (this.controller.parentSprite.width -500)/2
-            this.paylineSymbolY = (this.controller.parentSprite.height - this.paylineTextBottom.height) - 10
-
-            this.paylineContainer.alpha = 0
+            this.paylineBackDrop.visible = false
+            this.controller.parentSprite.addChild(this.paylineContainer)
+            this.gameContainer.removeChild(this.paylineContainer)
+            this.updatePaylineText(this.paylineTextBottom.text,this.paylineText.text)
             
             this.infoContainer.alpha = 0
             this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
             this.controller.infoBtnSprite.scale.set(1.2)
             this.controller.infoBtnSprite.x = (this.controller.parentSprite.width - this.controller.spinBtnSprite.width) - 89
             this.controller.infoBtnSprite.y =  this.controller.parentSprite.y+55
+            
+            this.paylineContainer.y = ((this.controller.parentSprite.height - this.paylineContainer.height)/2)+15
             
             this.controller.soundBtnSprite.alpha = 0
 
@@ -847,16 +848,17 @@ export default class GameMobile{
             //safe area
             if(this.screenSetting.isSafe == 'A'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
-                this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 0
                 //slot
                 this.slotGame.levelBarContainer.y = 50
+                this.controller.container.y = -50
                 console.log('desk a')
             }
             else if(this.screenSetting.isSafe == 'B'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 50
+                this.controller.container.y = -20
                 console.log('desk b')
             }
             else if(this.screenSetting.isSafe == 'C'){
@@ -869,6 +871,7 @@ export default class GameMobile{
                 this.slotGame.levelBarContainer.scale.set(1)
                 this.slotGame.levelBarContainer.y = 0
                 this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
+                this.controller.container.y = 0
                 console.log('desk c')
             }
             else{
@@ -886,12 +889,17 @@ export default class GameMobile{
             }
            
         }
+        clearTimeout(setputa)
+        },60)
     }
 
     private createIntro(){
         this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
+        this.gameContainer.addChild(this.paylineBackDrop)
+        this.paylineBackDrop.visible = false
         this.gameContainer.addChild(this.intro.container)
+        this.paylineContainer.visible = false
         this.intro.playBtn.addEventListener('pointerdown',()=>{
             // initialize the sound on game enter
             if(this.globalSound){
@@ -913,6 +921,7 @@ export default class GameMobile{
                 this.intro.container.removeChild(this.intro.playBtn)
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
+                this.paylineContainer.visible = true
                 clearTimeout(timeOut)
             },this.transitionDelay)
         })
@@ -1119,9 +1128,9 @@ export default class GameMobile{
     }
     private createController(){
         this.controller = new Controller(this.app,this.textureArray)
-        this.gameContainer.addChild(this.paylineContainer)
-        this.gameContainer.addChild(this.infoContainer)
-        this.paylineContainer.y = 780
+        // this.gameContainer.addChild(this.paylineContainer)
+        this.controller.container.addChild(this.infoContainer)
+        // this.paylineContainer.y = 780
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
 
@@ -1160,7 +1169,12 @@ export default class GameMobile{
     private betTextValue(){
         //bet value
         this.controller.betText.text = this.betAmount 
-        this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+        if(this.screenSetting.screentype == 'portrait'){
+            this.controller.betText.x = (this.controller.betContainerSprite.width - (this.controller.betText.width/2))/2 
+        }else{
+            this.controller.betText.x = (this.controller.betContainerSprite.width - this.controller.betText.width)/2 
+        }
+
         //bet value buy bonus
         this.buyBonusText.text = this.betAmount
         this.buyBonusText.x = (this.buyBonusBtn.width - this.buyBonusText.width)/2
@@ -1169,7 +1183,11 @@ export default class GameMobile{
     private updateCreditValues(){
         //credit value
         this.controller.creditText.text = Functions.numberWithCommas(this.userCredit) 
-        this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2  
+        if(this.screenSetting.screentype == 'portrait'){
+            this.controller.creditText.x = (this.controller.creditContainerSprite.width - (this.controller.creditText.width/2))/2 
+        }else{
+            this.controller.creditText.x = (this.controller.creditContainerSprite.width - this.controller.creditText.width)/2 
+        } 
     }
     private onSpinEnd(){
         if(!this.isMatchingGame){
@@ -1205,7 +1223,7 @@ export default class GameMobile{
     private onSpinning(){
         this.paylineGreetings = 'GOOD LUCK'
         this.paylineContainersAnimation.forEach(data=>{
-            this.controller.parentSprite.removeChild(data)
+            this.gameContainer.removeChild(data)
         })
         this.updatePaylineAnimation(this.paylineGreetings)
     }
@@ -1487,8 +1505,7 @@ export default class GameMobile{
             // update text 
             this.textStyle.fontSize = 46
             this.textStyle3.fontSize = 30 
-            this.updatePaylineTopText(topText)
-            this.updatePaylineBottomText(bottomText)
+            this.updatePaylineText(bottomText,topText)
             this.screenSize()
             clearTimeout(timeOut)
         },this.transitionDelay)
@@ -1580,8 +1597,10 @@ export default class GameMobile{
             this.screenSize()
             this.slotGame.levelBarIndicator.width = 0
             this.slotGame.frameBg.removeChild(this.matchingBlocksContainer)
-            this.updatePaylineTopText('SPIN TO WIN')
-            this.updatePaylineBottomText('Tap space or enter to skip')
+            // update text 
+            this.textStyle.fontSize = 50
+            this.textStyle3.fontSize = 40 
+            this.updatePaylineText('Tap space or enter to skip','SPIN TO WIN')
             if(this.slotGame.freeSpinStart){
                 this.freeSpinEvent()
             }
@@ -1591,28 +1610,31 @@ export default class GameMobile{
 
     }
     private createPaylineAnimation(){
-        let greetY = 30
         this.paylineText =  new PIXI.Text('SPIN TO WIN', this.textStyle)
         this.paylineTextBottom = new PIXI.Text('Tap space or enter to skip', this.textStyle3)
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = greetY
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
-        this.controller.parentSprite.addChild(this.paylineText,this.paylineTextBottom)
+        this.paylineContainer.addChild(this.paylineText,this.paylineTextBottom)
+        this.updatePaylineText(this.paylineTextBottom.text,this.paylineText.text)
+        this.controller.parentSprite.addChild(this.paylineContainer)
+    }
+    private updatePaylineText(bottomText:string,topText:string){
+        this.paylineTextBottom.text = bottomText
+        this.paylineText.text = topText 
+        this.paylineText.x = (this.paylineContainer.width - this.paylineText.width)/2
+        this.paylineTextBottom.x = (this.paylineContainer.width - this.paylineTextBottom.width)/2
+        this.paylineTextBottom.y = (this.paylineText.height)
+        this.paylineContainer.x = (this.controller.parentSprite.width - this.paylineContainer.width)/2
     }
     private updatePaylineAnimation(greetings:string){
         this.paylineContainersAnimation = []
         this.paylineAnimations.forEach(data=>{data.kill()})
         let paylineContent:any = this.slotGame.paylines
-        let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
         let paylineTotal = 0
         let bottomText = this.isAutoPlay?`Free spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
-        this.updatePaylineBottomText(bottomText)       
         if(this.slotGame.paylines.length !== 0){
             for(let i=0;i<paylineContent.length;i++){
                 bottomText = ''
-                this.updatePaylineBottomText(bottomText)
+                this.updatePaylineText(bottomText,this.paylineText.text)
                 let payline = paylineContent[i].payline
                 let payout = Functions.numberWithCommas(paylineContent[i].payout)
                 const container = new PIXI.Container
@@ -1630,34 +1652,31 @@ export default class GameMobile{
                 greetingText.y = (containerWithText.height - greetingText.height)/2
                 this.paylineContainersAnimation.push(containerWithText)
                 this.animatePaySymbols(containerWithText,i)
-                parentContainer.addChild(containerWithText)
+                this.gameContainer.addChild(containerWithText)
             }
-            this.updatePaylineTopText(`WIN ${Functions.numberWithCommas(paylineTotal)}`)
+            this.updatePaylineText(bottomText,`WIN ${Functions.numberWithCommas(paylineTotal)}`)
         }
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.updatePaylineBottomText(bottomText)
-    }
-    private updatePaylineTopText(text:string){
-        let greetY = 30
-        this.paylineText.text = text
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = this.paylineTextY
-    }
-    private updatePaylineBottomText(text:string){
-        this.paylineTextBottom.text = text
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y =this.paylineTextBtmY
+        this.updatePaylineText(bottomText,this.paylineText.text)
     }
     private animatePaySymbols(containerWithText:any,i:number){
+        let posX = 0
+        let posY = 0
+        if(this.screenSetting.screentype == 'portrait'){
+            posX = this.paylineContainer.x + (this.paylineContainer.width - containerWithText.width)/2
+            posY = this.paylineContainer.y + this.paylineText.height
+        }else{
+            posX = this.paylineContainer.x + (this.paylineContainer.width - containerWithText.width)/2
+            posY = this.controller.parentSprite.y + this.paylineContainer.y + this.paylineText.height
+        }
+
         let lastIndex = i+1
-        let parentContainer = this.controller.parentSprite
         let fadeIn = gsap.to(containerWithText,{
             delay:i*2,
             duration:1,
             alpha:1,
             onStart:()=>{
-                containerWithText.x = this.paylineSymbolX
-                containerWithText.y = this.paylineSymbolY
+                containerWithText.x = posX
+                containerWithText.y = posY
             },
             onComplete:()=>{
                 containerWithText.alpha = 0

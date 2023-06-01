@@ -949,6 +949,7 @@ export default class Game{
     }
     private updatePaylineText(bottomText:string,topText:string){
         this.paylineTextBottom.text = bottomText
+        this.paylineText.text = topText 
         this.paylineText.x = (this.paylineContainer.width - this.paylineText.width)/2
         this.paylineTextBottom.x = (this.paylineContainer.width - this.paylineTextBottom.width)/2
         this.paylineTextBottom.y = (this.paylineText.height)
@@ -989,17 +990,6 @@ export default class Game{
             this.updatePaylineText(bottomText,`WIN ${Functions.numberWithCommas(paylineTotal)}`)
         }
         this.updatePaylineText(bottomText,this.paylineText.text)
-    }
-    private updatePaylineTopText(text:string){
-        let greetY = 30
-        this.paylineText.text = text
-        this.paylineText.x = (this.controller.parentSprite.width - this.paylineText.width)/2
-        this.paylineText.y = greetY
-    }
-    private updatePaylineBottomText(text:string){
-        this.paylineTextBottom.text = text
-        this.paylineTextBottom.x = (this.controller.parentSprite.width - this.paylineTextBottom.width)/2
-        this.paylineTextBottom.y = (this.controller.parentSprite.height - this.paylineTextBottom.height)-10
     }
     private animatePaySymbols(containerWithText:any,i:number){
         let lastIndex = i+1
