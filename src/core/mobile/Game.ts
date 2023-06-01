@@ -630,7 +630,7 @@ export default class GameMobile{
                 this.popUps.logo.y = ((this.overlay.height)/2)*0.7
                 this.popUps.overlay.width = this.screenSetting.baseWidth
                 this.popUps.money.x = ((this.popUps.overlay.width - this.popUps.money.width)/2)
-                this.popUps.money.y = ((this.popUps.overlay.height - this.popUps.money.height)/2)*0.77
+                this.popUps.money.y = (this.popUps.logo.y + (this.popUps.logo.height-this.popUps.money.height)/2)*0.77
             }
         }else{ 
             //GAME BACKGROUND 
@@ -929,7 +929,7 @@ export default class GameMobile{
                 this.popUps.logo.y = ((this.overlay.height)/2)*0.7
                 this.popUps.overlay.width = this.screenSetting.baseWidth
                 this.popUps.money.x = ((this.popUps.overlay.width - this.popUps.money.width)/2)
-                this.popUps.money.y = ((this.popUps.overlay.height - this.popUps.money.height)/2)*0.83
+                this.popUps.money.y = (this.popUps.logo.y + (this.popUps.logo.height-this.popUps.money.height)/2)*0.65
             }
         }
         // set arrangements on resize
