@@ -312,7 +312,7 @@ export default class GameMobile{
         })
         this.createTransition()
         this.screenSize()
-        
+
         Howler.mute(true)
         // toggle sound on tab enter and leave
         document.addEventListener("visibilitychange", ()=> {
@@ -581,19 +581,21 @@ export default class GameMobile{
             this.intro.logo.x = (this.intro.centerContainer.width - this.intro.logo.width)/2
             this.intro.playBtn.y = (this.screenSetting.baseHeight - this.intro.playBtn.height)*0.8
 
-            //TRANSITION
+            // //TRANSITION
             if(this.openTransition){
-                this.transition.container.rotation = PIXI.DEG_TO_RAD * 4
-                this.transition.container.x = 54.5
-                this.transition.container.y = -97
+                this.transition.container.rotation = PIXI.DEG_TO_RAD * 0
+                this.transition.container.x = 936
+                this.transition.container.y = 1066.5
+                this.transition.container.rotation = PIXI.DEG_TO_RAD * 90
+                this.transition.container.x = 89.5
+                this.transition.container.y = 936.5
             }
-
+            
             // PLANTS
             this.plantContainerRight.x = -780
             this.plantContainerRight.y = this.controller.container.y
             this.plantContainerLeft.y = this.controller.container.y
             this.vines.y = -435.5
-
 
             //safe area
             if(this.screenSetting.isSafe == 'A'){
@@ -872,8 +874,8 @@ export default class GameMobile{
             //TRANSITION
             if(this.openTransition){
                 this.transition.container.rotation = PIXI.DEG_TO_RAD * 0
-                this.transition.container.x = 0
-                this.transition.container.y = 0
+                this.transition.container.x = 936
+                this.transition.container.y = 1038
             }
 
             // PLANTS 
@@ -2367,6 +2369,15 @@ export default class GameMobile{
     private createTransition(){
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray, this.screenSetting.screentype)
         this.openTransition = true
+        // if(this.screenSetting.screentype == 'portrait'){
+        //     this.transition.container.rotation = PIXI.DEG_TO_RAD * 4
+        //     this.transition.container.x = 54.5
+        //     this.transition.container.y = -97
+        // }else{
+        //     this.transition.container.rotation = PIXI.DEG_TO_RAD * 0
+        //     this.transition.container.x = 0
+        //     this.transition.container.y = 0
+        // }
         this.gameContainer.addChild(this.transition.container)
         this.transition.container.zIndex = 100
     }
