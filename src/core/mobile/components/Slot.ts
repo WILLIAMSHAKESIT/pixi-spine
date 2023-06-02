@@ -836,7 +836,7 @@ export default class Slot{
             coinX = coinX>804?coinX*1.5:coinX*1.6
         }else{
             barPosX = levelBarX + this.levelBarIndicator.width
-            barPosY = levelBarY
+            barPosY = this.levelBarIndicator.y
             coinY = coinY*0.75 
             coinX = coinX
         }
