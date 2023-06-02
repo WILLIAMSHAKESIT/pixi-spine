@@ -34,18 +34,20 @@ export default class Transition{
     private createParent(){
         this.leaves = new Spine(this.textureArray.transition.spineData)
         if(this.screenOrient == 'portrait'){
-            this.posX = 100
-            this.leaves.rotation = 190
+            this.container.rotation = PIXI.DEG_TO_RAD * 0
+            this.container.x = 936
+            this.container.y = 1066.5
+            this.container.rotation = PIXI.DEG_TO_RAD * 90
+            this.container.x = 89.5
+            this.container.y = 936.5
         }else{
-            this.posX = 935.5
+            this.container.rotation = PIXI.DEG_TO_RAD * 0
+            this.container.x = 936
+            this.container.y = 1038
         }
-       // const posX = 935.5
-        const posY = 1025
+        // const posX = 935.5
+        // const posY = 1025
         // create glow back drop
-       
-         this.leaves.x = this.posX
-         this.leaves.y = posY
-        //this.leaves.rotation = 190
         // animate glow
         this.container.addChild(this.leaves)
         this.spine = Functions.loadSpineAnimation(this.leaves,'animation',false,0.3)
