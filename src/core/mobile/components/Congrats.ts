@@ -175,7 +175,7 @@ export default class Congrats{
             },
             onUpdate: () => {
                 this.money.text = Functions.numberWithCommas(parseInt(this.money.text)).toString();
-                // this.money.x = (this.overlay.width - this.money.width)/2
+                 this.money.x = (this.overlay.width - this.money.width)/2
                 // this.money.y= ((this.overlay.height - this.money.height)/2)*1.06
             },
             onComplete:()=>{

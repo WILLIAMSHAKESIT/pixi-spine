@@ -597,10 +597,10 @@ export default class GameMobile{
                 this.slotGame.container.y = 200
                 this.controller.container.y = 300
                 this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
-                console.log('mob a')
+                //console.log('mob a')
             }
             else if(this.screenSetting.isSafe == 'B'){
-                console.log('mob b')
+                //console.log('mob b')
                 this.slotGame.container.y = 200
                 this.controller.container.y = 350
                 this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
@@ -612,7 +612,7 @@ export default class GameMobile{
                 this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
-                console.log('mob c')
+                //console.log('mob c')
             }
             else{
                 this.controller.infoBtnSprite.x = (this.gameBackground.width - this.controller.infoBtnSprite.width)*0.96
@@ -620,7 +620,7 @@ export default class GameMobile{
                 this.buyBonusBtn.x = 50
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
-                console.log('mob d')
+               // console.log('mob d')
             }
 
             //POP  UPS
@@ -884,7 +884,7 @@ export default class GameMobile{
                 //slot
                 this.slotGame.levelBarContainer.y = 50
                 this.controller.container.y = -50
-                console.log('desk a')
+               // console.log('desk a')
             }
             else if(this.screenSetting.isSafe == 'B'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
@@ -892,7 +892,7 @@ export default class GameMobile{
                 this.buyBonusBtn.x = 50
                 this.controller.container.y = -20
                 this.paylineContainer.y = ((this.controller.parentSprite.height - this.paylineContainer.height)/2)+15
-                console.log('desk b')
+               // console.log('desk b')
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 150;
@@ -906,7 +906,7 @@ export default class GameMobile{
                 this.slotGame.levelBarContainer.y = 0
                 this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
                 this.controller.container.y = 0
-                console.log('desk c')
+               // console.log('desk c')
             }
             else{
 
@@ -919,7 +919,7 @@ export default class GameMobile{
                 this.slotGame.levelBarContainer.scale.set(1)
                 this.slotGame.levelBarContainer.y = 0
                 this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.92
-                console.log('desk d')
+               // console.log('desk d')
             }
 
             //POP  UPS
