@@ -310,7 +310,6 @@ export default class GameMobile{
         window.addEventListener('resize',()=>{
             this.screenSize()
         })
-        this.createTransition()
         this.screenSize()
 
         Howler.mute(true)
@@ -949,6 +948,7 @@ export default class GameMobile{
     }
 
     private createIntro(){
+        console.log('test')
         this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.paylineBackDrop)
@@ -956,6 +956,8 @@ export default class GameMobile{
         this.gameContainer.addChild(this.intro.container)
         this.paylineContainer.visible = false
         this.intro.playBtn.addEventListener('pointerdown',()=>{
+            console.log('testr')
+            this.intro.playBtn.interactive = false
             // initialize the sound on game enter
             if(this.globalSound){
                 Howler.mute(false)
@@ -969,7 +971,6 @@ export default class GameMobile{
             this.soundVolume(16,0)
             this.playSound(17)
             this.soundVolume(17,0)
-            this.intro.playBtn.interactive = false
             this.createTransition()
             let timeOut = setTimeout(()=>{
                 this.enableButtons(true)
