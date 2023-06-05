@@ -755,7 +755,7 @@ export default class Modal{
             text.y = symbols.height*1.1
             symbolsContainer.addChild(symbols,text)
         })
-        jackpotView.y = symbolsContainer.height
+        jackpotView.y = symbolsContainer.height+30
         desc.y = (jackpotView.y + jackpotView.height)*1.05
 
         this.infoSecondPageContainer.addChild(jackpotView)
