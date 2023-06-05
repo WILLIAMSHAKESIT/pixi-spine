@@ -499,6 +499,8 @@ export default class GameMobile{
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
                 this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
+                this.modal.pageText.y = (this.modal.modalFrame.height - this.modal.pageText.height)- 50
+
             }
 
             //CONGRATS POPUP
@@ -532,8 +534,9 @@ export default class GameMobile{
             this.modal.infoThirdPageContainerPortrait.x = (this.modal.modalFrame.width - this.modal.infoThirdPageContainerPortrait.width)/2 
            
             // ALIGNING OF ALL PAGES Y AXIS
-                this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoFifthPageContainerPortrait.height)/2 
-              this.modal.infoThirdPageContainerPortrait.y = (this.modal.modalFrame.height - this.modal.infoThirdPageContainerPortrait.height)/2 
+            this.modal.infoFirstPageContainerPortrait.y = 30
+            this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoFifthPageContainerPortrait.height)/2 
+            this.modal.infoThirdPageContainerPortrait.y = (this.modal.modalFrame.height - this.modal.infoThirdPageContainerPortrait.height)/2 
            
             //CHECK THE CURRENT PAGE
             if(this.modal.currentPage == 0) {
@@ -792,7 +795,8 @@ export default class GameMobile{
                 this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
-                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
+                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)- 50
+                this.modal.pageText.y = (this.modal.modalFrame.height - this.modal.pageText.height)- 30
                 
             }
 
@@ -822,7 +826,8 @@ export default class GameMobile{
             this.modal.infoFourthPageContainer.x =0
 
             // ALIGNING OF ALL PAGES Y AXIS INFO MODAL
-            this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoSecondPageContainer.height)/2
+            this.modal.infoFirstPageContainer.y = 20
+            this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoSecondPageContainer.height)/2 + 50
             this.modal.infoThirdPageContainer.y =((this.modal.modalFrame.height - this.modal.infoThirdPageContainer.height)/2) + 50
   
             //CHECK THE CURRENT PAGE FOR INFO MODAL
@@ -857,6 +862,8 @@ export default class GameMobile{
                 this.modal.image6th.x = (this.modal.modalFrame.width - this.modal.image6th.width)/2
                 this.modal.image6th.y = (this.modal.modalFrame.height - this.modal.image6th.height)/2 +30    
             }
+
+    
 
             //HOME
             this.intro.bg.texture = landscapeBg

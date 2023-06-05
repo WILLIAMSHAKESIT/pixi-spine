@@ -480,7 +480,6 @@ export default class Modal{
         this.nextBtn = Functions.loadTexture(this.textureArray,'modal','right_arrow')
         this.infoContainer.removeChildren()
 
-        
         this.currentPage = 0
         let lastPage = json2.modalInfoPage.length - 1
         let paddingSide = 30
@@ -501,8 +500,7 @@ export default class Modal{
         this.pageText.x = (this.modalFrame.width - this.pageText.width)*0.95
         this.pageText.y = (this.modalFrame.height - this.pageText.height)*0.95
         this.infoContainer.addChild(this.pageText)
-
-        
+ 
         this.prevBtn.interactive = true
         this. prevBtn.cursor = 'pointer'
         this.prevBtn.x = paddingSide
@@ -520,9 +518,7 @@ export default class Modal{
                 this.currentPage--
             }
             this.updatePageContent(args,this.currentPage,lastPage)
-        })
-
-        
+        }) 
         this.nextBtn.interactive = true
         this.nextBtn.cursor = 'pointer'
         this.nextBtn.x = (this.modalFrame.width - this.nextBtn.width) - paddingSide
@@ -544,8 +540,7 @@ export default class Modal{
         }else{
             this.infoFirstPageContainer.alpha = 1
         }
-
-       
+     
         this.infoSecondPageContainer.alpha = 0
         this.infoThirdPageContainer.alpha = 0
         this.infoFourthPageContainer.alpha = 0
@@ -559,9 +554,7 @@ export default class Modal{
         this.infoFifthPageContainerPortrait.alpha = 0
         this.infoSixthPageContainerPortrait.alpha = 0
         this.infoSeventhPageContainerPortrait.alpha = 0
-
-
-        
+ 
         this.createInfoFirstPage()
         this.createInfoSecondPage()
         this.createInfoThirdPage()
@@ -592,8 +585,7 @@ export default class Modal{
         this.infoFifthPageContainer.alpha = 0
         this.infoSixthPageContainer.alpha = 0
         this.infoSeventhPageContainer.alpha = 0
-
-        
+ 
         this.infoFirstPageContainerPortrait.alpha = 0
         this.infoSecondPageContainerPortrait.alpha = 0
         this.infoThirdPageContainerPortrait.alpha = 0
@@ -601,8 +593,6 @@ export default class Modal{
         this.infoFifthPageContainerPortrait.alpha = 0
         this.infoSixthPageContainerPortrait.alpha = 0
         this.infoSeventhPageContainerPortrait.alpha = 0
-
-
 
         if(currentPage == 0){
             if(this.screenSetting.screentype == 'portrait'){
