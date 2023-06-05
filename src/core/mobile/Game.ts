@@ -328,7 +328,7 @@ export default class GameMobile{
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
-        // let setputa = setTimeout(() => {
+    
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -456,8 +456,8 @@ export default class GameMobile{
 
             //MODALS
             this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'controller_mobile','modal_container').texture
-            this.modal.modalFrame.x = (this.gameBackground.width - this.modal.modalFrame.width)  / 2
-            this.modal.modalFrame.y = (this.gameBackground.height - this.modal.modalFrame.height)  / 2
+            this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)  / 2
+            this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)  / 2
            
             if(this.isOpenSetting){
                 this.modal.modalTitle.x = (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
@@ -490,6 +490,7 @@ export default class GameMobile{
             }
 
             if(this.isOpenInfo){
+                this.modal.infoFirstPageContainerPortrait.x = 270.379
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
                 this.modal.closeModal.y = 45
                   //PREVIOUS AND NEXT BUTTON
@@ -497,8 +498,11 @@ export default class GameMobile{
                 this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
                 this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
+                this.modal.pageTitle.y = 100
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
+                this.modal.pageDesc.y = 130
                 this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
+                this.modal.pageText.y = (this.modal.modalFrame.height - this.modal.pageText.height)*0.95
             }
 
             //CONGRATS POPUP
@@ -524,16 +528,13 @@ export default class GameMobile{
 
             //INFO MODAL
            
-          
-
             // ALIGNING OF ALL PAGES X AXIS
-            this.modal.infoFirstPageContainerPortrait.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainerPortrait.width)/2- 200
-            this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
+            this.modal.infoFirstPageContainerPortrait.y = 100
             this.modal.infoThirdPageContainerPortrait.x = (this.modal.modalFrame.width - this.modal.infoThirdPageContainerPortrait.width)/2 
            
             // ALIGNING OF ALL PAGES Y AXIS
-                this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoFifthPageContainerPortrait.height)/2 
-              this.modal.infoThirdPageContainerPortrait.y = (this.modal.modalFrame.height - this.modal.infoThirdPageContainerPortrait.height)/2 
+            this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoFifthPageContainerPortrait.height)/2 
+            this.modal.infoThirdPageContainerPortrait.y = (this.modal.modalFrame.height - this.modal.infoThirdPageContainerPortrait.height)/2 
            
             //CHECK THE CURRENT PAGE
             if(this.modal.currentPage == 0) {
@@ -568,6 +569,8 @@ export default class GameMobile{
                 this.modal.image6thPortrait.y = (this.modal.modalFrame.height - this.modal.image6thPortrait.height)/2 +30    
             }
 
+            this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
+
             //HOME
             this.intro.bg.texture = portraitBg
             this.intro.bg.height = this.screenSetting.baseHeight
@@ -601,6 +604,8 @@ export default class GameMobile{
                 this.slotGame.container.y = 200
                 this.controller.container.y = 300
                 this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
+                this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
+                this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
                 //console.log('mob a')
             }
             else if(this.screenSetting.isSafe == 'B'){
@@ -672,7 +677,7 @@ export default class GameMobile{
             this.slotGame.logo.x = this.slotGame.frameBorder.x
             this.slotGame.logo.y = this.slotGame.frameBorder.y
             this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
-             this.slotGame.container.y = 0
+            this.slotGame.container.y = 0
 
             //CONTROLLER CHILDREN
             this.controller.spinBtnSprite.scale.set(1.3)
@@ -683,7 +688,6 @@ export default class GameMobile{
             this.controller.autoPlay.x = (this.controller.parentSprite.width - this.controller.autoPlay.width) - 45
             this.controller.autoPlay.y = (this.controller.parentSprite.y + this.controller.parentSprite.height) - this.controller.autoPlay.height*1.2 - 330
            
-
             this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
             this.controller.settingBtnSpite.scale.set(1.3)
             this.controller.settingBtnSpite.x = this.controller.settingBtnSpite.width *1.5 -93
@@ -735,8 +739,8 @@ export default class GameMobile{
             this.popGlow2.y = 1044
 
             if(this.isOpenFreeSpinModals){
-            this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 + 400
-            this.moneySlot.y = -240
+                this.moneySlot.x = (this.baseWidth - this.moneySlot.width)/2 + 400
+                this.moneySlot.y = -240
             }
             this.moneyBoardY = -240
 
@@ -748,9 +752,9 @@ export default class GameMobile{
 
             //CONTROLLER PARENT
             if(this.isMatchingGame || this.eventStart){
-            this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','tablet_controllers').texture
-            this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
-            this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
+                this.controller.parentSprite.texture = Functions.loadTexture(this.textureArray,'controller_mobile','tablet_controllers').texture
+                this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings2').texture
+                this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button2').texture
             }
 
             //MODALS
@@ -791,9 +795,11 @@ export default class GameMobile{
                 this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
                 this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
+                this.modal.pageTitle.y = 30
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
-                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)/2
-                
+                this.modal.pageDesc.y =  this.modal.pageDesc.y = (this.modal.pageTitle.height+30)*1.2 
+                this.modal.pageText.x = (this.modal.modalFrame.width - this.modal.pageText.width)*0.95
+                this.modal.pageText.y = (this.modal.modalFrame.height - this.modal.pageText.height)*0.95
             }
 
             //CONGRATS POPUP
@@ -816,10 +822,14 @@ export default class GameMobile{
             this.modal.infoSecondPageContainer.scale.set(1)
 
             // ALIGNING OF ALL PAGES X AXIS INFO MODAL
-            this.modal.infoFirstPageContainer.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainer.width)/2
+            if(this.isOpenInfo){
+                this.modal.infoFirstPageContainer.x = (this.modal.modalFrame.width - this.modal.infoFirstPageContainer.width)/2
+                this.modal.infoFirstPageContainer.y = 20
+            }
+
             this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
             this.modal.infoThirdPageContainer.x = (this.modal.modalFrame.width - this.modal.infoThirdPageContainer.width)/2 
-            this.modal.infoFourthPageContainer.x =0
+            this.modal.infoFourthPageContainer.x = 0
 
             // ALIGNING OF ALL PAGES Y AXIS INFO MODAL
             this.modal.infoSecondPageContainer.y = (this.modal.modalFrame.height - this.modal.infoSecondPageContainer.height)/2
@@ -832,6 +842,7 @@ export default class GameMobile{
             }
             else if(this.modal.currentPage == 1){
                 this.modal.infoSecondPageContainer.alpha = 1
+                this.modal.infoSecondPageContainer.x = (this.modal.modalFrame.width - this.modal.infoSecondPageContainer.width)/2
             }
             else if(this.modal.currentPage == 2){
                 this.modal.infoThirdPageContainerPortrait.alpha = 0
@@ -897,6 +908,9 @@ export default class GameMobile{
                 this.buyBonusBtn.x = 50
                 this.controller.container.y = -20
                 this.paylineContainer.y = ((this.controller.parentSprite.height - this.paylineContainer.height)/2)+15
+                this.slotGame.levelBarContainer.scale.set(1)
+                this.slotGame.levelBarContainer.y = 0
+                this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
                // console.log('desk b')
             }
             else if(this.screenSetting.isSafe == 'C'){
@@ -943,12 +957,9 @@ export default class GameMobile{
         this.wildSlot.zIndex = 5
         this.popGlow.zIndex = 4
         this.popGlow2.zIndex = 4
-        // clearTimeout(setputa)
-        // },60)
     }
 
     private createIntro(){
-        console.log('test')
         this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.paylineBackDrop)
@@ -956,7 +967,6 @@ export default class GameMobile{
         this.gameContainer.addChild(this.intro.container)
         this.paylineContainer.visible = false
         this.intro.playBtn.addEventListener('pointerdown',()=>{
-            console.log('testr')
             this.intro.playBtn.interactive = false
             // initialize the sound on game enter
             if(this.globalSound){

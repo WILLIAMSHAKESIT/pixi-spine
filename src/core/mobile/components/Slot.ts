@@ -446,8 +446,8 @@ export default class Slot{
             this.timeScale = 0
         })
     }
-    private reelContainWildAndBonus(index:number){
-        this.reelsSymbols[index].forEach((data:any,index:number)=>{
+    private reelContainWildAndBonus(i:number){
+        this.reelsSymbols[i].forEach((data:any,index:number)=>{
             if(index > 26){
                 if(data.type == this.wildType){ 
                     this.playSound(18)
@@ -455,7 +455,7 @@ export default class Slot{
                     Functions.loadSpineAnimation(data.symbol,'open',false,1.1)
                     const globalPos = data.symbol.getGlobalPosition()
                    
-                    this.createWildCoin(globalPos.x,globalPos.y)
+                    this.createWildCoin(this.reelContainer[i].x,globalPos.y)
                     this.levelBarIndicator.width++
                     // reset level bar and start matching game
                     if(this.levelBarIndicator.width == this.levelBarWidth){
@@ -832,13 +832,13 @@ export default class Slot{
         if(this.screenSetting.screentype == 'portrait'){
             barPosX = levelBarX*1.8 + this.levelBarIndicator.width
             barPosY = this.levelBarIndicator.y
-            coinY = coinY*1.4 
-            coinX = coinX>804?coinX*1.5:coinX*1.6
+            // coinY = coinY*1.4 
+            // coinX = coinX>804?coinX*1.5:coinX*1.6
         }else{
-            barPosX = levelBarX + this.levelBarContainer.width
-            barPosY = this.levelBarContainer.y
-            coinY = coinY*0.75 
-            coinX = coinX
+            barPosX = levelBarX + this.levelBarIndicator.width
+            barPosY = this.levelBarContainer.y + 25
+            // coinY = coinY*0.75 
+            // coinX = coinX
         }
         for(let i = 0;i<=3;i++){
             const coin = Functions.animatedSprite(this.textureArray['coins'],'new_coin_spinning')
