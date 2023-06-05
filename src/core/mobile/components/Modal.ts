@@ -676,15 +676,14 @@ export default class Modal{
             }
         })
         this.infoFirstPageContainer.addChild(contOne)
-        contOne.x = (this.infoContainer.width - contOne.width)/2
-        contOne.y = paddingTop
         this.infoFirstPageContainer.addChild(contTwo)
-        contTwo.x = (this.infoContainer.width - contTwo.width)/2
-        contTwo.y = paddingTop*1.2
         this.infoFirstPageContainer.addChild(contThree)
-        contThree.x = (this.infoContainer.width - contThree.width)/2
+        contThree.x = (this.infoFirstPageContainer.width - contThree.width)/2
         contThree.y = paddingTop*1.7
-        this.infoFirstPageContainer.x = (this.infoContainer.width - this.infoFirstPageContainer.width)/2
+        contOne.x = (this.infoFirstPageContainer.width - contOne.width)/2
+        contOne.y = paddingTop
+        contTwo.x = (this.infoFirstPageContainer.width - contTwo.width)/2
+        contTwo.y = paddingTop*1.2
         this.infoContainer.addChild(this.infoFirstPageContainer)
         //PORTRAIT
         const contOnePortrait = new PIXI.Container
@@ -692,8 +691,8 @@ export default class Modal{
         const contThreePortrait = new PIXI.Container
         json2.mainSymbols.forEach((data,index)=>{
             const sprite2 = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
-            const text = new PIXI.Text(`${data.text}`,this.textStyle4)
-            sprite2.scale.set(0.8)
+            const text = new PIXI.Text(`${data.text}`,this.textStyle4Center)
+            sprite2.scale.set(0.7)
             if(index <= 2){
                 sprite2.x = (sprite2.width*index)*xGap - 45
                 sprite2.y = 0
@@ -701,55 +700,46 @@ export default class Modal{
                 text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                 contOnePortrait.addChild(sprite2,text)
             }else if(index <= 4 && index >2){
-                sprite2.x = (sprite2.width*index)*xGap - 650
+                sprite2.x = (sprite2.width*index)*xGap - 580
                 sprite2.y = sprite2.height*1.2
                 text.y = sprite2.height *2 + 45
                 text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                 contOnePortrait.addChild(sprite2,text)
             }else if(index >= 5 && index <=6){
                 sprite2.x = (sprite2.width*(index-5))*xGap  - 40
-               // sprite2.y = sprite2.height*1.2
                 sprite2.y = sprite2.height*2.5
                 text.y = sprite2.height+sprite2.y
                 text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                 contTwoPortrait.addChild(sprite2,text)
             }else if(index >= 7 && index <=8){
-                sprite2.x = (sprite2.width*(index-5))*xGap - 520
-                // sprite2.y = sprite2.height*1.2
+                sprite2.x = (sprite2.width*(index-5))*xGap - 470
                  sprite2.y = sprite2.height*3 + 130
                  text.y = sprite2.height+sprite2.y
                  text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                  contTwoPortrait.addChild(sprite2,text)
             }else if(index == 9){
-                //index == 10?sprite2.x = 0:sprite2.x = sprite2.width*2 
-                sprite2.x = sprite2.width*2 - 340
-                //sprite2.y = sprite2.height*2
-               
                 sprite2.y = sprite2.height*5 - 50
                 text.y = (sprite2.y+(sprite2.height-text.height)/2) +140
-                text.x = (sprite2.x + sprite2.width)/2- 140
+                text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                 contThreePortrait.addChild(sprite2,text)
             }else{
-                sprite2.x = sprite2.width*2  -350
-                //sprite2.y = sprite2.height*2
-               
                 sprite2.y = sprite2.height*6 + 40
                 text.y = (sprite2.y+(sprite2.height-text.height)/2)+ 160
-                text.x = (sprite2.x + sprite2.width)/2- 130
+                text.x = (sprite2.x + ((sprite2.width-text.width)/2))
                 contThreePortrait.addChild(sprite2,text)
             }
         })
         this.infoFirstPageContainerPortrait.addChild(contOnePortrait)
-        contOnePortrait.x = (this.infoContainer.width - contOnePortrait.width)/2
+        contOnePortrait.x = (this.infoFirstPageContainerPortrait.width - contOnePortrait.width)/2
         contOnePortrait.y = paddingTop
         this.infoFirstPageContainerPortrait.addChild(contTwoPortrait)
-        contTwoPortrait.x = (this.infoContainer.width - contTwoPortrait.width)/2
-        contTwoPortrait.y = paddingTop*1.2
+        contTwoPortrait.x = (this.infoFirstPageContainerPortrait.width - contTwoPortrait.width)/2
+        contTwoPortrait.y = paddingTop*1.1
         this.infoFirstPageContainerPortrait.addChild(contThreePortrait)
-        contThreePortrait.x = (this.infoContainer.width - contThreePortrait.width)/2
-        contThreePortrait.y = paddingTop*1.7
-        this.infoFirstPageContainerPortrait.x = (this.infoContainer.width - this.infoFirstPageContainerPortrait.width)/2-290
         this.infoContainer.addChild(this.infoFirstPageContainerPortrait)
+        contThreePortrait.x = 148
+        contThreePortrait.y = paddingTop*1.7
+        this.infoFirstPageContainerPortrait.x = 270.379
     }
     private createInfoSecondPage(){
         const symbolsContainer = new PIXI.Container
@@ -767,15 +757,16 @@ export default class Modal{
         })
         jackpotView.y = symbolsContainer.height
         desc.y = (jackpotView.y + jackpotView.height)*1.05
-        
-        this.infoSecondPageContainer.addChild(symbolsContainer)
+
         this.infoSecondPageContainer.addChild(jackpotView)
+        this.infoSecondPageContainer.addChild(symbolsContainer)
         this.infoSecondPageContainer.addChild(desc)
         symbolsContainer.x = (this.infoSecondPageContainer.width - symbolsContainer.width)/2
+        symbolsContainer.y = 30
 
-        this.infoSecondPageContainer.x = (this.modalFrame.width - this.infoSecondPageContainer.width)/2
-        this.infoSecondPageContainer.y = (this.modalFrame.height - this.infoSecondPageContainer.height)/2
         this.infoContainer.addChild(this.infoSecondPageContainer)
+        // this.infoSecondPageContainer.x = (this.modalFrame.width - this.infoSecondPageContainer.width)/2
+        // this.infoSecondPageContainer.y = (this.modalFrame.height - this.infoSecondPageContainer.height)/2
         
     }
     private createInfoThirdPage(){
@@ -788,7 +779,6 @@ export default class Modal{
             const desc = new PIXI.Text(`${data.desc}`,this.textStyle4Center)
             img.scale.set(0.7)
             img.x = (index==0?img.width:0)*1.3
-           // img.y = (index==0?img.width:0)*1.3
             text.x= img.x + (img.width-text.width)/2
             text.y = -text.height
             desc.x = img.x + (img.width-desc.width)/2
