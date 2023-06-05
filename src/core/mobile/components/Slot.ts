@@ -457,8 +457,9 @@ export default class Slot{
                    
                     this.createWildCoin(globalPos.x,globalPos.y)
                     this.levelBarIndicator.width++
+                    Math.round(this.levelBarIndicator.width)
                     // reset level bar and start matching game
-                    if(this.levelBarIndicator.width == this.levelBarWidth){
+                    if( Math.round(this.levelBarIndicator.width) == this.levelBarWidth){
                         this.autoPlayCount = 0
                         this.levelBarIndicator.width = this.levelBarWidth
                         this.isMatchingGame = true
@@ -835,8 +836,8 @@ export default class Slot{
             coinY = coinY*1.4 
             coinX = coinX>804?coinX*1.5:coinX*1.6
         }else{
-            barPosX = levelBarX + this.levelBarContainer.width
-            barPosY = this.levelBarContainer.y
+            barPosX = levelBarX + this.levelBarIndicator.width
+            barPosY = this.levelBarContainer.y+ 35
             coinY = coinY*0.75 
             coinX = coinX
         }
