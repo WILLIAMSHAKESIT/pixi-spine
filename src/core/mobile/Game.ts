@@ -349,8 +349,8 @@ export default class GameMobile{
             this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
             this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
             this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
-            this.slotGame.logo.scale.set(1)
-            this.slotGame.logo.y = 20
+            this.slotGame.logo.scale.set(1.6)
+            this.slotGame.logo.y = -40
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
             this.slotGame.logo.x = (this.slotGame.frameBorder.width - this.slotGame.logo.width)/1.6
             //FREE SPIN
@@ -479,14 +479,13 @@ export default class GameMobile{
                 this.modal.closeModal.y = 45
                 this.modal.btnContainer.visible = false
                 this.modal.btn2Container.visible = true
-                this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
-                this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
                 this.modal.btn2Container.scale.set(1.3)
                 this.modal.btn2Container.x = 0
                 this.modal.btn2Container.y = -300
                 this.modal.bottomContainer.scale.set(1.3)
                 this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
-                
+                this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
+                this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
             }
 
             if(this.isOpenInfo){
@@ -606,30 +605,35 @@ export default class GameMobile{
                 this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
-                //console.log('mob a')
+                this.slotGame.logo.y = -30
+                // console.log('mob a')
             }
             else if(this.screenSetting.isSafe == 'B'){
-                //console.log('mob b')
+                // console.log('mob b')
                 this.slotGame.container.y = 200
                 this.controller.container.y = 350
                 this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
+                this.slotGame.logo.y = -30
             }
             else if(this.screenSetting.isSafe == 'C'){
                 this.slotGame.container.y = 70
                 this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
-                //console.log('mob c')
+                this.slotGame.logo.y = -60
+                // console.log('mob c')
             }
             else{
+                this.slotGame.container.y = 70
                 this.controller.infoBtnSprite.x = (this.gameBackground.width - this.controller.infoBtnSprite.width)*0.96
                 this.infoContainer.x = (this.controller.infoBtnSprite.x)*0.98
                 this.buyBonusBtn.x = 50
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
-               // console.log('mob d')
+                this.slotGame.logo.y = -60
+            //    console.log('mob d')
             }
 
             //POP  UPS
@@ -642,6 +646,7 @@ export default class GameMobile{
                 this.popUps.money.y = (this.popUps.logo.y + (this.popUps.logo.height-this.popUps.money.height)/2)*0.77
             }
         }else{ 
+            this.slotGame.logo.scale.set(1)
             //GAME BACKGROUND 
             this.gameBackground.texture = landscapeBg
 
@@ -784,7 +789,6 @@ export default class GameMobile{
                 this.modal.autoPlaySettingsCont.x = (this.modal.modalFrame.width - this.modal.autoPlaySettingsCont.width)/2
                 this.modal.autoPlaySettingsCont.y = (this.modal.modalFrame.height - this.modal.autoPlaySettingsCont.height)/2
                 this.modal.bottomContainer.x = (this.modal.autoPlaySettingsCont.width - this.modal.bottomContainer.width)/2
-            
             }
             
             if(this.isOpenInfo){
