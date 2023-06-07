@@ -77,6 +77,7 @@ export default class Slot{
         [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,9,3,9,7,1,7],
         [2,5,9,2,4,6,5,4,2,9,3,5,3,3,8,2,4,5,3,5,8,9,1,6,6,4,3,7,3,2]
     ]
+
     private reelY:number = -6713.7
     // private reelY:number = -6773.7
     public timeScale:number = 0
@@ -495,6 +496,7 @@ export default class Slot{
             if(index == arr[index] && data.count>2){
                 let totalLinePay:number = 0
                 let notWild:number = 0
+                let eventMultiplier:number = 0
                 let lineSymbols:Array<any> = []
                     for(let i=0;i<data.count;i++){
                         //add animation
@@ -503,16 +505,34 @@ export default class Slot{
                         if(lineSymbols.length == data.count){
                             if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                                 lineSymbols.forEach((el,i)=>{
-                                    if(data.blocks[i].type != 11){
-                                        notWild = i
-                                    }
-                                    if(data.blocks[i].type == 11){
-                                        data.blocks[i].payout =data.blocks[notWild].payout
-                                    }
-                                    //data.blocks[i].payout = 0
-                                    totalLinePay+=data.blocks[i].payout
-                                    console.log(data.blocks[i],"hey")
-                                    this.animatePatterns(i,data.blocks[i].block)
+                                    console.log(data.blocks[i],"buzz")
+                                    if(this.startCountWinFreeSpin){
+                                        if(data.blocks[i].type == 11){
+                                            eventMultiplier = data.blocks[i].payout 
+                                        }
+                                        if(data.blocks[i].type != 11){
+                                            totalLinePay += data.blocks[i].payout
+                                            this.totalWin += data.blocks[i].payout
+                                    
+                                        }   
+                                        if(eventMultiplier != 0){
+                                            totalLinePay = totalLinePay*eventMultiplier
+                                            this.totalWin = totalLinePay*eventMultiplier
+                                        }
+                                        this.animatePatterns(i,data.blocks[i].block)
+
+                                    }else{
+                                        if(data.blocks[i].type != 11){
+                                            notWild = i
+                                        }
+                                        if(data.blocks[i].type == 11){
+                                            data.blocks[i].payout = data.blocks[notWild].payout
+                                        }
+                                        totalLinePay+=data.blocks[i].payout
+                                        this.animatePatterns(i,data.blocks[i].block)
+                                           // add total win
+                                            this.totalWin += data.blocks[i].payout
+                                    }   
                                 })
                             }
                         }
@@ -555,11 +575,7 @@ export default class Slot{
 
 
 
-        // add total win
-        if(this.isFreeSpin){
-            this.winFreeSpin += symbol.payout
-        }
-        this.totalWin += symbol.payout
+
         Functions.loadSpineAnimation(symbol.symbol,'animation',true,0.8)
         // this.playSound(5);
         this.animateDone = false
