@@ -494,6 +494,7 @@ export default class Slot{
         countsArray.forEach((data,index)=>{
             if(index == arr[index] && data.count>2){
                 let totalLinePay:number = 0
+                let notWild:number = 0
                 let lineSymbols:Array<any> = []
                     for(let i=0;i<data.count;i++){
                         //add animation
@@ -502,7 +503,15 @@ export default class Slot{
                         if(lineSymbols.length == data.count){
                             if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                                 lineSymbols.forEach((el,i)=>{
+                                    if(data.blocks[i].type != 11){
+                                        notWild = i
+                                    }
+                                    if(data.blocks[i].type == 11){
+                                        data.blocks[i].payout =data.blocks[notWild].payout
+                                    }
+                                    //data.blocks[i].payout = 0
                                     totalLinePay+=data.blocks[i].payout
+                                    console.log(data.blocks[i],"hey")
                                     this.animatePatterns(i,data.blocks[i].block)
                                 })
                             }
@@ -541,6 +550,11 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         let symbol = this.reelsSymbols[reelIndex][blockIndex]
+        
+
+
+
+
         // add total win
         if(this.isFreeSpin){
             this.winFreeSpin += symbol.payout
@@ -836,7 +850,7 @@ export default class Slot{
             // coinY = coinY*1.4 
             // coinX = coinX>804?coinX*1.5:coinX*1.6
         }else{
-            barPosX = levelBarX + this.levelBarIndicator.width
+            barPosX = this.levelBarContainer.x + this.levelBarIndicator.width
             barPosY = this.levelBarContainer.y + 25
             // coinY = coinY*0.75 
             // coinX = coinX

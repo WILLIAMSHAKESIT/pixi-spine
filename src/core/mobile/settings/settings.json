@@ -53,7 +53,7 @@
         {
             "symbol": "wild",
             "type":11,
-            "pay":3
+            "pay":0
         }
     ],
     "symbolAssetsEvent":[
