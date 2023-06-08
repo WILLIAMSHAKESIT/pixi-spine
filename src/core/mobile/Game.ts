@@ -72,7 +72,6 @@ export default class GameMobile{
     private popGlow:Spine
     private popGlow2:Spine
     //free spin
-    private isFreeSpin:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
@@ -286,9 +285,8 @@ export default class GameMobile{
                 // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
                 // console.log(this.isAutoPlay, " this.isAutoPlay")
                 // console.log(this.isMatchingGame, " this.isMatchingGame")
-                // console.log(this.isFreeSpin, " this.isFreeSpin")
                 // console.log(this.isOpenModal, " this.isOpenModal")
-                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isFreeSpin && !this.isOpenModal){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
@@ -326,8 +324,8 @@ export default class GameMobile{
         this.screenSetting = Functions.screenSize();
         this.gameBackground.width = this.screenSetting.baseWidth
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
-        let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.slotGame.isFreeSpin || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
-        let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.slotGame.isFreeSpin || this.isMatchingGame?'bg2':'bg'}`).texture
+        let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.eventStart || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
+        let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.eventStart|| this.isMatchingGame?'bg2':'bg'}`).texture
     
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -506,6 +504,7 @@ export default class GameMobile{
 
             //CONGRATS POPUP
             if(this.isOpenCongrats){
+                this.congrats.middleContainer.scale.set(0.8)
                 this.congrats.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
                 this.congrats.logo.x = (this.overlay.width)/2
                 this.congrats.logo.y = (this.overlay.height)/2
@@ -518,6 +517,7 @@ export default class GameMobile{
                 this.congrats.clickAnyTxt.y =  (this.overlay.width - this.congrats.clickAnyTxt.width) + 30
                 this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
                 this.congrats.money.y = ((this.overlay.height - this.congrats.money.height)/2)- 330
+                this.congrats.middleContainer.x = 121.375
             }
 
             // //LOADER
@@ -808,6 +808,7 @@ export default class GameMobile{
 
             //CONGRATS POPUP
             if(this.isOpenCongrats){
+                this.congrats.middleContainer.scale.set(1)
                 this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal','overlay').texture
                 this.congrats.logo.x = (this.overlay.width)/2
                 this.congrats.logo.y = (this.overlay.height)/1.2
@@ -820,6 +821,7 @@ export default class GameMobile{
                 this.congrats.clickAnyTxt.y =  (this.overlay.height - this.congrats.clickAnyTxt.height)/1.4
                 this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
                 this.congrats.money.y =((this.overlay.height - this.congrats.money.height)/2)*1.06
+                this.congrats.middleContainer.x =  -21.025
             }
 
             //INFO MODAL
@@ -1156,7 +1158,6 @@ export default class GameMobile{
                 this.lightModeEvent(true)
                 
                 let show = setTimeout(() => {
-                    this.isFreeSpin = false
                     this.soundStop(7)
                     clearTimeout(show);
                 }, 1000);
@@ -1189,7 +1190,7 @@ export default class GameMobile{
     }
     private createSlot(){
         // create slot
-        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.checkIfFreeSpin.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this), this.checkBalance.bind(this))
+        this.slotGame = new Slot(this.app,this.textureArray,this.onSpinEnd.bind(this),this.matchingGame.bind(this),this.onSpinning.bind(this),this.freeSpinEvent.bind(this),this.createCongrats.bind(this),this.onSpin.bind(this),this.playSound.bind(this),this.soundStop.bind(this),this.sound,this.fadeSound.bind(this),this.soundVolume.bind(this), this.checkBalance.bind(this))
         this.gameContainer.addChild(this.slotGame.container)
     }
     private createFrameGlow(){
@@ -1278,7 +1279,6 @@ export default class GameMobile{
         }
     }
     private onSpinEnd(){
-   
         if(!this.isMatchingGame){
             this.paylineGreetings = 'SPIN TO WIN'
             this.userCredit += this.slotGame.totalWin 
@@ -2174,7 +2174,7 @@ export default class GameMobile{
             this.playSound(1)
             
             this.controller.spinBtnSprite.interactive = true
-            if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay && !this.isMatchingGame ){
+            if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.startSpinAutoPlay(1)
             }else{
@@ -2186,7 +2186,6 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
-          
             this.playSound(30)
             this.isOpenBuyBonusFrame = true
             this.buyBonusPopUp()
@@ -2195,15 +2194,13 @@ export default class GameMobile{
         })
     }
     private freeSpinEvent(){
-        this.playSound(14)
-        this.fadeSound(16,0,this.fadeDurationBgm)
-        this.fadeSound(17,0,this.fadeDurationBgm)
-        this.fadeSound(0,0,this.fadeDurationBgm)
-        this.playSound(6)
-        this.fadeSound(6,1,this.fadeDurationBgm)
         this.soundStop(16)
         this.soundStop(17)
         this.soundStop(0)
+        this.playSound(14)
+        this.playSound(6)
+        this.fadeSound(6,1,this.fadeDurationBgm)
+        
         this.isOpenFreeSpinModals = true
         this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
         this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
@@ -2361,7 +2358,6 @@ export default class GameMobile{
         this.slotGame.isFreeSpin = true
         this.slotGame.isFreeSpinDone = false
         let show = setTimeout(() => {
-            this.isFreeSpin = false
             clearTimeout(show);
         }, 100);
         this.screenSize()
@@ -2374,10 +2370,6 @@ export default class GameMobile{
             clearTimeout(show2);
         }, 1000);
     }
-    private checkIfFreeSpin(bool:boolean){
-        // this.enableButtons(false)
-        // this.isFreeSpin = true
-    }
     private createPopUps(skin:string){
         this.popUpActive = true
         this.popUps = new PopUps(this.app,this.gameContainer,this.textureArray,skin,this.matchingGameWin)
@@ -2387,15 +2379,6 @@ export default class GameMobile{
     private createTransition(){
         this.transition = new Transition(this.app,this.gameContainer,this.textureArray, this.screenSetting.screentype)
         this.openTransition = true
-        // if(this.screenSetting.screentype == 'portrait'){
-        //     this.transition.container.rotation = PIXI.DEG_TO_RAD * 4
-        //     this.transition.container.x = 54.5
-        //     this.transition.container.y = -97
-        // }else{
-        //     this.transition.container.rotation = PIXI.DEG_TO_RAD * 0
-        //     this.transition.container.x = 0
-        //     this.transition.container.y = 0
-        // }
         this.gameContainer.addChild(this.transition.container)
         this.transition.container.zIndex = 100
     }
@@ -2449,7 +2432,7 @@ export default class GameMobile{
             this.sound[11].mute(false)
             this.sound[12].mute(false)
             this.sound[13].mute(false)
-            this.sound[13].mute(false)
+            this.sound[14].mute(false)
             this.sound[15].mute(false)
             this.sound[18].mute(false)
             this.sound[19].mute(false)
@@ -2476,7 +2459,7 @@ export default class GameMobile{
             this.sound[11].mute(true)
             this.sound[12].mute(true)
             this.sound[13].mute(true)
-            this.sound[13].mute(true)
+            this.sound[14].mute(true)
             this.sound[15].mute(true)
             this.sound[18].mute(true)
             this.sound[19].mute(true)

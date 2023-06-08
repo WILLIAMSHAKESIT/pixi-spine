@@ -2,6 +2,30 @@ import 'pixi-spine'
 import * as PIXI from 'pixi.js';
 import {Spine} from 'pixi-spine';
 
+function combinations(arr:any, k:any) {
+  const result:any = [];
+  
+  function backtrack(temp:any, start:any) {
+    if (temp.length === k) {
+      result.push([...temp]);
+      return;
+    }
+    
+    for (let i = start; i < arr.length; i++) {
+      temp.push(arr[i]);
+      backtrack(temp, i + 1);
+      temp.pop();
+    }
+  }
+  
+  backtrack([], 0);
+  return result;
+}
+
+const numbers = [27, 28, 29];
+const groupSize = 5;
+
+console.log(combinations(numbers, groupSize));
 
 //RESPONSIVE SCREEN
 const screenSize = () => {
