@@ -523,14 +523,14 @@ export default class Slot{
                                             this.totalWin = totalLinePay*eventMultiplier
                                         }
                                         this.animatePatterns(i,data.blocks[i].block)
-                                        console.log("HE")
+                            
 
                                     }
                                     else if(this.startCountWinFreeSpin && this.whatEvent == 2){
                                         totalLinePay+=data.blocks[i].payout
                                         this.totalWin += data.blocks[i].payout
                                         this.animatePatterns(i,data.blocks[i].block)
-                                        console.log(data.blocks[i].payout,"SHE")
+                                       
                                     }
                                     else{
                                         if(data.blocks[i].type != 11){
