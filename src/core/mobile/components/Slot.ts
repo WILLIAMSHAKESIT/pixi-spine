@@ -523,8 +523,16 @@ export default class Slot{
                                             this.totalWin = totalLinePay*eventMultiplier
                                         }
                                         this.animatePatterns(i,data.blocks[i].block)
+                                        console.log("HE")
 
-                                    }else{
+                                    }
+                                    else if(this.startCountWinFreeSpin && this.whatEvent == 2){
+                                        totalLinePay+=data.blocks[i].payout
+                                        this.totalWin += data.blocks[i].payout
+                                        this.animatePatterns(i,data.blocks[i].block)
+                                        console.log(data.blocks[i].payout,"SHE")
+                                    }
+                                    else{
                                         if(data.blocks[i].type != 11){
                                             notWild = i
                                         }
@@ -532,9 +540,8 @@ export default class Slot{
                                             data.blocks[i].payout = data.blocks[notWild].payout
                                         }
                                         totalLinePay+=data.blocks[i].payout
-                                        this.animatePatterns(i,data.blocks[i].block)
-                                           // add total win
-                                            this.totalWin += data.blocks[i].payout
+                                        this.totalWin += data.blocks[i].payout
+                                        this.animatePatterns(i,data.blocks[i].block)              
                                     }   
                                 })
                             }
