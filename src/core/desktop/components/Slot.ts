@@ -496,7 +496,14 @@ export default class Slot{
                                     }
                                     this.animatePatterns(i,data.blocks[i].block)
 
-                                }else{
+                                }
+                                else if(this.startCountWinFreeSpin && this.whatEvent == 2){
+                                    totalLinePay+=data.blocks[i].payout
+                                    this.totalWin += data.blocks[i].payout
+                                    this.animatePatterns(i,data.blocks[i].block)
+                                   
+                                }
+                                else{
                                     if(data.blocks[i].type != 11){
                                         notWild = i
                                     }
