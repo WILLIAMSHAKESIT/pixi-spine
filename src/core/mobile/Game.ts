@@ -1135,6 +1135,8 @@ export default class GameMobile{
         this.congrats.container.cursor = 'pointer'
         this.congrats.container.interactive = true
         this.congrats.container.addEventListener('pointerdown',()=>{
+            this.moneySlot.interactive = true
+            this.wildSlot.interactive = true
             this.eventStart = false
             this.isAutoPlay = false
             this.congrats.container.interactive = false
@@ -2311,7 +2313,7 @@ export default class GameMobile{
         this.wildSlot.addEventListener('pointerdown', () =>{
             this.slotGame.whatEvent = 1
             this.playSound(12)
-            
+            this.wildSlot.interactive = false
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=6
@@ -2334,7 +2336,7 @@ export default class GameMobile{
         this.moneySlot.addEventListener('pointerdown', () =>{
             this.playSound(12)
             this.slotGame.whatEvent = 2
-            
+            this.moneySlot.interactive = false
             this.overlay.removeChild(this.popGlow2)
             this.gameContainer.removeChild(this.overlay)
             this.noOfSpin=12
