@@ -1,11 +1,11 @@
 {
 "skeleton": {
-	"hash": "fmiL8SMaBh19EFIuhkmKTcyQ3k8",
+	"hash": "xxfCnbCGVIG7bsfi/2a9vXx1HKA",
 	"spine": "3.8.75",
 	"x": -121,
-	"y": -119.5,
+	"y": -117,
 	"width": 242,
-	"height": 239.5,
+	"height": 232,
 	"images": "../photoshop/images/bird/",
 	"audio": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/revised/photoshop"
 },
@@ -211,10 +211,11 @@
 	{ "name": "leaves_21", "parent": "bone5", "length": 14.11, "rotation": 25.7, "x": 27.97, "y": -8.24 },
 	{ "name": "leaves_22", "parent": "leaves_21", "length": 12.64, "rotation": -23.77, "x": 13.04, "y": -0.36 },
 	{ "name": "leaves_23", "parent": "bone5", "length": 20.14, "rotation": 21.26, "x": 20.32, "y": 1.64 },
-	{ "name": "leaves_24", "parent": "bone5", "length": 30.54, "rotation": -12.03, "x": 26.69, "y": 18.93 }
+	{ "name": "leaves_24", "parent": "bone5", "length": 30.54, "rotation": -12.03, "x": 26.69, "y": 18.93 },
+	{ "name": "frame_bg", "parent": "bone3", "x": 2.1, "y": 6.59 }
 ],
 "slots": [
-	{ "name": "frame_bg", "bone": "root", "attachment": "frame_bg" },
+	{ "name": "frame_bg", "bone": "frame_bg", "attachment": "frame_bg" },
 	{ "name": "leaves_4", "bone": "leaves_11", "attachment": "leaves_4" },
 	{ "name": "leaves_3", "bone": "leaves_13", "attachment": "leaves_3" },
 	{ "name": "leaves_2", "bone": "leaves_24", "attachment": "leaves_2" },
@@ -285,7 +286,7 @@
 				"left_lear3": { "name": "left_lear3_b", "type": "linkedmesh", "skin": "no_blur", "parent": "left_lear3", "width": 54, "height": 55 }
 			},
 			"frame_bg": {
-				"frame_bg": { "name": "frame_bg_b", "y": -3.84, "width": 242, "height": 207 }
+				"frame_bg": { "name": "frame_bg_b", "x": -17.04, "y": -5.24, "rotation": -125.78, "width": 242, "height": 207 }
 			},
 			"bottom_frame": {
 				"bottom_frame": { "name": "bottom_frame_b", "x": 66.32, "y": -12.27, "rotation": -125.78, "width": 230, "height": 171 }
@@ -392,7 +393,7 @@
 				}
 			},
 			"frame_bg": {
-				"frame_bg": { "y": -3.5, "width": 242, "height": 197 }
+				"frame_bg": { "x": -16.76, "y": -5.44, "rotation": -125.78, "width": 242, "height": 197 }
 			},
 			"bottom_frame": {
 				"bottom_frame": { "x": 66.12, "y": -12.54, "rotation": -125.78, "width": 230, "height": 152 }
@@ -808,6 +809,12 @@
 					{},
 					{ "time": 0.1667, "x": 5.11, "y": 4.47 },
 					{ "time": 2 }
+				],
+				"scale": [
+					{},
+					{ "time": 0.1667, "x": 0.89, "y": 0.89 },
+					{ "time": 1.1667, "curve": "stepped" },
+					{ "time": 2 }
 				]
 			},
 			"leaf_fall5": {
@@ -882,7 +889,8 @@
 				],
 				"translate": [
 					{},
-					{ "time": 0.1667, "x": -3.34, "y": 0.91 },
+					{ "time": 0.1667, "x": -6.74, "y": -1.92 },
+					{ "time": 0.2667, "x": -4.72, "y": -5.11 },
 					{ "time": 1.1667, "x": 7.78, "y": 0.11 },
 					{ "time": 2 }
 				]
