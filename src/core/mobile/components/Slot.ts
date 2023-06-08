@@ -42,11 +42,11 @@ export default class Slot{
     //settings
     private screenSetting:any;
     private reelsValues:Array<Array<number>> = [
-        [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
-        [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
-        [1,2,9,3,10,2,3,9,8,10,2,3,11,4,2,11,5,9,5,9,2,6,8,6,9,3,11,7,1,7],
-        [1,1,1,1,11,1,1,1,11,1,1,10,11,11,1,1,1,1,5,9,2,6,8,11,9,3,9,7,1,7],
-        [11,5,9,2,4,6,11,11,2,9,10,5,3,3,8,11,4,5,3,5,8,9,1,6,6,11,3,7,3,2]
+        // [3,4,3,11,10,1,2,3,11,8,4,11,2,9,3,10,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
+        // [2,8,3,11,10,7,3,11,9,1,4,2,3,4,4,7,5,10,5,9,2,6,8,6,9,3,9,11,1,7],
+        // [1,2,9,3,10,2,3,9,8,10,2,3,11,4,2,11,5,9,5,9,2,6,8,6,9,3,11,7,1,7],
+        // [1,1,1,1,11,1,1,1,11,1,1,10,11,11,1,1,1,1,5,9,2,6,8,11,9,3,9,7,1,7],
+        // [11,5,9,2,4,6,11,11,2,9,10,5,3,3,8,11,4,5,3,5,8,9,1,6,6,11,3,7,3,2]
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
         // [9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9],
@@ -57,18 +57,25 @@ export default class Slot{
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11],
         // [11,11,11,11,11,11,11,11,11,11,11,11,11,11,7,6,6,6,6,6,6,6,6,9,9,9,9,9,10,11]
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
-        // [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2],
+        [10,10,10,10,10,10,10,10,10,10,10,10,10,10,3,3,2,2,3,3,4,4,4,5,7,7,6,5,4,2]
     ]
+    // private reelsValuesMoneySlot:Array<Array<number>> = [
+    //     [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
+    //     [2,8,3,3,1,7,3,8,8,1,4,2,3,4,4,7,5,1,5,8,2,6,8,6,8,3,8,7,1,7],
+    //     [1,2,8,3,2,2,3,8,8,3,2,3,4,4,2,11,5,8,5,8,2,6,8,6,8,3,8,7,1,7],
+    //     [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,3,8,7,1,7],
+    //     [2,5,8,2,4,6,5,4,2,8,3,5,3,3,8,2,4,5,3,5,8,8,1,6,6,4,3,7,3,2]
+    // ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
-        [3,4,3,2,3,1,2,3,7,8,4,3,2,8,3,2,1,3,5,8,2,6,8,6,8,3,8,7,1,7],
-        [2,8,3,3,1,7,3,8,8,1,4,2,3,4,4,7,5,1,5,8,2,6,8,6,8,3,8,7,1,7],
-        [1,2,8,3,2,2,3,8,8,3,2,3,4,4,2,11,5,8,5,8,2,6,8,6,8,3,8,7,1,7],
-        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,3,8,7,1,7],
-        [2,5,8,2,4,6,5,4,2,8,3,5,3,3,8,2,4,5,3,5,8,8,1,6,6,4,3,7,3,2]
+        [11,4,11,2,11,1,2,11,7,8,4,11,2,8,11,2,1,11,5,8,2,6,8,6,8,11,8,7,1,7],
+        [2,8,11,11,1,7,11,8,8,1,4,2,11,4,4,7,5,1,5,8,2,6,8,6,8,11,8,7,1,7],
+        [1,2,8,11,2,2,11,8,8,11,2,11,4,4,2,11,5,8,5,8,2,6,8,6,8,11,8,7,1,7],
+        [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,11,8,7,1,7],
+        [2,5,8,2,4,6,5,4,2,8,11,5,11,11,8,2,4,5,11,5,8,8,1,6,6,4,11,7,11,2]
     ]
     private reelsValuesMultiplierSlot:Array<Array<number>> = [
         [3,4,3,2,3,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -87,7 +94,6 @@ export default class Slot{
     private matchingGame:()=>void
     private freeSpinEvent:()=>void
     private createCongrats:()=>void
-    private checkIfFreeSpin:(bool: boolean)=>void
     private onSpinning:()=>void
     private onSpinEnd:()=>void
     private onSpin:()=>void
@@ -139,7 +145,7 @@ export default class Slot{
 
     public logo:PIXI.Sprite
 
-    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,checkIfFreeSpin:(bool: boolean)=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void,checkBalance:()=>void){
+    constructor(app:PIXI.Application,textureArray:any,onSpinEnd:()=>void,matchingGame:()=>void,onSpinning:()=>void,freeSpinEvent:()=>void,createCongrats:()=>void,onSpin:()=>void,playSound:(index: number)=>void,soundStop:(index: number)=>void,sound:Array<any>,fadeSound: (sound: number,volume:number,duration:number) => void,soundVolume: (sound: number,volume:number) => void,checkBalance:()=>void){
         this.app = app
         this.sound = sound
         this.baseWidth = this.app.screen.width
@@ -153,7 +159,6 @@ export default class Slot{
         this.createCongrats = createCongrats
         this.matchingGame = matchingGame
         this.freeSpinEvent = freeSpinEvent
-        this.checkIfFreeSpin = checkIfFreeSpin
         this.onSpinning = onSpinning
         this.onSpin = onSpin
         this.playSound = playSound;
@@ -380,10 +385,8 @@ export default class Slot{
                             this.playSound(4);
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
-                            
                                 this.generateNewSymbolsEvent(index)
                             }else if(this.isFreeSpin && !this.isFreeSpinDone){
-                       
                                 this.generateNewSymbolsMainEvent(index)
                             }else{
                               
@@ -508,9 +511,7 @@ export default class Slot{
                         }
                     }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
-                    this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
-                    this.checkIfMatchingGameDone()
                 }
                 // validate not to add payline bonus and wild symbol
                 if(lineSymbols.length == data.count){
@@ -528,11 +529,6 @@ export default class Slot{
             data.symbol.alpha = 1
         })
     }
-    private checkIfMatchingGameDone(){
-        if(!this.isMatchingGame){
-            //this.freeSpinEvent()
-        }
-    }
     private containPattern(blocks:Array<number>,arr:Array<any>){
         blocks.forEach((blockNo,index)=>{
             arr.push({pattern:this.reelsSymbols[index][blockNo],blockNo:blockNo})
@@ -540,12 +536,15 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         let symbol = this.reelsSymbols[reelIndex][blockIndex]
-        // add total win
-        if(this.isFreeSpin){
-            this.winFreeSpin += symbol.payout
+        if(this.whatEvent == 1){
+            if(symbol.type == 11){
+                console.log('test')
+            }
         }
+        // add total win
         this.totalWin += symbol.payout
-        Functions.loadSpineAnimation(symbol.symbol,'animation',true,0.8)
+        // animate
+        Functions.loadSpineAnimation(symbol.symbol,'animation',true,1)
         // this.playSound(5);
         this.animateDone = false
         if(reelIndex == 0){
@@ -679,6 +678,7 @@ export default class Slot{
         let arr:Array<any> = new Array(30).fill(null)
         this.reelContainer[i].removeChildren()
         let jsonType:any;
+
         if(this.whatEvent == 1){
             jsonType = json.symbolAssetsEvent2
         }
@@ -693,7 +693,7 @@ export default class Slot{
             let payout = jsonType[symbolIndex-1].pay
             let symbol = new Spine(this.textureArray[`${jsonType[symbolIndex-1].symbol}`].spineData)
             symbol.y = index * this.blockSpacing
-            let el ={
+            let el = {
                 type:type,
                 symbol:symbol,
                 payout:payout
@@ -831,14 +831,10 @@ export default class Slot{
         let duration = 1
         if(this.screenSetting.screentype == 'portrait'){
             barPosX = levelBarX*1.8 + this.levelBarIndicator.width
-            barPosY = this.levelBarIndicator.y
-            // coinY = coinY*1.4 
-            // coinX = coinX>804?coinX*1.5:coinX*1.6
+            barPosY = this.levelBarIndicator.y+10
         }else{
             barPosX = levelBarX + this.levelBarIndicator.width
             barPosY = this.levelBarContainer.y + 25
-            // coinY = coinY*0.75 
-            // coinX = coinX
         }
         for(let i = 0;i<=3;i++){
             const coin = Functions.animatedSprite(this.textureArray['coins'],'new_coin_spinning')
