@@ -509,7 +509,7 @@ export default class Slot{
                             if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                                 lineSymbols.forEach((el,i)=>{
                             
-                                    if(this.startCountWinFreeSpin){
+                                    if(this.startCountWinFreeSpin && this.whatEvent == 1){
                                         if(data.blocks[i].type == 11){
                                             eventMultiplier = data.blocks[i].payout 
                                         }
