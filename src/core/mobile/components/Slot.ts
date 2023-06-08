@@ -570,14 +570,8 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         let symbol = this.reelsSymbols[reelIndex][blockIndex]
-        
-
-
-
-
-
         Functions.loadSpineAnimation(symbol.symbol,'animation',true,0.8)
-        // this.playSound(5);
+        //this.playSound(5);
         this.animateDone = false
         if(reelIndex == 0){
             let type = symbol.type

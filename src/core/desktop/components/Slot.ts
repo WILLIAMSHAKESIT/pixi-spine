@@ -470,20 +470,48 @@ export default class Slot{
         countsArray.forEach((data,index)=>{
             if(index == arr[index] && data.count>2){
                 let totalLinePay:number = 0
+                let notWild:number = 0
+                let eventMultiplier:number = 0
                 let lineSymbols:Array<any> = []
-                    for(let i=0;i<data.count;i++){
-                        //add animation
-                        lineSymbols.push(data.blocks[i].type)
-                        // validate not to match bonus and wild symbol
-                        if(lineSymbols.length == data.count){
-                            if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
-                                lineSymbols.forEach((el,i)=>{
+                for(let i=0;i<data.count;i++){
+                    //add animation
+                    lineSymbols.push(data.blocks[i].type)
+                    // validate not to match bonus and wild symbol
+                    if(lineSymbols.length == data.count){
+                        if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
+                            lineSymbols.forEach((el,i)=>{
+                        
+                                if(this.startCountWinFreeSpin){
+                                    if(data.blocks[i].type == 11){
+                                        eventMultiplier = data.blocks[i].payout 
+                                    }
+                                    if(data.blocks[i].type != 11){
+                                        totalLinePay += data.blocks[i].payout
+                                        this.totalWin += data.blocks[i].payout
+                                
+                                    }   
+                                    if(eventMultiplier != 0){
+                                        totalLinePay = totalLinePay*eventMultiplier
+                                        this.totalWin = totalLinePay*eventMultiplier
+                                    }
+                                    this.animatePatterns(i,data.blocks[i].block)
+
+                                }else{
+                                    if(data.blocks[i].type != 11){
+                                        notWild = i
+                                    }
+                                    if(data.blocks[i].type == 11){
+                                        data.blocks[i].payout = data.blocks[notWild].payout
+                                    }
                                     totalLinePay+=data.blocks[i].payout
                                     this.animatePatterns(i,data.blocks[i].block)
-                                })
-                            }
+                                       // add total win
+                                        this.totalWin += data.blocks[i].payout
+                                }   
+                            })
                         }
                     }
+                }
                 if(data.arrTypes == this.bonusType && !this.freeSpinStart){
                     this.checkIfFreeSpin(false);
                     this.freeSpinStart = true
@@ -517,11 +545,6 @@ export default class Slot{
     }
     private animatePatterns(reelIndex:number,blockIndex:number){
         let symbol = this.reelsSymbols[reelIndex][blockIndex]
-        // add total win
-        if(this.isFreeSpin){
-            this.winFreeSpin += symbol.payout
-        }
-        this.totalWin += symbol.payout
         Functions.loadSpineAnimation(symbol.symbol,'animation',true,0.8)
         // this.playSound(5);
         this.animateDone = false
