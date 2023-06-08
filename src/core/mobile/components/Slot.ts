@@ -505,7 +505,7 @@ export default class Slot{
                         if(lineSymbols.length == data.count){
                             if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                                 lineSymbols.forEach((el,i)=>{
-                                    console.log(data.blocks[i],"buzz")
+                            
                                     if(this.startCountWinFreeSpin){
                                         if(data.blocks[i].type == 11){
                                             eventMultiplier = data.blocks[i].payout 
