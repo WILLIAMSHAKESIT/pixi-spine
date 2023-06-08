@@ -72,6 +72,7 @@ export default class GameMobile{
     private popGlow:Spine
     private popGlow2:Spine
     //free spin
+    private isFreeSpin:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
@@ -285,8 +286,9 @@ export default class GameMobile{
                 // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
                 // console.log(this.isAutoPlay, " this.isAutoPlay")
                 // console.log(this.isMatchingGame, " this.isMatchingGame")
+                // console.log(this.isFreeSpin, " this.isFreeSpin")
                 // console.log(this.isOpenModal, " this.isOpenModal")
-                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame && !this.isOpenModal){
+                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isFreeSpin && !this.isMatchingGame && !this.isOpenModal){
                   
                     this.slotGame.timeScale = 0 
                     if(this.slotGame.notLongPress === true) {
@@ -1146,7 +1148,7 @@ export default class GameMobile{
             this.slotGame.maskSprite.height = this.slotGame.frameBg.height - 8
             this.slotGame.maskSprite.y = this.slotGame.frameBg.y - 8
             this.congrats.textAnimation.duration(0.3)
-            this.isOpenModal= false
+         
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
             let timeout = setTimeout(()=>{
@@ -1160,6 +1162,7 @@ export default class GameMobile{
                 this.lightModeEvent(true)
                 
                 let show = setTimeout(() => {
+                    this.isFreeSpin = false
                     this.soundStop(7)
                     clearTimeout(show);
                 }, 1000);
@@ -1167,6 +1170,7 @@ export default class GameMobile{
                     this.slotGame.generateNewSymbols(index)      
                 })  
                 this.screenSize()
+                this.isOpenModal= false
                 clearTimeout(timeout)
             },this.transitionDelay)
         })
@@ -2176,7 +2180,7 @@ export default class GameMobile{
             this.playSound(1)
             
             this.controller.spinBtnSprite.interactive = true
-            if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isMatchingGame ){
+            if(!this.slotGame.isSpinning && !this.isFreeSpin && !this.isAutoPlay && !this.isMatchingGame ){
                 this.controller.spinBtnSprite.texture = this.spinTextureOff
                 this.startSpinAutoPlay(1)
             }else{
@@ -2202,7 +2206,7 @@ export default class GameMobile{
         this.playSound(14)
         this.playSound(6)
         this.fadeSound(6,1,this.fadeDurationBgm)
-        
+        this.isFreeSpin = true 
         this.isOpenFreeSpinModals = true
         this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
         this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
@@ -2360,6 +2364,7 @@ export default class GameMobile{
         this.slotGame.isFreeSpin = true
         this.slotGame.isFreeSpinDone = false
         let show = setTimeout(() => {
+            this.isFreeSpin = false
             clearTimeout(show);
         }, 100);
         this.screenSize()
