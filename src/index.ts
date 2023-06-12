@@ -12,7 +12,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     document.getElementsByTagName("canvas")[0].classList.add("desktop");
 }
 
-window.addEventListener('touchend', function () {
+document.addEventListener('touchend', function () {
     console.log('test')
     var elem = document.documentElement;
     elem.requestFullscreen();
