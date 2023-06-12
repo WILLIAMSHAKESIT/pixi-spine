@@ -973,7 +973,6 @@ export default class GameMobile{
         this.wildSlot.zIndex = 5
         this.popGlow.zIndex = 4
         this.popGlow2.zIndex = 4
-        console.log(this.screenSetting.isSafe)
     }
 
     private createIntro(){
