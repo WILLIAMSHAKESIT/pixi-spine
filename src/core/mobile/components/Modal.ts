@@ -102,8 +102,9 @@ export default class Modal{
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = textureArray
-        this.spinBtnTextureOn =  Functions.loadTexture(this.textureArray,'modal','spin_amount_btn_active').texture
-        this.spinBtnTextureOff =  Functions.loadTexture(this.textureArray,'modal','spin_amount_btn').texture
+        this.spinBtnTextureOn =  Functions.loadTexture(this.textureArray,'modal_autoplay','spin_amount_btn_active').texture
+        this.spinBtnTextureOff =  Functions.loadTexture(this.textureArray,'modal_autoplay','spin_amount_btn').texture
+
         this.container = new PIXI.Container()
         this.infoFirstPageContainer = new PIXI.Container
         this.infoSecondPageContainer = new PIXI.Container
@@ -211,12 +212,12 @@ export default class Modal{
         //this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
     }
     private createParent(){
-        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
-        this.modalFrame = Functions.loadTexture(this.textureArray,'modal','modal_frame')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
+        this.modalFrame = Functions.loadTexture(this.textureArray,'modal_main','modal_frame')
         this.modalFrame.x = (this.overlay.width - this.modalFrame.width)/2
         this.modalFrame.y = (this.overlay.height - this.modalFrame.height)/2
         //close modal
-        this.closeModal = Functions.loadTexture(this.textureArray,'modal','close_button') 
+        this.closeModal = Functions.loadTexture(this.textureArray,'modal_main','close_button') 
         this.closeModal.scale.set(.8)
         this.closeModal.cursor = 'pointer'
         this.closeModal.interactive = true
@@ -263,12 +264,12 @@ export default class Modal{
         this.leftContainer = new PIXI.Container
         this.rightContainer = new PIXI.Container
         //title
-        this.modalTitle = Functions.loadTexture(this.textureArray,'modal','system_settings_title')
+        this.modalTitle = Functions.loadTexture(this.textureArray,'modal_settings','system_settings_title')
         this.modalTitle.x = (this.modalFrame.width - this.modalTitle.width)/2
         this.modalTitle.y = this.titleY
-        this.modalFrame.addChild(this.modalTitle)
+        //this.modalFrame.addChild(this.modalTitle)
         // middle separator
-        this.separator = Functions.loadTexture(this.textureArray,'modal','separate')
+        this.separator = Functions.loadTexture(this.textureArray,'modal_settings','separate')
         this.separator.x = (this.modalFrame.width - this.separator.width)/2
         this.separator.y = (this.modalFrame.height - this.separator.height)/2
        // this.systemContainer.addChild(this.separator)
@@ -277,7 +278,7 @@ export default class Modal{
 
         // left container content
         // bet container
-        this.betAmountSpite = Functions.loadTexture(this.textureArray,'modal','total_bet_container')
+        this.betAmountSpite = Functions.loadTexture(this.textureArray,'modal_settings','total_bet_container')
         this.betAmountSpite.x = 0
         this.leftContainer.addChild(this.betAmountSpite)
         // bet amount
@@ -291,7 +292,7 @@ export default class Modal{
         totalBetText.y = -totalBetText.height
         this.leftContainer.addChild(totalBetText)
         // minus btn
-        this.minusBtn = Functions.loadTexture(this.textureArray,'modal','minus_bet')
+        this.minusBtn = Functions.loadTexture(this.textureArray,'modal_settings','minus_bet')
         this.minusBtn.x = this.betAmountSpite.x
         this.minusBtn.y= this.betAmountSpite.height + 20
         this.minusBtn.interactive = betDisable?false:true
@@ -299,7 +300,7 @@ export default class Modal{
         this.betBtns.push(this.minusBtn)
         this.leftContainer.addChild(this.minusBtn)
         // plus btn
-        this.plusBtn = Functions.loadTexture(this.textureArray,'modal','add_bet')
+        this.plusBtn = Functions.loadTexture(this.textureArray,'modal_settings','add_bet')
         this.plusBtn.x = (this.betAmountSpite.x + this.betAmountSpite.width) - this.plusBtn.width
         this.plusBtn.y = this.minusBtn.y
         this.plusBtn.interactive = betDisable?false:true
@@ -320,7 +321,7 @@ export default class Modal{
         ambientDesc.y = 45
         this.rightContainer.addChild(ambientTitle,ambientDesc)
         // ambient toggle
-        this.musicBtnSprite = Functions.loadTexture(this.textureArray,'modal','off')
+        this.musicBtnSprite = Functions.loadTexture(this.textureArray,'modal_settings','off')
         this.musicBtnSprite.interactive = true
         this.musicBtnSprite.cursor = 'pointer'
         this.musicBtnSprite.x = ambientTitle.width +50
@@ -337,7 +338,7 @@ export default class Modal{
         sfxDesc.y = sfxTitle.y + 45
         this.rightContainer.addChild(sfxTitle,sfxDesc)
         // ambient toggle
-        this.sfxBtnSprite = Functions.loadTexture(this.textureArray,'modal','off')
+        this.sfxBtnSprite = Functions.loadTexture(this.textureArray,'modal_settings','off')
         this.sfxBtnSprite.interactive = true
         this.sfxBtnSprite.cursor ='pointer'
         this.sfxBtnSprite.x = sfxTitle.width + 160
@@ -365,7 +366,7 @@ export default class Modal{
         let btns2:Array<any> = []
         // btns 
         json.auto_play_values.forEach((data,index)=>{
-            const btn = Functions.loadTexture(this.textureArray,'modal','spin_amount_btn')
+            const btn = Functions.loadTexture(this.textureArray,'modal_autoplay','spin_amount_btn')
             const textValue = new PIXI.Text(`${data.value}`, this.textStyle)
             textValue.x = (btn.width - textValue.width)/2 
             textValue.y = (btn.height - textValue.height)/2 
@@ -388,7 +389,7 @@ export default class Modal{
             this.autoPlaySettingsCont.addChild(this.btnContainer)
         })
         json.auto_play_values2.forEach((data,index)=>{
-            const btn2 = Functions.loadTexture(this.textureArray,'modal','spin_amount_btn')
+            const btn2 = Functions.loadTexture(this.textureArray,'modal_autoplay','spin_amount_btn')
             const textValue = new PIXI.Text(`${data.value}`, this.textStyle)
             textValue.x = (btn2.width - textValue.width)/2 
             textValue.y = (btn2.height - textValue.height)/2 
@@ -431,7 +432,7 @@ export default class Modal{
         turboDesc.y = turboTitle.y * 1.13
         this.bottomContainer.addChild(turboDesc)
         // quick spin toggle
-        const quickSprite =  Functions.loadTexture(this.textureArray,'modal','off')
+        const quickSprite =  Functions.loadTexture(this.textureArray,'modal_autoplay','off')
         quickSprite.interactive = true
         quickSprite.cursor = 'pointer'
         quickSprite.x = toggleX
@@ -439,7 +440,7 @@ export default class Modal{
         this.btnArray.push(quickSprite)
         this.bottomContainer.addChild(quickSprite)
         // turbo spin toggle
-        const turboSprite =  Functions.loadTexture(this.textureArray,'modal','off')
+        const turboSprite =  Functions.loadTexture(this.textureArray,'modal_autoplay','off')
         turboSprite.interactive = true
         turboSprite.cursor = 'pointer'
         turboSprite.x = toggleX
@@ -447,7 +448,7 @@ export default class Modal{
         this.btnArray.push(turboSprite)
         this.bottomContainer.addChild(turboSprite)
         // roll sprite  
-        this.rollBtn =  Functions.loadTexture(this.textureArray,'modal','roll')
+        this.rollBtn =  Functions.loadTexture(this.textureArray,'modal_autoplay','roll')
         this.rollBtn.interactive = true
         this.rollBtn.cursor = 'pointer'
         this.rollBtn.x = (this.bottomContainer.width - this.rollBtn.width)/2
@@ -476,8 +477,8 @@ export default class Modal{
     }
     public createInfoModal(){
         this.infoContainer = new PIXI.Container
-        this.prevBtn = Functions.loadTexture(this.textureArray,'modal','left_arrow')
-        this.nextBtn = Functions.loadTexture(this.textureArray,'modal','right_arrow')
+        this.prevBtn = Functions.loadTexture(this.textureArray,'modal_main','left_arrow')
+        this.nextBtn = Functions.loadTexture(this.textureArray,'modal_main','right_arrow')
         this.infoContainer.removeChildren()
 
         this.currentPage = 0
@@ -485,7 +486,7 @@ export default class Modal{
         let paddingSide = 30
         let args:any = null
         
-        this.pageTitle =  Functions.loadTexture(this.textureArray,'modal','paytable_slot_title')
+        this.pageTitle =  Functions.loadTexture(this.textureArray,'modal_info','paytable_slot_title')
         this.pageTitle.x = (this.modalFrame.width - this.pageTitle.width)/2
         this.pageTitle.y = paddingSide
         this.infoContainer.addChild(this.pageTitle)
@@ -571,7 +572,7 @@ export default class Modal{
         const {pageTitle,pageDesc,pageText} = args
         const elContent = json2.modalInfoPage[currentPage]
 
-        pageTitle.texture = Functions.loadTexture(this.textureArray,'modal',`${elContent.title}`).texture
+        pageTitle.texture = Functions.loadTexture(this.textureArray,'modal_info',`${elContent.title}`).texture
         pageTitle.x = (this.modalFrame.width - pageTitle.width)/2
         pageDesc.text = elContent.desc
         pageDesc.x = (this.modalFrame.width - pageDesc.width)/2
@@ -652,7 +653,7 @@ export default class Modal{
         const contThree = new PIXI.Container
 
         json2.mainSymbols.forEach((data,index)=>{
-            const sprite = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const sprite = Functions.loadTexture(this.textureArray,'modal_info',`${data.img}`)
             const text = new PIXI.Text(`${data.text}`,this.textStyle4)
             sprite.scale.set(0.7)
             if(index <= 4){
@@ -690,7 +691,7 @@ export default class Modal{
         const contTwoPortrait = new PIXI.Container
         const contThreePortrait = new PIXI.Container
         json2.mainSymbols.forEach((data,index)=>{
-            const sprite2 = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const sprite2 = Functions.loadTexture(this.textureArray,'modal_info',`${data.img}`)
             const text = new PIXI.Text(`${data.text}`,this.textStyle4Center)
             sprite2.scale.set(0.7)
             if(index <= 2){
@@ -743,11 +744,11 @@ export default class Modal{
     }
     private createInfoSecondPage(){
         const symbolsContainer = new PIXI.Container
-        const jackpotView = Functions.loadTexture(this.textureArray,'modal','jackpot_img')
+        const jackpotView = Functions.loadTexture(this.textureArray,'modal_info','jackpot_img')
         const descText = 'In the jackpot game pick stone to reveal a jackpot symbol, Match 3 of the same symbol to be awarded the corresponding jackpot!'
         const desc = new PIXI.Text(`${descText}`,this.textStyle4Center)
         json2.jackpotSymbols.forEach((data,index)=>{
-            const symbols = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const symbols = Functions.loadTexture(this.textureArray,'modal_info',`${data.img}`)
             const text = new PIXI.Text(`${data.text}`,this.textStyle4)
             symbols.scale.set(1.6)
             symbols.x = (symbols.width*index)*1.2
@@ -774,7 +775,7 @@ export default class Modal{
         this.imgContainerPortrait = new PIXI.Container
 
         json2.freeSpinImages.forEach((data,index)=>{
-            const img = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const img = Functions.loadTexture(this.textureArray,'modal_info',`${data.img}`)
             const text = new PIXI.Text(`${data.text}`,this.textStyle)
             const desc = new PIXI.Text(`${data.desc}`,this.textStyle4Center)
             img.scale.set(0.7)
@@ -796,7 +797,7 @@ export default class Modal{
         this.infoContainer.addChild(this.infoThirdPageContainer)
 
         json2.freeSpinImages.forEach((data,index)=>{
-            const img = Functions.loadTexture(this.textureArray,'modal',`${data.img}`)
+            const img = Functions.loadTexture(this.textureArray,'modal_info',`${data.img}`)
             const text = new PIXI.Text(`${data.text}`,this.textStyle)
             const desc = new PIXI.Text(`${data.desc}`,this.textStyle4Center)
             img.scale.set(1.2)
@@ -819,7 +820,7 @@ export default class Modal{
         
     }
     private creatFourthPage(){
-        this.image4th = Functions.loadTexture(this.textureArray,'modal',`patterns`)
+        this.image4th = Functions.loadTexture(this.textureArray,'modal_info',`patterns`)
         this.image4th.scale.set(0.8)
         this.image4th.x =(this.modalFrame.width - this.image4th.width)/2
         this.image4th.y = (this.modalFrame.height - this.image4th.height)/2
@@ -834,7 +835,7 @@ export default class Modal{
         this.infoContainer.addChild(this.infoFourthPageContainerPortrait)
     }
     private createFifthPage(){
-        this.image5th = Functions.loadTexture(this.textureArray,'modal',`how_to_play_content`)
+        this.image5th = Functions.loadTexture(this.textureArray,'modal_info',`how_to_play_content`)
         this.image5th.x = (this.modalFrame.width-this.image5th.width)/2
         this.image5th.y = (this.modalFrame.height-this.image5th.height)/2
         this.infoFifthPageContainer.addChild(this.image5th)
@@ -847,7 +848,7 @@ export default class Modal{
         this.infoContainer.addChild(this.infoFifthPageContainerPortrait)
     }
     private createSixthPage(){
-        this.image6th = Functions.loadTexture(this.textureArray,'modal',`settings_menu_content`)
+        this.image6th = Functions.loadTexture(this.textureArray,'modal_info',`settings_menu_content`)
         this.image6th.x = (this.modalFrame.width-this.image6th.width)/2
         this.image6th.y = (this.modalFrame.height-this.image6th.height)/2
         this.infoSixthPageContainer.addChild(this.image6th)
