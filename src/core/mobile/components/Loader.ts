@@ -62,6 +62,11 @@ export default class Loader{
               families: ['Eras ITC'],
             },
         });
+        document.getElementsByTagName("body")[0].addEventListener('touchend',()=>{
+            var elem = document.documentElement;
+            if(elem.requestFullscreen)
+                elem.requestFullscreen();
+        })
         window.addEventListener('resize',()=>{
             this.screenSize()
         })
