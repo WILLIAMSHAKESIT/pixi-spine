@@ -1414,9 +1414,14 @@ export default class GameMobile{
         close.addEventListener('pointerdown',()=>{
             this.isOpenBuyBonusFrame = false
             this.playSound(13)
-            
+            let timeOut1 = setTimeout(()=>{
+                this.enableButtons(true)
+                clearTimeout(timeOut1)
+            },2000)
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
+        
+           
         })
         check.addListener('mouseover',() =>{
             this.playSound(2)
@@ -1462,7 +1467,7 @@ export default class GameMobile{
         this.gameContainer.addChild(this.overlay)
     }
     private hideBonusPopUp(dY:number,sY:number){
-        this.enableButtons(true)
+        
         let fadeOutGlow = gsap.to(this.popGlow,{
             duration:0.8,
             alpha:0,
@@ -2193,6 +2198,7 @@ export default class GameMobile{
             this.playSound(2)
         })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
+            this.buyBonusBtn.interactive = false
             this.playSound(30)
             this.isOpenBuyBonusFrame = true
             this.buyBonusPopUp()
