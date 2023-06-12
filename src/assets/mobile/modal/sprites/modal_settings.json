@@ -20,10 +20,50 @@
 				"h": 66
 			}
 		},
-		"minus_bet.png": {
+		"close_button.png": {
 			"frame": {
 				"x": 162,
 				"y": 10,
+				"w": 69,
+				"h": 64
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 69,
+				"h": 64
+			},
+			"sourceSize": {
+				"w": 69,
+				"h": 64
+			}
+		},
+		"left_arrow.png": {
+			"frame": {
+				"x": 251,
+				"y": 10,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
+		"minus_bet.png": {
+			"frame": {
+				"x": 162,
+				"y": 94,
 				"w": 133,
 				"h": 66
 			},
@@ -43,7 +83,7 @@
 		"off.png": {
 			"frame": {
 				"x": 10,
-				"y": 96,
+				"y": 180,
 				"w": 83,
 				"h": 41
 			},
@@ -63,7 +103,7 @@
 		"on.png": {
 			"frame": {
 				"x": 113,
-				"y": 96,
+				"y": 180,
 				"w": 83,
 				"h": 41
 			},
@@ -80,9 +120,29 @@
 				"h": 41
 			}
 		},
+		"right_arrow.png": {
+			"frame": {
+				"x": 216,
+				"y": 180,
+				"w": 50,
+				"h": 54
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 50,
+				"h": 54
+			},
+			"sourceSize": {
+				"w": 50,
+				"h": 54
+			}
+		},
 		"separate.png": {
 			"frame": {
-				"x": 315,
+				"x": 321,
 				"y": 10,
 				"w": 6,
 				"h": 374
@@ -102,8 +162,8 @@
 		},
 		"system_settings_title.png": {
 			"frame": {
-				"x": 341,
-				"y": 10,
+				"x": 10,
+				"y": 254,
 				"w": 290,
 				"h": 27
 			},
@@ -122,7 +182,7 @@
 		},
 		"total_bet_container.png": {
 			"frame": {
-				"x": 651,
+				"x": 347,
 				"y": 10,
 				"w": 314,
 				"h": 107
@@ -147,7 +207,7 @@
 		"image": "modal_settings.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 975,
+			"w": 671,
 			"h": 394
 		},
 		"scale": "1"

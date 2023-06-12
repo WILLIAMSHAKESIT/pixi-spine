@@ -217,7 +217,7 @@ export default class Modal{
         this.modalFrame.x = (this.overlay.width - this.modalFrame.width)/2
         this.modalFrame.y = (this.overlay.height - this.modalFrame.height)/2
         //close modal
-        this.closeModal = Functions.loadTexture(this.textureArray,'modal_main','close_button') 
+        this.closeModal = Functions.loadTexture(this.textureArray,'modal_settings','close_button') 
         this.closeModal.scale.set(.8)
         this.closeModal.cursor = 'pointer'
         this.closeModal.interactive = true
@@ -477,8 +477,8 @@ export default class Modal{
     }
     public createInfoModal(){
         this.infoContainer = new PIXI.Container
-        this.prevBtn = Functions.loadTexture(this.textureArray,'modal_main','left_arrow')
-        this.nextBtn = Functions.loadTexture(this.textureArray,'modal_main','right_arrow')
+        this.prevBtn = Functions.loadTexture(this.textureArray,'modal_settings','left_arrow')
+        this.nextBtn = Functions.loadTexture(this.textureArray,'modal_settings','right_arrow')
         this.infoContainer.removeChildren()
 
         this.currentPage = 0
