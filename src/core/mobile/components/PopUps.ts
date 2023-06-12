@@ -129,7 +129,7 @@ export default class PopUps{
         })
     }
     private createParent(){
-        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_settings','overlay')
         this.overlay.width = this.baseWidth
         this.overlay.height = this.baseHeight
         this.container.addChild(this.overlay)

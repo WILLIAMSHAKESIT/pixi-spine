@@ -212,8 +212,8 @@ export default class Modal{
         //this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
     }
     private createParent(){
-        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
-        this.modalFrame = Functions.loadTexture(this.textureArray,'modal_main','modal_frame')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_settings','overlay')
+        this.modalFrame = Functions.loadTexture(this.textureArray,'modal_settings','modal_frame')
         this.modalFrame.x = (this.overlay.width - this.modalFrame.width)/2
         this.modalFrame.y = (this.overlay.height - this.modalFrame.height)/2
         //close modal
