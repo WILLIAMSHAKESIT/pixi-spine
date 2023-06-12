@@ -268,7 +268,7 @@ export default class GameMobile{
 
 
         //overlay
-        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_settings','overlay')
         this.createGame()
         this.createPlants()
         this.createSlot()
@@ -658,11 +658,11 @@ export default class GameMobile{
             this.gameBackground.texture = landscapeBg
 
             //MODAL
-            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal_main','modal_frame').texture
+            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal_settings','modal_frame').texture
             this.slotGame.container.scale.set(1)
     
-            this.overlay.texture = Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
-            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
+            this.overlay.texture = Functions.loadTexture(this.textureArray,'modal_settings','overlay').texture
+            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal_settings','overlay').texture
             
             this.slotGame.container.x = 0
             this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)/2
@@ -816,7 +816,7 @@ export default class GameMobile{
             //CONGRATS POPUP
             if(this.isOpenCongrats){
                 this.congrats.middleContainer.scale.set(1)
-                this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
+                this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal_settings','overlay').texture
                 this.congrats.logo.x = (this.overlay.width)/2
                 this.congrats.logo.y = (this.overlay.height)/1.2
                 this.congrats.popGlow.x =  (this.overlay.width)/2
