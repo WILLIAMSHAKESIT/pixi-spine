@@ -122,6 +122,10 @@ export default class Loader{
                     {name: 'vines',srcs: 'assets/mobile/main/sprites/vines.json'},
                     {name: 'firefly',srcs: 'assets/mobile/main/sprites/firefly.json'},
                     {name: 'butterfly',srcs: 'assets/mobile/main/sprites/butterfly.json'},
+                    {name: 'modal_autoplay',srcs: 'assets/mobile/modal/sprites/modal_autoplay.json'},
+                    {name: 'modal_info',srcs: 'assets/mobile/modal/sprites/modal_info.json'},
+                    {name: 'modal_main',srcs: 'assets/mobile/modal/sprites/modal_main.json'},
+                    {name: 'modal_settings',srcs: 'assets/mobile/modal/sprites/modal_settings.json'},
                 ],
             }],
         };

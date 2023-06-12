@@ -71,11 +71,11 @@ export default class Slot{
     //     [2,5,8,2,4,6,5,4,2,8,3,5,3,3,8,2,4,5,3,5,8,8,1,6,6,4,3,7,3,2]
     // ]
     private reelsValuesMoneySlot:Array<Array<number>> = [
-        [11,4,11,2,11,1,2,11,7,8,4,11,2,8,11,2,1,11,5,8,2,6,8,6,8,11,8,7,1,7],
-        [2,8,11,11,1,7,11,8,8,1,4,2,11,4,4,7,5,1,5,8,2,6,8,6,8,11,8,7,1,7],
-        [1,2,8,11,2,2,11,8,8,11,2,11,4,4,2,11,5,8,5,8,2,6,8,6,8,11,8,7,1,7],
+        [2,4,11,2,11,1,2,3,7,8,4,3,2,8,5,2,1,11,5,8,2,6,8,6,8,3,8,7,1,7],
+        [2,8,1,11,1,7,7,8,8,1,4,2,9,4,4,7,5,1,5,8,2,6,8,6,8,11,8,7,1,7],
+        [1,2,8,2,2,2,6,8,8,2,2,11,4,4,2,8,5,8,5,8,2,6,8,6,8,11,8,7,1,7],
         [1,1,1,1,2,1,1,1,2,1,1,1,2,1,1,1,1,1,5,9,2,6,8,6,8,11,8,7,1,7],
-        [2,5,8,2,4,6,5,4,2,8,11,5,11,11,8,2,4,5,11,5,8,8,1,6,6,4,11,7,11,2]
+        [2,5,8,2,4,6,5,4,2,8,3,5,1,11,8,2,4,5,5,5,8,8,1,6,6,4,11,7,8,2]
     ]
     private reelsValuesMultiplierSlot:Array<Array<number>> = [
         [3,4,3,2,3,1,2,3,7,8,4,3,2,9,3,2,1,3,5,9,2,6,8,6,9,3,9,7,1,7],
@@ -202,34 +202,44 @@ export default class Slot{
     private createLevelBar(){
         //create level bar background
         this.levelBarBg = Functions.loadTexture(this.textureArray,'main','bar_bg')
+        this.levelBarBg.width = 742
+        this.levelBarBg.height = 66
         // this.levelBarBg.x = (this.frameBorder.width - this.levelBarBg.width)+50
         this.levelBarBg.y = this.frameBorder.y * 0.7
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
+        this.levelBarIndicator.width = 742
+        this.levelBarIndicator.height = 68
         this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
         //create mini item
         this.itemMini = Functions.loadTexture(this.textureArray,'main','mini')
+        this.itemMini.width = 245
+        this.itemMini.height = 106
         this.itemMini.x = this.levelBarBg.x
         this.itemMini.y = this.levelBarBg.y - 30
         this.levelBarContainer.addChild(this.itemMini)
         //create major item
         this.itemMajor = Functions.loadTexture(this.textureArray,'main','major')
+        this.itemMajor.width = 266
+        this.itemMajor.height = 119
         this.itemMajor.x = this.itemMini.x + this.itemMini.width
         this.itemMajor.y = this.itemMini.y - 13
         this.levelBarContainer.addChild(this.itemMajor)
         //create grand item
         this.itemGrand = Functions.loadTexture(this.textureArray,'main','grand')
+        this.itemGrand.width = 244
+        this.itemGrand.height = 105
         this.itemGrand.x = this.itemMajor.x + this.itemMajor.width
         this.itemGrand.y = 10
         this.levelBarContainer.addChild(this.itemGrand)
 
         const style = new PIXI.TextStyle({  
             fontFamily: 'Arial',
-            fontSize: 36,
+            fontSize: 20,
             fontWeight: 'bold',
             fill: ['#ffffff', '#ffffff'], // gradient
             stroke: '#4a1850',
@@ -245,18 +255,18 @@ export default class Slot{
         });
         //create mini text
         const miniPrize = new PIXI.Text(`${json.jackpots.mini}`, style);
-        miniPrize.x = (this.itemMini.width - miniPrize.width)/2;
-        miniPrize.y = 40;
+        miniPrize.x = (this.itemMini.width - miniPrize.width)/2 - 55;
+        miniPrize.y = 15;
         this.itemMini.addChild(miniPrize)
         //create major text
         const majorPrize = new PIXI.Text(`${json.jackpots.major}`, style);
-        majorPrize.x = (this.itemMajor.width - majorPrize.width)/2;
-        majorPrize.y = 53;
+        majorPrize.x = (this.itemMajor.width - majorPrize.width)/2  - 55;
+        majorPrize.y = 21;
         this.itemMajor.addChild(majorPrize)
         //create grand text
         const grandPrize = new PIXI.Text(`${json.jackpots.grand}`, style);
-        grandPrize.x = (this.itemGrand.width - grandPrize.width)/2;
-        grandPrize.y = 40;
+        grandPrize.x = (this.itemGrand.width - grandPrize.width)/2  - 55;
+        grandPrize.y = 14;
         this.itemGrand.addChild(grandPrize)
         this.container.addChild(this.levelBarContainer)
     }

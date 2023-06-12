@@ -245,11 +245,11 @@ export default class GameMobile{
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
         this.textureArray = res
-        this.textureToggleOn = Functions.loadTexture(this.textureArray,'modal','on').texture
-        this.textureToggleOff = Functions.loadTexture(this.textureArray,'modal','off').texture
-        this.textureRollOn = Functions.loadTexture(this.textureArray,'modal','roll_active').texture
-        this.textureRollOff = Functions.loadTexture(this.textureArray,'modal','roll').texture
-        this.textureRollOff = Functions.loadTexture(this.textureArray,'modal','roll').texture
+        this.textureToggleOn = Functions.loadTexture(this.textureArray,'modal_autoplay','on').texture
+        this.textureToggleOff = Functions.loadTexture(this.textureArray,'modal_autoplay','off').texture
+        this.textureRollOn = Functions.loadTexture(this.textureArray,'modal_autoplay','roll_active').texture
+        this.textureRollOff = Functions.loadTexture(this.textureArray,'modal_autoplay','roll').texture
+        this.textureRollOff = Functions.loadTexture(this.textureArray,'modal_autoplay','roll').texture
         this.spinTextureOn = Functions.loadTexture(this.textureArray,'controller','spin_button').texture
         this.spinTextureOff = Functions.loadTexture(this.textureArray,'controller','spin_pause_button').texture
         this.sounBtnSpriteOff =  Functions.loadTexture(this.textureArray,'controller','sound_off_button').texture
@@ -268,7 +268,7 @@ export default class GameMobile{
 
 
         //overlay
-        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
         this.createGame()
         this.createPlants()
         this.createSlot()
@@ -608,6 +608,7 @@ export default class GameMobile{
                 this.buyBonusBtn.y = this.slotGame.frameBorder.height +100
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
+                this.slotGame.logo.scale.set(3)
                 this.slotGame.logo.y = -30
                 // console.log('mob a')
             }
@@ -618,6 +619,7 @@ export default class GameMobile{
                 this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
+                this.slotGame.logo.scale.set(3)
                 this.slotGame.logo.y = -30
             }
             else if(this.screenSetting.isSafe == 'C'){
@@ -625,6 +627,7 @@ export default class GameMobile{
                 this.controller.container.y = this.screenSetting.baseHeight/2  -  this.controller.parentSprite.height + 100
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
+                this.slotGame.logo.scale.set(3)
                 this.slotGame.logo.y = -60
                 // console.log('mob c')
             }
@@ -635,6 +638,7 @@ export default class GameMobile{
                 this.buyBonusBtn.x = 50
                 this.paylineContainer.y = (this.slotGame.container.height + this.slotGame.container.y)*1.1
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
+                this.slotGame.logo.scale.set(3)
                 this.slotGame.logo.y = -60
             //    console.log('mob d')
             }
@@ -648,17 +652,17 @@ export default class GameMobile{
                 this.popUps.money.x = ((this.popUps.overlay.width - this.popUps.money.width)/2)
                 this.popUps.money.y = (this.popUps.logo.y + (this.popUps.logo.height-this.popUps.money.height)/2)*0.77
             }
-        }else{ 
-            this.slotGame.logo.scale.set(1)
+            this.slotGame.logo.x =  this.slotGame.logo.width/2
+        }else{
             //GAME BACKGROUND 
             this.gameBackground.texture = landscapeBg
 
             //MODAL
-            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal','modal_frame').texture
+            this.modal.modalFrame.texture = Functions.loadTexture(this.textureArray,'modal_main','modal_frame').texture
             this.slotGame.container.scale.set(1)
     
-            this.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
-            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal','overlay').texture
+            this.overlay.texture = Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
+            this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
             
             this.slotGame.container.x = 0
             this.modal.modalFrame.x = (this.overlay.width - this.modal.modalFrame.width)/2
@@ -681,9 +685,9 @@ export default class GameMobile{
             this.slotGame.itemMini.y =  this.slotGame.levelBarBg.y - 30
             this.slotGame.itemMajor.y = this.slotGame.itemMini.y - 13
             this.slotGame.itemGrand.y =  10
-            this.slotGame.logo.scale.set(0.7)
             this.slotGame.logo.x = this.slotGame.frameBorder.x
             this.slotGame.logo.y = this.slotGame.frameBorder.y
+            this.slotGame.logo.scale.set(0.9)
             this.slotGame.levelBarContainer.x = (this.slotGame.frameBorder.x + (this.slotGame.frameBorder.width - this.slotGame.levelBarContainer.width))*0.96
             this.slotGame.container.y = 0
 
@@ -812,7 +816,7 @@ export default class GameMobile{
             //CONGRATS POPUP
             if(this.isOpenCongrats){
                 this.congrats.middleContainer.scale.set(1)
-                this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal','overlay').texture
+                this.congrats.overlay.texture =  Functions.loadTexture(this.textureArray,'modal_main','overlay').texture
                 this.congrats.logo.x = (this.overlay.width)/2
                 this.congrats.logo.y = (this.overlay.height)/1.2
                 this.congrats.popGlow.x =  (this.overlay.width)/2
@@ -879,8 +883,6 @@ export default class GameMobile{
                 this.modal.image6th.y = (this.modal.modalFrame.height - this.modal.image6th.height)/2 +30    
             }
 
-    
-
             //HOME
             this.intro.bg.texture = landscapeBg
             this.intro.bg.height = this.screenSetting.baseHeight
@@ -910,6 +912,7 @@ export default class GameMobile{
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.buyBonusBtn.x = 0
                 //slot
+                this.slotGame.logo.scale.set(1.5)
                 this.slotGame.levelBarContainer.y = 50
                 this.controller.container.y = -50
                // console.log('desk a')
@@ -918,6 +921,7 @@ export default class GameMobile{
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width);
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width);
                 this.buyBonusBtn.x = 50
+                this.slotGame.logo.scale.set(1.5)
                 this.controller.container.y = -20
                 this.paylineContainer.y = ((this.controller.parentSprite.height - this.paylineContainer.height)/2)+15
                 this.slotGame.levelBarContainer.scale.set(1)
@@ -930,7 +934,7 @@ export default class GameMobile{
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 150;
                 this.buyBonusBtn.x = 200
                 // slot
-                this.slotGame.logo.scale.set(1)
+                this.slotGame.logo.scale.set(2)
                 this.slotGame.logo.x = this.slotGame.frameBorder.x*1.24
                 this.slotGame.logo.y = 0
                 this.slotGame.levelBarContainer.scale.set(1)
@@ -944,7 +948,7 @@ export default class GameMobile{
                 this.controller.spinBtnSprite.x = (this.screenSetting.baseWidth - this.controller.spinBtnSprite.width) - 200;
                 this.controller.autoPlay.x = (this.screenSetting.baseWidth - this.controller.autoPlay.width)- 200;
                 this.buyBonusBtn.x = 200
-                this.slotGame.logo.scale.set(1)
+                this.slotGame.logo.scale.set(2)
                 this.slotGame.logo.x = 191.5
                 this.slotGame.logo.y = 10.5
                 this.slotGame.levelBarContainer.scale.set(1)
@@ -969,6 +973,7 @@ export default class GameMobile{
         this.wildSlot.zIndex = 5
         this.popGlow.zIndex = 4
         this.popGlow2.zIndex = 4
+        console.log(this.screenSetting.isSafe)
     }
 
     private createIntro(){
@@ -1383,7 +1388,6 @@ export default class GameMobile{
         Functions.loadSpineAnimation(this.popGlow,'glow',true,0.1)
         this.overlay.addChild(this.popGlow)
         
-        
         this.buyBonusFrame.x = this.freeSpinX
         this.buyBonusFrame.y = dY
     
@@ -1427,7 +1431,8 @@ export default class GameMobile{
             this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
             this.hideBonusPopUp(dY,sY)
-        check.interactive = false
+            check.interactive = false
+            this.enableButtons(false)
             let timeOut = setTimeout(()=>{
                 this.startSpinAutoPlay(1)
                 clearTimeout(timeOut)

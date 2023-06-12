@@ -116,7 +116,7 @@ export default class Congrats{
         this.createCoin()
     }
     private createParent(){
-        this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
+        this.overlay = Functions.loadTexture(this.textureArray,'modal_main','overlay')
         // this.overlay.width = this.baseWidth
         // this.overlay.height = this.baseHeight
         this.container.addChild(this.overlay)
