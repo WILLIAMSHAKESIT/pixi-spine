@@ -1,0 +1,13 @@
+
+firefly.png
+size: 59,59
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+firefly
+  rotate: false
+  xy: 2, 2
+  size: 55, 55
+  orig: 57, 57
+  offset: 1, 1
+  index: -1

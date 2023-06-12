@@ -73,55 +73,55 @@ export default class Loader{
         const manifest = {
             bundles: [
             {
-                name:'loading-screen',
-                assets: [{name: 'loading',srcs: 'assets/loading/sprites/loading.json'},]
+                name:'loading-screen-mobile',
+                assets: [{name: 'loading',srcs: 'assets/mobile/loading/sprites/loading.json'},]
             },
             {
-                name: 'game-screen',
+                name: 'game-screen-mobile',
                 assets: [
-                    {name: 'main',srcs: 'assets/main/sprites/main.json'},
-                    {name: 'controller',srcs: 'assets/controller/sprites/controller.json'},
-                    {name: 'controller_mobile',srcs: 'assets/controller/sprites/controller_mobile.json'},
-                    {name: 'controller_mobile_darkmode',srcs: 'assets/controller/sprites/controller_mobile_darkmode.json'},
-                    {name: 'slot',srcs: 'assets/slot/sprites/slot.json'},
-                    {name: 'bonus',srcs: 'assets/bonus/sprites/bonus.json'},
-                    {name: 'modal',srcs: 'assets/modal/sprites/modal.json'},
-                    {name: 'modal_portrait',srcs: 'assets/modal/sprites/modal_portrait.json'},
-                    {name: 'grass',srcs:'assets/main/sprites/grass.json'},
-                    {name: 'pop_glow',srcs: 'assets/bonus/sprites/pop_glow.json'},
-                    {name: 'coins',srcs: 'assets/pop_ups/sprites/coins.json'},
-                    {name: 'transition',srcs: 'assets/pop_ups/sprites/transition_leaf.json'},
-                    {name: 'pop_ups',srcs: 'assets/pop_ups/sprites/pop-ups.json'},
-                    {name: 'congrats',srcs: 'assets/pop_ups/sprites/congrats.json'},
-                    {name: 'frame_glow',srcs: 'assets/bonus/sprites/frame_glow.json'},
-                    {name: 'rock_block',srcs: 'assets/bonus/sprites/rock_block.json'},
-                    {name: 'reel_effect',srcs: 'assets/bonus/sprites/reel_effect.json'},
-                    {name: 'bird',srcs: 'assets/slot/sprites/bird.json'},
-                    {name: 'blue_crystal',srcs: 'assets/slot/sprites/blue_crystal.json'},
-                    {name: 'bonus_symbol',srcs: 'assets/slot/sprites/bonus.json'},
-                    {name: 'cameleon',srcs: 'assets/slot/sprites/chameleon.json'},
-                    {name: 'snake',srcs: 'assets/slot/sprites/snake.json'},
-                    {name: 'violet_crystal',srcs: 'assets/slot/sprites/violet_crystal.json'},
-                    {name: 'monkey',srcs: 'assets/slot/sprites/monkey.json'},
-                    {name: 'leopard',srcs:'assets/slot/sprites/leopard.json'},
-                    {name: 'green_crystal',srcs: 'assets/slot/sprites/green_crystal.json'},
-                    {name: 'orange_crystal',srcs: 'assets/slot/sprites/orange_crystal.json'},
-                    {name: 'wild',srcs: 'assets/slot/sprites/wild.json'},
-                    {name: '2k',srcs: 'assets/slot/sprites/2k.json'},
-                    {name: '3k',srcs: 'assets/slot/sprites/3k.json'},
-                    {name: '5k',srcs: 'assets/slot/sprites/5k.json'},
-                    {name: 'x2',srcs: 'assets/slot/sprites/x2.json'},
-                    {name: 'x3',srcs: 'assets/slot/sprites/x3.json'},
-                    {name: 'x5',srcs: 'assets/slot/sprites/x5.json'},
-                    {name: 'plant_1',srcs: 'assets/main/sprites/plant_1.json'},
-                    {name: 'plant_2',srcs: 'assets/main/sprites/plant2.json'},
-                    {name: 'plant_3',srcs: 'assets/main/sprites/plant3.json'},
-                    {name: 'plant_4',srcs: 'assets/main/sprites/plant4.json'},
-                    {name: 'plant_5',srcs: 'assets/main/sprites/banana.json'},
-                    {name: 'vines',srcs: 'assets/main/sprites/vines.json'},
-                    {name: 'firefly',srcs: 'assets/main/sprites/firefly.json'},
-                    {name: 'butterfly',srcs: 'assets/main/sprites/butterfly.json'},
-                    {name: 'intro',srcs: 'assets/intro/sprites/intro.json'},
+                    {name: 'intro',srcs: 'assets/mobile/intro/sprites/intro.json'},
+                    {name: 'main',srcs: 'assets/mobile/main/sprites/main.json'},
+                    {name: 'controller',srcs: 'assets/mobile/controller/sprites/controller.json'},
+                    {name: 'controller_mobile',srcs: 'assets/mobile/controller/sprites/controller_mobile.json'},
+                    {name: 'controller_mobile_darkmode',srcs: 'assets/mobile/controller/sprites/controller_mobile_darkmode.json'},
+                    {name: 'slot',srcs: 'assets/mobile/slot/sprites/slot.json'},
+                    {name: 'bonus',srcs: 'assets/mobile/bonus/sprites/bonus.json'},
+                    {name: 'modal',srcs: 'assets/mobile/modal/sprites/modal.json'},
+                    {name: 'modal_portrait',srcs: 'assets/mobile/modal/sprites/modal_portrait.json'},
+                    {name: 'grass',srcs:'assets/mobile/main/sprites/grass.json'},
+                    {name: 'pop_glow',srcs: 'assets/mobile/bonus/sprites/pop_glow.json'},
+                    {name: 'coins',srcs: 'assets/mobile/pop_ups/sprites/coins.json'},
+                    {name: 'transition',srcs: 'assets/mobile/pop_ups/sprites/transition_leaf.json'},
+                    {name: 'pop_ups',srcs: 'assets/mobile/pop_ups/sprites/pop-ups.json'},
+                    {name: 'congrats',srcs: 'assets/mobile/pop_ups/sprites/congrats.json'},
+                    {name: 'frame_glow',srcs: 'assets/mobile/bonus/sprites/frame_glow.json'},
+                    {name: 'rock_block',srcs: 'assets/mobile/bonus/sprites/rock_block.json'},
+                    {name: 'reel_effect',srcs: 'assets/mobile/bonus/sprites/reel_effect.json'},
+                    {name: 'bird',srcs: 'assets/mobile/slot/sprites/bird.json'},
+                    {name: 'blue_crystal',srcs: 'assets/mobile/slot/sprites/blue_crystal.json'},
+                    {name: 'bonus_symbol',srcs: 'assets/mobile/slot/sprites/bonus.json'},
+                    {name: 'cameleon',srcs: 'assets/mobile/slot/sprites/chameleon.json'},
+                    {name: 'snake',srcs: 'assets/mobile/slot/sprites/snake.json'},
+                    {name: 'violet_crystal',srcs: 'assets/mobile/slot/sprites/violet_crystal.json'},
+                    {name: 'monkey',srcs: 'assets/mobile/slot/sprites/monkey.json'},
+                    {name: 'leopard',srcs:'assets/mobile/slot/sprites/leopard.json'},
+                    {name: 'green_crystal',srcs: 'assets/mobile/slot/sprites/green_crystal.json'},
+                    {name: 'orange_crystal',srcs: 'assets/mobile/slot/sprites/orange_crystal.json'},
+                    {name: 'wild',srcs: 'assets/mobile/slot/sprites/wild.json'},
+                    {name: '2k',srcs: 'assets/mobile/slot/sprites/2k.json'},
+                    {name: '3k',srcs: 'assets/mobile/slot/sprites/3k.json'},
+                    {name: '5k',srcs: 'assets/mobile/slot/sprites/5k.json'},
+                    {name: 'x2',srcs: 'assets/mobile/slot/sprites/x2.json'},
+                    {name: 'x3',srcs: 'assets/mobile/slot/sprites/x3.json'},
+                    {name: 'x5',srcs: 'assets/mobile/slot/sprites/x5.json'},
+                    {name: 'plant_1',srcs: 'assets/mobile/main/sprites/plant_1.json'},
+                    {name: 'plant_2',srcs: 'assets/mobile/main/sprites/plant2.json'},
+                    {name: 'plant_3',srcs: 'assets/mobile/main/sprites/plant3.json'},
+                    {name: 'plant_4',srcs: 'assets/mobile/main/sprites/plant4.json'},
+                    {name: 'plant_5',srcs: 'assets/mobile/main/sprites/banana.json'},
+                    {name: 'vines',srcs: 'assets/mobile/main/sprites/vines.json'},
+                    {name: 'firefly',srcs: 'assets/mobile/main/sprites/firefly.json'},
+                    {name: 'butterfly',srcs: 'assets/mobile/main/sprites/butterfly.json'},
                 ],
             }],
         };
@@ -169,7 +169,7 @@ export default class Loader{
         const loadingIncrement = 11
         const loadingBarWidth = 451
         //loading assets
-        this.loadingAssets = await PIXI.Assets.loadBundle('loading-screen')
+        this.loadingAssets = await PIXI.Assets.loadBundle('loading-screen-mobile')
         this.loadingBg = new PIXI.Sprite(this.loadingAssets.loading.textures['loading_background.png'])
         this.app.stage.addChild(this.loadingBg)
 
@@ -205,7 +205,7 @@ export default class Loader{
         this.app.stage.addChild(this.loadingContainer)
 
         //load game assets
-        this.gameAssets = await PIXI.Assets.loadBundle('game-screen',(progress) => {
+        this.gameAssets = await PIXI.Assets.loadBundle('game-screen-mobile',(progress) => {
             // add the bar progress here
             if(progress < 1){
                 loadingBarMask.width+=loadingIncrement

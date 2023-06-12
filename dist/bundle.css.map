@@ -1,1 +1,0 @@
-{"version":3,"file":"bundle.css","mappings":"AAAA,UACI,gBAAiB,CACjB,UACJ","sources":["webpack://webpack-setup/./src/main.css"],"sourcesContent":["html,body{\r\n    max-height: 100vh;\r\n    width: 100%;\r\n}"],"names":[],"sourceRoot":""}

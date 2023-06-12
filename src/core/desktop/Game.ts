@@ -966,7 +966,7 @@ export default class Game{
         let parentContainer = this.controller.parentSprite
         this.paylineText.text = greetings
         let paylineTotal = 0
-        let bottomText = this.isAutoPlay?`Free spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
+        let bottomText = this.isAutoPlay?`Spin left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
         if(this.slotGame.paylines.length !== 0){
             for(let i=0;i<paylineContent.length;i++){
                 bottomText = ''

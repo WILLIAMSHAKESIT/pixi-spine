@@ -328,7 +328,8 @@ export default class GameMobile{
         this.app.renderer.resize(this.screenSetting.baseWidth,this.screenSetting.baseHeight);
         let portraitBg = Functions.loadTexture(this.textureArray,'main', `${this.eventStart || this.isMatchingGame?'bg_mobile2':'bg_mobile' }`).texture
         let landscapeBg = Functions.loadTexture(this.textureArray,'main',`${this.eventStart|| this.isMatchingGame?'bg2':'bg'}`).texture
-    
+        
+        //init texture sizes
         if(this.screenSetting.screentype == 'portrait'){
             this.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
             this.modal.overlay.texture = Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait').texture
@@ -577,7 +578,7 @@ export default class GameMobile{
             this.intro.bg.height = this.screenSetting.baseHeight
             this.intro.bg.width = this.screenSetting.baseWidth
             this.intro.centerContainer.x = (this.intro.bg.width - this.intro.centerContainer.width)/2 
-            this.intro.centerContainer.y = (this.intro.bg.height - this.intro.centerContainer.height)/3 
+            this.intro.centerContainer.y = (this.intro.bg.height - this.intro.centerContainer.height)/2.5 
             this.intro.playBtn.x = (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
             this.intro.playBtnX =  (this.screenSetting.baseWidth - this.intro.playBtn.width) / 2
             this.intro.playBtnY = (this.screenSetting.baseWidth - this.intro.playBtn.width) + 100
@@ -1741,7 +1742,7 @@ export default class GameMobile{
         let paylineContent:any = this.slotGame.paylines
         this.paylineText.text = greetings
         let paylineTotal = 0
-        let bottomText = this.isAutoPlay?`Free spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
+        let bottomText = this.isAutoPlay?`Spins left ${this.slotGame.autoPlayCount}`:'Tap space or enter to skip'
         if(this.slotGame.paylines.length !== 0){
             for(let i=0;i<paylineContent.length;i++){
                 bottomText = ''

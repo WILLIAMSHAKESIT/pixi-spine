@@ -78,6 +78,8 @@ export default class IntroScreen{
         this.container.addChild(this.bg)
         
         this.logo = new PIXI.Sprite(this.assets.intro.textures['logo.png'])
+        this.logo.width = 642
+        this.logo.height = 116
         this.centerContainer.addChild(this.logo)
         
         this.slides.forEach((data,index)=>{
@@ -85,7 +87,7 @@ export default class IntroScreen{
             if(index !== 0){
                 slideImg.alpha = 0
             }
-            slideImg.y = (this.logo.height+this.logo.y)*1.2
+            slideImg.y = (this.logo.height+this.logo.y)*1.4
             this.centerContainer.addChild(slideImg)
 
             const radio = new PIXI.Sprite(this.assets.intro.textures[`radio_off.png`])

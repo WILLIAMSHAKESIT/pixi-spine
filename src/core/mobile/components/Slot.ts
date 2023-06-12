@@ -180,21 +180,26 @@ export default class Slot{
         const frameX = 95
         const frameY = 70
         this.frameBg = Functions.loadTexture(this.textureArray,'main','slot_frame_bg')
+        this.frameBg.width = 1490
+        this.frameBg.height = 770
         this.frameBg.y = ((this.baseHeight - this.frameBg.height)/2) - 30
         this.frameBg.x = (this.baseWidth - this.frameBg.width)/2 
         this.container.addChild(this.frameBg)
 
         this.frameBorder = Functions.loadTexture(this.textureArray,'main','slot_frame') 
+        this.frameBorder.width = 1682
+        this.frameBorder.height = 886
         this.frameBorder.x = this.frameBg.x - frameX
         this.frameBorder.y = this.frameBg.y - frameY
         this.container.addChild(this.frameBorder)
     }
     private createLogo(){
         this.logo = Functions.loadTexture(this.textureArray,'main','logo') 
+        this.logo.width = 620
+        this.logo.height = 112
         this.container.addChild(this.logo)
     }
     private createLevelBar(){
-
         //create level bar background
         this.levelBarBg = Functions.loadTexture(this.textureArray,'main','bar_bg')
         // this.levelBarBg.x = (this.frameBorder.width - this.levelBarBg.width)+50
@@ -289,7 +294,7 @@ export default class Slot{
         })
         //create mask for reels
         this.maskSprite = Functions.loadTexture(this.textureArray,'main','mask_big') 
-        this.maskSprite.height = this.maskSprite.height
+        this.maskSprite.height = 1490 
         this.maskSprite.width = this.frameBorder.width 
         this.maskSprite.x = this.frameBorder.x
         this.maskSprite.y = this.frameBg.y-6
