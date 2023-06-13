@@ -1619,8 +1619,11 @@ export default class GameMobile{
                 arrayBlockValues.push({symbol:symbol,status:status})
                 this.matchingBlocksContainer.addChild(symbol)
             })
-            this.matchingBlocksContainer.x = (this.slotGame.frameBg.width - this.matchingBlocksContainer.width)
-            this.matchingBlocksContainer.y = (this.slotGame.frameBg.height - this.matchingBlocksContainer.height)*1.7
+            this.matchingBlocksContainer.height = 355
+            this.matchingBlocksContainer.width = 615
+
+            this.matchingBlocksContainer.x = ((this.slotGame.frameBg.width/2) - this.matchingBlocksContainer.width)/ 2 + 70
+            this.matchingBlocksContainer.y =  ((this.slotGame.frameBg.height/2) - this.matchingBlocksContainer.height)/ 2 + 55
             this.slotGame.frameBg.addChild(this.matchingBlocksContainer)
             // update text 
             this.textStyle.fontSize = 46
@@ -1843,6 +1846,8 @@ export default class GameMobile{
         this.slotGame.reelContainer.forEach(data=>{data.visible = bool})
         this.paylineContainersAnimation.forEach(data=>{data.visible = bool})
         this.slotGame.frameBg.texture = frameBgTexture
+        this.slotGame.frameBg.width = 1490
+        this.slotGame.frameBg.height = 765
         this.controller.parentSprite.texture = parentSpriteTexture
         this.controller.infoBtnSprite.texture = infoBtnTexture
         this.controller.settingBtnSpite.texture = settingBtnTexture

@@ -181,7 +181,7 @@ export default class Slot{
         const frameY = 70
         this.frameBg = Functions.loadTexture(this.textureArray,'main','slot_frame_bg')
         this.frameBg.width = 1490
-        this.frameBg.height = 770
+        this.frameBg.height = 765
         this.frameBg.y = ((this.baseHeight - this.frameBg.height)/2) - 30
         this.frameBg.x = (this.baseWidth - this.frameBg.width)/2 
         this.container.addChild(this.frameBg)
@@ -209,9 +209,8 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 742
+        this.levelBarIndicator.width = 740
         this.levelBarIndicator.height = 68
-        this.levelBarIndicator.width = 0
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
         this.levelBarContainer.addChild(this.levelBarIndicator)
