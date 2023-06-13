@@ -1,0 +1,41 @@
+
+plant_1.png
+size: 613,713
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+leaf11
+  rotate: true
+  xy: 337, 185
+  size: 242, 260
+  orig: 242, 262
+  offset: 0, 2
+  index: -1
+leaf12
+  rotate: true
+  xy: 337, 429
+  size: 282, 274
+  orig: 282, 274
+  offset: 0, 0
+  index: -1
+leaf13
+  rotate: false
+  xy: 316, 2
+  size: 291, 181
+  orig: 295, 181
+  offset: 0, 0
+  index: -1
+leaf14
+  rotate: false
+  xy: 2, 364
+  size: 333, 347
+  orig: 333, 347
+  offset: 0, 0
+  index: -1
+leaf15
+  rotate: false
+  xy: 2, 114
+  size: 312, 248
+  orig: 313, 255
+  offset: 0, 7
+  index: -1

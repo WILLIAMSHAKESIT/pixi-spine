@@ -280,8 +280,12 @@ export default class GameMobile{
         this.updateTextValues()
         this.createIntro()
         this.app.stage.addChild(this.gameContainer);
-
         
+        // skip spin on screen touch
+        window.document.addEventListener('touchend', (e)=> {
+            this.slotGame.timeScale = 10
+        })
+
         window.document.addEventListener('keydown', (e)=> {
             if(!this.isIntro){
                 if(e.code === 'Space'  || e.key === 'Enter'){         
@@ -291,7 +295,6 @@ export default class GameMobile{
                     // console.log(this.isFreeSpin, " this.isFreeSpin")
                     // console.log(this.isOpenModal, " this.isOpenModal")
                     if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isFreeSpin && !this.isMatchingGame && !this.isOpenModal){
-                        
                         this.slotGame.timeScale = 0 
                         if(this.slotGame.notLongPress === true) {
                             this.slotGame.notLongPress = false;

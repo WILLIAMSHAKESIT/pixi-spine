@@ -1,0 +1,49 @@
+{
+"skeleton": {
+	"hash": "yEE1fUfB0roNHY6WkszFcCxjT3k",
+	"spine": "3.8.75",
+	"x": -124.72,
+	"y": -120.31,
+	"width": 250,
+	"height": 241,
+	"images": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/symbols/symbols/images/",
+	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\junggl_story_assets\\symbols\\symbols\\images"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "Group 1 copy", "bone": "root", "attachment": "Group 1 copy" }
+],
+"skins": [
+	{
+		"name": "blur",
+		"attachments": {
+			"Group 1 copy": {
+				"Group 1 copy": { "name": "Group 1 blur", "x": 0.28, "y": 0.19, "width": 250, "height": 241 }
+			}
+		}
+	},
+	{
+		"name": "no_blur",
+		"attachments": {
+			"Group 1 copy": {
+				"Group 1 copy": { "x": 0.28, "y": 0.19, "width": 250, "height": 241 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"bones": {
+			"root": {
+				"scale": [
+					{},
+					{ "time": 0.3333, "x": 1.2, "y": 1.2 },
+					{ "time": 0.6667 }
+				]
+			}
+		}
+	}
+}
+}
