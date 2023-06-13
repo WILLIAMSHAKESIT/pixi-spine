@@ -129,7 +129,8 @@ export default class PopUps{
         })
     }
     private createParent(){
-        this.overlay = Functions.loadTexture(this.textureArray,'modal_settings','overlay')
+        //Functions.screenSize().screentype == 'portrait'? (this.logo.y + (this.logo.height-this.money.height)/2)*0.77: (this.logo.y + (this.logo.height-this.money.height)/2)*0.66
+        this.overlay = Functions.screenSize().screentype == 'portrait'?  Functions.loadTexture(this.textureArray,'controller_mobile','overlay_portrait') : Functions.loadTexture(this.textureArray,'modal_settings','overlay')
         this.overlay.width = this.baseWidth
         this.overlay.height = this.baseHeight
         this.container.addChild(this.overlay)
