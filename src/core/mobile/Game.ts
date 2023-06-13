@@ -33,7 +33,7 @@ export default class GameMobile{
     private popUps:PopUps
     private transition:Transition
     private spinType:string = 'normal'
-    //texttures
+    //textures
     private textureToggleOn:PIXI.Texture
     private textureToggleOff:PIXI.Texture
     private textureRollOn:PIXI.Texture
@@ -53,6 +53,7 @@ export default class GameMobile{
     private matchingGameWin:number = 0
     private isAutoPlay:boolean = false
     private isMatchingGame:boolean = false
+    private isIntro:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
@@ -101,7 +102,6 @@ export default class GameMobile{
     private plant4Left:Spine
     private plant5Left:Spine
     private vines:Spine
-
 
     //FOR MOBILE TEMPORARY
 
@@ -281,29 +281,33 @@ export default class GameMobile{
         this.createIntro()
         this.app.stage.addChild(this.gameContainer);
 
+        
         window.document.addEventListener('keydown', (e)=> {
-            if(e.code === 'Space'  || e.key === 'Enter'){         
-                // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
-                // console.log(this.isAutoPlay, " this.isAutoPlay")
-                // console.log(this.isMatchingGame, " this.isMatchingGame")
-                // console.log(this.isFreeSpin, " this.isFreeSpin")
-                // console.log(this.isOpenModal, " this.isOpenModal")
-                if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isFreeSpin && !this.isMatchingGame && !this.isOpenModal){
-                  
-                    this.slotGame.timeScale = 0 
-                    if(this.slotGame.notLongPress === true) {
-                        this.slotGame.notLongPress = false;
-                        this.spinType = 'normal'
-                        this.startSpin(this.spinType)
-                    }else{
-                        this.spinType = 'turbo'
-                        this.startSpin(this.spinType)
+            if(!this.isIntro){
+                if(e.code === 'Space'  || e.key === 'Enter'){         
+                    // console.log(this.slotGame.isSpinning, " this.slotGame.isSpinning")
+                    // console.log(this.isAutoPlay, " this.isAutoPlay")
+                    // console.log(this.isMatchingGame, " this.isMatchingGame")
+                    // console.log(this.isFreeSpin, " this.isFreeSpin")
+                    // console.log(this.isOpenModal, " this.isOpenModal")
+                    if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isFreeSpin && !this.isMatchingGame && !this.isOpenModal){
+                        
+                        this.slotGame.timeScale = 0 
+                        if(this.slotGame.notLongPress === true) {
+                            this.slotGame.notLongPress = false;
+                            this.spinType = 'normal'
+                            this.startSpin(this.spinType)
+                        }else{
+                            this.spinType = 'turbo'
+                            this.startSpin(this.spinType)
+                        }
+                    }else{ 
+                        this.slotGame.timeScale = 10
                     }
-                }else{ 
-                    this.slotGame.timeScale = 10
                 }
             }
         });
+        
         window.document.addEventListener('keyup', ()=> {
             this.slotGame.notLongPress = true;
         });
@@ -976,6 +980,7 @@ export default class GameMobile{
     }
 
     private createIntro(){
+        this.isIntro = true
         this.enableButtons(false)
         this.intro = new IntroScreen(this.app,this.textureArray)
         this.gameContainer.addChild(this.paylineBackDrop)
@@ -1004,6 +1009,7 @@ export default class GameMobile{
                 this.gameContainer.removeChild(this.intro.container)
                 this.intro.btnScaleAnimation.kill()
                 this.paylineContainer.visible = true
+                this.isIntro = false
                 clearTimeout(timeOut)
             },this.transitionDelay)
         })
