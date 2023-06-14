@@ -33,7 +33,7 @@ export default class Loader{
     private screenSetting:any;
 
     constructor(loadedAssets:(assets:any,app:PIXI.Application)=>void, sounds: (soundInit:Boolean,bgm: Array<any>) => void){
-        this.app = new PIXI.Application({ width: 1920, height: 1080});
+        this.app = new PIXI.Application({ width: 1920, height: 1080, forceCanvas: false});
         this.loadingContainer = new PIXI.Container
         this.loadingTextStyle = new PIXI.TextStyle({  
             fontFamily: 'Eras ITC',

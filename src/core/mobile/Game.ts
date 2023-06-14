@@ -270,7 +270,7 @@ export default class GameMobile{
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal_settings','overlay')
         this.createGame()
-        //this.createPlants()
+        this.createPlants()
         this.createSlot()
         this.createFrameGlow()
         this.createController()
@@ -599,11 +599,11 @@ export default class GameMobile{
                 this.transition.container.y = 936.5
             }
             
-            // // PLANTS
-            // this.plantContainerRight.x = -780
-            // this.plantContainerRight.y = this.controller.container.y
-            // this.plantContainerLeft.y = this.controller.container.y
-            // this.vines.y = -435.5
+            // PLANTS
+            this.plantContainerRight.x = -780
+            this.plantContainerRight.y = this.controller.container.y
+            this.plantContainerLeft.y = this.controller.container.y
+            this.vines.y = -435.5
 
             //safe area
             if(this.screenSetting.isSafe == 'A'){
