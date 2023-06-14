@@ -54,6 +54,7 @@ export default class GameMobile{
     private isAutoPlay:boolean = false
     private isMatchingGame:boolean = false
     private isIntro:boolean = false
+    private spinClick:boolean = false
     //text style 
     private textStyle:PIXI.TextStyle
     private textStyle2:PIXI.TextStyle
@@ -280,8 +281,12 @@ export default class GameMobile{
         this.updateTextValues()
         this.createIntro()
         this.app.stage.addChild(this.gameContainer);
-
         
+        // skip spin on screen touch
+        window.document.addEventListener('touchstart', (e)=> {
+            if(!this.spinClick)
+                this.slotGame.timeScale = 10
+        })
         window.document.addEventListener('keydown', (e)=> {
             if(!this.isIntro){
                 if(e.code === 'Space'  || e.key === 'Enter'){         
@@ -291,7 +296,6 @@ export default class GameMobile{
                     // console.log(this.isFreeSpin, " this.isFreeSpin")
                     // console.log(this.isOpenModal, " this.isOpenModal")
                     if(!this.slotGame.isSpinning && !this.isAutoPlay && !this.isFreeSpin && !this.isMatchingGame && !this.isOpenModal){
-                        
                         this.slotGame.timeScale = 0 
                         if(this.slotGame.notLongPress === true) {
                             this.slotGame.notLongPress = false;
@@ -2197,7 +2201,8 @@ export default class GameMobile{
         this.controller.spinBtnSprite.addListener('mouseover',() =>{
             this.playSound(2)
         })
-        this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
+        this.controller.spinBtnSprite.addEventListener('touchstart',()=>{
+            this.spinClick = true
             this.playSound(1)
             
             this.controller.spinBtnSprite.interactive = true
@@ -2207,6 +2212,9 @@ export default class GameMobile{
             }else{
                 this.slotGame.timeScale = 10
             }
+        })
+        this.controller.spinBtnSprite.addEventListener('touchend',(e)=>{
+            this.spinClick = false
         })
         //buy bonus
         this.buyBonusBtn.addListener('mouseover',() =>{
