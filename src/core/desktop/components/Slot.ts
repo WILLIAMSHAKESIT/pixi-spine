@@ -494,14 +494,11 @@ export default class Slot{
                                         this.totalWin = totalLinePay*eventMultiplier
                                     }
                                     this.animatePatterns(i,data.blocks[i].block)
-                        
-
                                 }
                                 else if(this.startCountWinFreeSpin && this.whatEvent == 2){
                                     totalLinePay+=data.blocks[i].payout
                                     this.totalWin += data.blocks[i].payout
                                     this.animatePatterns(i,data.blocks[i].block)
-                                   
                                 }
                                 else{
                                     if(data.blocks[i].type != 11){
@@ -647,12 +644,10 @@ export default class Slot{
         if(index == 4  && !this.isFreeSpin){
             this.reelEffect[4].visible = false
         }
-
         if(this.isFreeSpin && index == 0){
             this.reelEffect[2].visible = true
             this.isBonusTick = true
         }
-
         if(index == 4  && this.isFreeSpin){
             this.reelEffect[2].visible = false
         }
@@ -690,7 +685,6 @@ export default class Slot{
         else{
             jsonType = json.symbolAssetsEvent
         }
-        
         arr.forEach((data,index)=>{
             let reelValue = this.reelsValuesMoneySlot[i]
             let symbolIndex = reelValue[Math.floor(Math.random() * reelValue.length)]
