@@ -480,8 +480,7 @@ export default class Slot{
                     if(lineSymbols.length == data.count){
                         if(!lineSymbols.includes(10) || !lineSymbols.includes(11)){
                             lineSymbols.forEach((el,i)=>{
-                        
-                                if(this.startCountWinFreeSpin){
+                                if(this.startCountWinFreeSpin && this.whatEvent == 1){
                                     if(data.blocks[i].type == 11){
                                         eventMultiplier = data.blocks[i].payout 
                                     }
@@ -495,6 +494,7 @@ export default class Slot{
                                         this.totalWin = totalLinePay*eventMultiplier
                                     }
                                     this.animatePatterns(i,data.blocks[i].block)
+                        
 
                                 }
                                 else if(this.startCountWinFreeSpin && this.whatEvent == 2){
@@ -511,9 +511,8 @@ export default class Slot{
                                         data.blocks[i].payout = data.blocks[notWild].payout
                                     }
                                     totalLinePay+=data.blocks[i].payout
-                                    this.animatePatterns(i,data.blocks[i].block)
-                                       // add total win
-                                        this.totalWin += data.blocks[i].payout
+                                    this.totalWin += data.blocks[i].payout
+                                    this.animatePatterns(i,data.blocks[i].block)              
                                 }   
                             })
                         }
