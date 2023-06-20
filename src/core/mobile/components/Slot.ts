@@ -209,7 +209,7 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        this.levelBarIndicator.width = 680
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.height = 68
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
@@ -871,7 +871,8 @@ export default class Slot{
             barPosX = levelBarX*1.8 + this.levelBarIndicator.width
             barPosY = this.levelBarIndicator.y
         }else{
-            barPosX = this.levelBarContainer.x + this.levelBarIndicator.width
+           // barPosX = this.levelBarContainer.x + this.levelBarIndicator.width 
+            barPosX = this.levelBarContainer.x + (this.levelBarIndicator.width / 1.7)
             barPosY = this.levelBarContainer.y + 25
         }
         for(let i = 0;i<=3;i++){
