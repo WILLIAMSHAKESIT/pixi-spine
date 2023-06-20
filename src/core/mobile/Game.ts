@@ -701,6 +701,7 @@ export default class GameMobile{
             this.buyBonusBtn.y =  (this.screenSetting.baseHeight - this.buyBonusBtn.height)/2
            
             //levelbarIndicator
+            this.slotGame.levelBarContainer.scale.set(0.6)
             this.slotGame.levelBarBg.scale.set(2)
             this.slotGame.levelBarBg.y =  this.slotGame.frameBorder.y * 0.7
           

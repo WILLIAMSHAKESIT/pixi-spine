@@ -112,7 +112,7 @@ export default class Modal{
         this.infoFourthPageContainer = new PIXI.Container
         this.infoFifthPageContainer = new PIXI.Container
         this.infoSixthPageContainer = new PIXI.Container
-        this.infoSeventhPageContainer = new PIXI.Container
+        //this.infoSeventhPageContainer = new PIXI.Container
         //PORTRAIT MOBILE
         this.infoFirstPageContainerPortrait = new PIXI.Container
         this.infoSecondPageContainerPortrait = new PIXI.Container
@@ -120,7 +120,7 @@ export default class Modal{
         this.infoFourthPageContainerPortrait = new PIXI.Container
         this.infoFifthPageContainerPortrait = new PIXI.Container
         this.infoSixthPageContainerPortrait = new PIXI.Container
-        this.infoSeventhPageContainerPortrait = new PIXI.Container
+        //this.infoSeventhPageContainerPortrait = new PIXI.Container
 
         // this.infoFirstPageContainer = new PIXI.Container
         // this.infoFirstPageContainerPortrait = new PIXI.Container
@@ -251,8 +251,8 @@ export default class Modal{
             this.infoSixthPageContainer.removeChildren()
             this.infoSixthPageContainerPortrait.removeChildren()
     
-            this.infoSeventhPageContainer.removeChildren()
-            this.infoSeventhPageContainerPortrait.removeChildren()
+           // this.infoSeventhPageContainer.removeChildren()
+           // this.infoSeventhPageContainerPortrait.removeChildren()
 
         })
         this.modalFrame.addChild(this.closeModal)
@@ -547,14 +547,14 @@ export default class Modal{
         this.infoFourthPageContainer.alpha = 0
         this.infoFifthPageContainer.alpha = 0
         this.infoSixthPageContainer.alpha = 0
-        this.infoSeventhPageContainer.alpha = 0
+       // this.infoSeventhPageContainer.alpha = 0
 
         this.infoSecondPageContainerPortrait.alpha = 0
         this.infoThirdPageContainerPortrait.alpha = 0
         this.infoFourthPageContainerPortrait.alpha = 0
         this.infoFifthPageContainerPortrait.alpha = 0
         this.infoSixthPageContainerPortrait.alpha = 0
-        this.infoSeventhPageContainerPortrait.alpha = 0
+       // this.infoSeventhPageContainerPortrait.alpha = 0
  
         this.createInfoFirstPage()
         this.createInfoSecondPage()
@@ -562,7 +562,7 @@ export default class Modal{
         this.creatFourthPage()
         this.createFifthPage()
         this.createSixthPage()
-        this.createSeventhPage()
+       // this.createSeventhPage()
 
         this.modalFrame.addChild(this.infoContainer)
         this.container.addChild(this.overlay,this.modalFrame)
@@ -585,7 +585,7 @@ export default class Modal{
         this.infoFourthPageContainer.alpha = 0
         this.infoFifthPageContainer.alpha = 0
         this.infoSixthPageContainer.alpha = 0
-        this.infoSeventhPageContainer.alpha = 0
+       // this.infoSeventhPageContainer.alpha = 0
  
         this.infoFirstPageContainerPortrait.alpha = 0
         this.infoSecondPageContainerPortrait.alpha = 0
@@ -593,7 +593,7 @@ export default class Modal{
         this.infoFourthPageContainerPortrait.alpha = 0
         this.infoFifthPageContainerPortrait.alpha = 0
         this.infoSixthPageContainerPortrait.alpha = 0
-        this.infoSeventhPageContainerPortrait.alpha = 0
+      //  this.infoSeventhPageContainerPortrait.alpha = 0
 
         if(currentPage == 0){
             if(this.screenSetting.screentype == 'portrait'){
@@ -634,11 +634,11 @@ export default class Modal{
                 this.infoSixthPageContainer.alpha = 1
             }
         }else{
-            if(this.screenSetting.screentype == 'portrait'){
-                this.infoSeventhPageContainerPortrait.alpha = 1
-            }else{
-                this.infoSeventhPageContainer.alpha = 1
-            }
+            // if(this.screenSetting.screentype == 'portrait'){
+            //     this.infoSeventhPageContainerPortrait.alpha = 1
+            // }else{
+            //     this.infoSeventhPageContainer.alpha = 1
+            // }
         }
 
         this.infoFirstPageContainer.x = (this.infoContainer.width - this.infoFirstPageContainer.width)/2
