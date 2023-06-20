@@ -160,7 +160,7 @@
 				"h": 50
 			}
 		},
-		"leopard.png": {
+		"monkey.png": {
 			"frame": {
 				"x": 1,
 				"y": 105,
@@ -180,7 +180,7 @@
 				"h": 50
 			}
 		},
-		"monkey.png": {
+		"orange_crystal.png": {
 			"frame": {
 				"x": 53,
 				"y": 105,
@@ -200,7 +200,7 @@
 				"h": 50
 			}
 		},
-		"orange_crystal.png": {
+		"snake.png": {
 			"frame": {
 				"x": 105,
 				"y": 105,
@@ -220,7 +220,7 @@
 				"h": 50
 			}
 		},
-		"snake.png": {
+		"tiger.png": {
 			"frame": {
 				"x": 157,
 				"y": 105,

@@ -1353,7 +1353,7 @@ export default class GameMobile{
                 if(this.sound[16].volume() == 1){
                     this.fadeSound(16,0,this.fadeDurationBgm)
                 }
-                if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
+                if(this.sound[17].volume() == 0 && !this.isFreeSpin){
                     this.fadeSound(0,1,this.fadeDurationBgm)
                 }
             }

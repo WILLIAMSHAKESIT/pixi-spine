@@ -109,7 +109,7 @@ export default class Loader{
                     {name: 'snake',srcs: 'assets/mobile/slot/sprites/snake.json'},
                     {name: 'violet_crystal',srcs: 'assets/mobile/slot/sprites/violet_crystal.json'},
                     {name: 'monkey',srcs: 'assets/mobile/slot/sprites/monkey.json'},
-                    {name: 'leopard',srcs:'assets/mobile/slot/sprites/leopard.json'},
+                    {name: 'tiger',srcs:'assets/mobile/slot/sprites/tiger.json'},
                     {name: 'green_crystal',srcs: 'assets/mobile/slot/sprites/green_crystal.json'},
                     {name: 'orange_crystal',srcs: 'assets/mobile/slot/sprites/orange_crystal.json'},
                     {name: 'wild',srcs: 'assets/mobile/slot/sprites/wild.json'},
@@ -164,7 +164,7 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/reel/chameleon.mp3`,false); //26
         this.soundSetup(`${this.soundsPath}sfx/reel/bird.mp3`,false); //27
         this.soundSetup(`${this.soundsPath}sfx/reel/snake.mp3`,false); //28
-        this.soundSetup(`${this.soundsPath}sfx/reel/leopard.mp3`,false); //29
+        this.soundSetup(`${this.soundsPath}sfx/reel/tiger.mp3`,false); //29
         this.soundSetup(`${this.soundsPath}sfx/ui/confirm2.mp3`,false); //30
 
         await PIXI.Assets.init({ manifest: manifest });
