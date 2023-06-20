@@ -869,7 +869,7 @@ export default class Slot{
         let duration = 1
         if(this.screenSetting.screentype == 'portrait'){
             barPosX = levelBarX*1.8 + this.levelBarIndicator.width
-            barPosY = this.levelBarIndicator.y+10
+            barPosY = this.levelBarIndicator.y
         }else{
             barPosX = this.levelBarContainer.x + this.levelBarIndicator.width
             barPosY = this.levelBarContainer.y + 25
