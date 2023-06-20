@@ -351,8 +351,8 @@ export default class GameMobile{
             this.gameBackground.width = this.screenSetting.baseWidth
             
             //levelbarIndicator
-            this.slotGame.levelBarContainer.scale.set(1)
-            this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height +100
+            this.slotGame.levelBarContainer.scale.set(1.2)
+            this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height - 50
             this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y = this.slotGame.levelBarBg.y
             this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
@@ -430,6 +430,7 @@ export default class GameMobile{
             this.infoContainer.zIndex = -1
             this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
 
+            this.buyBonusBtn.scale.set(1.2)
             this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
             this.buyBonusBtn.x = 0
 
@@ -469,6 +470,7 @@ export default class GameMobile{
             this.modal.modalFrame.y = (this.overlay.height - this.modal.modalFrame.height)  / 2
            
             if(this.isOpenSetting){
+                this.modal.closeModal.scale.set(1.1)
                 this.modal.modalTitle.x = (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
                 this.modal.closeModal.y = 45
@@ -484,8 +486,9 @@ export default class GameMobile{
             }
 
             if(this.isOpenAutoplay){
+                this.modal.closeModal.scale.set(1.1)
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
-                this.modal.closeModal.y = 45
+                this.modal.closeModal.y = 43
                 this.modal.btnContainer.visible = false
                 this.modal.btn2Container.visible = true
                 this.modal.btn2Container.scale.set(1.3)
@@ -498,13 +501,17 @@ export default class GameMobile{
             }
 
             if(this.isOpenInfo){
+                this.modal.closeModal.scale.set(1.1)
                 this.modal.infoFirstPageContainerPortrait.x = 270.379
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 40
                 this.modal.closeModal.y = 45
                   //PREVIOUS AND NEXT BUTTON
-                this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height)/2
-                this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
-                this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
+                this.modal.prevBtn.scale.set(1.8)
+                this.modal.nextBtn.scale.set(1.8)
+                this.modal.prevBtn.x = 80
+                this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height) - 80
+                this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height) - 80
+                this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -80 
                 this.modal.pageTitle.x = (this.modal.modalFrame.width - this.modal.pageTitle.width)/2
                 this.modal.pageTitle.y = 100
                 this.modal.pageDesc.x = (this.modal.modalFrame.width - this.modal.pageDesc.width)/2
@@ -779,22 +786,24 @@ export default class GameMobile{
 
             //MODALS
             if(this.isOpenSetting){
-            this.modal.modalTitle.x =  (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
-            this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
-            this.modal.closeModal.y = 30
-            this.modal.separator.alpha = 1
+                this.modal.closeModal.scale.set(1.1)
+                this.modal.modalTitle.x =  (this.modal.modalFrame.width - this.modal.modalTitle.width)/2
+                this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
+                this.modal.closeModal.y = 30
+                this.modal.separator.alpha = 1
 
-            this.modal.leftContainer.scale.set(1)
-            this.modal.leftContainer.x = (this.modal.separator.x - this.modal.leftContainer.width) / 2 
-            this.modal.leftContainer.y =  (this.modal.modalFrame.height - this.modal.leftContainer.height)/2 + 50
-            
-            this.modal.rightContainer.scale.set(1)
-            this.modal.rightContainer.y = (this.modal.modalFrame.height - this.modal.rightContainer.height)/2 
-            this.modal.rightContainer.x =  this.modal.separator.x + 60
-            this.modal.separator.x = (this.modal.modalFrame.width - this.modal.separator.width)/2
-            this.modal.separator.y = (this.modal.modalFrame.height - this.modal.separator.height)/2
+                this.modal.leftContainer.scale.set(1)
+                this.modal.leftContainer.x = (this.modal.separator.x - this.modal.leftContainer.width) / 2 
+                this.modal.leftContainer.y =  (this.modal.modalFrame.height - this.modal.leftContainer.height)/2 + 50
+                
+                this.modal.rightContainer.scale.set(1)
+                this.modal.rightContainer.y = (this.modal.modalFrame.height - this.modal.rightContainer.height)/2 
+                this.modal.rightContainer.x =  this.modal.separator.x + 60
+                this.modal.separator.x = (this.modal.modalFrame.width - this.modal.separator.width)/2
+                this.modal.separator.y = (this.modal.modalFrame.height - this.modal.separator.height)/2
             }
             if(this.isOpenAutoplay){
+                this.modal.closeModal.scale.set(1.1)
                 this.modal.btn2Container.scale.set(1)
                 this.modal.bottomContainer.scale.set(1)
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
@@ -807,9 +816,13 @@ export default class GameMobile{
             }
             
             if(this.isOpenInfo){
+                this.modal.closeModal.scale.set(1.1)
                 this.modal.closeModal.x = (this.modal.modalFrame.width - this.modal.closeModal.width) - 30
                 this.modal.closeModal.y = 30
                  //PREVIOUS AND NEXT BUTTON
+                this.modal.prevBtn.scale.set(1.2)
+                this.modal.nextBtn.scale.set(1.2)
+                this.modal.prevBtn.x = 30
                 this.modal.prevBtn.y = (this.modal.modalFrame.height - this.modal.prevBtn.height)/2
                 this.modal.nextBtn.y = (this.modal.modalFrame.height - this.modal.nextBtn.height)/2
                 this.modal.nextBtn.x = (this.modal.modalFrame.width - this.modal.nextBtn.width) -30 
