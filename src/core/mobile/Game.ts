@@ -351,13 +351,21 @@ export default class GameMobile{
             this.gameBackground.width = this.screenSetting.baseWidth
             
             //levelbarIndicator
-            this.slotGame.levelBarContainer.scale.set(1.2)
-            this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height - 50
-            this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
+            this.slotGame.levelBarContainer.scale.set(1)
+
+            this.slotGame.levelBarBg.scale.set(2)
+            this.slotGame.levelBarBg.y = this.slotGame.frameBorder.height + 90
+            this.slotGame.levelBarIndicator.height = this.slotGame.levelBarBg.height
+            this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+10
             this.slotGame.levelBarIndicator.y = this.slotGame.levelBarBg.y
-            this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 30
-            this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 42
-            this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -28 
+            this.slotGame.itemMini.scale.set(2)
+            this.slotGame.itemMini.y = this.slotGame.levelBarBg.y - 38
+            this.slotGame.itemMajor.scale.set(2)
+            this.slotGame.itemMajor.x =  this.slotGame.itemMini.width - 5
+            this.slotGame.itemMajor.y = this.slotGame.levelBarBg.y - 50
+            this.slotGame.itemGrand.scale.set(2)
+            this.slotGame.itemGrand.x =  this.slotGame.itemMajor.x + this.slotGame.itemMajor.width
+            this.slotGame.itemGrand.y = this.slotGame.levelBarBg.y -35 
             this.slotGame.logo.scale.set(1.6)
             this.slotGame.logo.y = -40
             this.slotGame.levelBarContainer.x = (this.baseWidth - this.slotGame.levelBarContainer.width)/2
@@ -693,12 +701,20 @@ export default class GameMobile{
             this.buyBonusBtn.y =  (this.screenSetting.baseHeight - this.buyBonusBtn.height)/2
            
             //levelbarIndicator
+            this.slotGame.levelBarBg.scale.set(2)
             this.slotGame.levelBarBg.y =  this.slotGame.frameBorder.y * 0.7
-            this.slotGame.levelBarContainer.scale.set(0.6)
+          
+            this.slotGame.levelBarIndicator.height =  this.slotGame.levelBarBg.height
             this.slotGame.levelBarIndicator.x = this.slotGame.levelBarBg.x+3
             this.slotGame.levelBarIndicator.y =this.slotGame.levelBarBg.y
+            this.slotGame.itemMini.scale.set(2)
+
             this.slotGame.itemMini.y =  this.slotGame.levelBarBg.y - 30
+            this.slotGame.itemMajor.scale.set(2)
+            this.slotGame.itemMajor.x = this.slotGame.itemMini.width - 5
             this.slotGame.itemMajor.y = this.slotGame.itemMini.y - 13
+            this.slotGame.itemGrand.scale.set(2)
+            this.slotGame.itemGrand.x =  this.slotGame.itemMajor.x + this.slotGame.itemMajor.width
             this.slotGame.itemGrand.y =  10
             this.slotGame.logo.x = this.slotGame.frameBorder.x
             this.slotGame.logo.y = this.slotGame.frameBorder.y
