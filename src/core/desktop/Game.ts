@@ -566,7 +566,6 @@ export default class Game{
                 })
                 this.isSoundOff = true
                 this.isSoundOn = false
-                console.log("ey")
                 this.checkSounds()
             }else{
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
