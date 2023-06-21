@@ -556,7 +556,7 @@ export default class Game{
         }
         this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
             this.playSound(1)
-            if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
+            if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn || this.controller.soundBtnSprite.texture == this.soundOnHover){
                 Howler.mute(true)
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
                 this.ambientCheck = false
@@ -566,6 +566,7 @@ export default class Game{
                 })
                 this.isSoundOff = true
                 this.isSoundOn = false
+                console.log("ey")
                 this.checkSounds()
             }else{
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
