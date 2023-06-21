@@ -468,7 +468,7 @@ export default class Game{
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
-        this.modal = new Modal(this.app,this.textureArray)
+        this.modal = new Modal(this.app,this.textureArray,this.playSound.bind(this))
         this.modal.closeModal.addEventListener('pointerdown',() =>{
             this.playSound(1)
             
@@ -754,6 +754,7 @@ export default class Game{
             close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
          })
         close.addEventListener('pointerdown',()=>{
+            close.interactive = false
             close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
             this.playSound(13) 
             this.hideBonusPopUp(dY,sY);
@@ -1281,6 +1282,7 @@ export default class Game{
         })
 
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.playSound(1);
             this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
             this.modal.createInfoModal()
         })

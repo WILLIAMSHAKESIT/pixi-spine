@@ -1222,7 +1222,7 @@ export default class GameMobile{
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
-        this.modal = new Modal(this.app,this.textureArray, this.screenSize.bind(this))
+        this.modal = new Modal(this.app,this.textureArray, this.screenSize.bind(this),this.playSound.bind(this))
         this.modal.closeModal.addEventListener('pointerdown',() =>{
             this.playSound(1)
             this.controller.settingBtnSpite.interactive = true
@@ -1455,6 +1455,7 @@ export default class GameMobile{
         //     this.playSound(2)
         // })
         close.addEventListener('pointerdown',()=>{
+            close.interactive = false
             this.isOpenBuyBonusFrame = false
             this.playSound(13)
             let timeOut1 = setTimeout(()=>{
@@ -2020,6 +2021,7 @@ export default class GameMobile{
         // })
         // open info modal
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.playSound(1)
             this.isOpenInfo = true
             this.controller.infoBtnSprite.interactive = false
             this.controller.settingBtnSpite.interactive = false
@@ -2129,6 +2131,7 @@ export default class GameMobile{
         //     this.playSound(2)
         // })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            this.playSound(1)
             let timeOut = setTimeout(()=>{
                 this.fadeSound(16,0,this.fadeDurationBgm)
                 this.fadeSound(0,1,this.fadeDurationBgm)
