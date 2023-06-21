@@ -299,11 +299,11 @@ export default class GameMobile{
                         this.slotGame.timeScale = 0 
                         if(this.slotGame.notLongPress === true) {
                             this.slotGame.notLongPress = false;
-                            this.spinType = 'normal'
                             this.startSpin(this.spinType)
+                            this.slotGame.timeScale = 0
                         }else{
-                            this.spinType = 'turbo'
                             this.startSpin(this.spinType)
+                            this.slotGame.timeScale = 10
                         }
                     }else{ 
                         this.slotGame.timeScale = 10
