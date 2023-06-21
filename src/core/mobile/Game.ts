@@ -1229,9 +1229,9 @@ export default class GameMobile{
             this.controller.autoPlay.interactive = true
             this.controller.infoBtnSprite.interactive = true
         })
-        this.modal.closeModal.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.modal.closeModal.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
     }
     private createGame(){
         this.gameBackground = Functions.loadTexture(this.textureArray,'main','bg')
@@ -1260,9 +1260,9 @@ export default class GameMobile{
         this.gameContainer.addChild(this.controller.container)
 
         this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
-        this.controller.soundBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.soundBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
             this.playSound(1)
             
@@ -1451,9 +1451,9 @@ export default class GameMobile{
         check.y = (this.buyBonusFrame.height - check.height)*.94
         this.buyBonusFrame.addChild(check)
         let sY = -this.buyBonusFrame.height
-        close.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // close.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         close.addEventListener('pointerdown',()=>{
             this.isOpenBuyBonusFrame = false
             this.playSound(13)
@@ -1466,9 +1466,9 @@ export default class GameMobile{
         
            
         })
-        check.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // check.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         check.addEventListener('pointerdown',()=>{
             this.playSound(12)
             this.isOpenBuyBonusFrame = false
@@ -2015,9 +2015,9 @@ export default class GameMobile{
     }
     private events(){
         // open info modal
-        this.controller.infoBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.infoBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         // open info modal
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
             this.isOpenInfo = true
@@ -2028,9 +2028,9 @@ export default class GameMobile{
             this.screenSize()
         })
         //open system settings modal
-        this.controller.settingBtnSpite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.settingBtnSpite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
             this.isOpenSetting = true
             this.playSound(1)
@@ -2045,9 +2045,9 @@ export default class GameMobile{
             this.modal.betBtns.forEach((data,index)=>{
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
-                    data.addListener('mouseover',() =>{
-                        this.playSound(2)
-                    })
+                    // data.addListener('mouseover',() =>{
+                    //     this.playSound(2)
+                    // })
                     
                     if(index == 0){
                         this.betIndex--
@@ -2093,9 +2093,9 @@ export default class GameMobile{
             }
 
             this.modal.soundBtns.forEach((data,index)=>{
-                data.addListener('mouseover',() =>{
-                    this.playSound(2)
-                })
+                // data.addListener('mouseover',() =>{
+                //     this.playSound(2)
+                // })
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
                     if(data.texture == this.textureToggleOff){
@@ -2125,9 +2125,9 @@ export default class GameMobile{
             this.screenSize()
         })
         //open autoplay
-        this.controller.autoPlay.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.autoPlay.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
             let timeOut = setTimeout(()=>{
                 this.fadeSound(16,0,this.fadeDurationBgm)
@@ -2168,9 +2168,9 @@ export default class GameMobile{
                 }
                 //toggle spin type
                 this.modal.btnArray.forEach((data,index)=>{
-                   data.addListener('mouseover',() =>{
-                        this.playSound(2)
-                    })
+                //    data.addListener('mouseover',() =>{
+                //         this.playSound(2)
+                //     })
                     data.addEventListener('pointerdown',()=>{
                         this.playSound(1)
                         
@@ -2196,9 +2196,9 @@ export default class GameMobile{
                     })
                 })
                 //start slot auto spin
-                this.modal.rollBtn.addListener('mouseover',() =>{
-                    this.playSound(2)
-                })
+                // this.modal.rollBtn.addListener('mouseover',() =>{
+                //     this.playSound(2)
+                // })
                 this.modal.rollBtn.addEventListener('pointerdown',()=>{
                     this.playSound(1)
                     
@@ -2228,9 +2228,9 @@ export default class GameMobile{
             this.screenSize()   
         })
         //single spin trigger
-        this.controller.spinBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.spinBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.controller.spinBtnSprite.addEventListener('touchstart',()=>{
             this.spinClick = true
             this.playSound(1)
@@ -2247,9 +2247,9 @@ export default class GameMobile{
             this.spinClick = false
         })
         //buy bonus
-        this.buyBonusBtn.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.buyBonusBtn.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.buyBonusBtn.addEventListener('pointerdown',()=>{
             this.buyBonusBtn.interactive = false
             this.playSound(30)
@@ -2371,9 +2371,9 @@ export default class GameMobile{
         this.gameContainer.addChild(this.wildSlot)
 
 
-        this.wildSlot.addListener('mouseover',() =>{
-            // this.playSound(2)
-        })
+        // this.wildSlot.addListener('mouseover',() =>{
+        //     // this.playSound(2)
+        // })
         this.wildSlot.addEventListener('pointerdown', () =>{
             this.slotGame.whatEvent = 1
             this.playSound(12)
@@ -2394,9 +2394,9 @@ export default class GameMobile{
         })
 
         
-        this.moneySlot.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.moneySlot.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         this.moneySlot.addEventListener('pointerdown', () =>{
             this.playSound(12)
             this.slotGame.whatEvent = 2

@@ -102,6 +102,7 @@ export default class Loader{
                     {name: 'firefly',srcs: 'assets/desktop/main/sprites/firefly.json'},
                     {name: 'butterfly',srcs: 'assets/desktop/main/sprites/butterfly.json'},
                     {name: 'intro',srcs: 'assets/desktop/intro/sprites/intro.json'},
+                    {name: 'buttons_hover',srcs: 'assets/desktop/buttons_hover/sprites/buttons_hover.json'},
                 ],
             }],
         };
