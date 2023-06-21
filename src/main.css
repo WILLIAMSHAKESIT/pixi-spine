@@ -34,12 +34,12 @@ canvas.desktop{
 
 @media(max-width:2188px){
     canvas.desktop{
-        max-width: 100% !important;
+        /* max-width: 100% !important;
         width: 100% !important;
-        height: unset !important;
+        height: unset !important; */
     }
 }
-@media(max-width:1593px){
+@media(max-width:2188px){
     canvas.desktop{
         max-width: 100% !important;
         width: unset !important;
