@@ -546,7 +546,7 @@ export default class Game{
                 if(this.sound[16].volume() == 1){
                     this.fadeSound(16,0,this.fadeDurationBgm)
                 }
-                if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
+                if(this.sound[17].volume() == 0 && !this.isFreeSpin){
                     this.fadeSound(0,1,this.fadeDurationBgm)
                 }
             }
@@ -1040,7 +1040,7 @@ export default class Game{
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
         this.slotGame.logo.visible = bool 
-        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        // this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
         this.frameGlow.visible = bool?false:true
         if(!bool){
@@ -1067,7 +1067,7 @@ export default class Game{
         this.controller.autoPlay.texture = autoPlayTexture
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
-        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        // this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
         this.frameGlow.visible = bool?false:true
         if(!bool){
