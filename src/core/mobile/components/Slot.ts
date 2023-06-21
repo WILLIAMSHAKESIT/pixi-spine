@@ -885,7 +885,11 @@ export default class Slot{
             coin.x = (coinX)
             coin.y = (coinY)
             coin.alpha = 0.4
-            coin.scale.set(0.15)
+            if(this.screenSetting.isSafe == 'A'){
+                coin.scale.set(0.10)
+            }else{
+                coin.scale.set(0.15)
+            }
             coin.animationSpeed = 0.5
             coin.play();
             let coinAnimation = gsap.to(coin,{
