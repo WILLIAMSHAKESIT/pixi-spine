@@ -104,6 +104,20 @@ export default class Game{
     private plant5Left:Spine
     private vines:Spine
 
+    //buttons hover
+
+    private autoplayHover: PIXI.Texture
+    private checkHover: PIXI.Texture
+    private exHover: PIXI.Texture
+    private infoHover: PIXI.Texture
+    private soundOnHover: PIXI.Texture
+    private soundOffHover: PIXI.Texture
+    private spinHover: PIXI.Texture
+    private settingsHover: PIXI.Texture
+
+    private isSoundOff:boolean = false
+    private isSoundOn:boolean = false
+
     private lastSpinTime:number = 0
     constructor(){
         this.matchingBlocksContainer = new PIXI.Container
@@ -204,6 +218,18 @@ export default class Game{
         this.sounBtnSpriteOn =  Functions.loadTexture(this.textureArray,'controller','sound_on_button').texture
         this.popGlow = new Spine(this.textureArray.pop_glow.spineData)
         this.popGlow2 = new Spine(this.textureArray.pop_glow.spineData)
+
+        //buttons Hover
+        this.autoplayHover = Functions.loadTexture(this.textureArray,'buttons_hover','autoplay_button_hover').texture
+        this.checkHover = Functions.loadTexture(this.textureArray,'buttons_hover','check_hover').texture
+        this.exHover = Functions.loadTexture(this.textureArray,'buttons_hover','ex_hover').texture
+        this.infoHover = Functions.loadTexture(this.textureArray,'buttons_hover','info_button_hover').texture
+        this.soundOnHover = Functions.loadTexture(this.textureArray,'buttons_hover','sound_button_hover').texture
+        this.soundOffHover = Functions.loadTexture(this.textureArray,'buttons_hover','sound_off_button_hover').texture
+        this.spinHover = Functions.loadTexture(this.textureArray,'buttons_hover','spin_button_hover').texture
+        this.settingsHover = Functions.loadTexture(this.textureArray,'buttons_hover','system_settings_hover').texture
+
+
         //overlay
         this.overlay = Functions.loadTexture(this.textureArray,'modal','overlay')
         this.createGame()
@@ -449,9 +475,9 @@ export default class Game{
             this.controller.settingBtnSpite.interactive = true
             this.controller.autoPlay.interactive = true
         })
-        this.modal.closeModal.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.modal.closeModal.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
     }
     private createGame(){
         this.gameBackground = Functions.loadTexture(this.textureArray,'main','bg')
@@ -473,14 +499,61 @@ export default class Game{
         this.gameContainer.addChild(this.frameGlow)
     }
     private createController(){
+   
         this.controller = new Controller(this.app,this.textureArray)
         this.createPaylineAnimation()
         this.gameContainer.addChild(this.controller.container)
 
         this.controller.soundBtnSprite.texture = this.sounBtnSpriteOff
-        this.controller.soundBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // this.controller.soundBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
+        if(this.globalSound){
+            Howler.mute(false)
+            this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
+            this.ambientCheck = true
+            this.sfxCheck = true
+            this.isSoundOn = true
+            this.isSoundOff = false
+        }
+        else{
+            this.isSoundOn = false
+            this.isSoundOff = true
+        }
+
+        // this.controller.soundBtnSprite.addEventListener('mouseenter',()=>{
+        //     this.controller.soundBtnSprite.texture = this.settingsHover
+        // })
+        // this.controller.soundBtnSprite.addEventListener('mouseleave',()=>{
+        //     this.controller.soundBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
+        // })
+        if(this.controller.soundBtnSprite.texture === this.sounBtnSpriteOn){
+            this.controller.soundBtnSprite.addEventListener('mouseenter',()=>{
+                this.controller.soundBtnSprite.texture = this.soundOnHover
+              
+            })
+      
+        }else{
+            this.controller.soundBtnSprite.addEventListener('mouseenter',()=>{
+                this.controller.soundBtnSprite.texture = this.soundOffHover
+               
+            })
+   
+        }
+
+        if(this.isSoundOn){
+            this.controller.soundBtnSprite.addEventListener('mouseleave',()=>{
+                this.controller.soundBtnSprite.texture =this.sounBtnSpriteOn 
+              
+            })
+        }
+        if(this.isSoundOff){
+            this.controller.soundBtnSprite.addEventListener('mouseleave',()=>{
+                this.controller.soundBtnSprite.texture =this.sounBtnSpriteOff
+                
+            })
+
+        }
         this.controller.soundBtnSprite.addEventListener('pointerdown',()=> {
             this.playSound(1)
             if(this.controller.soundBtnSprite.texture == this.sounBtnSpriteOn){
@@ -491,6 +564,9 @@ export default class Game{
                 this.modal.soundBtns.forEach((data,index)=>{
                     data.texture = this.textureToggleOff
                 })
+                this.isSoundOff = true
+                this.isSoundOn = false
+                this.checkSounds()
             }else{
                 this.controller.soundBtnSprite.texture = this.sounBtnSpriteOn 
                 Howler.mute(false)
@@ -499,14 +575,48 @@ export default class Game{
                 this.modal.soundBtns.forEach((data,index)=>{
                     data.texture = this.textureToggleOn
                 })
+                this.isSoundOff = false
+                this.isSoundOn = true
+                this.checkSounds()
             }
             this.checkSoundToggle()
        
         })
+
+
     }
     private updateTextValues(){
        this.betTextValue()    
        this.updateCreditValues()
+    }
+    private checkSounds(){
+        if(this.controller.soundBtnSprite.texture === this.sounBtnSpriteOn){
+            this.controller.soundBtnSprite.addEventListener('mouseenter',()=>{
+                this.controller.soundBtnSprite.texture = this.soundOnHover
+              
+            })
+      
+        }else{
+            this.controller.soundBtnSprite.addEventListener('mouseenter',()=>{
+                this.controller.soundBtnSprite.texture = this.soundOffHover
+             
+            })
+   
+        }
+
+        if(this.isSoundOn){
+            this.controller.soundBtnSprite.addEventListener('mouseleave',()=>{
+                this.controller.soundBtnSprite.texture =this.sounBtnSpriteOn 
+               
+            })
+        }
+        if(this.isSoundOff){
+            this.controller.soundBtnSprite.addEventListener('mouseleave',()=>{
+                this.controller.soundBtnSprite.texture =this.sounBtnSpriteOff
+              
+            })
+
+        }
     }
     private betTextValue(){
         //bet value
@@ -633,20 +743,34 @@ export default class Game{
         check.y = (this.buyBonusFrame.height - check.height)*.94
         this.buyBonusFrame.addChild(check)
         let sY = -this.buyBonusFrame.height
-        close.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // close.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         // reject bonus
+        close.addEventListener('mouseenter',()=>{
+            close.texture = this.exHover
+         })
+         close.addEventListener('mouseleave',()=>{
+            close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
+         })
         close.addEventListener('pointerdown',()=>{
+            close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
             this.playSound(13) 
             this.hideBonusPopUp(dY,sY);
             this.isOpenModal = false
         })
-        check.addListener('mouseover',() =>{
-            this.playSound(2)
-        })
+        // check.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
         // accept bonus
+        check.addEventListener('mouseenter',()=>{
+           check.texture = this.checkHover
+        })
+        check.addEventListener('mouseleave',()=>{
+            check.texture = Functions.loadTexture(this.textureArray,'bonus','check').texture
+        })
         check.addEventListener('pointerdown',()=>{
+            check.texture = Functions.loadTexture(this.textureArray,'bonus','check').texture
             this.playSound(12)
             this.slotGame.freeSpinStart = true
             this.slotGame.isFreeSpin = true
@@ -1146,17 +1270,32 @@ export default class Game{
     }
     private events(){
         // open info modal
-        this.controller.infoBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
+        // this.controller.infoBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
+        this.controller.infoBtnSprite.addEventListener('mouseenter',()=>{
+            this.controller.infoBtnSprite.texture = this.infoHover
         })
+        this.controller.infoBtnSprite.addEventListener('mouseleave',()=>{
+            this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
+        })
+
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
             this.modal.createInfoModal()
         })
         //open system settings modal
-        this.controller.settingBtnSpite.addListener('mouseover',() =>{
-            this.playSound(2)
+        // this.controller.settingBtnSpite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
+        this.controller.settingBtnSpite.addEventListener('mouseenter',()=>{
+            this.controller.settingBtnSpite.texture = this.settingsHover
+        })
+        this.controller.settingBtnSpite.addEventListener('mouseleave',()=>{
+            this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
         })
         this.controller.settingBtnSpite.addEventListener('pointerdown',()=>{
+            this.controller.settingBtnSpite.texture = Functions.loadTexture(this.textureArray,'controller','system_settings').texture
             this.playSound(1)
             this.controller.settingBtnSpite.interactive = false
             // call settings modal
@@ -1165,9 +1304,9 @@ export default class Game{
             this.modal.betBtns.forEach((data,index)=>{
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
-                    data.addListener('mouseover',() =>{
-                        this.playSound(2)
-                    })
+                    // data.addListener('mouseover',() =>{
+                    //     this.playSound(2)
+                    // })
                     if(index == 0){
                         this.betIndex--
                         this.betAmount = json.bet_amounts[this.betIndex]
@@ -1211,9 +1350,9 @@ export default class Game{
                 this.modal.soundBtns[1].texture = this.textureToggleOff
             }
             this.modal.soundBtns.forEach((data,index)=>{
-                data.addListener('mouseover',() =>{
-                    this.playSound(2)
-                })
+                // data.addListener('mouseover',() =>{
+                //     this.playSound(2)
+                // })
                 data.addEventListener('pointerdown',()=>{
                     this.playSound(1)
                     if(data.texture == this.textureToggleOff){
@@ -1245,10 +1384,19 @@ export default class Game{
             this.modal.betAmountText.x = (this.modal.betAmountSpite.width - this.modal.betAmountText.width)/2
         })
         //open autoplay
-        this.controller.autoPlay.addListener('mouseover',() =>{
-            this.playSound(2)
+        // this.controller.autoPlay.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
+        this.controller.autoPlay.addEventListener('mouseenter',()=>{
+            this.controller.autoPlay.texture = this.autoplayHover
         })
+        this.controller.autoPlay.addEventListener('mouseleave',()=>{
+            this.controller.autoPlay.texture = Functions.loadTexture(this.textureArray,'controller','autoplay_button').texture
+        })
+
+
         this.controller.autoPlay.addEventListener('pointerdown',()=>{
+            this.controller.autoPlay.texture = Functions.loadTexture(this.textureArray,'controller','autoplay_button').texture
             let timeOut = setTimeout(()=>{
                 this.fadeSound(16,0,this.fadeDurationBgm)
                 this.fadeSound(0,1,this.fadeDurationBgm)
@@ -1280,9 +1428,9 @@ export default class Game{
                 }
                 //toggle spin type
                 this.modal.btnArray.forEach((data,index)=>{
-                   data.addListener('mouseover',() =>{
-                        this.playSound(2)
-                    })
+                //    data.addListener('mouseover',() =>{
+                //         this.playSound(2)
+                //     })
                     data.addEventListener('pointerdown',()=>{
                         this.playSound(1)
                         
@@ -1308,9 +1456,9 @@ export default class Game{
                     })
                 })
                 //start slot auto spin
-                this.modal.rollBtn.addListener('mouseover',() =>{
-                    this.playSound(2)
-                })
+                // this.modal.rollBtn.addListener('mouseover',() =>{
+                //     this.playSound(2)
+                // })
                 this.modal.rollBtn.addEventListener('pointerdown',()=>{
                     this.playSound(1)
                     
@@ -1339,10 +1487,19 @@ export default class Game{
             }       
         })
         //single spin trigger
-        this.controller.spinBtnSprite.addListener('mouseover',() =>{
-            this.playSound(2)
+        // this.controller.spinBtnSprite.addListener('mouseover',() =>{
+        //     this.playSound(2)
+        // })
+
+        this.controller.spinBtnSprite.addEventListener('mouseenter',()=>{
+            this.controller.spinBtnSprite.texture = this.spinHover
         })
+        this.controller.spinBtnSprite.addEventListener('mouseleave',()=>{
+            this.controller.spinBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','spin_button').texture
+        })
+        
         this.controller.spinBtnSprite.addEventListener('pointerdown',()=>{
+            this.controller.spinBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','spin_button').texture
             this.playSound(1)
             
             this.controller.spinBtnSprite.interactive = true
