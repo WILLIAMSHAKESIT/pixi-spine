@@ -49,7 +49,10 @@ export default class Modal{
     public betBtns:Array<any> = []
     public soundBtns:Array<any> = []
 
-    constructor(app:PIXI.Application,textureArray:Array<any>){
+    //sound
+    private playSound: (index: number) => void;
+
+    constructor(app:PIXI.Application,textureArray:Array<any>,playSound:(index: number)=>void){
         this.app = app
         this.baseWidth = this.app.screen.width
         this.baseHeight = this.app.screen.height
@@ -112,6 +115,7 @@ export default class Modal{
             wordWrapWidth: 600,
             align:'center'
         });
+        this.playSound = playSound;
         this.init()
     }
 
@@ -356,6 +360,7 @@ export default class Modal{
         }
 
         prevBtn.addEventListener('pointerdown',()=>{
+            this.playSound(1)
             if(currentPage !== 0){
                 currentPage--
             }
@@ -369,6 +374,7 @@ export default class Modal{
         nextBtn.y = (this.modalFrame.height - nextBtn.height)/2
         this.infoContainer.addChild(nextBtn)
         nextBtn.addEventListener('pointerdown',()=>{
+            this.playSound(1)
             if(currentPage !== lastPage){
                 currentPage++
             }

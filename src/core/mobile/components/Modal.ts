@@ -95,8 +95,10 @@ export default class Modal{
     public pageDesc:PIXI.Sprite
     public pageText:PIXI.Sprite
 
+    //sound
+    private playSound: (index: number) => void;
 
-    constructor(app:PIXI.Application,textureArray:Array<any>,screenResize:()=> void){
+    constructor(app:PIXI.Application,textureArray:Array<any>,screenResize:()=> void,playSound:(index: number)=>void){
         this.app = app
         this.screenResize = screenResize
         this.baseWidth = this.app.screen.width
@@ -195,7 +197,7 @@ export default class Modal{
             align:'center'
         });
 
-      
+        this.playSound = playSound;
         this.init()
     }
 
@@ -515,6 +517,7 @@ export default class Modal{
         }
 
         this.prevBtn.addEventListener('pointerdown',()=>{
+            this.playSound(1);
             if(this.currentPage !== 0){
                 this.currentPage--
             }
@@ -526,6 +529,7 @@ export default class Modal{
         this.nextBtn.y = (this.modalFrame.height - this.nextBtn.height)/2
         this.infoContainer.addChild(this.nextBtn)
         this.nextBtn.addEventListener('pointerdown',()=>{
+            this.playSound(1);
             if(this.currentPage !== lastPage){
                 this.currentPage++
                 

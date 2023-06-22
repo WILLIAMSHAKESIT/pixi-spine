@@ -468,7 +468,7 @@ export default class Game{
         this.slotGame.autoplayDoneEvent = true
     }
     private createModal(){
-        this.modal = new Modal(this.app,this.textureArray)
+        this.modal = new Modal(this.app,this.textureArray,this.playSound.bind(this))
         this.modal.closeModal.addEventListener('pointerdown',() =>{
             this.playSound(1)
             
@@ -656,7 +656,7 @@ export default class Game{
                 if(this.sound[16].volume() == 1){
                     this.fadeSound(16,0,this.fadeDurationBgm)
                 }
-                if(this.sound[17].volume() == 0 && !this.slotGame.isFreeSpin){
+                if(this.sound[17].volume() == 0 && !this.isFreeSpin){
                     this.fadeSound(0,1,this.fadeDurationBgm)
                 }
             }
@@ -754,6 +754,7 @@ export default class Game{
             close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
          })
         close.addEventListener('pointerdown',()=>{
+            close.interactive = false
             close.texture =Functions.loadTexture(this.textureArray,'bonus','ex').texture
             this.playSound(13) 
             this.hideBonusPopUp(dY,sY);
@@ -1164,7 +1165,7 @@ export default class Game{
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
         this.slotGame.logo.visible = bool 
-        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        // this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
         this.frameGlow.visible = bool?false:true
         if(!bool){
@@ -1191,7 +1192,7 @@ export default class Game{
         this.controller.autoPlay.texture = autoPlayTexture
         this.gameBackground.texture = gameBackgroundTexture
         this.buyBonusBtn.visible = bool
-        this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
+        // this.slotGame.levelBarContainer.x = bool?0:-this.slotGame.levelBarContainer.width * 0.5
         //frame glow add
         this.frameGlow.visible = bool?false:true
         if(!bool){
@@ -1281,6 +1282,7 @@ export default class Game{
         })
 
         this.controller.infoBtnSprite.addEventListener('pointerdown',()=>{
+            this.playSound(1);
             this.controller.infoBtnSprite.texture = Functions.loadTexture(this.textureArray,'controller','info_button').texture
             this.modal.createInfoModal()
         })
