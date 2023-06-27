@@ -438,7 +438,7 @@ export default class GameMobile{
             this.infoContainer.zIndex = -1
             this.infoContainer.x = this.gameBackground.width - this.infoContainer.width
 
-            this.buyBonusBtn.scale.set(1.2)
+           // this.buyBonusBtn.scale.set(1.2)
             this.buyBonusBtn.y = (this.controller.container.y + this.infoContainer.y)
             this.buyBonusBtn.x = 0
 
@@ -1293,6 +1293,7 @@ export default class GameMobile{
        this.updateCreditValues()
     }
     private betTextValue(){
+        console.log("HERE")
         //bet value
         this.controller.betText.text = this.betAmount 
         if(this.screenSetting.screentype == 'portrait'){
@@ -1304,7 +1305,8 @@ export default class GameMobile{
         //bet value buy bonus
         this.buyBonusText.text = this.betAmount
         this.buyBonusText.x = (this.buyBonusBtn.width - this.buyBonusText.width)/2
-        this.buyBonusText.y = (this.buyBonusBtn.height - this.buyBonusText.height) - 20
+        // this.buyBonusText.y = (this.buyBonusBtn.height - this.buyBonusText.height) - 20
+        console.log(this.buyBonusText.x, " zzz")
     }
     private updateCreditValues(){
         //credit value
