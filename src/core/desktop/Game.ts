@@ -1102,10 +1102,18 @@ export default class Game{
                 const containerWithText = new PIXI.Container
                 const greetingText = new PIXI.Text(`line ${payline} pays ${payout}`, this.descText)
                 paylineContent[i].symbols.forEach((data:any,index:number)=>{
-                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
+                    let assetFrom:any;
+                    if(this.slotGame.whatEvent == 0){
+                        assetFrom = json.symbolAssets[data-1]
+                    }else if(this.slotGame.whatEvent == 1){
+                        assetFrom = json.symbolAssetsEvent2[data-1]
+                    }else{
+                        assetFrom = json.symbolAssetsEvent[data-1]
+                    }
+                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${assetFrom.symbol}`)
                     symbols.x = index*65
                     container.addChild(symbols)
-                    paylineTotal+=json.symbolAssets[data-1].pay
+                    // paylineTotal+=assetFrom.pay
                 })
                 container.x = greetingText.width
                 containerWithText.addChild(container,greetingText)
@@ -1115,7 +1123,7 @@ export default class Game{
                 this.animatePaySymbols(containerWithText,i)
                 parentContainer.addChild(containerWithText)
             }
-            this.updatePaylineText(bottomText,`WIN ${Functions.numberWithCommas(paylineTotal)}`)
+            this.updatePaylineText(bottomText,`WIN ${Functions.numberWithCommas(this.slotGame.totalWin)}`)
         }
         this.updatePaylineText(bottomText,this.paylineText.text)
     }

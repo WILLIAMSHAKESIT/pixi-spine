@@ -105,7 +105,7 @@ export default class Loader{
                     {name: 'bird',srcs: 'assets/mobile/slot/sprites/bird.json'},
                     {name: 'blue_crystal',srcs: 'assets/mobile/slot/sprites/blue_crystal.json'},
                     {name: 'bonus_symbol',srcs: 'assets/mobile/slot/sprites/bonus.json'},
-                    {name: 'cameleon',srcs: 'assets/mobile/slot/sprites/chameleon.json'},
+                    {name: 'cameleon',srcs: 'assets/mobile/slot/sprites/cameleon.json'},
                     {name: 'snake',srcs: 'assets/mobile/slot/sprites/snake.json'},
                     {name: 'violet_crystal',srcs: 'assets/mobile/slot/sprites/violet_crystal.json'},
                     {name: 'monkey',srcs: 'assets/mobile/slot/sprites/monkey.json'},
@@ -142,7 +142,7 @@ export default class Loader{
         this.soundSetup(`${this.soundsPath}sfx/reel/reel_stop.mp3`,false); //4
         this.soundSetup(`${this.soundsPath}sfx/reel/common_effect.mp3`,false); //5
         this.soundSetup(`${this.soundsPath}music/event_music.mp3`,true); //6
-        this.soundSetup(`${this.soundsPath}sfx/win/new_win.mp3`,true); //7
+        this.soundSetup(`${this.soundsPath}sfx/win/new_win.mp3`,false); //7
         this.soundSetup(`${this.soundsPath}music/matchgame_music.mp3`,true); //8 
         this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact.mp3`,false); //9 
         this.soundSetup(`${this.soundsPath}sfx/reel/bonus_impact2.mp3`,false); //10
