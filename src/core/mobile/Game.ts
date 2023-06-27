@@ -1168,6 +1168,7 @@ export default class GameMobile{
     }
     private createCongrats(){
         this.fadeSound(6,0,this.fadeDurationBgm)
+        this.soundStop(6)
         this.soundVolume(0,0)
         if(!this.sound[7].playing()){
             this.playSound(7)
@@ -1190,6 +1191,7 @@ export default class GameMobile{
             this.slotGame.isFreeSpinDone = true
             this.slotGame.freeSpinStart = false
             this.slotGame.isFreeSpin = false
+            this.slotGame.whatEvent = 0
             this.slotGame.maskSprite.height = this.slotGame.frameBg.height - 8
             this.slotGame.maskSprite.y = this.slotGame.frameBg.y - 8
             this.congrats.textAnimation.duration(0.3)
