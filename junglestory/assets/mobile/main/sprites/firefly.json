@@ -1,0 +1,41 @@
+{
+"skeleton": {
+	"hash": "dXmOPpTXoqF0LuTelCiQaDWqTPc",
+	"spine": "3.8.75",
+	"x": -28,
+	"y": -28,
+	"width": 57,
+	"height": 57,
+	"images": "C:/Users/PC/Documents/88 Group Projects/build/junggl_story_assets/background/",
+	"audio": "C:\\Users\\PC\\Documents\\88 Group Projects\\build\\junggl_story_assets\\background"
+},
+"bones": [
+	{ "name": "root" }
+],
+"slots": [
+	{ "name": "firefly", "bone": "root", "attachment": "firefly" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"firefly": {
+				"firefly": { "x": 0.5, "y": 0.5, "width": 57, "height": 57 }
+			}
+		}
+	}
+],
+"animations": {
+	"animation": {
+		"slots": {
+			"firefly": {
+				"color": [
+					{ "color": "ffffff00" },
+					{ "time": 0.6667, "color": "fffffffd" },
+					{ "time": 1.3333, "color": "ffffff00" }
+				]
+			}
+		}
+	}
+}
+}

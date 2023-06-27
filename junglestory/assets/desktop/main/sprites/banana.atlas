@@ -1,0 +1,27 @@
+
+banana.png
+size: 955,371
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+napaw1
+  rotate: true
+  xy: 2, 3
+  size: 366, 469
+  orig: 366, 469
+  offset: 0, 0
+  index: -1
+napaw2
+  rotate: false
+  xy: 473, 199
+  size: 480, 170
+  orig: 480, 170
+  offset: 0, 0
+  index: -1
+napaw3
+  rotate: false
+  xy: 473, 2
+  size: 205, 195
+  orig: 205, 195
+  offset: 0, 0
+  index: -1
