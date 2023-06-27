@@ -1,0 +1,13 @@
+
+vines.png
+size: 1106,141
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+vines
+  rotate: false
+  xy: 2, 2
+  size: 1102, 137
+  orig: 1106, 137
+  offset: 0, 0
+  index: -1
