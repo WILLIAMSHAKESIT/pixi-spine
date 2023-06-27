@@ -105,7 +105,7 @@ export default class Loader{
                     {name: 'bird',srcs: 'assets/mobile/slot/sprites/bird.json'},
                     {name: 'blue_crystal',srcs: 'assets/mobile/slot/sprites/blue_crystal.json'},
                     {name: 'bonus_symbol',srcs: 'assets/mobile/slot/sprites/bonus.json'},
-                    {name: 'cameleon',srcs: 'assets/mobile/slot/sprites/chameleon.json'},
+                    {name: 'cameleon',srcs: 'assets/mobile/slot/sprites/cameleon.json'},
                     {name: 'snake',srcs: 'assets/mobile/slot/sprites/snake.json'},
                     {name: 'violet_crystal',srcs: 'assets/mobile/slot/sprites/violet_crystal.json'},
                     {name: 'monkey',srcs: 'assets/mobile/slot/sprites/monkey.json'},

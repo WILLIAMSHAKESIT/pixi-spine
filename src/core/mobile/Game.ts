@@ -1431,7 +1431,6 @@ export default class GameMobile{
         this.buyBonusFrame.x = this.freeSpinX
         this.buyBonusFrame.y = dY
     
-        
         //amount
         const amount = new PIXI.Text(`${this.betAmount}`, this.textStyle2)
         amount.x = (this.buyBonusFrame.width - amount.width)/2
@@ -1518,12 +1517,12 @@ export default class GameMobile{
         this.gameContainer.addChild(this.overlay)
     }
     private hideBonusPopUp(dY:number,sY:number){
-        
         let fadeOutGlow = gsap.to(this.popGlow,{
             duration:0.8,
             alpha:0,
             onComplete:()=>{
                 fadeOutGlow.kill()
+                this.overlay.removeChild(this.popGlow)
                 let bonusFrameHide = gsap.to(this.buyBonusFrame, {
                     delay:0.2,
                     duration:0.2,
@@ -1812,10 +1811,18 @@ export default class GameMobile{
                 const containerWithText = new PIXI.Container
                 const greetingText = new PIXI.Text(`line ${payline} pays ${payout}`, this.descText)
                 paylineContent[i].symbols.forEach((data:any,index:number)=>{
-                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${json.symbolAssets[data-1].symbol}`)
+                    let assetFrom:any;
+                    if(this.slotGame.whatEvent == 0){
+                        assetFrom = json.symbolAssets[data-1]
+                    }else if(this.slotGame.whatEvent == 1){
+                        assetFrom = json.symbolAssetsEvent2[data-1]
+                    }else{
+                        assetFrom = json.symbolAssetsEvent[data-1]
+                    }
+                    let symbols = Functions.loadTexture(this.textureArray,'slot',`${assetFrom.symbol}`)
                     symbols.x = index*65
                     container.addChild(symbols)
-                    paylineTotal+=json.symbolAssets[data-1].pay
+                    paylineTotal+=assetFrom.pay
                 })
                 container.x = greetingText.width
                 containerWithText.addChild(container,greetingText)
