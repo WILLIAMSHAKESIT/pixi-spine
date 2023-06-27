@@ -25,7 +25,6 @@ function combinations(arr:any, k:any) {
 const numbers = [27, 28, 29];
 const groupSize = 5;
 
-console.log(combinations(numbers, groupSize));
 
 //RESPONSIVE SCREEN
 const screenSize = () => {

@@ -663,7 +663,7 @@ export default class GameMobile{
                 this.paylineBackDrop.y = this.paylineContainer.y + (this.paylineContainer.height-this.paylineBackDrop.height)/2
                 this.slotGame.logo.scale.set(3)
                 this.slotGame.logo.y = -60
-            //    console.log('mob d')
+                //console.log('mob d')
             }
 
             //POP  UPS
