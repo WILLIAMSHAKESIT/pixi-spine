@@ -376,7 +376,9 @@ export default class Slot{
                             this.applyMotionBlur(index,true)
                             this.spinReelAnimation.push(spin)
                             if(!this.isFreeSpin || this.freeSpinStart){
-                                this.generateTypes(this.generateTypeIndex)   
+                                console.log("GENERATE TYPES")  
+                              this.generateTypes(this.generateTypeIndex) 
+                              
                             }
                             this.generateTypeIndex++
                         },
@@ -401,6 +403,7 @@ export default class Slot{
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
+                                console.log("GENERATE SYMBOLS EVENT")  
                             }else if(this.isFreeSpin && !this.isFreeSpinDone){
                                 this.generateNewSymbolsMainEvent(index)
                             }else{

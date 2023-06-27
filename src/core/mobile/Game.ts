@@ -1193,6 +1193,7 @@ export default class GameMobile{
             this.slotGame.maskSprite.height = this.slotGame.frameBg.height - 8
             this.slotGame.maskSprite.y = this.slotGame.frameBg.y - 8
             this.congrats.textAnimation.duration(0.3)
+            this.slotGame.freeSpinStart = false
          
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
@@ -1460,17 +1461,19 @@ export default class GameMobile{
             this.playSound(13)
             let timeOut1 = setTimeout(()=>{
                 this.enableButtons(true)
+                this.buyBonusFrame.removeChild(check)
+                this.buyBonusFrame.removeChild(close)
                 clearTimeout(timeOut1)
+                
             },2000)
             this.hideBonusPopUp(dY,sY);
-            this.isOpenModal = false
-        
-           
+            this.isOpenModal = false       
         })
         // check.addListener('mouseover',() =>{
         //     this.playSound(2)
         // })
         check.addEventListener('pointerdown',()=>{
+            console.log("CHECK CLICKEEED")
             this.playSound(12)
             this.isOpenBuyBonusFrame = false
             this.slotGame.freeSpinStart = true
@@ -1484,8 +1487,11 @@ export default class GameMobile{
             },1000)
             let timeOut1 = setTimeout(()=>{
                 check.interactive = true
+                this.buyBonusFrame.removeChild(check)
+                this.buyBonusFrame.removeChild(close)
                 clearTimeout(timeOut1)
             },5000)
+
         })
         let bonusFrameShow = gsap.from(this.buyBonusFrame, {
             delay:.3,
