@@ -783,6 +783,8 @@ export default class Game{
             },1000)
             let timeOut1 = setTimeout(()=>{
                 check.interactive = true
+                this.buyBonusFrame.removeChild(check)
+                this.buyBonusFrame.removeChild(close)
                 clearTimeout(timeOut1)
             },5000)
         })
