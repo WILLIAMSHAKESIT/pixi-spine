@@ -74,6 +74,7 @@ export default class Game{
     private popGlow2:Spine
     //free spin
     private isFreeSpin:boolean = false;
+    private isFreeSpinActive:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
@@ -447,6 +448,7 @@ export default class Game{
             this.isOpenModal= false
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
+            this.isFreeSpinActive = false
             let timeout = setTimeout(()=>{
                 if(!this.sound[0].playing()){
                     this.playSound(0)
@@ -658,7 +660,7 @@ export default class Game{
                 if(this.sound[16].volume() == 1){
                     this.fadeSound(16,0,this.fadeDurationBgm)
                 }
-                if(this.sound[17].volume() == 0 && !this.isFreeSpin){
+                if(this.sound[17].volume() == 0 && !this.isFreeSpinActive){
                     this.fadeSound(0,1,this.fadeDurationBgm)
                 }
             }
@@ -673,13 +675,13 @@ export default class Game{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        if(!this.sound[0].playing() && !this.slotGame.isFreeSpin){
+        if(!this.sound[0].playing() && !this.isFreeSpinActive){
             this.playSound(0)
         }
-        if(!this.sound[16].playing() && !this.slotGame.isFreeSpin){
+        if(!this.sound[16].playing() && !this.isFreeSpinActive){
             this.playSound(16)
         }
-        if(!this.slotGame.isFreeSpin){
+        if(!this.isFreeSpinActive){
             this.fadeSound(16,1,this.fadeDurationBgm)
             this.fadeSound(17,0,this.fadeDurationBgm)
             this.fadeSound(0,0,this.fadeDurationBgm)
@@ -1534,18 +1536,15 @@ export default class Game{
     }
     private freeSpinEvent(){
         this.playSound(14)
-        this.fadeSound(16,0,this.fadeDurationBgm)
-        this.fadeSound(17,0,this.fadeDurationBgm)
-        this.fadeSound(0,0,this.fadeDurationBgm)
         this.playSound(6)
         this.fadeSound(6,1,this.fadeDurationBgm)
         this.soundStop(16)
         this.soundStop(17)
         this.soundStop(0)
-
+        
         this.slotGame.autoPlayCount = 0
         this.isOpenModal= true
-
+        this.isFreeSpinActive = true
         let glowX = 570
         let glowX2 = 1370
         let glowY = 1044
