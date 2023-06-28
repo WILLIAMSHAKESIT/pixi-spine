@@ -53,7 +53,7 @@
         {
             "symbol": "wild",
             "type":11,
-            "pay":3
+            "pay":0
         }
     ],
     "symbolAssetsEvent":[
@@ -153,8 +153,7 @@
             "symbol": "violet_crystal",
             "type":8,
             "pay":2
-        },
-        {
+        },{
             "symbol": "x2",
             "type":11,
             "pay":2
@@ -167,7 +166,7 @@
         {
             "symbol": "x5",
             "type":11,
-            "pay":3
+            "pay":5
         }
     ],
     "pattern":[
@@ -205,5 +204,17 @@
         {"value":500,"x":3},
         {"value":1000,"x":4}
     ],
-    "matchgame_values":["mini","mini","major","mini","mini","mini","major","grand","grand","mini","major","grand"]
+    "auto_play_values2":[
+        {"value":1,"x":0},
+        {"value":5,"x":1},
+        {"value":10,"x":2},
+        {"value":25,"x":0},
+        {"value":50,"x":1},
+        {"value":75,"x":2},
+        {"value":100,"x":0},
+        {"value":250,"x":1},
+        {"value":500,"x":2},
+        {"value":1000,"x":1}
+    ],
+    "matchgame_values":["mini","mini","mini","major","mini","mini","major","grand","grand","mini","major","grand"]
 }
