@@ -201,8 +201,7 @@ export default class Slot{
         this.levelBarContainer.addChild(this.levelBarBg)
         //create indicator
         this.levelBarIndicator = Functions.loadTexture(this.textureArray,'main','bar_energy')
-        // this.levelBarIndicator.width = 500
-        this.levelBarIndicator.width = 740
+        this.levelBarIndicator.width = 0
         this.levelBarIndicator.height = 68
         this.levelBarIndicator.x = this.levelBarBg.x + 5
         this.levelBarIndicator.y = this.levelBarBg.y
@@ -304,6 +303,7 @@ export default class Slot{
         this.container.addChild(this.maskSprite)
     }
     public startSpin(spinType:string){
+       // console.log("EY YOU CALL ME")
         this.bonusSymbolsCount = 0
         this.soundStop(5)
         this.spinType = spinType
@@ -367,7 +367,8 @@ export default class Slot{
                         onStart:()=>{
                             this.applyMotionBlur(index,true)
                             this.spinReelAnimation.push(spin)
-                            if(!this.isFreeSpin || this.freeSpinStart){ 
+                            if(!this.isFreeSpin || this.freeSpinStart){
+                                console.log("GENERATE TYPES")  
                               this.generateTypes(this.generateTypeIndex) 
                               
                             }
@@ -394,6 +395,7 @@ export default class Slot{
                             spin.kill()
                             if(this.isFreeSpin && this.isFreeSpinDone){
                                 this.generateNewSymbolsEvent(index)
+                                console.log("GENERATE SYMBOLS EVENT")  
                             }else if(this.isFreeSpin && !this.isFreeSpinDone){
                                 this.generateNewSymbolsMainEvent(index)
                             }else{
@@ -442,6 +444,7 @@ export default class Slot{
                                         this.autoPlayCount--
                                         // set the credit base 
                                         this.onSpinEnd()
+                                        //console.log(this.autoPlayCount, " z")
                                         if(this.autoPlayCount == 0 && !this.autoplayDoneEvent) {
                                             this.createCongrats()
                                         }
@@ -466,7 +469,7 @@ export default class Slot{
                     const globalPos = data.symbol.getGlobalPosition()
                    
                     this.createWildCoin(this.reelContainer[i].x,globalPos.y)
-                    this.levelBarIndicator.width +=2
+                    this.levelBarIndicator.width++
                     Math.round(this.levelBarIndicator.width)
                     // reset level bar and start matching game
                     if( Math.round(this.levelBarIndicator.width) == this.levelBarWidth){
