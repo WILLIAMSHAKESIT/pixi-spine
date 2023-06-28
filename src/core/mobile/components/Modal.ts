@@ -390,7 +390,7 @@ export default class Modal{
             this.btnContainer.addChild(btn)
             this.autoPlaySettingsCont.addChild(this.btnContainer)
         })
-        json.auto_play_values2.forEach((data,index)=>{
+        json.auto_play_values.forEach((data,index)=>{
             const btn2 = Functions.loadTexture(this.textureArray,'modal_autoplay','spin_amount_btn')
             const textValue = new PIXI.Text(`${data.value}`, this.textStyle)
             textValue.x = (btn2.width - textValue.width)/2 
