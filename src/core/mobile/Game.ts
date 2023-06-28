@@ -1776,8 +1776,13 @@ export default class GameMobile{
             if(this.slotGame.freeSpinStart){
                 this.freeSpinEvent()
             }
+            this.screenSize()
             clearTimeout(timeOut)
         },this.transitionDelay)
+        let timeOut2 = setTimeout(()=>{
+            this.screenSize()
+            clearTimeout(timeOut2)
+        },2500)
         this.slotGame.isMatchingGame = false
 
     }
