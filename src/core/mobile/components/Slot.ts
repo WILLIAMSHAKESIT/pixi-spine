@@ -466,7 +466,7 @@ export default class Slot{
                     const globalPos = data.symbol.getGlobalPosition()
                    
                     this.createWildCoin(this.reelContainer[i].x,globalPos.y)
-                    this.levelBarIndicator.width++
+                    this.levelBarIndicator.width +=2
                     Math.round(this.levelBarIndicator.width)
                     // reset level bar and start matching game
                     if( Math.round(this.levelBarIndicator.width) == this.levelBarWidth){

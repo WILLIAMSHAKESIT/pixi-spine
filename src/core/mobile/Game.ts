@@ -75,6 +75,7 @@ export default class GameMobile{
     private popGlow2:Spine
     //free spin
     private isFreeSpin:boolean = false;
+    private isFreeSpinActive:boolean = false;
     private transitionDelay:number = 2000
     private isOpenModal:boolean = false;
     private winFreeSpin:number = 0
@@ -544,6 +545,7 @@ export default class GameMobile{
                 this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
                 this.congrats.money.y = ((this.overlay.height - this.congrats.money.height)/2)- 330
                 this.congrats.middleContainer.x = 121.375
+                this.congrats.middleContainer.y = (this.congrats.overlay.height - this.congrats.middleContainer.height)/2
             }
 
             // //LOADER
@@ -867,8 +869,8 @@ export default class GameMobile{
                 this.congrats.money.x = (this.overlay.width - this.congrats.money.width)/2
                 this.congrats.money.y =((this.overlay.height - this.congrats.money.height)/2)*1.06
                 this.congrats.middleContainer.x =  -21.025
+                this.congrats.middleContainer.y = ((this.congrats.overlay.height - this.congrats.middleContainer.height)/2)*0.01
             }
-
             //INFO MODAL
             this.modal.infoSecondPageContainer.scale.set(1)
 
@@ -1054,35 +1056,30 @@ export default class GameMobile{
         this.plant5Right.scale.set(0.7)
         this.plant5Right.x = this.baseWidth-100
         this.plant5Right.y = this.baseHeight*0.15
-        Functions.loadSpineAnimation(this.plant5Right,'animation',true,0.6)
         this.plantContainerRight.addChild(this.plant5Right)
         //plant 4
         this.plant4Right = new Spine(this.textureArray.plant_4.spineData)
         this.plant4Right.scale.set(0.7)
         this.plant4Right.x = this.baseWidth-100
         this.plant4Right.y = this.baseHeight*0.3
-        Functions.loadSpineAnimation(this.plant4Right,'animation',true,0.6)
         this.plantContainerRight.addChild(this.plant4Right)
         //plant 3
         this.plant3Right = new Spine(this.textureArray.plant_3.spineData)
         this.plant3Right.scale.set(0.7)
         this.plant3Right.x = this.baseWidth-100
         this.plant3Right.y = this.baseHeight*0.5
-        Functions.loadSpineAnimation(this.plant3Right,'animation',true,0.6)
         this.plantContainerRight.addChild(this.plant3Right)
         //plant 2
         this.plant2Right = new Spine(this.textureArray.plant_2.spineData)
         this.plant2Right.scale.set(0.7)
         this.plant2Right.x = this.baseWidth
         this.plant2Right.y = this.baseHeight*0.6
-        Functions.loadSpineAnimation(this.plant2Right,'animation',true,0.7)
         this.plantContainerRight.addChild(this.plant2Right)
         //plant 1
         this.plant1Right = new Spine(this.textureArray.plant_1.spineData)
         this.plant1Right.scale.set(0.8)
         this.plant1Right.x = this.baseWidth
         this.plant1Right.y = this.baseHeight*0.9
-        Functions.loadSpineAnimation(this.plant1Right,'animation',true,0.7)
         this.plantContainerRight.addChild(this.plant1Right)
         this.gameContainer.addChild(this.plantContainerRight)
 
@@ -1092,7 +1089,6 @@ export default class GameMobile{
         this.plant5Left.scale.set(0.7)
         this.plant5Left.x = this.baseWidth-100
         this.plant5Left.y = this.baseHeight*0.15
-        Functions.loadSpineAnimation(this.plant5Left,'animation',true,0.6)
         this.plantContainerLeft.addChild(this.plant5Left)
         //plant 4
         this.plant4Left = new Spine(this.textureArray.plant_4.spineData)
@@ -1100,7 +1096,6 @@ export default class GameMobile{
         this.plant4Left.scale.x = -1
         this.plant4Left.x = 100
         this.plant4Left.y = this.baseHeight*0.2
-        Functions.loadSpineAnimation(this.plant4Left,'animation',true,0.6)
         this.plantContainerLeft.addChild(this.plant4Left)
         //plant 3
         this.plant3Left = new Spine(this.textureArray.plant_3.spineData)
@@ -1108,7 +1103,6 @@ export default class GameMobile{
         this.plant3Left.scale.x = -1
         this.plant3Left.x = 100
         this.plant3Left.y = this.baseHeight*0.4
-        Functions.loadSpineAnimation(this.plant3Left,'animation',true,0.6)
         this.plantContainerLeft.addChild(this.plant3Left)
         //plant 2
         this.plant2Left = new Spine(this.textureArray.plant_2.spineData)
@@ -1116,7 +1110,6 @@ export default class GameMobile{
         this.plant2Left.scale.x = -1
         this.plant2Left.x = -10
         this.plant2Left.y = this.baseHeight*0.75
-        Functions.loadSpineAnimation(this.plant2Left,'animation',true,0.7)
         this.plantContainerLeft.addChild(this.plant2Left)
         //plant 1
         this.plant1Left = new Spine(this.textureArray.plant_1.spineData)
@@ -1124,47 +1117,13 @@ export default class GameMobile{
         this.plant1Left.scale.x = -1
         this.plant1Left.x = 10
         this.plant1Left.y = this.baseHeight*0.9
-        Functions.loadSpineAnimation(this.plant1Left,'animation',true,0.7)
         this.plantContainerLeft.addChild(this.plant1Left)
         //plant 1
         this.vines = new Spine(this.textureArray.vines.spineData)
         this.vines.x = this.vines.width*0.6
         this.vines.y = 6
-        Functions.loadSpineAnimation(this.vines,'animation',true,0.4)
         this.plantContainerLeft.addChild(this.vines)
         this.gameContainer.addChild(this.plantContainerLeft)
-        this.createButterfly()
-        
-    }
-    private createButterfly(){
-        //butterfly 1
-        const butterfly = new Spine(this.textureArray.butterfly.spineData)
-        butterfly.scale.set(0.5)
-        butterfly.x = -100
-        butterfly.y = this.baseHeight
-        let fly = gsap.to(butterfly,{
-            x:(this.baseWidth - butterfly.width)*0.99,
-            y:this.plant1Right.y * 0.85,
-            delay:2,
-            duration:3,
-            onComplete:()=>{
-                let fly2 = gsap.to(butterfly,{
-                    x:this.baseWidth + butterfly.width,
-                    y:this.plant1Right.y * 0.9,
-                    delay:2,
-                    duration:3,
-                    onComplete:()=>{
-                        fly.kill()
-                        fly2.kill()
-                        this.createButterfly()
-                        this.plantContainerRight.removeChild(butterfly)
-                    }
-                })
-            }
-        })
-        Functions.loadSpineAnimation(butterfly,'animation',true,5)
-        butterfly.zIndex = 0
-        this.plantContainerRight.addChild(butterfly)
     }
     private createCongrats(){
         this.fadeSound(6,0,this.fadeDurationBgm)
@@ -1196,6 +1155,7 @@ export default class GameMobile{
             this.slotGame.maskSprite.y = this.slotGame.frameBg.y - 8
             this.congrats.textAnimation.duration(0.3)
             this.slotGame.freeSpinStart = false
+            this.isFreeSpinActive = false
          
             this.createTransition()
             this.slotGame.startCountWinFreeSpin = false
@@ -1357,7 +1317,7 @@ export default class GameMobile{
                 if(this.sound[16].volume() == 1){
                     this.fadeSound(16,0,this.fadeDurationBgm)
                 }
-                if(this.sound[17].volume() == 0 && !this.isFreeSpin){
+                if(this.sound[17].volume() == 0 && !this.isFreeSpinActive){
                     this.fadeSound(0,1,this.fadeDurationBgm)
                 }
             }
@@ -1372,13 +1332,13 @@ export default class GameMobile{
         this.updatePaylineAnimation(this.paylineGreetings)
     }
     private onSpin(){
-        if(!this.sound[0].playing() && !this.slotGame.isFreeSpin){
+        if(!this.sound[0].playing() && !this.isFreeSpinActive){
             this.playSound(0)
         }
-        if(!this.sound[16].playing() && !this.slotGame.isFreeSpin){
+        if(!this.sound[16].playing() && !this.isFreeSpinActive){
             this.playSound(16)
         }
-        if(!this.slotGame.isFreeSpin){
+        if(!this.isFreeSpinActive){
             this.fadeSound(16,1,this.fadeDurationBgm)
             this.fadeSound(17,0,this.fadeDurationBgm)
             this.fadeSound(0,0,this.fadeDurationBgm)
@@ -2290,6 +2250,7 @@ export default class GameMobile{
         this.playSound(6)
         this.fadeSound(6,1,this.fadeDurationBgm)
         this.isFreeSpin = true 
+        this.isFreeSpinActive = true
         this.isOpenFreeSpinModals = true
         this.moneySlot = Functions.loadTexture(this.textureArray,'bonus','money_wilds')
         this.wildSlot = Functions.loadTexture(this.textureArray,'bonus','multiplier_wilds')
