@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/howler": "^2.2.7",
+    "@types/jquery": "^3.5.16",
     "@types/webfontloader": "^1.6.35",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
@@ -28,6 +29,7 @@
   "dependencies": {
     "gsap": "^3.11.5",
     "howler": "^2.2.3",
+    "jquery": "^3.7.0",
     "pixi-scrollbox": "^2.3.1",
     "pixi-spine": "^4.0.3",
     "pixi-viewport": "^5.0.1",
