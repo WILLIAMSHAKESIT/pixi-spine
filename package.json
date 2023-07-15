@@ -27,6 +27,7 @@
     "webpack-dev-server": "^4.11.1"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "gsap": "^3.11.5",
     "howler": "^2.2.3",
     "jquery": "^3.7.0",

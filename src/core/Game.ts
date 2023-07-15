@@ -8,8 +8,10 @@ import { PixiPlugin } from "gsap/PixiPlugin";
 import $ from "jquery";
 // give the plugin a reference to the PIXI object
 PixiPlugin.registerPIXI(PIXI);
-export default class Game{
 
+const axios = require('axios');
+
+export default class Game{
     private app:PIXI.Application
     private gameContainer:PIXI.Container;
     private drawerContainer:PIXI.Container
@@ -38,6 +40,7 @@ export default class Game{
         {start:70,end:79,file:'ball70To79',color:'light-blue'},
         {start:80,end:90,file:'balls80To90',color:'blue'},
     ]
+    private globalData:any
     constructor(){
         this.gameContainer = new PIXI.Container
         this.drawerContainer = new PIXI.Container
@@ -54,12 +57,12 @@ export default class Game{
             fillGradientStops: [0.4, 0.9],
         });
         new Loader(this.init.bind(this))
-
-        window.addEventListener('pointerdown',()=>{
-            if(!this.resultShowing){
-                this.startResultAnimation()
-            }
-        })
+        
+        // window.addEventListener('pointerdown',()=>{
+        //     if(!this.resultShowing){
+        //         this.startResultAnimation()
+        //     }
+        // })
     }
     private init(res:any,app:PIXI.Application){
         this.app = app
@@ -71,6 +74,55 @@ export default class Game{
         this.gameContainer.addChild(this.drawerContainer)
         this.gameContainer.x = 110
         this.app.stage.addChild(this.gameContainer)
+        this.getRound()
+    }
+    private async getRound(){
+        try {
+            this.globalData = await axios.get('http://159.223.69.154/api/og/games/journal/rounds?gamesIdx=1',{
+                headers : {
+                    'x-auth': 'rLexQm1p9gj5lWVEXozudWs51PUcvM68'
+                }
+            });
+            console.log(this.globalData.data.data[1].drawResult.split(','))
+
+            const targetDate = new Date(this.increaseDateSameGap(this.globalData.data.data[0].dateCreated)).getTime()
+            
+            const timer = setInterval(()=>{
+                const currentDate = Date.now();
+                
+                const remainingTime = Math.abs(currentDate - targetDate);
+
+                var days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+                if (minutes <= 0 && seconds <= 0) {
+                    clearInterval(timer); // Stop the timer
+                    console.log("Countdown complete!");
+                    this.startResultAnimation()
+                    this.getRound()
+                    return;
+                }
+            
+                // Display the countdown
+                console.log(days + ' days, ' + hours + ' hours, ' + minutes + ' minutes, ' + seconds + ' seconds remaining');
+            },1000)
+          } catch (error) {
+            console.error(error);
+        }
+    }
+    private increaseDateSameGap(date:Date){
+        // var givenPast = new Date('2023-07-15 10:27:44');
+        var givenPast = new Date(date);
+
+        var now = new Date();
+
+        var timeDiff = now.getTime() - givenPast.getTime();
+
+        var futureDate = new Date(now.getTime() + timeDiff);
+
+        return futureDate
     }
     private createDrawer(){
         this.drawerCircle = new PIXI.Sprite(this.textureArray.drawer.textures['circle.png'])

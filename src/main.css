@@ -47,6 +47,7 @@ canvas{
     height: 600px;
     width:fit-content;
     background: #e8f4ff;
+    opacity: 0;
 }
 .game-wrapper{
     position: absolute;
